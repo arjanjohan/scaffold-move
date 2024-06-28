@@ -14,6 +14,7 @@
     "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true"
   },
   "dependencies": {
+    "@aptos-labs/wallet-adapter-react": "^3.4.2",
     "@heroicons/react": "^2.0.11",
     "@rainbow-me/rainbowkit": "2.1.2",
     "@tanstack/react-query": "^5.28.6",
@@ -25,6 +26,7 @@
     "next": "^14.0.4",
     "next-themes": "^0.2.1",
     "nprogress": "^0.2.0",
+    "petra-plugin-wallet-adapter": "^0.4.5",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
