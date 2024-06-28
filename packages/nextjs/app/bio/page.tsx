@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
@@ -20,8 +20,6 @@ const ONCHAIN_BIO = moveContracts.ONCHAIN_BIO;
 
 const OnchainBio: NextPage = () => {
   const { signAndSubmitTransaction, account } = useWallet();
-  const name = useRef<HTMLInputElement>(null);
-  const bio = useRef<HTMLTextAreaElement>(null);
 
   const [inputName, setInputName] = useState<string>("");
   const [inputBio, setInputBio] = useState<string>("");
@@ -54,11 +52,11 @@ const OnchainBio: NextPage = () => {
   };
 
   async function registerBio() {
-    if (bio.current === null || name.current === null) {
+    if (inputName === null || inputBio === null) {
       // error msg popup
     } else {
-      const onchainName = name.current.value;
-      const onchainBio = bio.current.value;
+      const onchainName = inputName;
+      const onchainBio = inputBio;
       const transaction: InputTransactionData = {
         data: {
           function: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.modules.onchain_bio.name}::${ONCHAIN_BIO.modules.onchain_bio.functions.register}`,
