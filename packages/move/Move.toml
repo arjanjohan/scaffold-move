@@ -1,0 +1,9 @@
+[package]
+name = 'onchain_bio'
+version = '1.0.0'
+[dependencies.AptosFramework]
+git = 'https://github.com/aptos-labs/aptos-core.git'
+rev = 'main'
+subdir = 'aptos-move/framework/aptos-framework'                                                                                                                                                                                            
+[addresses]
+OnchainBio='0xa8e7c149c80c604a71a785217fb3783b461d34945844d8a8609dc0ef06c70b92'
