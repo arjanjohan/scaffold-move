@@ -26,12 +26,9 @@ const OnchainBio: NextPage = () => {
   const [inputName, setInputName] = useState<string>("");
   const [inputBio, setInputBio] = useState<string>("");
 
-  const [accountHasBio, setAccountHasBio] = useState(true);
-  const [currentName, setCurrentName] = useState("TEST");
-  const [currentBio, setCurrentBio] = useState("TEST");
-  // const [accountHasBio, setAccountHasBio] = useState(false);
-  // const [currentName, setCurrentName] = useState(null);
-  // const [currentBio, setCurrentBio] = useState(null);
+  const [accountHasBio, setAccountHasBio] = useState(false);
+  const [currentName, setCurrentName] = useState(null);
+  const [currentBio, setCurrentBio] = useState(null);
 
   const fetchBio = async () => {
     if (!account) {
