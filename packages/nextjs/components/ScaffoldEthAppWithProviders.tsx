@@ -7,12 +7,9 @@ import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 import { ProgressBar } from "~~/components/scaffold-eth/ProgressBar";
 import { WalletProvider } from "~~/components/scaffold-move/WalletContext";
-import { useInitializeNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
-  useInitializeNativeCurrencyPrice();
-
   return (
     <>
       <div className="flex flex-col min-h-screen">
