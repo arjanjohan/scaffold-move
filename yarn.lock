@@ -10485,8 +10485,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "se-2@workspace:."
   dependencies:
-    "@aptos-labs/wallet-adapter-ant-design": ^2.6.2
-    aptos: ^1.21.0
     husky: ^8.0.1
     lint-staged: ^13.0.3
   languageName: unknown
