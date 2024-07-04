@@ -11,7 +11,7 @@ import { useState } from "react";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import {SubmitHandler} from "react-hook-form";
 import {encodeInputArgsForViewRequest} from "../../../../utils/utils";
-import { view } from "~~/hooks/scaffold-move";
+import { view } from "~~/hooks";
 
 
 
