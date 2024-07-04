@@ -10,6 +10,10 @@ import {
 import { useState } from "react";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import {SubmitHandler} from "react-hook-form";
+import {encodeInputArgsForViewRequest} from "../../../../utils/utils";
+import { view } from "~~/hooks/scaffold-move";
+
+
 
 
 const zeroInputs = false;
@@ -35,17 +39,20 @@ function removeSignerParam(fn: Types.MoveFunction, write: boolean) {
 }
 
 
-
 export const FunctionForm = ({
   module,
   fn,
   write,
 }: FunctionFormProps) => {
   // const [state] = useGlobalState();
-  const {connected} = useWallet();
-  const [formValid, setFormValid] = useState(false);
+  // const {connected} = useWallet();
+  // const [formValid, setFormValid] = useState(false);
   const {submitTransaction, transactionResponse, transactionInProcess} =
     useSubmitTransaction(); 
+  const writeDisabled = false; // if connect to wrong chain or no wallet connected    
+  const [inProcess, setInProcess] = useState(false);
+  const [result, setResult] = useState<Types.MoveValue[]>();
+
 
   const fnParams = removeSignerParam(fn, write);
   // console.log("AVH", module, fn);
@@ -119,8 +126,9 @@ export const FunctionForm = ({
   //   );
   // });
 
-  const onSubmit: SubmitHandler<ContractFormType> = async (data) => {
-    // logEvent("write_button_clicked", fn.name);
+  
+
+  const handleWrite = async () => {
 
     const payload: InputTransactionData = {
       data: {
@@ -133,12 +141,67 @@ export const FunctionForm = ({
       },
     };
 
-    await submitTransaction(payload);
-    if (transactionResponse?.transactionSubmitted) {
-      // logEvent("function_interacted", fn.name, {
-      //   txn_status: transactionResponse.success ? "success" : "failed",
-      // });
+    try {
+      await submitTransaction(payload);
+
+      if (transactionResponse?.transactionSubmitted) {
+        console.log("function_interacted", fn.name, {
+        txn_status: transactionResponse.success ? "success" : "failed",
+      })
     }
+    } catch (e: any) {
+      console.error("⚡️ ~ file: FunctionForm.tsx:handleWrite ~ error", e);
+    }
+  };
+  const handleView = async () => {
+    let viewRequest: Types.ViewRequest;
+    try {
+      viewRequest = {
+        function: `${module.address}::${module.name}::${fn.name}`,
+        type_arguments: data.typeArgs,
+        arguments: data.args.map((arg, i) => {
+          return encodeInputArgsForViewRequest(fn.params[i], arg);
+        }),
+      };
+    } catch (e: any) {
+      console.error("Parsing arguments failed: " + e?.message);
+      return;
+    }
+    setInProcess(true);
+    try {
+      const result = await view(
+        viewRequest,
+        state.network_value,
+        data.ledgerVersion,
+      );
+      setResult(result);
+      // setErrMsg(undefined);
+      console.log("function_interacted", fn.name, {txn_status: "success"});
+    } catch (e: any) {
+      // Ensure error is a string
+      let error = e.message ?? JSON.stringify(e);
+
+      const prefix = "Error:";
+      if (error.startsWith(prefix)) {
+        error = error.substring(prefix.length).trim();
+      }
+
+      // setErrMsg(error);
+      setResult(undefined);
+      console.log("function_interacted", fn.name, {txn_status: "failed"});
+    }
+    setInProcess(false);
+    // try {
+    //   await submitTransaction(payload);
+
+    //   if (transactionResponse?.transactionSubmitted) {
+    //     console.log("function_interacted", fn.name, {
+    //     txn_status: transactionResponse.success ? "success" : "failed",
+    //   })
+    // }
+    // } catch (e: any) {
+    //   console.error("⚡️ ~ file: FunctionForm.tsx:handleWrite ~ error", e);
+    // }
   };
 
   const isFunctionSuccess = !!(
@@ -217,14 +280,14 @@ export const FunctionForm = ({
           > */}
             {/* <button className="btn btn-secondary btn-sm" disabled={writeDisabled || isPending} onClick={handleWrite}> */}
             {write && (
-              <button className="btn btn-secondary btn-sm">
+              <button className="btn btn-secondary btn-sm" onClick={handleView()}>
               {/* {isPending && <span className="loading loading-spinner loading-xs"></span>} */}
               Send 💸
             </button>
             )}
             {!write && (
-              <button className="btn btn-secondary btn-sm">
-            {/* {isFetching && <span className="loading loading-spinner loading-xs"></span>} */}
+              <button className="btn btn-secondary btn-sm" disabled={writeDisabled || transactionInProcess} onClick={handleWrite()}>
+            {transactionInProcess && <span className="loading loading-spinner loading-xs"></span>}
             Read 📡
               </button>
             )}
@@ -232,10 +295,11 @@ export const FunctionForm = ({
           </div>
         {/* </div> */}
       </div>
-      {/* {zeroInputs && txResult ? (
+      {transactionResponse ? (
         <div className="flex-grow basis-0">
+          {transactionResponse.message} // TODO clean this up
         </div>
-      ) : null} */}
+      ) : null}
     </div>
   );
 };
