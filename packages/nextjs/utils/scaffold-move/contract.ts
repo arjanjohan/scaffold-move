@@ -1,6 +1,8 @@
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedContractsData from "~~/contracts/deployedMoveContracts";
 import externalContractsData from "~~/contracts/externalMoveContracts";
+import scaffoldConfig from "~~/scaffold.config";
+
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
@@ -58,6 +60,7 @@ type MoveStruct = {
 export type GenericContract = {
   bytecode: string;
   abi?: GenericContractAbi;
+  external?: true;
 };
 
 export type GenericContractAbi = {
@@ -75,3 +78,26 @@ export type GenericContractsDeclaration = {
 };
 
 export const contracts = contractsData as GenericContractsDeclaration | null;
+
+
+type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
+
+type IsContractDeclarationMissing<TYes, TNo> = typeof contractsData extends { [key in ConfiguredChainId]: any }
+  ? TNo
+  : TYes;
+
+type ContractsDeclaration = IsContractDeclarationMissing<GenericContractsDeclaration, typeof contractsData>;
+
+type Contracts = ContractsDeclaration[ConfiguredChainId];
+
+
+export type ContractName = keyof Contracts;
+export type Contract<TContractName extends ContractName> = Contracts[TContractName];
+
+
+
+export enum ContractCodeStatus {
+  "LOADING",
+  "DEPLOYED",
+  "NOT_FOUND",
+}

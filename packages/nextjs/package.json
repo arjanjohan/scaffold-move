@@ -35,6 +35,7 @@
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.52.1",
     "react-hot-toast": "^2.4.0",
     "react-router-dom": "^6.24.1",
     "use-debounce": "^8.0.4",

@@ -22,12 +22,6 @@ export function DebugContracts() {
 
 
   const selectedContractStorageKey = "scaffoldEth2.selectedContract";
-  // const {data: contractsData, isLoading, error} = useGetAccountModules(ONCHAIN_BIO.address);
-
-  // if (!isLoading && !error && contractsData) {
-
-  //   const contractNames = contractsData.map(contract => contract.abi?.name) as ContractName[];
-  // }
 
   const [selectedContract, setSelectedContract] = useLocalStorage<ContractName>(
     selectedContractStorageKey,

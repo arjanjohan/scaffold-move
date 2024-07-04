@@ -1,5 +1,5 @@
 
-import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
+import { GenericContractsDeclaration } from "~~/utils/scaffold-move/contract";
 
 const deployedContracts = {
   "devnet": {
