@@ -11,7 +11,7 @@
   "scripts": {
     "account": "",
     "chain": "",
-    "deploy": "",
+    "deploy": "cd packages/move && movement aptos move publish && node scripts/loadContracts.js",
     "compile": "",
     "test": "",
     "format": "yarn next:format && yarn hardhat:format",
@@ -28,10 +28,15 @@
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {
+    "@types/js-yaml": "^4",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3"
   },
   "engines": {
     "node": ">=18.17.0"
+  },
+  "dependencies": {
+    "aptos": "^1.21.0",
+    "js-yaml": "^4.1.0"
   }
 }

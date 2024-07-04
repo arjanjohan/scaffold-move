@@ -1,6 +1,6 @@
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
-import deployedContractsData from "~~/contracts/deployedMoveContracts";
-import externalContractsData from "~~/contracts/externalMoveContracts";
+import deployedContractsData from "~~/contracts/deployedModules";
+import externalContractsData from "~~/contracts/externalModules";
 import scaffoldConfig from "~~/scaffold.config";
 
 
