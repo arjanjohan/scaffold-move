@@ -6,6 +6,8 @@ import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-reac
 import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-eth";
 import moveContracts from "~~/contracts/moveContracts";
+import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
+import { useGetAccountModules } from "~~/hooks/scaffold-move/useGetAccountModules";
 
 // TODO: move this somewhere global
 const aptosConfig = new AptosConfig({
@@ -19,7 +21,7 @@ const aptos = new Aptos(aptosConfig);
 const ONCHAIN_BIO = moveContracts.ONCHAIN_BIO;
 
 const OnchainBio: NextPage = () => {
-  const { signAndSubmitTransaction, account } = useWallet();
+  const { account } = useWallet();
 
   const [inputName, setInputName] = useState<string>("");
   const [inputBio, setInputBio] = useState<string>("");
@@ -27,6 +29,13 @@ const OnchainBio: NextPage = () => {
   const [accountHasBio, setAccountHasBio] = useState(false);
   const [currentName, setCurrentName] = useState(null);
   const [currentBio, setCurrentBio] = useState(null);
+
+  const {data, isLoading, error} = useGetAccountModules(ONCHAIN_BIO.address);
+  console.log("useGetAccountModules", data, "isLoading", isLoading, "error", error);
+
+
+  const {submitTransaction, transactionResponse, transactionInProcess} =
+    useSubmitTransaction();
 
   const fetchBio = async () => {
     if (!account) {
@@ -63,15 +72,11 @@ const OnchainBio: NextPage = () => {
           functionArguments: [onchainName, onchainBio],
         },
       };
-      try {
-        // sign and submit transaction to chain
-        const response = await signAndSubmitTransaction(transaction);
-        // wait for transaction
-        console.log(`Success! View your transaction at https://explorer.aptoslabs.com/txn/${response.hash}`); // todo: store explorer link in config
-        await aptos.waitForTransaction({ transactionHash: response.hash });
-        fetchBio();
-      } catch (error: any) {
-        console.log("Error:", error);
+      await submitTransaction(transaction);
+      if (transactionResponse?.transactionSubmitted) {
+        console.log("function_interacted", {
+          txn_status: transactionResponse.success ? "success" : "failed",
+        });
       }
     }
   }
@@ -129,7 +134,7 @@ const OnchainBio: NextPage = () => {
           </button>
         </div>
 
-        {accountHasBio && (
+        {accountHasBio && !transactionInProcess && (
           <div>
             <div>{currentName}</div>
             <div>{currentBio}</div>
