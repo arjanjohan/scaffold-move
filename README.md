@@ -2,7 +2,7 @@
 
 <h4 align="center">
   <a href="https://github.com/arjanjohan/scaffold-move">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
+  <a href="https://scaffold-move-chi.vercel.app/">Website</a>
 </h4>
 
 🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Move blockchains like Aptos and Movement M1. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
@@ -63,15 +63,27 @@ Visit your app on: `http://localhost:3000`. You can interact with your smart con
 
 **What's next**:
 
-- Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
+- Edit your smart contract `OnchainBio.move` in `packages/move/sources`
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/hardhat/deploy`
-- Edit your smart contract test in: `packages/hardhat/test`. To run test use `yarn hardhat:test`
+<!-- - Edit your smart contract test in: `packages/hardhat/test`. To run test use `yarn hardhat:test` -->
 
-## Documentation
+## TODO:
 
-Coming soon.
+- Styling wallet connect button
+- Store network data in scaffold-config
+- Debug page
+  - Display Resources? 
+  - Read and write functionality
+- Make Move hooks for ScaffoldReadContract and ScaffoldWriteContract
+- Add `aptos init` script that runs `aptos init` and then copies the new address to the `move.toml` file.
+- Hot contract reload: Add `aptos move deploy` script that copies the address to the frontend file `addresses.ts`.
 
-## Contributing to Scaffold-ETH 2
+## Links
 
-We welcome contributions to Scaffold-Move!
+- [Presentation video]()
+- [Presentation slides]()
+- [Website](https://scaffold-move-chi.vercel.app/)
+
+## Team
+
+- [arjanjohan](https://x.com/arjanjohan/)

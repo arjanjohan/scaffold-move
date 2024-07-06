@@ -14,6 +14,7 @@
     "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true"
   },
   "dependencies": {
+    "@apollo/client": "^3.10.8",
     "@aptos-labs/wallet-adapter-ant-design": "^2.6.2",
     "@aptos-labs/wallet-adapter-react": "^3.4.2",
     "@heroicons/react": "^2.0.11",
@@ -25,6 +26,7 @@
     "blo": "^1.0.1",
     "burner-connector": "^0.0.8",
     "daisyui": "4.5.0",
+    "graphql": "^16.9.0",
     "next": "^14.0.4",
     "next-themes": "^0.2.1",
     "nprogress": "^0.2.0",
@@ -33,7 +35,9 @@
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.52.1",
     "react-hot-toast": "^2.4.0",
+    "react-router-dom": "^6.24.1",
     "use-debounce": "^8.0.4",
     "usehooks-ts": "^2.13.0",
     "viem": "2.13.6",
