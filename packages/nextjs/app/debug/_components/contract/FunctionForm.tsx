@@ -83,7 +83,6 @@ export const FunctionForm = ({
   };
 
   const handleWrite = async () => {
-    console.log("AVH", module);
     const payload: InputTransactionData = {
       data: {
         function: `${module.address}::${module.name}::${fn.name}`,

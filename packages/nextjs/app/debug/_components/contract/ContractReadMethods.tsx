@@ -13,7 +13,6 @@ export const ContractReadMethods = ({
   const functionsToDisplay = deployedContractData.abi.exposed_functions.filter((fn) =>
     fn.is_view,
   );
-  console.log("AVH 3", functionsToDisplay);
 
   if (!functionsToDisplay.length) {
     return <>No read methods</>;
@@ -28,7 +27,7 @@ export const ContractReadMethods = ({
         />
       ))} */}
         <FunctionForm
-          module={deployedContractData}
+          module={deployedContractData.abi}
           fn={functionsToDisplay[0]}
           write={false}
         />

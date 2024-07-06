@@ -33,7 +33,6 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
       </div>
     );
   }
-  console.log("AVH 1", deployedContractData);
   if (!deployedContractData) {
     return (
       <p className="text-3xl mt-14">

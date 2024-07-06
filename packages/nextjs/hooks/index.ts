@@ -100,7 +100,6 @@ export function getAccountResources(
 ): Promise<Types.MoveResource[]> {
   const client = new AptosClient(nodeUrl);
   const {address, ledgerVersion} = requestParameters;
-  console.log("AVH 2 address", address, ledgerVersion);
   let ledgerVersionBig;
   if (ledgerVersion !== undefined) {
     ledgerVersionBig = BigInt(ledgerVersion);
