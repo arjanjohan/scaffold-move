@@ -43,16 +43,20 @@ const OnchainBio: NextPage = () => {
       return [];
     }
     try {
+
+      const resourceName = "Bio";
       const bioResource = await aptos.getAccountResource({
         accountAddress: account?.address,
-        resourceType: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::Bio`,
+        resourceType: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::${resourceName}`,
       });
-      console.log("Name:", bioResource.name, "Bio:", bioResource.bio);
       setAccountHasBio(true);
       if (bioResource) {
+        console.log("Name:", bioResource.name, "Bio:", bioResource.bio);
         setCurrentName(bioResource.name);
         setCurrentBio(bioResource.bio);
       } else {
+        setCurrentName(null);
+        setCurrentBio(null);
         console.log("no bio");
       }
     } catch (e: any) {
@@ -66,9 +70,10 @@ const OnchainBio: NextPage = () => {
     } else {
       const onchainName = inputName;
       const onchainBio = inputBio;
+      const functionName = "register";
       const transaction: InputTransactionData = {
         data: {
-          function: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::register`,
+          function: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::${functionName}`,
           functionArguments: [onchainName, onchainBio],
         },
       };
