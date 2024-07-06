@@ -5,7 +5,7 @@ import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-eth";
-import moveContracts from "~~/contracts/moveContracts";
+import deployedModules from "~~/contracts/deployedModules";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useGetAccountModules } from "~~/hooks/scaffold-move/useGetAccountModules";
 
@@ -18,7 +18,7 @@ const aptosConfig = new AptosConfig({
 });
 const aptos = new Aptos(aptosConfig);
 
-const ONCHAIN_BIO = moveContracts.ONCHAIN_BIO;
+const ONCHAIN_BIO = deployedModules.devnet.onchain_bio.abi;
 
 const OnchainBio: NextPage = () => {
   const { account } = useWallet();
@@ -45,7 +45,7 @@ const OnchainBio: NextPage = () => {
     try {
       const bioResource = await aptos.getAccountResource({
         accountAddress: account?.address,
-        resourceType: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.modules.onchain_bio.name}::${ONCHAIN_BIO.modules.onchain_bio.resources.Bio}`,
+        resourceType: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::Bio`,
       });
       console.log("Name:", bioResource.name, "Bio:", bioResource.bio);
       setAccountHasBio(true);
@@ -68,11 +68,15 @@ const OnchainBio: NextPage = () => {
       const onchainBio = inputBio;
       const transaction: InputTransactionData = {
         data: {
-          function: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.modules.onchain_bio.name}::${ONCHAIN_BIO.modules.onchain_bio.functions.register}`,
+          function: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::register`,
           functionArguments: [onchainName, onchainBio],
         },
       };
       await submitTransaction(transaction);
+
+      fetchBio();
+
+      // TODO: no transactionResponse?
       if (transactionResponse?.transactionSubmitted) {
         console.log("function_interacted", {
           txn_status: transactionResponse.success ? "success" : "failed",
