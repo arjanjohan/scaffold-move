@@ -13,9 +13,6 @@ import {SubmitHandler} from "react-hook-form";
 import {encodeInputArgsForViewRequest} from "../../../../utils/utils";
 import { view } from "~~/hooks";
 
-
-
-
 const zeroInputs = false;
 
 type ContractFormType = {
@@ -30,7 +27,6 @@ type FunctionFormProps = {
   write: boolean;
 };
 
-
 function removeSignerParam(fn: Types.MoveFunction, write: boolean) {
   if (!write) {
     return fn.params;
@@ -38,32 +34,19 @@ function removeSignerParam(fn: Types.MoveFunction, write: boolean) {
   return fn.params.filter((p) => p !== "signer" && p !== "&signer");
 }
 
-
 export const FunctionForm = ({
   module,
   fn,
   write,
 }: FunctionFormProps) => {
-  // const [state] = useGlobalState();
-  // const {connected} = useWallet();
-  // const [formValid, setFormValid] = useState(false);
-  const {submitTransaction, transactionResponse, transactionInProcess} =
-    useSubmitTransaction(); 
-  const writeDisabled = false; // if connect to wrong chain or no wallet connected    
+  const {submitTransaction, transactionResponse, transactionInProcess} = useSubmitTransaction(); 
   const [inProcess, setInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();
-
+  const [data, setData] = useState<ContractFormType>({ typeArgs: [], args: [] });
 
   const fnParams = removeSignerParam(fn, write);
-  // console.log("AVH", module, fn);
-  // const fnParams = fn.params;
 
-  // TODO: We should use the SDKv2 for this
-  const convertArgument = (
-    arg: string | null | undefined,
-    type: string,
-  ): any => {
-    // TypeScript doesn't really protect us from nulls, this enforces it
+  const convertArgument = (arg: string | null | undefined, type: string): any => {
     if (typeof arg !== "string") {
       arg = "";
     }
@@ -72,64 +55,35 @@ export const FunctionForm = ({
     if (typeTag.isVector()) {
       const innerTag = typeTag.value;
       if (innerTag.isVector()) {
-        // This must be JSON, let's parse it
         return JSON.parse(arg) as any[];
       }
-
       if (innerTag.isU8()) {
-        // U8 we take as an array or hex
         if (arg.startsWith("0x")) {
-          // For hex, let the hex pass through
           return arg;
         }
       }
-
       if (arg.startsWith("[")) {
-        // This is supposed to be JSON if it has the bracket
         return JSON.parse(arg) as any[];
       } else {
-        // We handle array without brackets otherwise
         return arg.split(",").map((arg) => {
           return arg.trim();
         });
       }
     } else if (typeTag.isStruct()) {
       if (typeTag.isOption()) {
-        // This we need to handle if there is no value, we take "empty trimmed" as no value
         if (arg === "") {
           return undefined;
         } else {
-          // Convert for the inner type if it isn't empty
           arg = convertArgument(arg, typeTag.value.typeArgs[0].toString());
           return arg;
         }
       }
     }
-
-    // For all other cases return it straight
     return arg;
   };
 
-  // const inputs = transformedFunction.inputs.map((input, inputIndex) => {
-  //   const key = getFunctionInputKey(abiFunction.name, input, inputIndex);
-  //   return (
-  //     <ContractInput
-  //       key={key}
-  //       setForm={updatedFormValue => {
-  //         setDisplayedTxResult(undefined);
-  //         setForm(updatedFormValue);
-  //       }}
-  //       form={form}
-  //       stateObjectKey={key}
-  //       paramType={input}
-  //     />
-  //   );
-  // });
-
-  
-
   const handleWrite = async () => {
-
+    console.log("AVH", module);
     const payload: InputTransactionData = {
       data: {
         function: `${module.address}::${module.name}::${fn.name}`,
@@ -146,13 +100,14 @@ export const FunctionForm = ({
 
       if (transactionResponse?.transactionSubmitted) {
         console.log("function_interacted", fn.name, {
-        txn_status: transactionResponse.success ? "success" : "failed",
-      })
-    }
+          txn_status: transactionResponse.success ? "success" : "failed",
+        });
+      }
     } catch (e: any) {
       console.error("⚡️ ~ file: FunctionForm.tsx:handleWrite ~ error", e);
     }
   };
+
   const handleView = async () => {
     let viewRequest: Types.ViewRequest;
     try {
@@ -169,39 +124,19 @@ export const FunctionForm = ({
     }
     setInProcess(true);
     try {
-      const result = await view(
-        viewRequest,
-        state.network_value,
-        data.ledgerVersion,
-      );
+      const result = await view(viewRequest, state.network_value, data.ledgerVersion);
       setResult(result);
-      // setErrMsg(undefined);
-      console.log("function_interacted", fn.name, {txn_status: "success"});
+      console.log("function_interacted", fn.name, { txn_status: "success" });
     } catch (e: any) {
-      // Ensure error is a string
       let error = e.message ?? JSON.stringify(e);
-
       const prefix = "Error:";
       if (error.startsWith(prefix)) {
         error = error.substring(prefix.length).trim();
       }
-
-      // setErrMsg(error);
       setResult(undefined);
-      console.log("function_interacted", fn.name, {txn_status: "failed"});
+      console.log("function_interacted", fn.name, { txn_status: "failed" });
     }
     setInProcess(false);
-    // try {
-    //   await submitTransaction(payload);
-
-    //   if (transactionResponse?.transactionSubmitted) {
-    //     console.log("function_interacted", fn.name, {
-    //     txn_status: transactionResponse.success ? "success" : "failed",
-    //   })
-    // }
-    // } catch (e: any) {
-    //   console.error("⚡️ ~ file: FunctionForm.tsx:handleWrite ~ error", e);
-    // }
   };
 
   const isFunctionSuccess = !!(
@@ -215,89 +150,46 @@ export const FunctionForm = ({
           {fn.name}
         </p>
         {fnParams.map((param, i) => {
-              // TODO: Need a nice way to differentiate between option and empty string
-              const isOption = param.startsWith("0x1::option::Option");
-              return (
-                <div className="flex flex-col gap-1.5 w-full">
-                  <div className="flex items-center mt-2 ml-2">
-                    <span className="block text-xs font-extralight leading-none">{`arg${i}:`}</span>
-                  </div>
-                  <div className={"flex border-2 border-base-300 bg-base-200 rounded-full text-accent"}>
-                    <input
-                      // type={type}
-                      // value={value}
-                      // onChange={onChange}
-                      placeholder={param}
-                      // disabled={disabled ? true : false}
-                      className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
-                    />
-                  </div>
-                </div>
-                // <div><p>{`args-${i}`} : {param}</p>
-                // <input></input>
-                // </div>
-                // <ContractInput
-                //   key={`args-${i}`}
-                //   setForm={updatedFormValue => {
-                //     // setDisplayedTxResult(undefined);
-                //     // setForm(updatedFormValue);
-                //   }}
-                //   form={form}
-                //   stateObjectKey={key}
-                //   paramType={input}
-                // />
-
-                // <div>{param}</div>
-                // <Controller
-                //   key={`args-${i}`}
-                //   name={`args.${i}`}
-                //   // control={control}
-                //   rules={{required: !isOption}}
-                //   // render={({field: {onChange, value}}) => (
-                //   //   <input
-                //   //     onChange={onChange}
-                //   //     value={isOption ? value : value ?? ""}
-                //   //     // label={`arg${i}: ${param}`}
-                //   //     // fullWidth
-                //   //   />
-                //   // )}
-                // />
-              );
-            })}
-
+          const isOption = param.startsWith("0x1::option::Option");
+          return (
+            <div key={`arg-${i}`} className="flex flex-col gap-1.5 w-full">
+              <div className="flex items-center mt-2 ml-2">
+                <span className="block text-xs font-extralight leading-none">{`arg${i}:`}</span>
+              </div>
+              <div className={"flex border-2 border-base-300 bg-base-200 rounded-full text-accent"}>
+                <input
+                  placeholder={param}
+                  className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
+                  onChange={(e) => {
+                    const newArgs = [...data.args];
+                    newArgs[i] = e.target.value;
+                    setData({ ...data, args: newArgs });
+                  }}
+                />
+              </div>
+            </div>
+          );
+        })}
         <div className="flex justify-between gap-2">
           {!zeroInputs && (
-            <div className="flex-grow basis-0">
-              
-            </div>
+            <div className="flex-grow basis-0"></div>
           )}
-          {/* <div
-            className={`flex ${
-              writeDisabled &&
-              "tooltip before:content-[attr(data-tip)] before:right-[-10px] before:left-auto before:transform-none"
-            }`}
-            data-tip={`${writeDisabled && "Wallet not connected or in the wrong network"}`}
-          > */}
-            {/* <button className="btn btn-secondary btn-sm" disabled={writeDisabled || isPending} onClick={handleWrite}> */}
-            {write && (
-              <button className="btn btn-secondary btn-sm" onClick={handleView()}>
-              {/* {isPending && <span className="loading loading-spinner loading-xs"></span>} */}
+          {write && (
+            <button className="btn btn-secondary btn-sm" onClick={handleWrite}>
               Send 💸
             </button>
-            )}
-            {!write && (
-              <button className="btn btn-secondary btn-sm" disabled={writeDisabled || transactionInProcess} onClick={handleWrite()}>
-            {transactionInProcess && <span className="loading loading-spinner loading-xs"></span>}
-            Read 📡
-              </button>
-            )}
-            
-          </div>
-        {/* </div> */}
+          )}
+          {!write && (
+            <button className="btn btn-secondary btn-sm" disabled={transactionInProcess} onClick={handleView}>
+              {transactionInProcess && <span className="loading loading-spinner loading-xs"></span>}
+              Read 📡
+            </button>
+          )}
+        </div>
       </div>
       {transactionResponse ? (
         <div className="flex-grow basis-0">
-          {transactionResponse.message} // TODO clean this up
+          {transactionResponse.message}
         </div>
       ) : null}
     </div>

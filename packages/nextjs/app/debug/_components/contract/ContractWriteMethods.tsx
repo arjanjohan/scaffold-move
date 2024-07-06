@@ -22,7 +22,7 @@ export const ContractWriteMethods = ({
     <>
       {functionsToDisplay.map((fn) => (
         <FunctionForm
-          module={deployedContractData}
+          module={deployedContractData.abi}
           fn={fn}
           write={true}
         />
