@@ -1,17 +1,18 @@
 "use client";
 
-import {Types} from "aptos";
-import {parseTypeTag} from "@aptos-labs/ts-sdk";
+import { Types } from "aptos";
+import { parseTypeTag } from "@aptos-labs/ts-sdk";
 import {
-  useWallet,
   InputTransactionData,
 } from "@aptos-labs/wallet-adapter-react";
 
 import { useState } from "react";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
-import {SubmitHandler} from "react-hook-form";
-import {encodeInputArgsForViewRequest} from "../../../../utils/utils";
+import { encodeInputArgsForViewRequest } from "../../../../utils/utils";
 import { view } from "~~/hooks";
+import { useGlobalState } from "../../../../global-config/GlobalConfig";
+import { displayTxResult } from "~~/app/debug/_components/contract";
+
 
 const zeroInputs = false;
 
@@ -39,10 +40,11 @@ export const FunctionForm = ({
   fn,
   write,
 }: FunctionFormProps) => {
-  const {submitTransaction, transactionResponse, transactionInProcess} = useSubmitTransaction(); 
-  const [inProcess, setInProcess] = useState(false);
+  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
+  const [viewInProcess, setViewInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();
   const [data, setData] = useState<ContractFormType>({ typeArgs: [], args: [] });
+  const [state] = useGlobalState();
 
   const fnParams = removeSignerParam(fn, write);
 
@@ -109,6 +111,8 @@ export const FunctionForm = ({
 
   const handleView = async () => {
     let viewRequest: Types.ViewRequest;
+    console.log("viewRequest AVH", state.network_value, data.ledgerVersion);
+
     try {
       viewRequest = {
         function: `${module.address}::${module.name}::${fn.name}`,
@@ -121,8 +125,9 @@ export const FunctionForm = ({
       console.error("Parsing arguments failed: " + e?.message);
       return;
     }
-    setInProcess(true);
+    setViewInProcess(true);
     try {
+      console.log("viewRequest", viewRequest, state.network_value, data.ledgerVersion);
       const result = await view(viewRequest, state.network_value, data.ledgerVersion);
       setResult(result);
       console.log("function_interacted", fn.name, { txn_status: "success" });
@@ -133,14 +138,10 @@ export const FunctionForm = ({
         error = error.substring(prefix.length).trim();
       }
       setResult(undefined);
-      console.log("function_interacted", fn.name, { txn_status: "failed" });
+      console.log("AVH function_interacted", fn.name, { txn_status: "failed" });
     }
-    setInProcess(false);
+    setViewInProcess(false);
   };
-
-  const isFunctionSuccess = !!(
-    transactionResponse?.transactionSubmitted && transactionResponse?.success
-  );
 
   return (
     <div className="py-5 space-y-3 first:pt-0 last:pb-1">
@@ -169,28 +170,49 @@ export const FunctionForm = ({
             </div>
           );
         })}
-        <div className="flex justify-between gap-2">
-          {!zeroInputs && (
-            <div className="flex-grow basis-0"></div>
-          )}
-          {write && (
-            <button className="btn btn-secondary btn-sm" onClick={handleWrite}>
+
+        {write && (
+          <div className="flex flex-col md:flex-row justify-between gap-2 flex-wrap">
+            <div className="flex-grow basis-0">
+
+            {transactionResponse !== null && transactionResponse?.transactionSubmitted && (
+                <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
+                  <p className="font-bold m-0 mb-1">Result:</p>
+                  <pre className="whitespace-pre-wrap break-words">{transactionResponse.success ? "✅ transaction successful" : "❌ transaction failed"}</pre>
+                </div>
+              )}
+              {/* TODO: Add TxReceipt for Move */}
+              {/* {displayedTxResult ? <TxReceipt txResult={displayedTxResult} /> : null} */}
+            </div>
+
+            <button className="btn btn-secondary btn-sm" disabled={transactionInProcess} onClick={handleWrite}>
+              {transactionInProcess && <span className="loading loading-spinner loading-xs"></span>}
               Send 💸
             </button>
-          )}
-          {!write && (
-            <button className="btn btn-secondary btn-sm" disabled={transactionInProcess} onClick={handleView}>
-              {transactionInProcess && <span className="loading loading-spinner loading-xs"></span>}
+          </div>
+
+        )}
+        {!write && (
+          <div className="flex flex-col md:flex-row justify-between gap-2 flex-wrap">
+            <div className="flex-grow w-full md:max-w-[80%]">
+              {result !== null && result !== undefined && (
+                <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
+                  <p className="font-bold m-0 mb-1">Result:</p>
+                  <pre className="whitespace-pre-wrap break-words">{displayTxResult(result, "sm")}</pre>
+                </div>
+              )}
+            </div>
+
+            <button className="btn btn-secondary btn-sm" disabled={viewInProcess} onClick={handleView}>
+              {viewInProcess && <span className="loading loading-spinner loading-xs"></span>}
               Read 📡
             </button>
-          )}
-        </div>
+          </div>
+
+        )}
+
       </div>
-      {transactionResponse ? (
-        <div className="flex-grow basis-0">
-          {transactionResponse.message}
-        </div>
-      ) : null}
+
     </div>
   );
 };
