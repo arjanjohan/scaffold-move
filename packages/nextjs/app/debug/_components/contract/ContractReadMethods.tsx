@@ -20,12 +20,6 @@ export const ContractReadMethods = ({
 
   return (
     <>
-      {/* {functionsToDisplay.map(({ fn }) => (
-        <WriteOnlyFunctionForm
-          module={deployedContractData}
-          fn={fn}
-        />
-      ))} */}
         <FunctionForm
           module={deployedContractData.abi}
           fn={functionsToDisplay[0]}

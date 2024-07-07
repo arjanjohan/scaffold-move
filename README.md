@@ -10,10 +10,9 @@
 ⚙️ Built using NextJS, RainbowKit and Typescript.
 
 - ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
+- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks to simplify interactions with smart contracts.
 - 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+- 🔐 **Integration with Wallet Providers**: Connect your Petra Wallet and interact with the Aptos or Movement M1 network.
 
 ![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
 
@@ -32,8 +31,8 @@ To get started with Scaffold-Move, follow the steps below:
 1. Clone this repo & install dependencies
 
 ```
-git clone https://github.com/scaffold-eth/scaffold-eth-2.git
-cd scaffold-eth-2
+git clone https://github.com/arjanjohan/scaffold-move.git
+cd scaffold-move
 yarn install
 ```
 
@@ -43,15 +42,26 @@ yarn install
 yarn chain
 ```
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
+This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`. 
+// TODO: rewrite this for Movement
 
-3. On a second terminal, deploy the test contract:
+3. On a second terminal, initialize a new account.
+
+TODO: create yarn script for this.
+
+```
+movement aptos init
+```
+
+Choose custom and enter `https://devnet.m1.movementlabs.xyz/` as rest and faucet endpoints.
+
+3a. Deploy the test contract:
 
 ```
 yarn deploy
 ```
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
+This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses `movement aptos move publish` to publish the contract to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new contracts available in the nextjs frontend.
 
 4. On a third terminal, start your NextJS app:
 
@@ -72,11 +82,9 @@ Visit your app on: `http://localhost:3000`. You can interact with your smart con
 - Styling wallet connect button
 - Store network data in scaffold-config
 - Debug page
-  - Display Resources? 
-  - Read and write functionality
-- Make Move hooks for ScaffoldReadContract and ScaffoldWriteContract
+  - Display Resources as well?
 - Add `aptos init` script that runs `aptos init` and then copies the new address to the `move.toml` file.
-- Hot contract reload: Add `aptos move deploy` script that copies the address to the frontend file `addresses.ts`.
+- Fix colors for dark mode
 
 ## Links
 
