@@ -23,6 +23,7 @@ type ContractFormType = {
 };
 
 type FunctionFormProps = {
+  key: number;
   module: Types.MoveModule;
   fn: Types.MoveFunction;
   write: boolean;
@@ -36,6 +37,7 @@ function removeSignerParam(fn: Types.MoveFunction, write: boolean) {
 }
 
 export const FunctionForm = ({
+  key,
   module,
   fn,
   write,
@@ -144,13 +146,13 @@ export const FunctionForm = ({
   };
 
   return (
-    <div className="py-5 space-y-3 first:pt-0 last:pb-1">
+    <div key={key} className="py-5 space-y-3 first:pt-0 last:pb-1">
       <div className={`flex gap-3 ${zeroInputs ? "flex-row justify-between items-center" : "flex-col"}`}>
         <p className="font-medium my-0 break-words">
           {fn.name}
         </p>
         {fnParams.map((param, i) => {
-          const isOption = param.startsWith("0x1::option::Option");
+          // const isOption = param.startsWith("0x1::option::Option");
           return (
             <div key={`arg-${i}`} className="flex flex-col gap-1.5 w-full">
               <div className="flex items-center mt-2 ml-2">

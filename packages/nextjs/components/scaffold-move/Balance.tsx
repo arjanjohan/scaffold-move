@@ -1,8 +1,5 @@
 "use client";
 
-import { Address, formatEther } from "viem";
-import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
-import { useWatchBalance } from "~~/hooks/scaffold-eth/useWatchBalance";
 import {useGetAccountAPTBalance} from "~~/hooks/scaffold-move/useGetAccountAPTBalance";
 import {getFormattedBalanceStr} from "../../utils/scaffold-move/ContentValue/CurrencyValue"
 

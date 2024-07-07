@@ -2,6 +2,7 @@ import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedContractsData from "~~/contracts/deployedModules";
 import externalContractsData from "~~/contracts/externalModules";
 import scaffoldConfig from "~~/scaffold.config";
+import { Types } from "aptos";
 
 
 type AddExternalFlag<T> = {
@@ -60,7 +61,7 @@ type MoveStruct = {
 export type GenericContract = {
   bytecode: string;
   abi?: GenericContractAbi;
-  external?: true;
+  external?: boolean;
 };
 
 export type GenericContractAbi = {
@@ -70,7 +71,6 @@ export type GenericContractAbi = {
   exposed_functions: MoveFunction[];
   structs: MoveStruct[];
 }
-
 export type GenericContractsDeclaration = {
   [chainId: string]: {
     [contractName: string]: GenericContract;

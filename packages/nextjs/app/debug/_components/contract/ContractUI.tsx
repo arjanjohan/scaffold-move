@@ -1,14 +1,12 @@
 "use client";
 
 // @refresh reset
-import { useReducer } from "react";
 import { ContractReadMethods } from "./ContractReadMethods";
 import { ContractVariables } from "./ContractVariables";
 import { ContractWriteMethods } from "./ContractWriteMethods";
 import { Address, Balance} from "~~/components/scaffold-move";
 
-import { useDeployedContractInfo, useNetworkColor } from "~~/hooks/scaffold-eth";
-import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
+import { useDeployedContractInfo } from "~~/hooks/scaffold-move";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 type ContractUIProps = {
@@ -20,11 +18,9 @@ type ContractUIProps = {
  * UI component to interface with deployed contracts.
  **/
 export const ContractUI = ({ contractName, className = "" }: ContractUIProps) => {
-  const [refreshDisplayVariables, triggerRefreshDisplayVariables] = useReducer(value => !value, false);
   // const { targetNetwork } = useTargetNetwork();
   const targetNetwork = "devnet"
   const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo(contractName);
-  const networkColor = useNetworkColor();
 
   if (deployedContractLoading) {
     return (
@@ -33,7 +29,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
       </div>
     );
   }
-  if (!deployedContractData) {
+  if (!deployedContractData || !deployedContractData.abi) {
     return (
       <p className="text-3xl mt-14">
         {`No contract found by the name of "${contractName}" on chain "${targetNetwork}"!`}
@@ -49,11 +45,10 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
             <div className="flex">
               <div className="flex flex-col gap-1">
                 <span className="font-bold">{contractName}</span>
-                {/* <p>{deployedContractData.abi.address}</p> */}
                 <Address address={deployedContractData.abi.address} />
                 <div className="flex gap-1 items-center">
                   <span className="font-bold text-sm">Balance:</span>
-                  <Balance address={deployedContractData.abi.address} className="px-0 h-1.5 min-h-[0.375rem]" />
+                  <Balance address={deployedContractData.abi.address}/>
                 </div>
               </div>
             </div>
@@ -66,7 +61,6 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
           </div>
           <div className="bg-base-300 rounded-3xl px-6 lg:px-8 py-4 shadow-lg shadow-base-300">
             <ContractVariables
-              refreshDisplayVariables={refreshDisplayVariables}
               deployedContractData={deployedContractData}
             />
           </div>

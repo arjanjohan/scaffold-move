@@ -83,8 +83,10 @@ Visit your app on: `http://localhost:3000`. You can interact with your smart con
 - Store network data in scaffold-config
 - Debug page
   - Display Resources as well?
+  - Msg for no result view methods
 - Add `aptos init` script that runs `aptos init` and then copies the new address to the `move.toml` file.
 - Fix colors for dark mode
+- Ensure export default deployedContracts satisfies GenericContractsDeclaration
 
 ## Links
 

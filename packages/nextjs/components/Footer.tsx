@@ -4,7 +4,7 @@ import { hardhat } from "viem/chains";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { SwitchTheme } from "~~/components/SwitchTheme";
-import { Faucet } from "~~/components/scaffold-eth";
+// import { Faucet } from "~~/components/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 
 /**
@@ -21,7 +21,7 @@ export const Footer = () => {
           <div className="flex flex-col md:flex-row gap-2 pointer-events-auto">
             {isLocalNetwork && (
               <>
-                <Faucet />
+                {/* <Faucet /> */}
                 <Link href="/blockexplorer" passHref className="btn btn-primary btn-sm font-normal gap-1">
                   <MagnifyingGlassIcon className="h-4 w-4" />
                   <span>Block Explorer</span>

@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 // import { FaucetButton } from "~~/components/scaffold-eth";
-import { useOutsideClick } from "~~/hooks/scaffold-eth";
+// import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
 type HeaderMenuLink = {
   label: string;
@@ -63,10 +63,10 @@ export const HeaderMenuLinks = () => {
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(
-    burgerMenuRef,
-    useCallback(() => setIsDrawerOpen(false), []),
-  );
+  // useOutsideClick(
+  //   burgerMenuRef,
+  //   useCallback(() => setIsDrawerOpen(false), []),
+  // );
 
   return (
     <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
