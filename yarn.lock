@@ -2058,9 +2058,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@se-2/nextjs@workspace:packages/nextjs":
+"@se-2/move@workspace:packages/move":
   version: 0.0.0-use.local
-  resolution: "@se-2/nextjs@workspace:packages/nextjs"
+  resolution: "@se-2/move@workspace:packages/move"
+  languageName: unknown
+  linkType: soft
+
+"@sinclair/typebox@npm:0.25.24":
+  version: 0.25.24
+  resolution: "@sinclair/typebox@npm:0.25.24"
+  checksum: 10219c58f40b8414c50b483b0550445e9710d4fe7b2c4dccb9b66533dd90ba8e024acc776026cebe81e87f06fa24b07fdd7bc30dd277eb9cc386ec50151a3026
+  languageName: node
+  linkType: hard
+
+"@sindresorhus/is@npm:^4.0.0":
+  version: 4.6.0
+  resolution: "@sindresorhus/is@npm:4.6.0"
+  checksum: 83839f13da2c29d55c97abc3bc2c55b250d33a0447554997a85c539e058e57b8da092da396e252b11ec24a0279a0bed1f537fa26302209327060643e327f81d2
+  languageName: node
+  linkType: hard
+
+"@sm/nextjs@workspace:packages/nextjs":
+  version: 0.0.0-use.local
+  resolution: "@sm/nextjs@workspace:packages/nextjs"
   dependencies:
     "@apollo/client": ^3.10.8
     "@aptos-labs/wallet-adapter-ant-design": ^2.6.2
@@ -2112,20 +2132,6 @@ __metadata:
     zustand: ^4.1.2
   languageName: unknown
   linkType: soft
-
-"@sinclair/typebox@npm:0.25.24":
-  version: 0.25.24
-  resolution: "@sinclair/typebox@npm:0.25.24"
-  checksum: 10219c58f40b8414c50b483b0550445e9710d4fe7b2c4dccb9b66533dd90ba8e024acc776026cebe81e87f06fa24b07fdd7bc30dd277eb9cc386ec50151a3026
-  languageName: node
-  linkType: hard
-
-"@sindresorhus/is@npm:^4.0.0":
-  version: 4.6.0
-  resolution: "@sindresorhus/is@npm:4.6.0"
-  checksum: 83839f13da2c29d55c97abc3bc2c55b250d33a0447554997a85c539e058e57b8da092da396e252b11ec24a0279a0bed1f537fa26302209327060643e327f81d2
-  languageName: node
-  linkType: hard
 
 "@socket.io/component-emitter@npm:~3.1.0":
   version: 3.1.0

@@ -1,5 +1,5 @@
 {
-  "name": "se-2",
+  "name": "scaffold-move",
   "version": "0.0.1",
   "private": true,
   "workspaces": {
@@ -9,22 +9,22 @@
     ]
   },
   "scripts": {
-    "account": "cd packages/move && [ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | movement aptos init --network custom --rest-url https://devnet.m1.movementlabs.xyz/ --faucet-url https://devnet.m1.movementlabs.xyz/ --assume-no && node ../../scripts/account.js",
-    "chain": "",
-    "deploy": "cd packages/move && movement aptos move publish && node ../../scripts/loadContracts.js",
-    "compile": "",
+    "account": "yarn workspace @scaffold-move/move account && node scripts/account.js",
+    "chain": "yarn workspace @scaffold-move/move chain",
+    "deploy": "yarn workspace @scaffold-move/move publish && node scripts/loadContracts.js",
+    "compile": "yarn workspace @scaffold-move/move compile",
     "test": "",
-    "format": "yarn next:format && yarn hardhat:format",
-    "start": "yarn workspace @se-2/nextjs dev",
-    "next:lint": "yarn workspace @se-2/nextjs lint",
-    "next:format": "yarn workspace @se-2/nextjs format",
-    "next:check-types": "yarn workspace @se-2/nextjs check-types",
-    "next:build": "yarn workspace @se-2/nextjs build",
-    "next:serve": "yarn workspace @se-2/nextjs serve",
+    "format": "yarn next:format",
+    "start": "yarn workspace @scaffold-move/nextjs dev",
+    "next:lint": "yarn workspace @scaffold-move/nextjs lint",
+    "next:format": "yarn workspace @scaffold-move/nextjs format",
+    "next:check-types": "yarn workspace @scaffold-move/nextjs check-types",
+    "next:build": "yarn workspace @scaffold-move/nextjs build",
+    "next:serve": "yarn workspace @scaffold-move/nextjs serve",
     "postinstall": "husky install",
     "precommit": "lint-staged",
-    "vercel": "yarn workspace @se-2/nextjs vercel",
-    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo"
+    "vercel": "yarn workspace @scaffold-move/nextjs vercel",
+    "vercel:yolo": "yarn workspace @scaffold-move/nextjs vercel:yolo"
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {

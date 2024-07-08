@@ -36,14 +36,15 @@ cd scaffold-move
 yarn install
 ```
 
-<!-- 2. Run a local network in the first terminal:
+2. ~~Run a local network in the first terminal:~~
 
-```
+<!-- ```
 yarn chain
 ``` -->
 
+Movement M1 devnet is hardcoded in this version of Scaffold-Move, so we skip this step.
 
-2. On a second terminal, initialize a new account.
+3. On a second terminal, initialize a new account.
 
 ```
 yarn account
@@ -51,7 +52,7 @@ yarn account
 
 This command overwrites `packages/move/.aptos/config.yaml` with a new Aptos account. The new address is copied over to the first address in the Move.toml file. If no address exists in this file, it is added on a new line.
 
-3. Deploy the test contract:
+4. Deploy the test contract:
 
 ```
 yarn deploy
@@ -59,7 +60,7 @@ yarn deploy
 
 This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses `movement aptos move publish` to publish the contract to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new contracts available in the nextjs frontend.
 
-4. On a third terminal, start your NextJS app:
+5. On a third terminal, start your NextJS app:
 
 ```
 yarn start
@@ -77,7 +78,7 @@ Visit your app on: `http://localhost:3000`. You can interact with your smart con
 
 For this hackathon I kept the scope small due to the time constraints. I build only the most essential and useful features, so that developers can start using Scaffold Move right away. However, there is much more that I want to add to this project after the hackathon. If you have any ideas or suggestions, please reach out and I will add it to this list.
 
-- Styling wallet connect button
+- Styling wallet connect button + add dropdown
 - Store network data in scaffold-config
 - Debug page
   - Msg for no result on view methods
@@ -87,8 +88,8 @@ For this hackathon I kept the scope small due to the time constraints. I build o
 
 ## Links
 
-- [Presentation video]()
-- [Presentation slides]()
+<!-- - [Presentation video]()
+- [Presentation slides]() -->
 - [Website](https://scaffold-move-chi.vercel.app/)
 
 ## Team

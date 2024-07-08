@@ -1,0 +1,11 @@
+{
+  "name": "@scaffold-move/move",
+  "packageManager": "yarn@3.2.3",
+  "scripts": {
+    "account": "[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | movement aptos init --network custom --rest-url https://devnet.m1.movementlabs.xyz/ --faucet-url https://devnet.m1.movementlabs.xyz/",
+    "chain": "movement aptos node run-local-testnet",
+    "publish": "movement aptos move publish",
+    "compile": "movement aptos move compile",
+    "test": ""
+  }
+}
