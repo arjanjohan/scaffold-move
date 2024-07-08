@@ -13,7 +13,6 @@ import { view } from "~~/hooks";
 // import { useGlobalState } from "../../../../global-config/GlobalConfig";
 import { displayTxResult } from "~~/app/debug/_components/contract";
 
-
 const zeroInputs = false;
 
 type ContractFormType = {
@@ -45,10 +44,10 @@ export const FunctionForm = ({
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
   const [viewInProcess, setViewInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();
+  const [error, setError] = useState<string | null>(null); // Add error state
   const [data, setData] = useState<ContractFormType>({ typeArgs: [], args: [] });
   // const [state] = useGlobalState();
   const state = {network_value: "https://aptos.devnet.m1.movementlabs.xyz"}
-
 
   const fnParams = removeSignerParam(fn, write);
 
@@ -107,9 +106,15 @@ export const FunctionForm = ({
         console.log("function_interacted", fn.name, {
           txn_status: transactionResponse.success ? "success" : "failed",
         });
+        if (!transactionResponse.success) {
+          setError("❌ Transaction failed");
+        } else {
+          setError(null); // Clear any previous error
+        }
       }
     } catch (e: any) {
       console.error("⚡️ ~ file: FunctionForm.tsx:handleWrite ~ error", e);
+      setError("❌ Transaction failed: " + e.message);
     }
   };
 
@@ -127,6 +132,7 @@ export const FunctionForm = ({
       };
     } catch (e: any) {
       console.error("Parsing arguments failed: " + e?.message);
+      setError("Parsing arguments failed: " + e.message);
       return;
     }
     setViewInProcess(true);
@@ -134,7 +140,8 @@ export const FunctionForm = ({
       console.log("viewRequest", viewRequest, state.network_value, data.ledgerVersion);
       const result = await view(viewRequest, state.network_value, data.ledgerVersion);
       setResult(result);
-      console.log("function_interacted", fn.name, { txn_status: "success" });
+      console.log("function_interacted", result, fn.name, { txn_status: "success" });
+      setError(null); // Clear any previous error
     } catch (e: any) {
       let error = e.message ?? JSON.stringify(e);
       const prefix = "Error:";
@@ -142,7 +149,8 @@ export const FunctionForm = ({
         error = error.substring(prefix.length).trim();
       }
       setResult(undefined);
-      console.log("AVH function_interacted", fn.name, { txn_status: "failed" });
+      setError("❌ View request failed: " + error);
+      console.log("AVH function_interacted", error, fn.name, { txn_status: "failed" });
     }
     setViewInProcess(false);
   };
@@ -154,7 +162,6 @@ export const FunctionForm = ({
           {fn.name}
         </p>
         {fnParams.map((param, i) => {
-          // const isOption = param.startsWith("0x1::option::Option");
           return (
             <div key={`arg-${i}`} className="flex flex-col gap-1.5 w-full">
               <div className="flex items-center mt-2 ml-2">
@@ -178,15 +185,18 @@ export const FunctionForm = ({
         {write && (
           <div className="flex flex-col md:flex-row justify-between gap-2 flex-wrap">
             <div className="flex-grow basis-0">
-
-            {transactionResponse !== null && transactionResponse?.transactionSubmitted && (
+              {transactionResponse !== null && transactionResponse?.transactionSubmitted && (
                 <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
                   <p className="font-bold m-0 mb-1">Result:</p>
-                  <pre className="whitespace-pre-wrap break-words">{transactionResponse.success ? "✅ transaction successful" : "❌ transaction failed"}</pre>
+                  <pre className="whitespace-pre-wrap break-words">{transactionResponse.success ? "✅ Transaction successful" : "❌ Transaction failed"}</pre>
                 </div>
               )}
-              {/* TODO: Add TxReceipt for Move */}
-              {/* {displayedTxResult ? <TxReceipt txResult={displayedTxResult} /> : null} */}
+              {error && (
+                <div className="bg-red-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
+                  <p className="font-bold m-0 mb-1">Error:</p>
+                  <pre className="whitespace-pre-wrap break-words">{error}</pre>
+                </div>
+              )}
             </div>
 
             <button className="btn btn-secondary btn-sm" disabled={transactionInProcess} onClick={handleWrite}>
@@ -194,7 +204,6 @@ export const FunctionForm = ({
               Send 💸
             </button>
           </div>
-
         )}
         {!write && (
           <div className="flex flex-col md:flex-row justify-between gap-2 flex-wrap">
@@ -205,6 +214,12 @@ export const FunctionForm = ({
                   <pre className="whitespace-pre-wrap break-words">{displayTxResult(result, "sm")}</pre>
                 </div>
               )}
+              {error && (
+                <div className="bg-red-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
+                  <p className="font-bold m-0 mb-1">Error:</p>
+                  <pre className="whitespace-pre-wrap break-words">{error}</pre>
+                </div>
+              )}
             </div>
 
             <button className="btn btn-secondary btn-sm" disabled={viewInProcess} onClick={handleView}>
@@ -212,11 +227,8 @@ export const FunctionForm = ({
               Read 📡
             </button>
           </div>
-
         )}
-
       </div>
-
     </div>
   );
 };
