@@ -36,24 +36,22 @@ cd scaffold-move
 yarn install
 ```
 
-2. Run a local network in the first terminal:
+<!-- 2. Run a local network in the first terminal:
 
 ```
 yarn chain
-```
+``` -->
 
 
-3. On a second terminal, initialize a new account.
-
-<!-- TODO: create yarn script for this. -->
+2. On a second terminal, initialize a new account.
 
 ```
-movement aptos init --network custom --rest-url https://devnet.m1.movementlabs.xyz/ --faucet-url https://devnet.m1.movementlabs.xyz/ 
+yarn account
 ```
 
-Choose custom and enter `https://devnet.m1.movementlabs.xyz/` as rest and faucet endpoints.
+This command overwrites `packages/move/.aptos/config.yaml` with a new Aptos account. The new address is copied over to the first address in the Move.toml file. If no address exists in this file, it is added on a new line.
 
-4. Deploy the test contract:
+3. Deploy the test contract:
 
 ```
 yarn deploy
@@ -61,7 +59,7 @@ yarn deploy
 
 This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses `movement aptos move publish` to publish the contract to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new contracts available in the nextjs frontend.
 
-5. On a third terminal, start your NextJS app:
+4. On a third terminal, start your NextJS app:
 
 ```
 yarn start
@@ -82,9 +80,7 @@ For this hackathon I kept the scope small due to the time constraints. I build o
 - Styling wallet connect button
 - Store network data in scaffold-config
 - Debug page
-  - Display Resources as well?
   - Msg for no result on view methods
-- Add `aptos init` script that runs `aptos init` and then copies the new address to the `move.toml` file.
 - Fix colors for dark mode
 - Ensure export default deployedContracts satisfies GenericContractsDeclaration
 - Add block explorer page
