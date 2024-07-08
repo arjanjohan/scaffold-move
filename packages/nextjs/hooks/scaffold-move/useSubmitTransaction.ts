@@ -4,7 +4,9 @@ import {
   useWallet,
   InputTransactionData,
 } from "@aptos-labs/wallet-adapter-react";
-import {useGlobalState} from "../../global-config/GlobalConfig";
+// import {useGlobalState} from "../../global-config/GlobalConfig";
+import {Aptos, AptosConfig, Network} from "@aptos-labs/ts-sdk";
+
 
 export type TransactionResponse =
   | TransactionResponseOnSubmission
@@ -29,8 +31,18 @@ const useSubmitTransaction = () => {
     useState<TransactionResponse | null>(null);
   const [transactionInProcess, setTransactionInProcess] =
     useState<boolean>(false);
-  const [state] = useGlobalState();
-  const {signAndSubmitTransaction, network} = useWallet();
+  // const [state] = useGlobalState();
+
+  const aptosConfig = new AptosConfig({
+    network: Network.CUSTOM,
+    fullnode: 'https://aptos.devnet.m1.movementlabs.xyz',
+    indexer: 'https://indexer.devnet.m1.movementlabs.xyz/',
+    faucet: 'https://faucet2.movementlabs.xyz'
+  });
+  const aptos = new Aptos(aptosConfig);
+  const state = {network_value: "https://aptos.devnet.m1.movementlabs.xyz", aptos_client: aptos}
+
+  const {signAndSubmitTransaction} = useWallet();
 
   useEffect(() => {
     if (transactionResponse !== null) {
@@ -39,19 +51,7 @@ const useSubmitTransaction = () => {
   }, [transactionResponse]);
 
   async function submitTransaction(transaction: InputTransactionData) {
-    console.log("network", network?.name, state.network_name);
-    // if (
-    //   network?.name.toLocaleLowerCase() !==
-    //   (state.network_name === "local" ? "localhost" : state.network_name)
-    // ) {
-    //   setTransactionResponse({
-    //     transactionSubmitted: false,
-    //     message:
-    //       "Wallet and Explorer should use the same network to submit a transaction",
-    //   });
-    //   return;
-    // }
-    
+
 
     setTransactionInProcess(true);
     console.log("submitting transaction", transaction);
@@ -62,7 +62,6 @@ const useSubmitTransaction = () => {
         transactionSubmitted: false,
         message: "Unknown Error",
       };
-
       let response;
       try {
         response = await signAndSubmitTransaction(transaction);
@@ -70,9 +69,12 @@ const useSubmitTransaction = () => {
 
         // transaction submit succeed
         if ("hash" in response) {
-          await state.aptos_client.waitForTransaction(response["hash"], {
-            checkSuccess: true,
-          });
+          // await state.aptos_client.waitForTransaction(response["hash"], {
+          //   checkSuccess: true,
+          // });
+          
+          await state.aptos_client.waitForTransaction(response["hash"]);
+          
           return {
             transactionSubmitted: true,
             transactionHash: response["hash"],

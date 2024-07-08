@@ -10,7 +10,7 @@ import { useState } from "react";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { encodeInputArgsForViewRequest } from "../../../../utils/utils";
 import { view } from "~~/hooks";
-import { useGlobalState } from "../../../../global-config/GlobalConfig";
+// import { useGlobalState } from "../../../../global-config/GlobalConfig";
 import { displayTxResult } from "~~/app/debug/_components/contract";
 
 
@@ -46,7 +46,9 @@ export const FunctionForm = ({
   const [viewInProcess, setViewInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();
   const [data, setData] = useState<ContractFormType>({ typeArgs: [], args: [] });
-  const [state] = useGlobalState();
+  // const [state] = useGlobalState();
+  const state = {network_value: "https://aptos.devnet.m1.movementlabs.xyz"}
+
 
   const fnParams = removeSignerParam(fn, write);
 
