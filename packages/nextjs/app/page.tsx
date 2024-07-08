@@ -55,10 +55,10 @@ const Home: NextPage = () => {
               <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
               <p>
                 Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
+                {/* <Link href="/blockexplorer" passHref className="link"> */}
+                  Block Explorer {" "}
+                {/* </Link>{" "} */}
+                tab. <b>Coming soon...</b>
               </p>
             </div>
           </div>

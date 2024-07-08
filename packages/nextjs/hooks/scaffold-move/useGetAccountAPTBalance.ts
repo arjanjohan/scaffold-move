@@ -1,4 +1,3 @@
-import {Types} from "aptos";
 import {useGetAccountResources} from "./useGetAccountResources";
 
 interface CoinStore {
