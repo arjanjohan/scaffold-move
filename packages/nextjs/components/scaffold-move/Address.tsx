@@ -30,8 +30,8 @@ const blockieSizeMap = {
  * Displays an address (or ENS) with a Blockie image and option to copy address.
  */
 export const Address = ({ address, disableAddressLink, format, size = "base" }: AddressProps) => {
-  const [ens, setEns] = useState<string | null>();
-  const [ensAvatar, setEnsAvatar] = useState<string | null>();
+  // const [ens, setEns] = useState<string | null>();
+  // const [ensAvatar, setEnsAvatar] = useState<string | null>();
   const [addressCopied, setAddressCopied] = useState(false);
 
   const { targetNetwork } = useTargetNetwork();
@@ -77,9 +77,10 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   const blockExplorerAddressLink = getBlockExplorerAddressLink(targetNetwork, address);
   let displayAddress = address?.slice(0, 6) + "..." + address?.slice(-4);
 
-  if (ens) {
-    displayAddress = ens;
-  } else if (format === "long") {
+  // if (ens) {
+  //   displayAddress = ens;
+  // } else 
+  if (format === "long") {
     displayAddress = address;
   }
 
@@ -88,7 +89,7 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
       <div className="flex-shrink-0">
         <BlockieAvatar
           address={address}
-          ensImage={ensAvatar}
+          // ensImage={ensAvatar}
           size={(blockieSizeMap[size] * 24) / blockieSizeMap["base"]}
         />
       </div>

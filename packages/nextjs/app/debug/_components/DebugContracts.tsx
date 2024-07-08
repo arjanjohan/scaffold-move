@@ -6,20 +6,11 @@ import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
 import { ContractUI } from "~~/app/debug/_components/contract";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
 import { getAllContracts } from "~~/utils/scaffold-move/contractsData";
-// import moveContracts from "~~/contracts/moveContracts";
-// import { useGetAccountModules } from "~~/hooks/scaffold-move/useGetAccountModules";
-// const ONCHAIN_BIO = moveContracts.ONCHAIN_BIO;
 
-
-const selectedContractStorageKey = "scaffoldEth2.selectedContract";
 const contractsData = getAllContracts();
 const contractNames = Object.keys(contractsData) as ContractName[];
 
-// let contractNames = [] as ContractName[];
-
 export function DebugContracts() {
-
-
 
   const selectedContractStorageKey = "scaffoldEth2.selectedContract";
 

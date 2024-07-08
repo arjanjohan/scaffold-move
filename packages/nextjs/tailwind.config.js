@@ -52,7 +52,7 @@ module.exports = {
           yellow: "#ffd016",
           "base-100": "#1b1f1e",
           "base-200": "#121615",
-          "base-300": "#121615",
+          "base-300": "#ffd016",
           "base-content": "#ffffff",
           info: "#385183",
           success: "#34EEB6",

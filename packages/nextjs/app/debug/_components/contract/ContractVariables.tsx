@@ -1,12 +1,9 @@
-import { DisplayVariable } from "./DisplayVariable";
-import { Abi, AbiFunction } from "abitype";
-import { Contract, ContractName, GenericContract, InheritedFunctions } from "~~/utils/scaffold-eth/contract";
+import { AbiFunction } from "abitype";
+import { Contract, ContractName } from "~~/utils/scaffold-move/contract";
 
 export const ContractVariables = ({
-  refreshDisplayVariables,
   deployedContractData,
 }: {
-  refreshDisplayVariables: boolean;
   deployedContractData: Contract<ContractName>;
 }) => {
   if (!deployedContractData) {

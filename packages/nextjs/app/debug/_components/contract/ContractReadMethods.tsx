@@ -1,10 +1,10 @@
 import { FunctionForm } from "~~/app/debug/_components/contract";
 import { Contract, ContractName } from "~~/utils/scaffold-move/contract";
 
-export const ContractReadMethods = ({ 
+export const ContractReadMethods = ({
   deployedContractData
- }: { 
-  deployedContractData: Contract<ContractName> 
+}: {
+  deployedContractData: Contract<ContractName>
 }) => {
   if (!deployedContractData || deployedContractData.abi === undefined) {
     return null;
@@ -20,17 +20,16 @@ export const ContractReadMethods = ({
 
   return (
     <>
-      {/* {functionsToDisplay.map(({ fn }) => (
-        <WriteOnlyFunctionForm
-          module={deployedContractData}
-          fn={fn}
-        />
-      ))} */}
-        <FunctionForm
-          module={deployedContractData.abi}
-          fn={functionsToDisplay[0]}
-          write={false}
-        />
+
+      {functionsToDisplay.map((fn, index) => (
+        <div key={index}>
+          <FunctionForm
+            key={index}
+            module={deployedContractData.abi!}
+            fn={fn}
+            write={false}
+          /></div>
+      ))}
     </>
   );
 };

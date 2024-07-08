@@ -20,12 +20,14 @@ export const ContractWriteMethods = ({
 
   return (
     <>
-      {functionsToDisplay.map((fn) => (
+      {functionsToDisplay.map((fn, index) => (
+        <div key={index}>
         <FunctionForm
-          module={deployedContractData.abi}
+          key={index}
+          module={deployedContractData.abi!}
           fn={fn}
           write={true}
-        />
+        /></div>
       ))}
     </>
   );

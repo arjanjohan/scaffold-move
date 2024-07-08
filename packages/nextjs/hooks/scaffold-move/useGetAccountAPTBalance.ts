@@ -8,7 +8,6 @@ interface CoinStore {
 }
 
 export function useGetAccountAPTBalance(address: string) {
-  console.log("useGetAccountAPTBalance", address);
   const {isLoading, data, error} = useGetAccountResources(address);
 
   if (isLoading || error || !data) {
