@@ -14,7 +14,7 @@
 - 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
 - 🔐 **Integration with Wallet Providers**: Connect your Petra Wallet and interact with the Aptos or Movement M1 network.
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+![Debug Contracts tab](assets/debug.png)
 
 ## Requirements
 
@@ -55,7 +55,7 @@ movement aptos init
 
 Choose custom and enter `https://devnet.m1.movementlabs.xyz/` as rest and faucet endpoints.
 
-3a. Deploy the test contract:
+4. Deploy the test contract:
 
 ```
 yarn deploy
@@ -63,7 +63,7 @@ yarn deploy
 
 This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses `movement aptos move publish` to publish the contract to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new contracts available in the nextjs frontend.
 
-4. On a third terminal, start your NextJS app:
+5. On a third terminal, start your NextJS app:
 
 ```
 yarn start
