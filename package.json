@@ -9,9 +9,9 @@
     ]
   },
   "scripts": {
-    "account": "",
+    "account": "cd packages/move && [ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | movement aptos init --network custom --rest-url https://devnet.m1.movementlabs.xyz/ --faucet-url https://devnet.m1.movementlabs.xyz/ --assume-no && node ../../scripts/account.js",
     "chain": "",
-    "deploy": "cd packages/move && movement aptos move publish && node scripts/loadContracts.js",
+    "deploy": "cd packages/move && movement aptos move publish && node ../../scripts/loadContracts.js",
     "compile": "",
     "test": "",
     "format": "yarn next:format && yarn hardhat:format",

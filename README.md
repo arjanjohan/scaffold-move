@@ -42,15 +42,13 @@ yarn install
 yarn chain
 ```
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`. 
-// TODO: rewrite this for Movement
 
 3. On a second terminal, initialize a new account.
 
-TODO: create yarn script for this.
+<!-- TODO: create yarn script for this. -->
 
 ```
-movement aptos init
+movement aptos init --network custom --rest-url https://devnet.m1.movementlabs.xyz/ --faucet-url https://devnet.m1.movementlabs.xyz/ 
 ```
 
 Choose custom and enter `https://devnet.m1.movementlabs.xyz/` as rest and faucet endpoints.
