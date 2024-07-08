@@ -2,7 +2,7 @@ import {Types} from "aptos";
 import {useQuery, UseQueryResult} from "@tanstack/react-query";
 import {getAccountResources} from "..";
 import {ResponseError} from "../client";
-import {useGlobalState} from "../../global-config/GlobalConfig";
+// import {useGlobalState} from "../../global-config/GlobalConfig";
 
 export function useGetAccountResources(
   address: string,
