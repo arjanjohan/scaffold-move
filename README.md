@@ -77,7 +77,9 @@ Visit your app on: `http://localhost:3000`. You can interact with your smart con
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
 <!-- - Edit your smart contract test in: `packages/hardhat/test`. To run test use `yarn hardhat:test` -->
 
-## TODO:
+## Next steps
+
+For this hackathon I kept the scope small due to the time constraints. I build only the most essential and useful features, so that developers can start using Scaffold Move right away. However, there is much more that I want to add to this project after the hackathon. If you have any ideas or suggestions, please reach out and I will add it to this list.
 
 - Styling wallet connect button
 - Store network data in scaffold-config
@@ -87,6 +89,7 @@ Visit your app on: `http://localhost:3000`. You can interact with your smart con
 - Add `aptos init` script that runs `aptos init` and then copies the new address to the `move.toml` file.
 - Fix colors for dark mode
 - Ensure export default deployedContracts satisfies GenericContractsDeclaration
+- Add block explorer page
 
 ## Links
 
