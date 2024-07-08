@@ -15,7 +15,7 @@ export const ContractReadMethods = ({
   );
 
   if (!functionsToDisplay.length) {
-    return <>No read methods</>;
+    return <>No view functions</>;
   }
 
   return (

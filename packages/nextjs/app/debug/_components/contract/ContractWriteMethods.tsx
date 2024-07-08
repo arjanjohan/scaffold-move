@@ -15,7 +15,7 @@ export const ContractWriteMethods = ({
   );
 
   if (!functionsToDisplay.length) {
-    return <>No write methods</>;
+    return <>No write functions</>;
   }
 
   return (
