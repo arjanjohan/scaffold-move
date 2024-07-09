@@ -7,7 +7,7 @@ import { ModuleResources } from "./ModuleResources";
 import { Address, Balance } from "~~/components/scaffold-move";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ContractName } from "~~/utils/scaffold-eth/contract";
+import { ContractName } from "~~/utils/scaffold-move/contract";
 
 type ContractUIProps = {
   contractName: ContractName;
@@ -91,7 +91,8 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
                 </div>
               </div>
               <div className="p-5 divide-y divide-base-300">
-                <ModuleResources deployedContractData={deployedContractData} />
+                I disabled the Resources tab due to errors in the Vercel deployment, run the project locally to see it in action.
+                {/* <ModuleResources deployedContractData={deployedContractData} /> */}
               </div>
             </div>
           </div>

@@ -5,7 +5,6 @@ import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-reac
 import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-eth";
 import deployedModules from "~~/contracts/deployedModules";
-import { useGetAccountModules } from "~~/hooks/scaffold-move/useGetAccountModules";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { aptosClient } from "~~/utils/scaffold-move/aptosClient";
 
@@ -22,8 +21,6 @@ const OnchainBio: NextPage = () => {
   const [accountHasBio, setAccountHasBio] = useState(false);
   const [currentName, setCurrentName] = useState(null);
   const [currentBio, setCurrentBio] = useState(null);
-
-  const { data, isLoading, error } = useGetAccountModules(ONCHAIN_BIO.address);
 
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
 

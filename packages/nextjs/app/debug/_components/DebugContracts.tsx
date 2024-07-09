@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
 import { ContractUI } from "~~/app/debug/_components/contract";
-import { ContractName } from "~~/utils/scaffold-eth/contract";
+import { ContractName } from "~~/utils/scaffold-move/contract";
 import { getAllContracts } from "~~/utils/scaffold-move/contractsData";
 
 const contractsData = getAllContracts();
@@ -40,11 +40,11 @@ export function DebugContracts() {
                       ? "bg-base-300 hover:bg-base-300 no-animation"
                       : "bg-base-100 hover:bg-secondary"
                   }`}
-                  key={contractName}
+                  key={contractName as string}
                   onClick={() => setSelectedContract(contractName)}
                 >
-                  {contractName}
-                  {contractsData[contractName].external && (
+                  {contractName as string}
+                  {contractsData[contractName as string].external && (
                     <span className="tooltip tooltip-top tooltip-accent" data-tip="External contract">
                       <BarsArrowUpIcon className="h-4 w-4 cursor-pointer" />
                     </span>
@@ -55,7 +55,7 @@ export function DebugContracts() {
           )}
           {contractNames.map(contractName => (
             <ContractUI
-              key={contractName}
+              key={contractName as string}
               contractName={contractName}
               className={contractName === selectedContract ? "" : "hidden"}
             />

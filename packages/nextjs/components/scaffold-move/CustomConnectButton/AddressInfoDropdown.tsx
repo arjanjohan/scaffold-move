@@ -13,7 +13,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { BlockieAvatar, isENS } from "~~/components/scaffold-move";
 import { useOutsideClick } from "~~/hooks/scaffold-move";
-import { getTargetNetworks } from "~~/utils/scaffold-eth";
+import { getTargetNetworks } from "~~/utils/scaffold-move";
 
 const allowedNetworks = getTargetNetworks();
 

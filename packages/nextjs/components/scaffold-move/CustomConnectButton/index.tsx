@@ -6,7 +6,7 @@ import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 // import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { getBlockExplorerAddressLink } from "~~/utils/scaffold-eth";
+import { getBlockExplorerAddressLink } from "~~/utils/scaffold-move";
 
 export const CustomConnectButton = () => {
   const { targetNetwork } = useTargetNetwork();
