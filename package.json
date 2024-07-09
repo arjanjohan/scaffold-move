@@ -34,9 +34,5 @@
   },
   "engines": {
     "node": ">=18.17.0"
-  },
-  "dependencies": {
-    "aptos": "^1.21.0",
-    "js-yaml": "^4.1.0"
   }
 }

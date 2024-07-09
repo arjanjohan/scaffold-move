@@ -8,15 +8,10 @@ import { InputBase } from "~~/components/scaffold-eth";
 import deployedModules from "~~/contracts/deployedModules";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useGetAccountModules } from "~~/hooks/scaffold-move/useGetAccountModules";
+import { aptosClient } from "~~/utils/scaffold-move/aptosClient";
 
-// TODO: move this somewhere global
-const aptosConfig = new AptosConfig({
-  network: Network.CUSTOM,
-  fullnode: "https://aptos.devnet.m1.movementlabs.xyz",
-  indexer: "https://indexer.devnet.m1.movementlabs.xyz/",
-  faucet: "https://faucet2.movementlabs.xyz",
-});
-const aptos = new Aptos(aptosConfig);
+
+const aptos = aptosClient("devnet");
 
 const ONCHAIN_BIO = deployedModules.devnet.onchain_bio.abi;
 

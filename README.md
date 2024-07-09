@@ -84,7 +84,10 @@ For this hackathon I kept the scope small due to the time constraints. I build o
   - Styling of connect button
 - Store Aptos/Movement network data in scaffold-config
 - Debug page
-  - Msg for no result on view methods
+  - Msg for no result on view methods + error msg 
+  - Formatting of input types
+  - Styling for resources tab
+  - Group contracts under address in list
 - Fix colors for dark mode
 - Ensure export default deployedContracts satisfies GenericContractsDeclaration
 - Add block explorer page

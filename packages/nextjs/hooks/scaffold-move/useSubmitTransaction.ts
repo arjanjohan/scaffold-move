@@ -5,7 +5,9 @@ import {
   InputTransactionData,
 } from "@aptos-labs/wallet-adapter-react";
 // import {useGlobalState} from "../../global-config/GlobalConfig";
-import {Aptos, AptosConfig, Network} from "@aptos-labs/ts-sdk";
+import { aptosClient } from "~~/utils/scaffold-move/aptosClient";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
+
 
 
 export type TransactionResponse =
@@ -33,13 +35,10 @@ const useSubmitTransaction = () => {
     useState<boolean>(false);
   // const [state] = useGlobalState();
 
-  const aptosConfig = new AptosConfig({
-    network: Network.CUSTOM,
-    fullnode: 'https://aptos.devnet.m1.movementlabs.xyz',
-    indexer: 'https://indexer.devnet.m1.movementlabs.xyz/',
-    faucet: 'https://faucet2.movementlabs.xyz'
-  });
-  const aptos = new Aptos(aptosConfig);
+
+
+  const network = useTargetNetwork();
+  const aptos = aptosClient("devnet");
   const state = {network_value: "https://aptos.devnet.m1.movementlabs.xyz", aptos_client: aptos}
 
   const {signAndSubmitTransaction} = useWallet();
