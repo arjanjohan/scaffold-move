@@ -26,9 +26,8 @@ const useSubmitTransaction = () => {
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
   // const [state] = useGlobalState();
 
-  const network = useTargetNetwork();
+  // const network = useTargetNetwork();
   const aptos = aptosClient("m1_devnet");
-  const state = { network_value: "https://aptos.devnet.m1.movementlabs.xyz", aptos_client: aptos };
 
   const { signAndSubmitTransaction } = useWallet();
 
@@ -55,7 +54,7 @@ const useSubmitTransaction = () => {
           //   checkSuccess: true,
           // });
 
-          await state.aptos_client.waitForTransaction(response["hash"]);
+          await aptos.waitForTransaction(response["hash"]);
 
           return {
             transactionSubmitted: true,

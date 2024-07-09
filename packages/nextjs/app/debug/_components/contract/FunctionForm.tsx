@@ -36,6 +36,7 @@ export const FunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
   const [viewInProcess, setViewInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();
+  const [error, setError] = useState<string | null>(null); 
   const [data, setData] = useState<ContractFormType>({ typeArgs: [], args: [] });
 
   const { account } = useWallet();
@@ -93,14 +94,22 @@ export const FunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
 
     try {
       await submitTransaction(payload);
+      console.log("AVH tx response", transactionResponse);
 
       if (transactionResponse?.transactionSubmitted) {
         console.log("function_interacted", fn.name, {
           txn_status: transactionResponse.success ? "success" : "failed",
         });
+        console.log("AVH tx response", transactionResponse);
+        if (!transactionResponse.success) {
+          setError("❌ Transaction failed");
+        } else {
+          setError(null); // Clear any previous error
+        }
       }
     } catch (e: any) {
       console.error("⚡️ ~ file: FunctionForm.tsx:handleWrite ~ error", e);
+      setError("❌ Transaction failed: " + e.message);
     }
   };
 
@@ -117,6 +126,7 @@ export const FunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
       };
     } catch (e: any) {
       console.error("Parsing arguments failed: " + e?.message);
+      setError("Parsing arguments failed: " + e.message);
       return;
     }
     setViewInProcess(true);
@@ -124,6 +134,7 @@ export const FunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
       const result = await view(viewRequest, state.network_value, data.ledgerVersion);
       setResult(result);
       console.log("function_interacted", fn.name, { txn_status: "success" });
+      setError(null); // Clear any previous error
     } catch (e: any) {
       let error = e.message ?? JSON.stringify(e);
       const prefix = "Error:";
@@ -131,6 +142,7 @@ export const FunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
         error = error.substring(prefix.length).trim();
       }
       setResult(undefined);
+      setError("❌ View request failed: " + error);
       console.log("function_interacted", fn.name, { txn_status: "failed" });
     }
     setViewInProcess(false);
@@ -168,8 +180,14 @@ export const FunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
                 <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
                   <p className="font-bold m-0 mb-1">Result:</p>
                   <pre className="whitespace-pre-wrap break-words">
-                    {transactionResponse.success ? "✅ transaction successful" : "❌ transaction failed"}
+                    {transactionResponse.success ? "✅ transaction successful. txreceipt: " : "❌ transaction failed"}
                   </pre>
+                </div>
+              )}
+              {error && (
+                <div className="bg-red-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
+                  <p className="font-bold m-0 mb-1">Error:</p>
+                  <pre className="whitespace-pre-wrap break-words">{error}</pre>
                 </div>
               )}
               {/* TODO: Add TxReceipt for Move */}
@@ -195,8 +213,13 @@ export const FunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
                   <pre className="whitespace-pre-wrap break-words">{displayTxResult(result, "sm")}</pre>
                 </div>
               )}
+              {error && (
+                <div className="bg-red-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
+                  <p className="font-bold m-0 mb-1">Error:</p>
+                  <pre className="whitespace-pre-wrap break-words">{error}</pre>
+                </div>
+              )}
             </div>
-
             <button className="btn btn-secondary btn-sm" disabled={viewInProcess} onClick={handleView}>
               {viewInProcess && <span className="loading loading-spinner loading-xs"></span>}
               Read 📡
