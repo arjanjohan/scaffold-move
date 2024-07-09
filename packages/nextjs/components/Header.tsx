@@ -109,9 +109,6 @@ export const Header = () => {
         </ul>
       </div>
       <div className="navbar-end flex-grow mr-4">
-        <div className="flex flex-col items-center mr-1 btn btn-primary">
-          <WalletSelector />
-        </div>
         <CustomConnectButton />
       </div>
     </div>

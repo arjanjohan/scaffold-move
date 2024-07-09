@@ -113,16 +113,16 @@ export function getBlockExplorerTxLink(chainId: number, txnHash: string) {
  * Defaults to Etherscan if no (wagmi) block explorer is configured for the network.
  */
 export function getBlockExplorerAddressLink(network: chains.Chain, address: string) {
-  const blockExplorerBaseURL = network.blockExplorers?.default?.url;
-  if (network.id === chains.hardhat.id) {
-    return `/blockexplorer/address/${address}`;
-  }
+  // const blockExplorerBaseURL = network.blockExplorers?.default?.url;
+  // if (network.id === chains.hardhat.id) {
+  //   return `/blockexplorer/address/${address}`;
+  // }
 
-  if (!blockExplorerBaseURL) {
-    return `https://etherscan.io/address/${address}`;
-  }
+  // if (!blockExplorerBaseURL) {
+    return `https://explorer.devnet.m1.movementlabs.xyz/account/${address}?network=devnet`;
+  // }
 
-  return `${blockExplorerBaseURL}/address/${address}`;
+  // return `${blockExplorerBaseURL}/address/${address}`;
 }
 
 /**
