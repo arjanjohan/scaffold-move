@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import type { NextPage } from "next";
-import { useAccount } from "wagmi";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Address } from "~~/components/scaffold-eth";
+import { Address } from "~~/components/scaffold-move";
+import {
+  useWallet,
+} from "@aptos-labs/wallet-adapter-react";
 
 const Home: NextPage = () => {
-  const { address: connectedAddress } = useAccount();
+  const { account: connectedAccount } = useWallet();
 
   return (
     <>
@@ -19,7 +21,8 @@ const Home: NextPage = () => {
           </h1>
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} />
+            
+            <Address address={connectedAccount?.address} />
           </div>
           <p className="text-center text-lg">
             Get started by editing{" "}

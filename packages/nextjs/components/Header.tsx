@@ -8,6 +8,8 @@ import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 // import { FaucetButton } from "~~/components/scaffold-eth";
 // import { useOutsideClick } from "~~/hooks/scaffold-eth";
+import {CustomConnectButton} from "~~/components/scaffold-move";
+
 
 type HeaderMenuLink = {
   label: string;
@@ -107,9 +109,7 @@ export const Header = () => {
         </ul>
       </div>
       <div className="navbar-end flex-grow mr-4">
-        <div className="flex flex-col items-center mr-1 btn btn-primary">
-          <WalletSelector />
-        </div>
+        <CustomConnectButton />
       </div>
     </div>
   );

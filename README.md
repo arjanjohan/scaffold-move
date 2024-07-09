@@ -78,8 +78,11 @@ Visit your app on: `http://localhost:3000`. You can interact with your smart con
 
 For this hackathon I kept the scope small due to the time constraints. I build only the most essential and useful features, so that developers can start using Scaffold Move right away. However, there is much more that I want to add to this project after the hackathon. If you have any ideas or suggestions, please reach out and I will add it to this list.
 
-- Styling wallet connect button + add dropdown
-- Store network data in scaffold-config
+- Wallet button component
+  - Fix QR code
+  - Add network switch
+  - Styling of connect button
+- Store Aptos/Movement network data in scaffold-config
 - Debug page
   - Msg for no result on view methods
 - Fix colors for dark mode
