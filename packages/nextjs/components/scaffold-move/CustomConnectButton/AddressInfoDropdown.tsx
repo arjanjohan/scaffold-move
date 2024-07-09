@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { NetworkOptions } from "./NetworkOptions";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { useDisconnect } from "wagmi";
 import {
   ArrowLeftOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
@@ -14,6 +13,9 @@ import {
 import { BlockieAvatar, isENS } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-move";
 import { getTargetNetworks } from "~~/utils/scaffold-eth";
+import {
+  useWallet
+} from "@aptos-labs/wallet-adapter-react";
 
 const allowedNetworks = getTargetNetworks();
 
@@ -30,7 +32,6 @@ export const AddressInfoDropdown = ({
   displayName,
   blockExplorerAddressLink,
 }: AddressInfoDropdownProps) => {
-  const { disconnect } = useDisconnect();
 
   const [addressCopied, setAddressCopied] = useState(false);
 
@@ -42,6 +43,8 @@ export const AddressInfoDropdown = ({
   };
   useOutsideClick(dropdownRef, closeDropdown);
 
+
+  const { disconnect, wallet } = useWallet();
   return (
     <>
       <details ref={dropdownRef} className="dropdown dropdown-end leading-3">

@@ -10,6 +10,7 @@ import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 // import { useOutsideClick } from "~~/hooks/scaffold-eth";
 import {CustomConnectButton} from "~~/components/scaffold-move";
 
+
 type HeaderMenuLink = {
   label: string;
   href: string;
