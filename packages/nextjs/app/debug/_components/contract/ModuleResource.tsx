@@ -18,8 +18,6 @@ export const ModuleResource = ({
   collapsedByDefault
 }: ModuleResourceProps) => {
 
-  console.log("resource", resource);
-
   return (
     <>
       <div>{resource.type}</div>

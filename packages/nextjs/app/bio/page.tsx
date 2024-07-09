@@ -24,7 +24,6 @@ const OnchainBio: NextPage = () => {
   const [currentBio, setCurrentBio] = useState(null);
 
   const {data, isLoading, error} = useGetAccountModules(ONCHAIN_BIO.address);
-  console.log("useGetAccountModules", data, "isLoading", isLoading, "error", error);
 
 
   const {submitTransaction, transactionResponse, transactionInProcess} =
@@ -32,7 +31,6 @@ const OnchainBio: NextPage = () => {
 
   const fetchBio = async () => {
     if (!account) {
-      console.log("No account");
       return [];
     }
     try {
@@ -44,13 +42,11 @@ const OnchainBio: NextPage = () => {
       });
       setAccountHasBio(true);
       if (bioResource) {
-        console.log("Name:", bioResource.name, "Bio:", bioResource.bio);
         setCurrentName(bioResource.name);
         setCurrentBio(bioResource.bio);
       } else {
         setCurrentName(null);
         setCurrentBio(null);
-        console.log("no bio");
       }
     } catch (e: any) {
       setAccountHasBio(false);

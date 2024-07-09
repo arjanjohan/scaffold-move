@@ -10,7 +10,6 @@ export const useDeployedContractInfo = <TContractName extends ContractName>(cont
   const isMounted = useIsMounted();
   const targetNetwork = "devnet";
   const deployedContract = contracts?.[targetNetwork]?.[contractName.toString()] as Contract<TContractName>;
-  console.log("deployedContract", deployedContract);
   const [status, setStatus] = useState<ContractCodeStatus>(ContractCodeStatus.LOADING);
   // const publicClient = usePublicClient({ chainId: targetNetwork.id });
 

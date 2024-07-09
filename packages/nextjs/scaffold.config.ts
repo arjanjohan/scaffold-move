@@ -1,4 +1,4 @@
-import {Chain, defaultChains} from "../nextjs/utils/scaffold-move/chains";
+import {Chain, defaultChains} from "./utils/scaffold-move/chains";
 
 
 export type ScaffoldConfig = {

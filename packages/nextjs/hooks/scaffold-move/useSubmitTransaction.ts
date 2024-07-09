@@ -53,7 +53,6 @@ const useSubmitTransaction = () => {
 
 
     setTransactionInProcess(true);
-    console.log("submitting transaction", transaction);
     const signAndSubmitTransactionCall = async (
       transaction: InputTransactionData,
     ): Promise<TransactionResponse> => {
@@ -64,7 +63,6 @@ const useSubmitTransaction = () => {
       let response;
       try {
         response = await signAndSubmitTransaction(transaction);
-        console.log("response", response);  
 
         // transaction submit succeed
         if ("hash" in response) {

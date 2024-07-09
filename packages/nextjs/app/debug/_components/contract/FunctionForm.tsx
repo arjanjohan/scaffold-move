@@ -116,7 +116,6 @@ export const FunctionForm = ({
 
   const handleView = async () => {
     let viewRequest: Types.ViewRequest;
-    console.log("viewRequest AVH", state.network_value, data.ledgerVersion);
 
     try {
       viewRequest = {
@@ -132,7 +131,6 @@ export const FunctionForm = ({
     }
     setViewInProcess(true);
     try {
-      console.log("viewRequest", viewRequest, state.network_value, data.ledgerVersion);
       const result = await view(viewRequest, state.network_value, data.ledgerVersion);
       setResult(result);
       console.log("function_interacted", fn.name, { txn_status: "success" });
@@ -143,7 +141,7 @@ export const FunctionForm = ({
         error = error.substring(prefix.length).trim();
       }
       setResult(undefined);
-      console.log("AVH function_interacted", fn.name, { txn_status: "failed" });
+      console.log("function_interacted", fn.name, { txn_status: "failed" });
     }
     setViewInProcess(false);
   };
