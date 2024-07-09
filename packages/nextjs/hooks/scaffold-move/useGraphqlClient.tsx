@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  HttpLink,
-  NormalizedCacheObject,
-} from "@apollo/client";
-import {useEffect, useState} from "react";
-import {Network, NetworkName} from "../../constants";
+import { useEffect, useState } from "react";
+import { Network, NetworkName } from "../../constants";
+import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
+
 // import {useGlobalState} from "../../global-config/GlobalConfig";
 
 function getIsGraphqlClientSupportedFor(networkName: NetworkName): boolean {
@@ -32,9 +27,7 @@ export function getGraphqlURI(networkName: NetworkName): string | undefined {
   }
 }
 
-function getGraphqlClient(
-  networkName: NetworkName,
-): ApolloClient<NormalizedCacheObject> {
+function getGraphqlClient(networkName: NetworkName): ApolloClient<NormalizedCacheObject> {
   return new ApolloClient({
     link: new HttpLink({
       uri: getGraphqlURI(networkName),
@@ -45,11 +38,11 @@ function getGraphqlClient(
 
 export function useGetGraphqlClient() {
   // const [state] = useGlobalState();
-  const state = {network_name: Network.DEVNET, network_value: "https://aptos.devnet.m1.movementlabs.xyz"}
+  const state = { network_name: Network.DEVNET, network_value: "https://aptos.devnet.m1.movementlabs.xyz" };
 
-  const [graphqlClient, setGraphqlClient] = useState<
-    ApolloClient<NormalizedCacheObject>
-  >(getGraphqlClient(state.network_name));
+  const [graphqlClient, setGraphqlClient] = useState<ApolloClient<NormalizedCacheObject>>(
+    getGraphqlClient(state.network_name),
+  );
 
   useEffect(() => {
     setGraphqlClient(getGraphqlClient(state.network_name));
@@ -62,7 +55,7 @@ type GraphqlClientProviderProps = {
   children: React.ReactNode;
 };
 
-export function GraphqlClientProvider({children}: GraphqlClientProviderProps) {
+export function GraphqlClientProvider({ children }: GraphqlClientProviderProps) {
   const graphqlClient = useGetGraphqlClient();
 
   return <ApolloProvider client={graphqlClient}>{children}</ApolloProvider>;
@@ -70,15 +63,14 @@ export function GraphqlClientProvider({children}: GraphqlClientProviderProps) {
 
 export function useGetIsGraphqlClientSupported(): boolean {
   // const [state] = useGlobalState();
-  const state = {network_name: Network.DEVNET, network_value: "https://aptos.devnet.m1.movementlabs.xyz"}
+  const state = { network_name: Network.DEVNET, network_value: "https://aptos.devnet.m1.movementlabs.xyz" };
 
-  const [isGraphqlClientSupported, setIsGraphqlClientSupported] =
-    useState<boolean>(getIsGraphqlClientSupportedFor(state.network_name));
+  const [isGraphqlClientSupported, setIsGraphqlClientSupported] = useState<boolean>(
+    getIsGraphqlClientSupportedFor(state.network_name),
+  );
 
   useEffect(() => {
-    setIsGraphqlClientSupported(
-      getIsGraphqlClientSupportedFor(state.network_name),
-    );
+    setIsGraphqlClientSupported(getIsGraphqlClientSupportedFor(state.network_name));
   }, [state.network_name]);
 
   return isGraphqlClientSupported;

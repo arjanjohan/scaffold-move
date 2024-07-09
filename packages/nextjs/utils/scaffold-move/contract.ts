@@ -1,9 +1,11 @@
+import { Types } from "aptos";
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedContractsData from "~~/contracts/deployedModules";
 import externalContractsData from "~~/contracts/externalModules";
 import scaffoldConfig from "~~/scaffold.config";
-import { Types } from "aptos";
-
+import {
+  AbiParameter
+} from "abitype";
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
@@ -35,29 +37,6 @@ const deepMergeContracts = <L extends Record<PropertyKey, any>, E extends Record
 
 const contractsData = deepMergeContracts(deployedContractsData, externalContractsData);
 
-type MoveFunction = {
-  name: string;
-  visibility: string;
-  is_entry: boolean;
-  is_view: boolean;
-  generic_type_params: any[];
-  params: string[];
-  return: string[];
-};
-
-type MoveStructField = {
-  name: string;
-  type: string;
-};
-
-type MoveStruct = {
-  name: string;
-  is_native: boolean;
-  abilities: string[];
-  generic_type_params: any[];
-  fields: MoveStructField[];
-};
-
 export type GenericContract = {
   bytecode: string;
   abi?: GenericContractAbi;
@@ -68,9 +47,9 @@ export type GenericContractAbi = {
   address: string; // TODO: address type
   name: string;
   friends: string[]; //TODO: check which type?
-  exposed_functions: MoveFunction[];
-  structs: MoveStruct[];
-}
+  exposed_functions: Types.MoveFunction[];
+  structs: Types.MoveStruct[];
+};
 export type GenericContractsDeclaration = {
   [chainId: string]: {
     [contractName: string]: GenericContract;
@@ -78,7 +57,6 @@ export type GenericContractsDeclaration = {
 };
 
 export const contracts = contractsData as GenericContractsDeclaration | null;
-
 
 type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
 
@@ -88,16 +66,15 @@ type IsContractDeclarationMissing<TYes, TNo> = typeof contractsData extends { [k
 
 type ContractsDeclaration = IsContractDeclarationMissing<GenericContractsDeclaration, typeof contractsData>;
 
-type Contracts = ContractsDeclaration[ConfiguredChainId];
-
+type Contracts = ContractsDeclaration["devnet"];
 
 export type ContractName = keyof Contracts;
 export type Contract<TContractName extends ContractName> = Contracts[TContractName];
-
-
 
 export enum ContractCodeStatus {
   "LOADING",
   "DEPLOYED",
   "NOT_FOUND",
 }
+
+export type AbiParameterTuple = Extract<AbiParameter, { type: "tuple" | `tuple[${string}]` }>;

@@ -10,7 +10,7 @@
 ⚙️ Built using NextJS, Tailwind and Typescript.
 
 - ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks to simplify interactions with smart contracts.
+- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks to simplify interactions with Move modules .
 - 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
 - 🔐 **Integration with Wallet Providers**: Connect your Petra Wallet and interact with the Aptos or Movement M1 network.
 
@@ -36,7 +36,7 @@ cd scaffold-move
 yarn install
 ```
 
-2. ~~Run a local network in the first terminal:~~
+2. ~~Run a local network in  the first terminal:~~
 
 <!-- ```
 yarn chain
@@ -58,7 +58,7 @@ This command overwrites `packages/move/.aptos/config.yaml` with a new Aptos acco
 yarn deploy
 ```
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses `movement aptos move publish` to publish the contract to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new contracts available in the nextjs frontend.
+This command deploys the move modules to the selected network. The contract is located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `movement aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new contracts available in the nextjs frontend.
 
 5. On a third terminal, start your NextJS app:
 
@@ -78,13 +78,11 @@ Visit your app on: `http://localhost:3000`. You can interact with your smart con
 
 For this hackathon I kept the scope small due to the time constraints. I build only the most essential and useful features, so that developers can start using Scaffold Move right away. However, there is much more that I want to add to this project after the hackathon. If you have any ideas or suggestions, please reach out and I will add it to this list.
 
-- Wallet button component
-  - Fix QR code
-  - Add network switch
-  - Styling of connect button
-- Store Aptos/Movement network data in scaffold-config
+
 - Debug page
-  - Msg for no result on view methods
+  - Msg for no result on view methods + error msg 
+  - Styling for resources tab
+  - Group contracts under address in list
 - Fix colors for dark mode
 - Ensure export default deployedContracts satisfies GenericContractsDeclaration
 - Add block explorer page
@@ -94,6 +92,8 @@ For this hackathon I kept the scope small due to the time constraints. I build o
 <!-- - [Presentation video]()
 - [Presentation slides]() -->
 - [Website](https://scaffold-move-chi.vercel.app/)
+- [Dorahacks](https://dorahacks.io/buidl/13953)
+- [Github](https://github.com/arjanjohan/scaffold-move)
 
 ## Team
 

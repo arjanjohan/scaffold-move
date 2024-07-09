@@ -1,7 +1,7 @@
 "use client";
 
-import {useGetAccountAPTBalance} from "~~/hooks/scaffold-move/useGetAccountAPTBalance";
-import {getFormattedBalanceStr} from "../../utils/scaffold-move/ContentValue/CurrencyValue"
+import { getFormattedBalanceStr } from "../../utils/scaffold-move/ContentValue/CurrencyValue";
+import { useGetAccountAPTBalance } from "~~/hooks/scaffold-move/useGetAccountAPTBalance";
 
 type BalanceProps = {
   address: string;

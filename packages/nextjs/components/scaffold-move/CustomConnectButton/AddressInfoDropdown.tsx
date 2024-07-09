@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { NetworkOptions } from "./NetworkOptions";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import {
   ArrowLeftOnRectangleIcon,
@@ -10,12 +11,9 @@ import {
   DocumentDuplicateIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
-import { BlockieAvatar, isENS } from "~~/components/scaffold-eth";
+import { BlockieAvatar, isENS } from "~~/components/scaffold-move";
 import { useOutsideClick } from "~~/hooks/scaffold-move";
-import { getTargetNetworks } from "~~/utils/scaffold-eth";
-import {
-  useWallet
-} from "@aptos-labs/wallet-adapter-react";
+import { getTargetNetworks } from "~~/utils/scaffold-move";
 
 const allowedNetworks = getTargetNetworks();
 
@@ -32,7 +30,6 @@ export const AddressInfoDropdown = ({
   displayName,
   blockExplorerAddressLink,
 }: AddressInfoDropdownProps) => {
-
   const [addressCopied, setAddressCopied] = useState(false);
 
   const [selectingNetwork, setSelectingNetwork] = useState(false);
@@ -43,8 +40,7 @@ export const AddressInfoDropdown = ({
   };
   useOutsideClick(dropdownRef, closeDropdown);
 
-
-  const { disconnect, wallet } = useWallet();
+  const { disconnect } = useWallet();
   return (
     <>
       <details ref={dropdownRef} className="dropdown dropdown-end leading-3">
@@ -120,7 +116,7 @@ export const AddressInfoDropdown = ({
                 <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Switch Network</span>
               </button>
             </li>
-          ) : null} 
+          ) : null}
           <li className={selectingNetwork ? "hidden" : ""}>
             <button
               className="menu-item text-error btn-sm !rounded-xl flex gap-3 py-3"

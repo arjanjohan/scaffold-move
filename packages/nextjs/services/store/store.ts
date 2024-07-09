@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import scaffoldConfig from "~~/scaffold.config";
-import { ChainWithAttributes } from "~~/utils/scaffold-eth";
+import { Chain } from "~~/utils/scaffold-move/chains";
 
 /**
  * Zustand Store
@@ -12,11 +12,11 @@ import { ChainWithAttributes } from "~~/utils/scaffold-eth";
  */
 
 type GlobalState = {
-  targetNetwork: ChainWithAttributes;
-  setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => void;
+  targetNetwork: Chain;
+  setTargetNetwork: (newTargetNetwork: Chain) => void;
 };
 
 export const useGlobalState = create<GlobalState>(set => ({
   targetNetwork: scaffoldConfig.targetNetworks[0],
-  setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => set(() => ({ targetNetwork: newTargetNetwork })),
+  setTargetNetwork: (newTargetNetwork: Chain) => set(() => ({ targetNetwork: newTargetNetwork })),
 }));

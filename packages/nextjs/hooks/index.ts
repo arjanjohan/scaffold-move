@@ -1,5 +1,5 @@
-import {AptosClient, Types} from "aptos";
-import {withResponseError} from "./client";
+import { withResponseError } from "./client";
+import { AptosClient, Types } from "aptos";
 
 // export async function getTransactions(
 //   requestParameters: {start?: number; limit?: number},
@@ -95,18 +95,16 @@ import {withResponseError} from "./client";
 // }
 
 export function getAccountResources(
-  requestParameters: {address: string; ledgerVersion?: number},
+  requestParameters: { address: string; ledgerVersion?: number },
   nodeUrl: string,
 ): Promise<Types.MoveResource[]> {
   const client = new AptosClient(nodeUrl);
-  const {address, ledgerVersion} = requestParameters;
+  const { address, ledgerVersion } = requestParameters;
   let ledgerVersionBig;
   if (ledgerVersion !== undefined) {
     ledgerVersionBig = BigInt(ledgerVersion);
   }
-  return withResponseError(
-    client.getAccountResources(address, {ledgerVersion: ledgerVersionBig}),
-  );
+  return withResponseError(client.getAccountResources(address, { ledgerVersion: ledgerVersionBig }));
 }
 
 // export function getAccountResource(
@@ -131,18 +129,16 @@ export function getAccountResources(
 // }
 
 export function getAccountModules(
-  requestParameters: {address: string; ledgerVersion?: number},
+  requestParameters: { address: string; ledgerVersion?: number },
   nodeUrl: string,
 ): Promise<Types.MoveModuleBytecode[]> {
   const client = new AptosClient(nodeUrl);
-  const {address, ledgerVersion} = requestParameters;
+  const { address, ledgerVersion } = requestParameters;
   let ledgerVersionBig;
   if (ledgerVersion !== undefined) {
     ledgerVersionBig = BigInt(ledgerVersion);
   }
-  return withResponseError(
-    client.getAccountModules(address, {ledgerVersion: ledgerVersionBig}),
-  );
+  return withResponseError(client.getAccountModules(address, { ledgerVersion: ledgerVersionBig }));
 }
 
 export function getAccountModule(
@@ -154,7 +150,7 @@ export function getAccountModule(
   nodeUrl: string,
 ): Promise<Types.MoveModuleBytecode> {
   const client = new AptosClient(nodeUrl);
-  const {address, moduleName, ledgerVersion} = requestParameters;
+  const { address, moduleName, ledgerVersion } = requestParameters;
   let ledgerVersionBig;
   if (ledgerVersion !== undefined) {
     ledgerVersionBig = BigInt(ledgerVersion);
@@ -166,11 +162,7 @@ export function getAccountModule(
   );
 }
 
-export function view(
-  request: Types.ViewRequest,
-  nodeUrl: string,
-  ledgerVersion?: string,
-): Promise<Types.MoveValue[]> {
+export function view(request: Types.ViewRequest, nodeUrl: string, ledgerVersion?: string): Promise<Types.MoveValue[]> {
   const client = new AptosClient(nodeUrl);
   let parsedVersion = ledgerVersion;
 

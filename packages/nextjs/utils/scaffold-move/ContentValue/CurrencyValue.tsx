@@ -9,11 +9,7 @@ function trimRight(rightSide: string) {
   return rightSide;
 }
 
-export function getFormattedBalanceStr(
-  balance: string,
-  decimals?: number,
-  fixedDecimalPlaces?: number,
-): string {
+export function getFormattedBalanceStr(balance: string, decimals?: number, fixedDecimalPlaces?: number): string {
   // If balance is zero or decimals is 0, just return it
   if (balance == "0" || (decimals !== undefined && decimals === 0)) {
     return balance;
@@ -28,9 +24,7 @@ export function getFormattedBalanceStr(
   }
 
   // Otherwise, insert decimal point at len - decimals
-  const leftSide = BigInt(balance.slice(0, len - decimals)).toLocaleString(
-    "en-US",
-  );
+  const leftSide = BigInt(balance.slice(0, len - decimals)).toLocaleString("en-US");
   let rightSide = balance.slice(len - decimals);
   if (BigInt(rightSide) == BigInt(0)) {
     return leftSide;
@@ -38,10 +32,7 @@ export function getFormattedBalanceStr(
 
   // remove trailing 0s
   rightSide = trimRight(rightSide);
-  if (
-    fixedDecimalPlaces !== undefined &&
-    rightSide.length > fixedDecimalPlaces
-  ) {
+  if (fixedDecimalPlaces !== undefined && rightSide.length > fixedDecimalPlaces) {
     rightSide = rightSide.slice(0, fixedDecimalPlaces - rightSide.length);
   }
 
@@ -59,12 +50,7 @@ type CurrencyValueProps = {
   currencyCode?: string | React.ReactNode;
 };
 
-export default function CurrencyValue({
-  amount,
-  decimals,
-  fixedDecimalPlaces,
-  currencyCode,
-}: CurrencyValueProps) {
+export default function CurrencyValue({ amount, decimals, fixedDecimalPlaces, currencyCode }: CurrencyValueProps) {
   const number = getFormattedBalanceStr(amount, decimals, fixedDecimalPlaces);
   if (currencyCode) {
     return (
@@ -77,21 +63,12 @@ export default function CurrencyValue({
   }
 }
 
-export function APTCurrencyValue({
-  amount: amountStr,
-  decimals,
-  fixedDecimalPlaces,
-}: CurrencyValueProps) {
+export function APTCurrencyValue({ amount: amountStr, decimals, fixedDecimalPlaces }: CurrencyValueProps) {
   // remove leading "-" when it's a negative number
   let amount = amountStr;
   if (amountStr.startsWith("-")) {
     amount = amountStr.substring(1);
   }
 
-  return (
-    <CurrencyValue
-      {...{amount, decimals, fixedDecimalPlaces}}
-      currencyCode="MOVE"
-    />
-  );
+  return <CurrencyValue {...{ amount, decimals, fixedDecimalPlaces }} currencyCode="MOVE" />;
 }

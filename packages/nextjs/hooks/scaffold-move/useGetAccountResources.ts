@@ -1,7 +1,8 @@
-import {Types} from "aptos";
-import {useQuery, UseQueryResult} from "@tanstack/react-query";
-import {getAccountResources} from "..";
-import {ResponseError} from "../client";
+import { getAccountResources } from "..";
+import { ResponseError } from "../client";
+import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { Types } from "aptos";
+
 // import {useGlobalState} from "../../global-config/GlobalConfig";
 
 export function useGetAccountResources(
@@ -11,11 +12,11 @@ export function useGetAccountResources(
   },
 ): UseQueryResult<Types.MoveResource[], ResponseError> {
   // const [state] = useGlobalState();
-  const state = {network_value: "https://aptos.devnet.m1.movementlabs.xyz"}
+  const state = { network_value: "https://aptos.devnet.m1.movementlabs.xyz" };
 
   const test = useQuery<Array<Types.MoveResource>, ResponseError>({
-    queryKey: ["accountResources", {address}, state.network_value],
-    queryFn: () => getAccountResources({address}, state.network_value),
+    queryKey: ["accountResources", { address }, state.network_value],
+    queryFn: () => getAccountResources({ address }, state.network_value),
     retry: options?.retry ?? false,
   });
   return test;

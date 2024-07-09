@@ -1,18 +1,14 @@
 "use client";
 
-import { Types } from "aptos";
-import { parseTypeTag } from "@aptos-labs/ts-sdk";
-import {
-  InputTransactionData,
-} from "@aptos-labs/wallet-adapter-react";
-
 import { useState } from "react";
-import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { encodeInputArgsForViewRequest } from "../../../../utils/utils";
-import { view } from "~~/hooks";
+import { parseTypeTag } from "@aptos-labs/ts-sdk";
+import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
+import { Types } from "aptos";
 // import { useGlobalState } from "../../../../global-config/GlobalConfig";
 import { displayTxResult } from "~~/app/debug/_components/contract";
-
+import { view } from "~~/hooks";
+import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 
 const zeroInputs = false;
 
@@ -33,22 +29,17 @@ function removeSignerParam(fn: Types.MoveFunction, write: boolean) {
   if (!write) {
     return fn.params;
   }
-  return fn.params.filter((p) => p !== "signer" && p !== "&signer");
+  return fn.params.filter(p => p !== "signer" && p !== "&signer");
 }
 
-export const FunctionForm = ({
-  key,
-  module,
-  fn,
-  write,
-}: FunctionFormProps) => {
+export const FunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
   const [viewInProcess, setViewInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();
   const [data, setData] = useState<ContractFormType>({ typeArgs: [], args: [] });
-  // const [state] = useGlobalState();
-  const state = {network_value: "https://aptos.devnet.m1.movementlabs.xyz"}
 
+  const { account } = useWallet();
+  const state = { network_value: "https://aptos.devnet.m1.movementlabs.xyz" };
 
   const fnParams = removeSignerParam(fn, write);
 
@@ -71,7 +62,7 @@ export const FunctionForm = ({
       if (arg.startsWith("[")) {
         return JSON.parse(arg) as any[];
       } else {
-        return arg.split(",").map((arg) => {
+        return arg.split(",").map(arg => {
           return arg.trim();
         });
       }
@@ -115,7 +106,6 @@ export const FunctionForm = ({
 
   const handleView = async () => {
     let viewRequest: Types.ViewRequest;
-    console.log("viewRequest AVH", state.network_value, data.ledgerVersion);
 
     try {
       viewRequest = {
@@ -131,7 +121,6 @@ export const FunctionForm = ({
     }
     setViewInProcess(true);
     try {
-      console.log("viewRequest", viewRequest, state.network_value, data.ledgerVersion);
       const result = await view(viewRequest, state.network_value, data.ledgerVersion);
       setResult(result);
       console.log("function_interacted", fn.name, { txn_status: "success" });
@@ -142,7 +131,7 @@ export const FunctionForm = ({
         error = error.substring(prefix.length).trim();
       }
       setResult(undefined);
-      console.log("AVH function_interacted", fn.name, { txn_status: "failed" });
+      console.log("function_interacted", fn.name, { txn_status: "failed" });
     }
     setViewInProcess(false);
   };
@@ -150,11 +139,8 @@ export const FunctionForm = ({
   return (
     <div key={key} className="py-5 space-y-3 first:pt-0 last:pb-1">
       <div className={`flex gap-3 ${zeroInputs ? "flex-row justify-between items-center" : "flex-col"}`}>
-        <p className="font-medium my-0 break-words">
-          {fn.name}
-        </p>
+        <p className="font-medium my-0 break-words">{fn.name}</p>
         {fnParams.map((param, i) => {
-          // const isOption = param.startsWith("0x1::option::Option");
           return (
             <div key={`arg-${i}`} className="flex flex-col gap-1.5 w-full">
               <div className="flex items-center mt-2 ml-2">
@@ -164,7 +150,7 @@ export const FunctionForm = ({
                 <input
                   placeholder={param}
                   className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
-                  onChange={(e) => {
+                  onChange={e => {
                     const newArgs = [...data.args];
                     newArgs[i] = e.target.value;
                     setData({ ...data, args: newArgs });
@@ -178,23 +164,27 @@ export const FunctionForm = ({
         {write && (
           <div className="flex flex-col md:flex-row justify-between gap-2 flex-wrap">
             <div className="flex-grow basis-0">
-
-            {transactionResponse !== null && transactionResponse?.transactionSubmitted && (
+              {transactionResponse !== null && transactionResponse?.transactionSubmitted && (
                 <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
                   <p className="font-bold m-0 mb-1">Result:</p>
-                  <pre className="whitespace-pre-wrap break-words">{transactionResponse.success ? "✅ transaction successful" : "❌ transaction failed"}</pre>
+                  <pre className="whitespace-pre-wrap break-words">
+                    {transactionResponse.success ? "✅ transaction successful" : "❌ transaction failed"}
+                  </pre>
                 </div>
               )}
               {/* TODO: Add TxReceipt for Move */}
               {/* {displayedTxResult ? <TxReceipt txResult={displayedTxResult} /> : null} */}
             </div>
 
-            <button className="btn btn-secondary btn-sm" disabled={transactionInProcess} onClick={handleWrite}>
+            <button
+              className="btn btn-secondary btn-sm"
+              disabled={transactionInProcess || !account}
+              onClick={handleWrite}
+            >
               {transactionInProcess && <span className="loading loading-spinner loading-xs"></span>}
               Send 💸
             </button>
           </div>
-
         )}
         {!write && (
           <div className="flex flex-col md:flex-row justify-between gap-2 flex-wrap">
@@ -212,11 +202,8 @@ export const FunctionForm = ({
               Read 📡
             </button>
           </div>
-
         )}
-
       </div>
-
     </div>
   );
 };

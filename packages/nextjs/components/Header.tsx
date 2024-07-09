@@ -4,12 +4,10 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 // import { FaucetButton } from "~~/components/scaffold-eth";
 // import { useOutsideClick } from "~~/hooks/scaffold-eth";
-import {CustomConnectButton} from "~~/components/scaffold-move";
-
+import { CustomConnectButton } from "~~/components/scaffold-move";
 
 type HeaderMenuLink = {
   label: string;

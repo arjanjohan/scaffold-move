@@ -1,16 +1,11 @@
-import {FailedTransactionError} from "aptos";
-import {useEffect, useState} from "react";
-import {
-  useWallet,
-  InputTransactionData,
-} from "@aptos-labs/wallet-adapter-react";
+import { useEffect, useState } from "react";
+import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
+import { FailedTransactionError } from "aptos";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 // import {useGlobalState} from "../../global-config/GlobalConfig";
-import {Aptos, AptosConfig, Network} from "@aptos-labs/ts-sdk";
+import { aptosClient } from "~~/utils/scaffold-move/aptosClient";
 
-
-export type TransactionResponse =
-  | TransactionResponseOnSubmission
-  | TransactionResponseOnError;
+export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
 
 // "submission" here means that the transaction is posted on chain and gas is paid.
 // However, the status of the transaction might not be "success".
@@ -27,22 +22,15 @@ export type TransactionResponseOnError = {
 };
 
 const useSubmitTransaction = () => {
-  const [transactionResponse, setTransactionResponse] =
-    useState<TransactionResponse | null>(null);
-  const [transactionInProcess, setTransactionInProcess] =
-    useState<boolean>(false);
+  const [transactionResponse, setTransactionResponse] = useState<TransactionResponse | null>(null);
+  const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
   // const [state] = useGlobalState();
 
-  const aptosConfig = new AptosConfig({
-    network: Network.CUSTOM,
-    fullnode: 'https://aptos.devnet.m1.movementlabs.xyz',
-    indexer: 'https://indexer.devnet.m1.movementlabs.xyz/',
-    faucet: 'https://faucet2.movementlabs.xyz'
-  });
-  const aptos = new Aptos(aptosConfig);
-  const state = {network_value: "https://aptos.devnet.m1.movementlabs.xyz", aptos_client: aptos}
+  const network = useTargetNetwork();
+  const aptos = aptosClient("m1_devnet");
+  const state = { network_value: "https://aptos.devnet.m1.movementlabs.xyz", aptos_client: aptos };
 
-  const {signAndSubmitTransaction} = useWallet();
+  const { signAndSubmitTransaction } = useWallet();
 
   useEffect(() => {
     if (transactionResponse !== null) {
@@ -51,13 +39,8 @@ const useSubmitTransaction = () => {
   }, [transactionResponse]);
 
   async function submitTransaction(transaction: InputTransactionData) {
-
-
     setTransactionInProcess(true);
-    console.log("submitting transaction", transaction);
-    const signAndSubmitTransactionCall = async (
-      transaction: InputTransactionData,
-    ): Promise<TransactionResponse> => {
+    const signAndSubmitTransactionCall = async (transaction: InputTransactionData): Promise<TransactionResponse> => {
       const responseOnError: TransactionResponseOnError = {
         transactionSubmitted: false,
         message: "Unknown Error",
@@ -65,16 +48,15 @@ const useSubmitTransaction = () => {
       let response;
       try {
         response = await signAndSubmitTransaction(transaction);
-        console.log("response", response);  
 
         // transaction submit succeed
         if ("hash" in response) {
           // await state.aptos_client.waitForTransaction(response["hash"], {
           //   checkSuccess: true,
           // });
-          
+
           await state.aptos_client.waitForTransaction(response["hash"]);
-          
+
           return {
             transactionSubmitted: true,
             transactionHash: response["hash"],
@@ -82,7 +64,7 @@ const useSubmitTransaction = () => {
           };
         }
         // transaction failed
-        return {...responseOnError, message: response.message};
+        return { ...responseOnError, message: response.message };
       } catch (error) {
         if (error instanceof FailedTransactionError) {
           return {
@@ -92,15 +74,13 @@ const useSubmitTransaction = () => {
             success: false,
           };
         } else if (error instanceof Error) {
-          return {...responseOnError, message: error.message};
+          return { ...responseOnError, message: error.message };
         }
       }
       return responseOnError;
     };
 
-    await signAndSubmitTransactionCall(transaction).then(
-      setTransactionResponse,
-    );
+    await signAndSubmitTransactionCall(transaction).then(setTransactionResponse);
   }
 
   function clearTransactionResponse() {
