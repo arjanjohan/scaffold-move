@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Balance } from "../Balance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
-import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
-import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
+// import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { getBlockExplorerAddressLink } from "~~/utils/scaffold-eth";
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 
@@ -15,8 +14,8 @@ import {
 
 export const CustomConnectButton = () => {
   const { targetNetwork } = useTargetNetwork();
-  // const [account, setAccount] = useState(null);
   const chain = {name: "devnet"}; // TODO: replace
+  
 
 
   const { account, connected} = useWallet();
@@ -37,13 +36,13 @@ export const CustomConnectButton = () => {
        : (
         <>
           <div className="flex flex-col items-center mr-1">
-            {/* <Balance address={account} className="min-h-0 h-auto" /> */}
-            <span className="text-xs">{chain ? chain.name : "Loading..."}</span>
+            <Balance address={account?.address as string}    />
+            <span className="text-xs">{chain ? targetNetwork.name : "Loading..."}</span>
           </div>
           <AddressInfoDropdown
             address={account?.address || ""}
             displayName={account?.address || ""}
-            ensAvatar={""} // Update this with ENS Avatar if available
+            // ensAvatar={""} // Update this with ENS Avatar if available
             blockExplorerAddressLink={blockExplorerAddressLink}
           />
         </>

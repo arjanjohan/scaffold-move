@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-eth";
@@ -10,8 +9,7 @@ import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useGetAccountModules } from "~~/hooks/scaffold-move/useGetAccountModules";
 import { aptosClient } from "~~/utils/scaffold-move/aptosClient";
 
-
-const aptos = aptosClient("devnet");
+const aptos = aptosClient("m1_devnet");
 
 const ONCHAIN_BIO = deployedModules.devnet.onchain_bio.abi;
 
@@ -110,6 +108,7 @@ const OnchainBio: NextPage = () => {
           </div>
           <button
             className="btn btn-secondary mt-2"
+            disabled={!account}
             onClick={async () => {
               try {
                 await registerBio();
@@ -126,6 +125,7 @@ const OnchainBio: NextPage = () => {
         <div className="flex flex-col items-center space-y-4 bg-base-100 shadow-lg shadow-secondary border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
           <button
             className="btn btn-secondary mt-2"
+            disabled={!account}
             onClick={async () => {
               try {
                 await fetchBio();
@@ -136,14 +136,26 @@ const OnchainBio: NextPage = () => {
           >
             Fetch Bio
           </button>
-        </div>
+
 
         {accountHasBio && !transactionInProcess && (
-          <div>
-            <div>{currentName}</div>
-            <div>{currentBio}</div>
+        <div className="space-y-4 w-full max-w-lg">
+          <div className="flex items-center">
+            <span className="text-xs font-medium mr-2 leading-none">Name:</span>
+          </div>
+          <div className="w-full flex flex-col space-y-2">
+            {currentName}
+          </div>            
+          <div className="flex items-center">
+            <span className="text-xs font-medium mr-2 leading-none">Bio:</span>
+          </div>
+          <div className="w-full flex flex-col space-y-2">
+            {currentBio}
+          </div>       
           </div>
         )}
+        </div>
+
       </div>
     </>
   );

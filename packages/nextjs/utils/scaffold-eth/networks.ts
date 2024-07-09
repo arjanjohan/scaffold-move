@@ -15,7 +15,7 @@ export function getBlockExplorerTxLink(chainId: string, txnHash: string) {
 export function getBlockExplorerAddressLink(network: Chain, address: string) {
 
   const chainId = network.id;
-  return `https://explorer.${chainId}.m1.movementlabs.xyz/account/${address}?network=dev${chainId}net`;
+  return `https://explorer.${chainId}.m1.movementlabs.xyz/account/${address}?network=${chainId}`;
 }
 
 /**

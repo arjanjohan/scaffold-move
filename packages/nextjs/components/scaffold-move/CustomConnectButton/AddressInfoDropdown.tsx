@@ -10,7 +10,7 @@ import {
   DocumentDuplicateIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
-import { BlockieAvatar, isENS } from "~~/components/scaffold-eth";
+import { BlockieAvatar, isENS } from "~~/components/scaffold-move";
 import { useOutsideClick } from "~~/hooks/scaffold-move";
 import { getTargetNetworks } from "~~/utils/scaffold-eth";
 import {

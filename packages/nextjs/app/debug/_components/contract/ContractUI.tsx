@@ -3,12 +3,12 @@
 // @refresh reset
 import { ContractReadMethods } from "./ContractReadMethods";
 import { ModuleResources } from "./ModuleResources";
-import { ContractVariables } from "./ContractVariables";
 import { ContractWriteMethods } from "./ContractWriteMethods";
 import { Address, Balance} from "~~/components/scaffold-move";
 
 import { useDeployedContractInfo } from "~~/hooks/scaffold-move";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork"; 
 
 type ContractUIProps = {
   contractName: ContractName;
@@ -19,8 +19,7 @@ type ContractUIProps = {
  * UI component to interface with deployed contracts.
  **/
 export const ContractUI = ({ contractName, className = "" }: ContractUIProps) => {
-  // const { targetNetwork } = useTargetNetwork();
-  const targetNetwork = "devnet"
+  const { targetNetwork } = useTargetNetwork();
   const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo(contractName);
 
   if (deployedContractLoading) {
@@ -33,7 +32,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
   if (!deployedContractData || !deployedContractData.abi) {
     return (
       <p className="text-3xl mt-14">
-        {`No contract found by the name of "${contractName}" on chain "${targetNetwork}"!`}
+        {`No contract found by the name of "${String(contractName)}" on chain "${targetNetwork}"!`}
       </p>
     );
   }
@@ -45,7 +44,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
           <div className="bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl px-6 lg:px-8 mb-6 space-y-1 py-4">
             <div className="flex">
               <div className="flex flex-col gap-1">
-                <span className="font-bold">{contractName}</span>
+                <span className="font-bold">{String(contractName)}</span>
                 <Address address={deployedContractData.abi.address} />
                 <div className="flex gap-1 items-center">
                   <span className="font-bold text-sm">Balance:</span>
@@ -56,7 +55,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
             {targetNetwork && (
               <p className="my-0 text-sm">
                 <span className="font-bold">Network</span>:{" "}
-                <span >{targetNetwork}</span>
+                <span >{String(targetNetwork.name)}</span>
               </p>
             )}
           </div>

@@ -3,7 +3,7 @@
 import { Types } from "aptos";
 import { parseTypeTag } from "@aptos-labs/ts-sdk";
 import {
-  InputTransactionData,
+  InputTransactionData, useWallet
 } from "@aptos-labs/wallet-adapter-react";
 
 import { useState } from "react";
@@ -46,8 +46,9 @@ export const FunctionForm = ({
   const [viewInProcess, setViewInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();
   const [data, setData] = useState<ContractFormType>({ typeArgs: [], args: [] });
-  // const [state] = useGlobalState();
-  const state = {network_value: "https://aptos.devnet.m1.movementlabs.xyz"}
+
+  const { account } = useWallet();
+  const state = { network_value: "https://aptos.devnet.m1.movementlabs.xyz" }
 
 
   const fnParams = removeSignerParam(fn, write);
@@ -154,7 +155,6 @@ export const FunctionForm = ({
           {fn.name}
         </p>
         {fnParams.map((param, i) => {
-          // const isOption = param.startsWith("0x1::option::Option");
           return (
             <div key={`arg-${i}`} className="flex flex-col gap-1.5 w-full">
               <div className="flex items-center mt-2 ml-2">
@@ -179,7 +179,7 @@ export const FunctionForm = ({
           <div className="flex flex-col md:flex-row justify-between gap-2 flex-wrap">
             <div className="flex-grow basis-0">
 
-            {transactionResponse !== null && transactionResponse?.transactionSubmitted && (
+              {transactionResponse !== null && transactionResponse?.transactionSubmitted && (
                 <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
                   <p className="font-bold m-0 mb-1">Result:</p>
                   <pre className="whitespace-pre-wrap break-words">{transactionResponse.success ? "✅ transaction successful" : "❌ transaction failed"}</pre>
@@ -189,7 +189,7 @@ export const FunctionForm = ({
               {/* {displayedTxResult ? <TxReceipt txResult={displayedTxResult} /> : null} */}
             </div>
 
-            <button className="btn btn-secondary btn-sm" disabled={transactionInProcess} onClick={handleWrite}>
+            <button className="btn btn-secondary btn-sm" disabled={transactionInProcess || !account} onClick={handleWrite}>
               {transactionInProcess && <span className="loading loading-spinner loading-xs"></span>}
               Send 💸
             </button>

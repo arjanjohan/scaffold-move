@@ -38,7 +38,7 @@ const useSubmitTransaction = () => {
 
 
   const network = useTargetNetwork();
-  const aptos = aptosClient("devnet");
+  const aptos = aptosClient("m1_devnet");
   const state = {network_value: "https://aptos.devnet.m1.movementlabs.xyz", aptos_client: aptos}
 
   const {signAndSubmitTransaction} = useWallet();
