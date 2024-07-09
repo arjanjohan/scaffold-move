@@ -1,4 +1,3 @@
-import { useTheme } from "next-themes";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
 import { getTargetNetworks } from "~~/utils/scaffold-eth";
 
@@ -10,8 +9,6 @@ type NetworkOptionsProps = {
 
 export const NetworkOptions = ({ hidden = false }: NetworkOptionsProps) => {
   const chain = "devnet"; // TODO: Get this from wallet?
-  const { resolvedTheme } = useTheme();
-  const isDarkMode = resolvedTheme === "dark";
 
   return (
     <>

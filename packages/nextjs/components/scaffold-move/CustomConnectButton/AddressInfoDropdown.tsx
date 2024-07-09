@@ -44,7 +44,7 @@ export const AddressInfoDropdown = ({
   useOutsideClick(dropdownRef, closeDropdown);
 
 
-  const { disconnect, wallet } = useWallet();
+  const { disconnect } = useWallet();
   return (
     <>
       <details ref={dropdownRef} className="dropdown dropdown-end leading-3">

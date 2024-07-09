@@ -1,8 +1,4 @@
-import { FunctionForm } from "~~/app/debug/_components/contract";
 import { Contract, ContractName } from "~~/utils/scaffold-move/contract";
-import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
-import { useEffect, useState } from 'react';
-import {Types} from "aptos";
 import {useGetAccountResources} from "~~/hooks/scaffold-move";
 import { ModuleResource } from "./ModuleResource";
 
@@ -12,16 +8,14 @@ export const ModuleResources = ({
 }: {
   deployedContractData: Contract<ContractName>;
 }) => {
-  if (!deployedContractData || deployedContractData.abi === undefined) {
-    return null;
-  }
-
   const {isLoading, data, error} = useGetAccountResources(deployedContractData.abi!.address);
-
   
-  const [accountResources, setAccountResources] =
-    useState<Types.MoveResource[] | null>(null);
-
+  if (error) {
+    return <>Cannot fetch  resources. 
+    {error.type && <p>Error: {error.type}</p>}
+    {error.message && <p>Error message: {error.message}</p>}
+    </>;
+  }
 
   if (!data?.length) {
     return <>No resources</>;

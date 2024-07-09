@@ -11,8 +11,7 @@ type ModuleResourceProps = {
 
 const GROUP_ARRAYS_AFTER_LENGTH = 100;
 const COLLAPSE_STRINGS_AFTER_LENGTH = 80;
-const MAX_CARD_HEIGHT = 500;
-
+ 
 export const ModuleResource = ({
   key,
   resource,
@@ -25,6 +24,7 @@ export const ModuleResource = ({
     <>
       <div>{resource.type}</div>
       <ReactJson
+        key={key}
         src={resource.data}
         collapseStringsAfterLength={COLLAPSE_STRINGS_AFTER_LENGTH}
         displayObjectSize={false}
