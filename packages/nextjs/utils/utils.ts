@@ -1,4 +1,5 @@
-import {HexString, Types} from "aptos";
+import { HexString, Types } from "aptos";
+
 // import pako from "pako";
 // import {Statsig} from "statsig-react";
 /**
@@ -160,18 +161,15 @@ import {HexString, Types} from "aptos";
 export function encodeInputArgsForViewRequest(type: string, value: string) {
   if (type.includes("vector")) {
     // when it's a vector, we support both hex and javascript array format
-    return value.trim().startsWith("0x")
-      ? value.trim()
-      : encodeVectorForViewRequest(type, value);
+    return value.trim().startsWith("0x") ? value.trim() : encodeVectorForViewRequest(type, value);
   } else if (type === "bool") {
-    if (value !== "true" && value !== "false")
-      throw new Error(`Invalid bool value: ${value}`);
+    if (value !== "true" && value !== "false") throw new Error(`Invalid bool value: ${value}`);
 
     return value === "true" ? true : false;
   } else if (["u8", "u16", "u32"].includes(type)) {
     return ensureNumber(value);
   } else if (type.startsWith("0x1::option::Option")) {
-    return {vec: [...(value ? [value] : [])]};
+    return { vec: [...(value ? [value] : [])] };
   } else return value;
 }
 
@@ -197,23 +195,22 @@ function encodeVectorForViewRequest(type: string, value: string) {
       return (
         HexString.fromUint8Array(
           new Uint8Array(
-            rawVector.map((v) => {
+            rawVector.map(v => {
               const result = ensureNumber(v.trim());
-              if (result < 0 || result > 255)
-                throw new Error(`Invalid u8 value: ${result}`);
+              if (result < 0 || result > 255) throw new Error(`Invalid u8 value: ${result}`);
               return result;
             }),
           ),
         ) as any
       ).hexString;
     } else if (["u16", "u32"].includes(match[1])) {
-      return rawVector.map((v) => ensureNumber(v.trim()));
+      return rawVector.map(v => ensureNumber(v.trim()));
     } else if (["u64", "u128", "u256"].includes(match[1])) {
       // For bigint, not need to convert, only validation
-      rawVector.forEach((v) => ensureBigInt(v.trim()));
+      rawVector.forEach(v => ensureBigInt(v.trim()));
       return rawVector;
     } else if (match[1] === "bool") {
-      return rawVector.map((v) => ensureBoolean(v.trim()));
+      return rawVector.map(v => ensureBoolean(v.trim()));
     } else {
       // 1. Address type no need to convert
       // 2. Other complex types like Struct is not support yet. We just pass what user input.
@@ -262,10 +259,7 @@ export function ensureBoolean(val: boolean | string): boolean {
 function assertType(val: any, types: string[] | string, message?: string) {
   if (!types?.includes(typeof val)) {
     throw new Error(
-      message ||
-        `Invalid arg: ${val} type should be ${
-          types instanceof Array ? types.join(" or ") : types
-        }`,
+      message || `Invalid arg: ${val} type should be ${types instanceof Array ? types.join(" or ") : types}`,
     );
   }
 }

@@ -18,6 +18,5 @@ export function useTargetNetwork(): { targetNetwork: Chain } {
     }
   }, [chain, setTargetNetwork, targetNetwork.id]);
 
-  return {targetNetwork};
-  
+  return { targetNetwork };
 }

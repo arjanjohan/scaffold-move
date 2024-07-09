@@ -72,13 +72,12 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
     );
   }
 
-
   const blockExplorerAddressLink = getBlockExplorerAddressLink(targetNetwork, address);
   let displayAddress = address?.slice(0, 6) + "..." + address?.slice(-4);
 
   // if (ens) {
   //   displayAddress = ens;
-  // } else 
+  // } else
   if (format === "long") {
     displayAddress = address;
   }

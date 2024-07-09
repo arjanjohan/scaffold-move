@@ -1,5 +1,4 @@
-
-import {Types} from "aptos";
+import { Types } from "aptos";
 import ReactJson from "react-json-view";
 
 type ModuleResourceProps = {
@@ -8,16 +7,10 @@ type ModuleResourceProps = {
   collapsedByDefault: boolean;
 };
 
-
 const GROUP_ARRAYS_AFTER_LENGTH = 100;
 const COLLAPSE_STRINGS_AFTER_LENGTH = 80;
- 
-export const ModuleResource = ({
-  key,
-  resource,
-  collapsedByDefault
-}: ModuleResourceProps) => {
 
+export const ModuleResource = ({ key, resource, collapsedByDefault }: ModuleResourceProps) => {
   return (
     <>
       <div>{resource.type}</div>

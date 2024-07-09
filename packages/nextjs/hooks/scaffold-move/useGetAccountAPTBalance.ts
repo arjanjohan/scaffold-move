@@ -1,4 +1,4 @@
-import {useGetAccountResources} from "./useGetAccountResources";
+import { useGetAccountResources } from "./useGetAccountResources";
 
 interface CoinStore {
   coin: {
@@ -7,16 +7,13 @@ interface CoinStore {
 }
 
 export function useGetAccountAPTBalance(address: string) {
-  const {isLoading, data, error} = useGetAccountResources(address);
+  const { isLoading, data, error } = useGetAccountResources(address);
 
   if (isLoading || error || !data) {
     return null;
   }
 
-  const coinStore = data.find(
-    (resource) =>
-      resource.type === "0x1::coin::CoinStore<0x1::aptos_coin::AptosCoin>",
-  );
+  const coinStore = data.find(resource => resource.type === "0x1::coin::CoinStore<0x1::aptos_coin::AptosCoin>");
 
   if (!coinStore) {
     return null;

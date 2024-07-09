@@ -2,13 +2,12 @@
 
 // @refresh reset
 import { ContractReadMethods } from "./ContractReadMethods";
-import { ModuleResources } from "./ModuleResources";
 import { ContractWriteMethods } from "./ContractWriteMethods";
-import { Address, Balance} from "~~/components/scaffold-move";
-
+import { ModuleResources } from "./ModuleResources";
+import { Address, Balance } from "~~/components/scaffold-move";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-move";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
-import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork"; 
 
 type ContractUIProps = {
   contractName: ContractName;
@@ -48,18 +47,16 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
                 <Address address={deployedContractData.abi.address} />
                 <div className="flex gap-1 items-center">
                   <span className="font-bold text-sm">Balance:</span>
-                  <Balance address={deployedContractData.abi.address}/>
+                  <Balance address={deployedContractData.abi.address} />
                 </div>
               </div>
             </div>
             {targetNetwork && (
               <p className="my-0 text-sm">
-                <span className="font-bold">Network</span>:{" "}
-                <span >{String(targetNetwork.name)}</span>
+                <span className="font-bold">Network</span>: <span>{String(targetNetwork.name)}</span>
               </p>
             )}
           </div>
-          
         </div>
         <div className="col-span-1 lg:col-span-2 flex flex-col gap-6">
           <div className="z-10">
@@ -82,9 +79,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
                 </div>
               </div>
               <div className="p-5 divide-y divide-base-300">
-                <ContractWriteMethods
-                  deployedContractData={deployedContractData}
-                />
+                <ContractWriteMethods deployedContractData={deployedContractData} />
               </div>
             </div>
           </div>
@@ -96,9 +91,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
                 </div>
               </div>
               <div className="p-5 divide-y divide-base-300">
-                <ModuleResources
-                  deployedContractData={deployedContractData}
-                />
+                <ModuleResources deployedContractData={deployedContractData} />
               </div>
             </div>
           </div>

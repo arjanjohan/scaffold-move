@@ -1,12 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-move";
-import {
-  useWallet,
-} from "@aptos-labs/wallet-adapter-react";
 
 const Home: NextPage = () => {
   const { account: connectedAccount } = useWallet();
@@ -21,7 +19,7 @@ const Home: NextPage = () => {
           </h1>
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             <p className="my-2 font-medium">Connected Address:</p>
-            
+
             <Address address={connectedAccount?.address} />
           </div>
           <p className="text-center text-lg">
@@ -57,10 +55,8 @@ const Home: NextPage = () => {
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Explore your local transactions with the{" "}
-                {/* <Link href="/blockexplorer" passHref className="link"> */}
-                  Block Explorer {" "}
-                {/* </Link>{" "} */}
+                Explore your local transactions with the {/* <Link href="/blockexplorer" passHref className="link"> */}
+                Block Explorer {/* </Link>{" "} */}
                 tab. <b>Coming soon...</b>
               </p>
             </div>

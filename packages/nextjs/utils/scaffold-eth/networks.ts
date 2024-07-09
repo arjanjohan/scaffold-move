@@ -13,7 +13,6 @@ export function getBlockExplorerTxLink(chainId: string, txnHash: string) {
  * Defaults to Etherscan if no (wagmi) block explorer is configured for the network.
  */
 export function getBlockExplorerAddressLink(network: Chain, address: string) {
-
   const chainId = network.id;
   return `https://explorer.${chainId}.m1.movementlabs.xyz/account/${address}?network=${chainId}`;
 }

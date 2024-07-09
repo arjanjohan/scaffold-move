@@ -30,12 +30,12 @@ export const queryClient = new QueryClient({
 
 export const ScaffoldEthAppWithProviders = ({ children }: { children: React.ReactNode }) => {
   return (
-      <QueryClientProvider client={queryClient}>
-        <ProgressBar />
+    <QueryClientProvider client={queryClient}>
+      <ProgressBar />
 
-        <WalletProvider>
-          <ScaffoldEthApp>{children}</ScaffoldEthApp>
-        </WalletProvider>
-      </QueryClientProvider>
+      <WalletProvider>
+        <ScaffoldEthApp>{children}</ScaffoldEthApp>
+      </WalletProvider>
+    </QueryClientProvider>
   );
 };

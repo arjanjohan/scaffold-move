@@ -5,8 +5,8 @@ import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-reac
 import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-eth";
 import deployedModules from "~~/contracts/deployedModules";
-import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useGetAccountModules } from "~~/hooks/scaffold-move/useGetAccountModules";
+import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { aptosClient } from "~~/utils/scaffold-move/aptosClient";
 
 const aptos = aptosClient("m1_devnet");
@@ -23,18 +23,15 @@ const OnchainBio: NextPage = () => {
   const [currentName, setCurrentName] = useState(null);
   const [currentBio, setCurrentBio] = useState(null);
 
-  const {data, isLoading, error} = useGetAccountModules(ONCHAIN_BIO.address);
+  const { data, isLoading, error } = useGetAccountModules(ONCHAIN_BIO.address);
 
-
-  const {submitTransaction, transactionResponse, transactionInProcess} =
-    useSubmitTransaction();
+  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
 
   const fetchBio = async () => {
     if (!account) {
       return [];
     }
     try {
-
       const resourceName = "Bio";
       const bioResource = await aptos.getAccountResource({
         accountAddress: account?.address,
@@ -133,25 +130,19 @@ const OnchainBio: NextPage = () => {
             Fetch Bio
           </button>
 
-
-        {accountHasBio && !transactionInProcess && (
-        <div className="space-y-4 w-full max-w-lg">
-          <div className="flex items-center">
-            <span className="text-xs font-medium mr-2 leading-none">Name:</span>
-          </div>
-          <div className="w-full flex flex-col space-y-2">
-            {currentName}
-          </div>            
-          <div className="flex items-center">
-            <span className="text-xs font-medium mr-2 leading-none">Bio:</span>
-          </div>
-          <div className="w-full flex flex-col space-y-2">
-            {currentBio}
-          </div>       
-          </div>
-        )}
+          {accountHasBio && !transactionInProcess && (
+            <div className="space-y-4 w-full max-w-lg">
+              <div className="flex items-center">
+                <span className="text-xs font-medium mr-2 leading-none">Name:</span>
+              </div>
+              <div className="w-full flex flex-col space-y-2">{currentName}</div>
+              <div className="flex items-center">
+                <span className="text-xs font-medium mr-2 leading-none">Bio:</span>
+              </div>
+              <div className="w-full flex flex-col space-y-2">{currentBio}</div>
+            </div>
+          )}
         </div>
-
       </div>
     </>
   );

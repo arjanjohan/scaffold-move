@@ -1,20 +1,18 @@
-import { Contract, ContractName } from "~~/utils/scaffold-move/contract";
-import {useGetAccountResources} from "~~/hooks/scaffold-move";
 import { ModuleResource } from "./ModuleResource";
+import { useGetAccountResources } from "~~/hooks/scaffold-move";
+import { Contract, ContractName } from "~~/utils/scaffold-move/contract";
 
+export const ModuleResources = ({ deployedContractData }: { deployedContractData: Contract<ContractName> }) => {
+  const { isLoading, data, error } = useGetAccountResources(deployedContractData.abi!.address);
 
-export const ModuleResources = ({
-  deployedContractData,
-}: {
-  deployedContractData: Contract<ContractName>;
-}) => {
-  const {isLoading, data, error} = useGetAccountResources(deployedContractData.abi!.address);
-  
   if (error) {
-    return <>Cannot fetch  resources. 
-    {error.type && <p>Error: {error.type}</p>}
-    {error.message && <p>Error message: {error.message}</p>}
-    </>;
+    return (
+      <>
+        Cannot fetch resources.
+        {error.type && <p>Error: {error.type}</p>}
+        {error.message && <p>Error message: {error.message}</p>}
+      </>
+    );
   }
 
   if (!data?.length) {
@@ -26,12 +24,8 @@ export const ModuleResources = ({
 
       {data.map((resource, index) => (
         <div key={index}>
-        <ModuleResource
-          key={index}
-          resource={resource}
-          collapsedByDefault={true}
-          
-        /></div>
+          <ModuleResource key={index} resource={resource} collapsedByDefault={true} />
+        </div>
       ))}
     </>
   );
