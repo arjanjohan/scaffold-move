@@ -4,7 +4,7 @@
   "scripts": {
     "account": "[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | movement aptos init --network custom --rest-url https://devnet.m1.movementlabs.xyz/ --faucet-url https://devnet.m1.movementlabs.xyz/",
     "chain": "movement aptos node run-local-testnet",
-    "publish": "movement aptos move publish",
+    "publish": "movement aptos move publish --assume-yes",
     "compile": "movement aptos move compile",
     "test": ""
   }
