@@ -1,9 +1,13 @@
 # 🏗 Scaffold-Move
 
+<div align="center">
+
+![logo](/assets/logo_small.png)
 <h4 align="center">
   <a href="https://github.com/arjanjohan/scaffold-move">Documentation</a> |
   <a href="https://scaffold-move-chi.vercel.app/">Website</a>
 </h4>
+</div>
 
 🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Move blockchains like Aptos and Movement M1. It's designed to make it easier for developers to create and deploy Move modules and build user interfaces that interact with those modules.
 
