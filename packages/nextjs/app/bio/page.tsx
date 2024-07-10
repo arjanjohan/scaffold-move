@@ -13,10 +13,10 @@ const aptos = aptosClient("m1_devnet");
 const OnchainBio: NextPage = () => {
   if (!deployedModules.devnet || !deployedModules.devnet.onchain_bio) {
     return (
-      <div className="flex items-center flex-col flex-grow ">
-        <div className="flex flex-col items-center bg-base-100 shadow-lg shadow-secondary border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
-          <div className="text-xl">Module onchain_bio not found on devnet</div>
-        </div>
+
+    <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
+    
+      <p className="text-3xl mt-14">onchain_bio module not found!</p>
       </div>
     );
   }
