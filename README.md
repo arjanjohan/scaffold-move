@@ -80,8 +80,7 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 
 ## Next steps
 
-For this hackathon I kept the scope small due to the time constraints. I build only the most essential and useful features, so that developers can start using Scaffold Move right away. However, there is much more that I want to add to this project after the hackathon. If you have any ideas or suggestions, please reach out and I will add it to this list.
-
+For this hackathon I kept the scope small due to the time constraints. I build the most essential and useful features, so that developers can start using Scaffold Move right away. However, there are more features that I want to add to this project after the hackathon. If you have any ideas or suggestions, please reach out to me!
 
 - Debug page
   - Styling Resources tab
