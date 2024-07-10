@@ -91,8 +91,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
                 </div>
               </div>
               <div className="p-5 divide-y divide-base-300">
-                I disabled the Resources tab due to errors in the Vercel deployment, run the project locally to see it in action.
-                {/* <ModuleResources deployedContractData={deployedContractData} /> */}
+                <ModuleResources deployedContractData={deployedContractData} />
               </div>
             </div>
           </div>
