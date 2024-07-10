@@ -82,7 +82,7 @@ async function main() {
 
   // Fetch and save account modules for the account from config.yaml
   const deployedModules = await getAccountModules({ address: accountAddress }, nodeUrl);
-  writeModules(deployedModulesPath, deployedModules, "devnet", "deployedContracts");
+  writeModules(deployedModulesPath, deployedModules, "devnet", "deployedModules");
   console.log(`Data for deployed modules at address ${accountAddress} saved successfully.`);
 
   // Fetch and save account modules for each address from Move.toml, excluding the one from config.yaml
@@ -95,7 +95,7 @@ async function main() {
         console.log(`Data for address ${address} saved successfully.`);
       }
     }
-    writeModules(externalModulesPath, externalModules, "devnet", "externalContracts");
+    writeModules(externalModulesPath, externalModules, "devnet", "externalModules");
   } else {
     console.log('No addresses found in Move.toml.');
   }

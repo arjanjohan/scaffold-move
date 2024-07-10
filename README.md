@@ -5,16 +5,16 @@
   <a href="https://scaffold-move-chi.vercel.app/">Website</a>
 </h4>
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Move blockchains like Aptos and Movement M1. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Move blockchains like Aptos and Movement M1. It's designed to make it easier for developers to create and deploy Move modules and build user interfaces that interact with those modules.
 
 ⚙️ Built using NextJS, Tailwind and Typescript.
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
+- ✅ **Module Hot Reload**: Your frontend auto-adapts to your Move modules as you edit it.
 - 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks to simplify interactions with Move modules .
 - 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
 - 🔐 **Integration with Wallet Providers**: Connect your Petra Wallet and interact with the Aptos or Movement M1 network.
 
-![Debug Contracts tab](assets/debug.png)
+![Debug Modules tab](assets/debug.png)
 
 ## Requirements
 
@@ -58,7 +58,7 @@ This command overwrites `packages/move/.aptos/config.yaml` with a new Aptos acco
 yarn deploy
 ```
 
-This command deploys the move modules to the selected network. The contract is located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `movement aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new contracts available in the nextjs frontend.
+This command deploys the move modules to the selected network. The contract is located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `movement aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new modules available in the nextjs frontend.
 
 5. On a third terminal, start your NextJS app:
 
@@ -66,13 +66,13 @@ This command deploys the move modules to the selected network. The contract is l
 yarn start
 ```
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+Visit your app on: `http://localhost:3000`. You can interact with your Move modules using the `Debug Modules` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
 
 **What's next**:
 
-- Edit your smart contract `OnchainBio.move` in `packages/move/sources`
+- Edit your Move module `OnchainBio.move` in `packages/move/sources`
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-<!-- - Edit your smart contract test in: `packages/hardhat/test`. To run test use `yarn hardhat:test` -->
+<!-- - Edit your Move modules test in: `packages/hardhat/test`. To run test use `yarn hardhat:test` -->
 
 ## Next steps
 
@@ -84,7 +84,7 @@ For this hackathon I kept the scope small due to the time constraints. I build o
   - Styling for Resources tab
   - Group contracts under address in liss
 - Fix colors for dark mode
-- Ensure export default deployedContracts satisfies GenericContractsDeclaration
+- Ensure export default deployedModules satisfies GenericContractsDeclaration
 - Add block explorer page
 
 ## Links

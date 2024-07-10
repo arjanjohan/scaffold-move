@@ -1,7 +1,7 @@
 import { Types } from "aptos";
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
-import deployedContractsData from "~~/contracts/deployedModules";
-import externalContractsData from "~~/contracts/externalModules";
+import deployedModulesData from "~~/contracts/deployedModules";
+import externalModulesData from "~~/contracts/externalModules";
 import scaffoldConfig from "~~/scaffold.config";
 import {
   AbiParameter
@@ -35,7 +35,7 @@ const deepMergeContracts = <L extends Record<PropertyKey, any>, E extends Record
   return result as MergeDeepRecord<AddExternalFlag<L>, AddExternalFlag<E>, { arrayMergeMode: "replace" }>;
 };
 
-const contractsData = deepMergeContracts(deployedContractsData, externalContractsData);
+const modulesData = deepMergeContracts(deployedModulesData, externalModulesData);
 
 export type GenericContract = {
   bytecode: string;
@@ -56,15 +56,15 @@ export type GenericContractsDeclaration = {
   };
 };
 
-export const contracts = contractsData as GenericContractsDeclaration | null;
+export const contracts = modulesData as GenericContractsDeclaration | null;
 
 type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
 
-type IsContractDeclarationMissing<TYes, TNo> = typeof contractsData extends { [key in ConfiguredChainId]: any }
+type IsContractDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key in ConfiguredChainId]: any }
   ? TNo
   : TYes;
 
-type ContractsDeclaration = IsContractDeclarationMissing<GenericContractsDeclaration, typeof contractsData>;
+type ContractsDeclaration = IsContractDeclarationMissing<GenericContractsDeclaration, typeof modulesData>;
 
 type Contracts = ContractsDeclaration["devnet"];
 

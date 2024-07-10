@@ -3,8 +3,8 @@ import { useIsMounted } from "usehooks-ts";
 import { Contract, ContractCodeStatus, ContractName, contracts } from "~~/utils/scaffold-move/contract";
 
 /**
- * Gets the matching contract info for the provided contract name from the contracts present in deployedContracts.ts
- * and externalContracts.ts corresponding to targetNetworks configured in scaffold.config.ts
+ * Gets the matching contract info for the provided contract name from the contracts present in deployedModules.ts
+ * and externalModules.ts corresponding to targetNetworks configured in scaffold.config.ts
  */
 export const useDeployedContractInfo = <TContractName extends ContractName>(contractName: TContractName) => {
   const isMounted = useIsMounted();

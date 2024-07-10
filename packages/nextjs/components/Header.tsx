@@ -25,7 +25,7 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/bio",
   },
   {
-    label: "Debug Contracts",
+    label: "Debug Modules",
     href: "/debug",
     icon: <BugAntIcon className="h-4 w-4" />,
   },
