@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Network, NetworkName } from "../../constants";
 import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
 
-// import {useGlobalState} from "../../global-config/GlobalConfig";
 
 function getIsGraphqlClientSupportedFor(networkName: NetworkName): boolean {
   const graphqlUri = getGraphqlURI(networkName);
@@ -37,7 +36,6 @@ function getGraphqlClient(networkName: NetworkName): ApolloClient<NormalizedCach
 }
 
 export function useGetGraphqlClient() {
-  // const [state] = useGlobalState();
   const state = { network_name: Network.DEVNET, network_value: "https://aptos.devnet.m1.movementlabs.xyz" };
 
   const [graphqlClient, setGraphqlClient] = useState<ApolloClient<NormalizedCacheObject>>(
@@ -62,7 +60,6 @@ export function GraphqlClientProvider({ children }: GraphqlClientProviderProps) 
 }
 
 export function useGetIsGraphqlClientSupported(): boolean {
-  // const [state] = useGlobalState();
   const state = { network_name: Network.DEVNET, network_value: "https://aptos.devnet.m1.movementlabs.xyz" };
 
   const [isGraphqlClientSupported, setIsGraphqlClientSupported] = useState<boolean>(

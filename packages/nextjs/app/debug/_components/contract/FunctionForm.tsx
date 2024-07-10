@@ -5,7 +5,6 @@ import { encodeInputArgsForViewRequest } from "../../../../utils/utils";
 import { parseTypeTag } from "@aptos-labs/ts-sdk";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
 import { Types } from "aptos";
-// import { useGlobalState } from "../../../../global-config/GlobalConfig";
 import { displayTxResult } from "~~/app/debug/_components/contract";
 import { view } from "~~/hooks";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";

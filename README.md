@@ -80,9 +80,8 @@ For this hackathon I kept the scope small due to the time constraints. I build o
 
 
 - Debug page
-  - Msg for no result on view methods + error msg 
+  - Msg for no result on view methods
   - Styling for Resources tab
-  - Fix vercel error in Resources tab
   - Group contracts under address in liss
 - Fix colors for dark mode
 - Ensure export default deployedContracts satisfies GenericContractsDeclaration
