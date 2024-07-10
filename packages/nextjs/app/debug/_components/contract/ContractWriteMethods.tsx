@@ -1,13 +1,13 @@
+import { Types } from "aptos";
 import { FunctionForm } from "~~/app/debug/_components/contract";
 import { Contract, ContractName } from "~~/utils/scaffold-move/contract";
-import { Types } from "aptos";
 
 export const ContractWriteMethods = ({ deployedContractData }: { deployedContractData: Contract<ContractName> }) => {
   if (!deployedContractData || deployedContractData.abi === undefined) {
     return null;
   }
 
-  const functionsToDisplay = deployedContractData.abi.exposed_functions.filter((fn : Types.MoveFunction) => fn.is_entry);
+  const functionsToDisplay = deployedContractData.abi.exposed_functions.filter((fn: Types.MoveFunction) => fn.is_entry);
 
   if (!functionsToDisplay.length) {
     return <>No write functions</>;

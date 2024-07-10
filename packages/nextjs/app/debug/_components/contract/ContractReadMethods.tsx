@@ -1,6 +1,6 @@
+import { Types } from "aptos";
 import { FunctionForm } from "~~/app/debug/_components/contract";
 import { Contract, ContractName } from "~~/utils/scaffold-move/contract";
-import { Types } from "aptos";
 
 export const ContractReadMethods = ({ deployedContractData }: { deployedContractData: Contract<ContractName> }) => {
   if (!deployedContractData || deployedContractData.abi === undefined) {

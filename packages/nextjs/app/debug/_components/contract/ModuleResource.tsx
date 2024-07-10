@@ -1,5 +1,6 @@
-import { Types } from "aptos";
 import dynamic from "next/dynamic";
+import { Types } from "aptos";
+
 const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false });
 
 type ModuleResourceProps = {

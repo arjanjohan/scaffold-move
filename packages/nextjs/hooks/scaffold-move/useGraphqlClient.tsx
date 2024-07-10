@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Network, NetworkName } from "../../constants";
 import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
 
-
 function getIsGraphqlClientSupportedFor(networkName: NetworkName): boolean {
   const graphqlUri = getGraphqlURI(networkName);
   return typeof graphqlUri === "string" && graphqlUri.length > 0;

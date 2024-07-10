@@ -10,9 +10,19 @@ import { aptosClient } from "~~/utils/scaffold-move/aptosClient";
 
 const aptos = aptosClient("m1_devnet");
 
-const ONCHAIN_BIO = deployedModules.devnet.onchain_bio.abi;
-
 const OnchainBio: NextPage = () => {
+  if (!deployedModules.devnet || !deployedModules.devnet.onchain_bio) {
+    return (
+      <div className="flex items-center flex-col flex-grow ">
+        <div className="flex flex-col items-center bg-base-100 shadow-lg shadow-secondary border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
+          <div className="text-xl">Module onchain_bio not found on devnet</div>
+        </div>
+      </div>
+    );
+  }
+
+  const ONCHAIN_BIO = deployedModules.devnet.onchain_bio.abi;
+
   const { account } = useWallet();
 
   const [inputName, setInputName] = useState<string>("");

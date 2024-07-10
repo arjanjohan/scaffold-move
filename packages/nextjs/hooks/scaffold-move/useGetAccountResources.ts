@@ -3,7 +3,6 @@ import { ResponseError } from "../client";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { Types } from "aptos";
 
-
 export function useGetAccountResources(
   address: string,
   options?: {

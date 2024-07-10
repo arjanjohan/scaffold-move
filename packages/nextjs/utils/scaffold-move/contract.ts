@@ -1,11 +1,9 @@
+import { AbiParameter } from "abitype";
 import { Types } from "aptos";
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedModulesData from "~~/contracts/deployedModules";
 import externalModulesData from "~~/contracts/externalModules";
 import scaffoldConfig from "~~/scaffold.config";
-import {
-  AbiParameter
-} from "abitype";
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {

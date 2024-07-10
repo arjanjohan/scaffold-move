@@ -35,7 +35,7 @@ export const FunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
   const [viewInProcess, setViewInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();
-  const [error, setError] = useState<string | null>(null); 
+  const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ContractFormType>({ typeArgs: [], args: [] });
 
   const { account } = useWallet();
