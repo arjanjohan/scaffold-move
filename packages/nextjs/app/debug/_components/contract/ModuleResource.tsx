@@ -1,5 +1,7 @@
+import dynamic from "next/dynamic";
 import { Types } from "aptos";
-import ReactJson from "react-json-view";
+
+const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false });
 
 type ModuleResourceProps = {
   key: number;
@@ -14,7 +16,7 @@ export const ModuleResource = ({ key, resource, collapsedByDefault }: ModuleReso
   return (
     <>
       <div>{resource.type}</div>
-      <ReactJson
+      <DynamicReactJson
         key={key}
         src={resource.data}
         collapseStringsAfterLength={COLLAPSE_STRINGS_AFTER_LENGTH}
@@ -22,7 +24,7 @@ export const ModuleResource = ({ key, resource, collapsedByDefault }: ModuleReso
         displayDataTypes={false}
         quotesOnKeys={false}
         groupArraysAfterLength={GROUP_ARRAYS_AFTER_LENGTH}
-        collapsed={true}
+        collapsed={collapsedByDefault}
       />
     </>
   );

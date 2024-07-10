@@ -56,13 +56,13 @@ yarn account
 
 This command overwrites `packages/move/.aptos/config.yaml` with a new Aptos account. The new address is copied over to the first address in the Move.toml file. If no address exists in this file, it is added on a new line.
 
-4. Deploy the test contract:
+4. Deploy the test modules:
 
 ```
 yarn deploy
 ```
 
-This command deploys the move modules to the selected network. The contract is located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `movement aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new modules available in the nextjs frontend.
+This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `movement aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new modules available in the nextjs frontend.
 
 5. On a third terminal, start your NextJS app:
 
@@ -84,17 +84,16 @@ For this hackathon I kept the scope small due to the time constraints. I build o
 
 
 - Debug page
-  - Msg for no result on view methods
-  - Styling for Resources tab
-  - Group contracts under address in liss
+  - Styling Resources tab
+  - Fix Vercel bug with Resources tab (Resources only showing on local for now)
+  - Group modules under address
 - Fix colors for dark mode
 - Ensure export default deployedModules satisfies GenericContractsDeclaration
 - Add block explorer page
 
 ## Links
 
-<!-- - [Presentation video]()
-- [Presentation slides]() -->
+- [Demo video](https://www.loom.com/share/4491aa1f222e409782a5ede3a7ac5cb0)
 - [Website](https://scaffold-move-chi.vercel.app/)
 - [Dorahacks](https://dorahacks.io/buidl/13953)
 - [Github](https://github.com/arjanjohan/scaffold-move)
