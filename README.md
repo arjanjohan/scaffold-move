@@ -14,8 +14,8 @@
 ⚙️ Built using NextJS, Tailwind and Typescript.
 
 - ✅ **Module Hot Reload**: Your frontend auto-adapts to your Move modules as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks to simplify interactions with Move modules .
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
+- 🪝 **Custom hooks**: Collection of React hooks to simplify interactions with Move modules .
+- 🧱 **Components**: Collection of common web3 components to quickly build your frontend.
 - 🔐 **Integration with Wallet Providers**: Connect your Petra Wallet and interact with the Aptos or Movement M1 network.
 
 ![Debug Modules tab](assets/debug.png)
