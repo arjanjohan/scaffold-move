@@ -27,7 +27,7 @@ Before you begin, you need to install the following tools:
 - [Node (>= v18.17)](https://nodejs.org/en/download/)
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
-- [Movement CLI]()
+- [Movement CLI](https://aptos.dev/en/build/cli)
 
 ## Quickstart
 
@@ -63,7 +63,7 @@ This command overwrites `packages/move/.aptos/config.yaml` with a new Aptos acco
 yarn deploy
 ```
 
-This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `movement aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new modules available in the nextjs frontend.
+This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/loadContracts.js` to make the new modules available in the nextjs frontend.
 
 5. On a third terminal, start your NextJS app:
 
