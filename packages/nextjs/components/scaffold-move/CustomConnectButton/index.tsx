@@ -3,6 +3,7 @@
 import { Balance } from "../Balance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
+
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 // import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
@@ -19,9 +20,8 @@ export const CustomConnectButton = () => {
   return (
     <>
       {!connected ? (
-        <div className="flex flex-col items-center mr-1 btn btn-primary">
-          <WalletSelector />
-        </div>
+        <WalletSelector />
+
       ) : (
         // : chainId !== targetNetwork.id ? (
         //   <WrongNetworkDropdown />

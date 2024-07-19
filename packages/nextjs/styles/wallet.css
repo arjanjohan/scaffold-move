@@ -1,0 +1,107 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.wallet-button {
+  @apply flex flex-col items-center mr-1 btn btn-primary !important;
+
+}
+
+.wallet-modal-title {
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+}
+
+.aptos-connect-privacy-policy-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aptos-connect-privacy-policy-text {
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.aptos-connect-privacy-policy-link {
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.aptos-connect-privacy-policy-link:hover {
+  text-decoration: underline;
+}
+
+.aptos-connect-powered-by {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.wallet-menu-wrapper {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  border: solid 1px;
+  border-color: rgba(0, 0, 0, 0.1);
+  padding-inline: 16px;
+  padding-block: 12px;
+  border-radius: 8px;
+}
+
+.wallet-name-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.wallet-selector-icon {
+  height: 24px;
+  width: 24px;
+  margin-right: 12px;
+}
+
+.wallet-selector-text {
+  font-size: 14px;
+}
+
+.wallet-connect-button {
+  @apply flex flex-col items-center btn btn-secondary;
+}
+
+.wallet-connect-install {
+  @apply flex flex-col items-center mr-1 btn btn-secondary;
+}
+
+/* Scoped Ant CSS overrides */
+
+:where(.wallet-selector-modal .ant-modal-body) {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+:where(.wallet-selector-modal .ant-divider-inner-text) {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+:where(.wallet-selector-modal .ant-collapse-header) {
+  justify-content: center !important;
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+:where(.wallet-selector-modal .ant-collapse-header-text) {
+  flex: unset !important;
+  margin-inline-end: 0 !important;
+}
+
+:where(.wallet-selector-modal .ant-collapse-content-box) {
+  padding: 0px !important;
+  padding-top: 8px !important;
+}
