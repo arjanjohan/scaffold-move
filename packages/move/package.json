@@ -2,10 +2,16 @@
   "name": "@scaffold-move/move",
   "packageManager": "yarn@3.2.3",
   "scripts": {
-    "account": "[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network custom --rest-url https://devnet.m1.movementlabs.xyz/ --faucet-url https://devnet.m1.movementlabs.xyz/",
+    "account": "node scripts/init-account.js",
     "chain": "aptos node run-local-testnet",
-    "publish": "aptos move publish --assume-yes",
+    "publish": "aptos move publish --assume-yes && node scripts/loadContracts.js",
     "compile": "aptos move compile",
     "test": ""
+  },
+  "dependencies": {
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "@types/minimist": "^1"
   }
 }
