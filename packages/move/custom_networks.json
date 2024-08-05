@@ -1,7 +1,10 @@
 {
-    "movement_devnet": {
-      "rest-url": "https://devnet.m1.movementlabs.xyz/",
-      "faucet-url": "https://devnet.m1.movementlabs.xyz/"
-    }
+  "movement_devnet": {
+    "rest-url": "https://devnet.m1.movementlabs.xyz/",
+    "faucet-url": "https://devnet.m1.movementlabs.xyz/"
+  },
+  "movement_testnet": {
+    "rest-url": "https://aptos.testnet.suzuka.movementlabs.xyz/v1",
+    "faucet-url": "https://faucet.testnet.suzuka.movementlabs.xyz/"
   }
-  
+}

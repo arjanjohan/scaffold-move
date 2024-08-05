@@ -22,12 +22,14 @@ export const defaultChains: Chains = {
     indexer: "https://indexer.devnet.m1.movementlabs.xyz/",
     faucet: "https://faucet2.movementlabs.xyz",
   },
-  // m1_testnet: {
-  //     id: 'testnet',
-  //     name: 'M1 Testnet',
-  //     network: Network.CUSTOM,
-  //     rpcUrl: 'https://devnet.m1.movementlabs.xyz/',
-  // },
+  m1_testnet: {
+    id: "testnet",
+    name: "M1 Testnet",
+    network: Network.CUSTOM,
+    fullnode: "https://aptos.testnet.suzuka.movementlabs.xyz/v1",
+    indexer: "https://indexer.testnet.m1.movementlabs.xyz/",
+    faucet: "https://faucet.testnet.suzuka.movementlabs.xyz/",
+  },
   aptos_testnet: {
     id: "testnet",
     name: "Aptos Testnet",
