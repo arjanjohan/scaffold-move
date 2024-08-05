@@ -8,7 +8,7 @@ import deployedModules from "~~/contracts/deployedModules";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { aptosClient } from "~~/utils/scaffold-move/aptosClient";
 
-const aptos = aptosClient("m1_devnet");
+const aptos = aptosClient("m1_testnet");
 
 const OnchainBio: NextPage = () => {
   if (!deployedModules.devnet || !deployedModules.devnet.onchain_bio) {

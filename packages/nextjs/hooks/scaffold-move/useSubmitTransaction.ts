@@ -25,7 +25,7 @@ const useSubmitTransaction = () => {
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
 
   // const network = useTargetNetwork();
-  const aptos = aptosClient("m1_devnet");
+  const aptos = aptosClient("m1_testnet");
 
   const { signAndSubmitTransaction } = useWallet();
 

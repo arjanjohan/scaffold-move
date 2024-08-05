@@ -8,7 +8,7 @@ type NetworkOptionsProps = {
 };
 
 export const NetworkOptions = ({ hidden = false }: NetworkOptionsProps) => {
-  const chain = "devnet"; // TODO: Get this from wallet?
+  const chain = "testnet"; // TODO: Get this from wallet?
 
   return (
     <>
