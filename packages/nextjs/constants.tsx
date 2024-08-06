@@ -1,6 +1,8 @@
 /**
  * Network
  */
+
+// TODO: Check where this is used
 export const devnetUrl = "https://aptos.devnet.m1.movementlabs.xyz";
 
 export const networks = {

@@ -2,6 +2,7 @@ import { getAccountResources } from "..";
 import { ResponseError } from "../client";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { Types } from "aptos";
+import { useTargetNetwork } from "./useTargetNetwork";
 
 export function useGetAccountResources(
   address: string,
@@ -9,7 +10,14 @@ export function useGetAccountResources(
     retry?: number | boolean;
   },
 ): UseQueryResult<Types.MoveResource[], ResponseError> {
-  const state = { network_value: "https://aptos.devnet.m1.movementlabs.xyz" };
+
+  const network = useTargetNetwork();
+  let state = {network_value: ""};
+  // if (network.targetNetwork.network === Network.CUSTOM) {
+  state.network_value = network.targetNetwork.fullnode ? network.targetNetwork.fullnode : "" ;
+  // } else {
+
+  // }
 
   const test = useQuery<Array<Types.MoveResource>, ResponseError>({
     queryKey: ["accountResources", { address }, state.network_value],

@@ -5,7 +5,7 @@ const { exec } = require('child_process');
 const minimist = require('minimist');
 
 const args = minimist(process.argv.slice(2));
-const network = args.network || 'movement_devnet';
+const network = args.network || 'movement_devnet || movement_testnet';
 const restUrl = args['rest-url'];
 const faucetUrl = args['faucet-url'];
 const configPath = path.join(__dirname, '../custom_networks.json');

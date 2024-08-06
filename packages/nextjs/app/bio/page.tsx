@@ -7,10 +7,12 @@ import { InputBase } from "~~/components/scaffold-eth";
 import deployedModules from "~~/contracts/deployedModules";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { aptosClient } from "~~/utils/scaffold-move/aptosClient";
-
-const aptos = aptosClient("m1_testnet");
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
 const OnchainBio: NextPage = () => {
+
+  const network = useTargetNetwork();
+  const aptos = aptosClient(network.targetNetwork.id);
   if (!deployedModules.devnet || !deployedModules.devnet.onchain_bio) {
     return (
 
