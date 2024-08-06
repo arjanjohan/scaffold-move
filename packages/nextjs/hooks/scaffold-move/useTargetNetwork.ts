@@ -7,7 +7,7 @@ import { Chain } from "~~/utils/scaffold-move/chains";
  * Retrieves the connected wallet's network from scaffold.config or defaults to the 0th network in the list if the wallet is not connected.
  */
 export function useTargetNetwork(): { targetNetwork: Chain } {
-  const chain = "devnet"; // TODO: Get this from wallet?
+  const chain = "m1_testnet"; // TODO: Get this from wallet?
   const targetNetwork = useGlobalState(({ targetNetwork }) => targetNetwork);
   const setTargetNetwork = useGlobalState(({ setTargetNetwork }) => setTargetNetwork);
 

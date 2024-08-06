@@ -4,10 +4,10 @@ const yaml = require('js-yaml');
 const { AptosClient } = require('aptos'); // Assuming you're using the Aptos SDK for JavaScript
 
 // Paths to the relevant files
-const moveTomlPath = path.join(__dirname, '../packages/move/Move.toml');
-const configYamlPath = path.join(__dirname, '../packages/move/.aptos/config.yaml');
-const deployedModulesPath = path.join(__dirname, '../packages/nextjs/contracts/deployedModules.ts');
-const externalModulesPath = path.join(__dirname, '../packages/nextjs/contracts/externalModules.ts');
+const moveTomlPath = path.join(__dirname, '../Move.toml');
+const configYamlPath = path.join(__dirname, '../.aptos/config.yaml');
+const deployedModulesPath = path.join(__dirname, '../../../packages/nextjs/contracts/deployedModules.ts');
+const externalModulesPath = path.join(__dirname, '../../../packages/nextjs/contracts/externalModules.ts');
 
 // Function to parse the TOML file and extract addresses
 function parseToml(filePath) {
