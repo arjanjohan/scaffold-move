@@ -5,7 +5,7 @@ const { exec } = require('child_process');
 const minimist = require('minimist');
 
 const args = minimist(process.argv.slice(2));
-const network = args.network || 'movement_devnet || movement_testnet';
+const network = args.network || 'movement_testnet';
 const restUrl = args['rest-url'];
 const faucetUrl = args['faucet-url'];
 const configPath = path.join(__dirname, '../custom_networks.json');
@@ -82,7 +82,7 @@ fs.readFile(configPath, 'utf8', (err, data) => {
       process.exit(1);
     }
     initCustomNetwork(restUrl, faucetUrl);
-  } else {
+  } else if (network in ["devnet", "testnet", "mainnet", "local"]) {
     const command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network ${network}`;
     console.log(`Running command: ${command}`);
     exec(command, (error, stdout, stderr) => {
@@ -100,5 +100,7 @@ fs.readFile(configPath, 'utf8', (err, data) => {
       const newAddress = `0x${config.profiles.default.account.replace(/^0x/, '')}`; // Ensure 0x prefix
       updateMoveTomlAddress(moveTomlPath, newAddress);
     });
+  } else {
+    console.error(`Error: Unknown network: ${network}`);
   }
 });
