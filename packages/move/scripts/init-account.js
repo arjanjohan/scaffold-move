@@ -82,7 +82,7 @@ fs.readFile(configPath, 'utf8', (err, data) => {
       process.exit(1);
     }
     initCustomNetwork(restUrl, faucetUrl);
-  } else if (network in ["devnet", "testnet", "mainnet", "local"]) {
+  } else if (["devnet", "testnet", "mainnet", "local"].includes(network)) {
     const command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network ${network}`;
     console.log(`Running command: ${command}`);
     exec(command, (error, stdout, stderr) => {
@@ -102,5 +102,7 @@ fs.readFile(configPath, 'utf8', (err, data) => {
     });
   } else {
     console.error(`Error: Unknown network: ${network}`);
+    process.exit(1);
   }
+  
 });
