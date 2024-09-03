@@ -47,7 +47,10 @@ function updateMoveTomlAddress(tomlPath, newAddress) {
 }
 
 function initCustomNetwork(restUrl, faucetUrl) {
-  const command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network custom --rest-url ${restUrl} --faucet-url ${faucetUrl}`;
+  let command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network custom --rest-url ${restUrl}`;
+  if (faucetUrl) {
+    command += ` --faucet-url ${faucetUrl}`;
+  }
   console.log(`Running command: ${command}`);
   exec(command, (error, stdout, stderr) => {
     if (error) {
@@ -77,8 +80,8 @@ fs.readFile(configPath, 'utf8', (err, data) => {
     const { 'rest-url': configRestUrl, 'faucet-url': configFaucetUrl } = networks[network];
     initCustomNetwork(configRestUrl, configFaucetUrl);
   } else if (network === 'custom') {
-    if (!restUrl || !faucetUrl) {
-      console.error('Error: custom network requires --rest-url and --faucet-url');
+    if (!restUrl) {
+      console.error('Error: custom network requires --rest-url');
       process.exit(1);
     }
     initCustomNetwork(restUrl, faucetUrl);

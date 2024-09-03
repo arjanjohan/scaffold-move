@@ -90,6 +90,7 @@ For this hackathon I kept the scope small due to the time constraints. I build t
 - Fix colors for dark mode
 - Ensure export default deployedModules satisfies GenericContractsDeclaration
 - Add block explorer page
+- Add indexer and update testnet config
 
 ## Links
 
