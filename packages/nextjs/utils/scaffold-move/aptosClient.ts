@@ -2,7 +2,8 @@ import { defaultChains } from "./chains";
 import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
 
 export function aptosClient(chainId: string) {
-  const chain = defaultChains[chainId];
+
+  const chain = defaultChains["m1_testnet"]; // TODO: remove hardcoded chain
   if (!chain) {
     throw new Error(`Chain with id ${chainId} not found`);
   }

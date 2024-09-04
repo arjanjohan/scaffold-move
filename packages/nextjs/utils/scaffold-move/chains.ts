@@ -15,7 +15,7 @@ type Chains = {
 
 export const defaultChains: Chains = {
   m1_devnet: {
-    id: "m1_devnet",
+    id: "4",
     name: "M1 Devnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.devnet.m1.movementlabs.xyz",
@@ -23,16 +23,31 @@ export const defaultChains: Chains = {
     faucet: "https://faucet2.movementlabs.xyz",
   },
   m1_testnet: {
-    id: "m1_testnet",
+    id: "27",
     name: "M1 Testnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.testnet.suzuka.movementlabs.xyz/v1",
     indexer: "https://indexer.testnet.m1.movementlabs.xyz/",
     faucet: "https://faucet.testnet.suzuka.movementlabs.xyz/",
   },
+  aptos_mainnet: {
+    id: "1",
+    name: "Aptos Mainnet",
+    network: Network.MAINNET,
+  },
   aptos_testnet: {
-    id: "testnet",
+    id: "2",
     name: "Aptos Testnet",
     network: Network.TESTNET,
+  },
+  aptos_devnet: {
+    id: "65",
+    name: "Aptos Devnet",
+    network: Network.DEVNET,
+  },
+  local: {
+    id: "4",
+    name: "Local",
+    network: Network.LOCAL,
   },
 };

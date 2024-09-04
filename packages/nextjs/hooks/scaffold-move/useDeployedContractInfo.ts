@@ -8,7 +8,7 @@ import { Contract, ContractCodeStatus, ContractName, contracts } from "~~/utils/
  */
 export const useDeployedContractInfo = <TContractName extends ContractName>(contractName: TContractName) => {
   const isMounted = useIsMounted();
-  const targetNetwork = "devnet";
+  const targetNetwork = "testnet"; //TODO: hardcoded value
   const deployedContract = contracts?.[targetNetwork]?.[contractName.toString()] as Contract<TContractName>;
   const [status, setStatus] = useState<ContractCodeStatus>(ContractCodeStatus.LOADING);
   // const publicClient = usePublicClient({ chainId: targetNetwork.id });

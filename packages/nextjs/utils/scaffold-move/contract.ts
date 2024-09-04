@@ -64,7 +64,7 @@ type IsContractDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key
 
 type ContractsDeclaration = IsContractDeclarationMissing<GenericContractsDeclaration, typeof modulesData>;
 
-type Contracts = ContractsDeclaration["devnet"];
+type Contracts = ContractsDeclaration["testnet"]; // TODO: hardcoded value
 
 export type ContractName = keyof Contracts;
 export type Contract<TContractName extends ContractName> = Contracts[TContractName];

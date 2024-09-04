@@ -12,8 +12,9 @@ import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 const OnchainBio: NextPage = () => {
 
   const network = useTargetNetwork();
-  const aptos = aptosClient(network.targetNetwork.id);
-  if (!deployedModules.devnet || !deployedModules.devnet.onchain_bio) {
+  console.log("network", network);
+  const aptos = aptosClient("m1_testnet");
+  if (!deployedModules.testnet || !deployedModules.testnet.onchain_bio) {
     return (
 
     <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
@@ -23,7 +24,7 @@ const OnchainBio: NextPage = () => {
     );
   }
 
-  const ONCHAIN_BIO = deployedModules.devnet.onchain_bio.abi;
+  const ONCHAIN_BIO = deployedModules.testnet.onchain_bio.abi;
 
   const { account } = useWallet();
 

@@ -135,9 +135,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aptos-connect/wallet-adapter-plugin@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@aptos-connect/wallet-adapter-plugin@npm:1.0.0"
+"@aptos-connect/wallet-adapter-plugin@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@aptos-connect/wallet-adapter-plugin@npm:1.0.1"
   dependencies:
     "@aptos-connect/wallet-api": ^0.1.1
     "@aptos-labs/wallet-adapter-core": ^3.5.0
@@ -147,7 +147,7 @@ __metadata:
     "@aptos-labs/ts-sdk": 1.18.1
     "@aptos-labs/wallet-standard": ^0.1.0
     aptos: ^1.21.0
-  checksum: a6debc35a78344cf714f8a759ae1a9bd79f9b0c26d0a5e235bfbe39b7562cc17f06345f71e8c201411db171e98615c2f9e168a3a42a837cf74bd9c212c226537
+  checksum: 827719d4555154ded2d529d63366d700367ab401b4d7baf0c5f16d9082b9f7b5104852f9b2e956276ba52359880f4a076a34f9b46f9c92f34f88d77e181f695c
   languageName: node
   linkType: hard
 
@@ -187,6 +187,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aptos-labs/aptos-cli@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@aptos-labs/aptos-cli@npm:0.2.0"
+  bin:
+    aptos: bin/aptos
+  checksum: feb166ec3fb657488df4c892f2ac49bedc1054a54d7410bf3cac6a1024a6231b4b3113273356bf855f6cf323205930b73cd70a8379ef2d676aef2ec569f60171
+  languageName: node
+  linkType: hard
+
 "@aptos-labs/aptos-client@npm:^0.1.0":
   version: 0.1.0
   resolution: "@aptos-labs/aptos-client@npm:0.1.0"
@@ -194,6 +203,35 @@ __metadata:
     axios: 1.6.2
     got: ^11.8.6
   checksum: afe2e3a2f18736ef6ddfdd059530a12b136d17ea79b5b80757721500620fa0d962de0e7863f15c95cbe127ba8be64b4733f79818a70a193967ec00d394dd1bcd
+  languageName: node
+  linkType: hard
+
+"@aptos-labs/aptos-client@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@aptos-labs/aptos-client@npm:0.1.1"
+  dependencies:
+    axios: 1.7.4
+    got: ^11.8.6
+  checksum: 230050a63ae2125c334dd87d7b72fd04c30700e0ef14d5e342d56390d23c18be742a68e6e49aa92d9a5d191da5b8b80623ec94400b565185861f38251c013a3a
+  languageName: node
+  linkType: hard
+
+"@aptos-labs/ts-sdk@npm:^1.26.0":
+  version: 1.27.1
+  resolution: "@aptos-labs/ts-sdk@npm:1.27.1"
+  dependencies:
+    "@aptos-labs/aptos-cli": ^0.2.0
+    "@aptos-labs/aptos-client": ^0.1.1
+    "@noble/curves": ^1.4.0
+    "@noble/hashes": ^1.4.0
+    "@scure/bip32": ^1.4.0
+    "@scure/bip39": ^1.3.0
+    eventemitter3: ^5.0.1
+    form-data: ^4.0.0
+    js-base64: ^3.7.7
+    jwt-decode: ^4.0.0
+    poseidon-lite: ^0.2.0
+  checksum: a30c3d7b22ef3d0bb0cb28f984b7c629912b9d481382c0ce5b7a0ded549e6da425482230a7ed54950d277993b8bde949f1e092b81fa4fce147848e7f434b55aa
   languageName: node
   linkType: hard
 
@@ -216,33 +254,35 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aptos-labs/wallet-adapter-ant-design@npm:^2.6.2":
-  version: 2.6.2
-  resolution: "@aptos-labs/wallet-adapter-ant-design@npm:2.6.2"
+"@aptos-labs/wallet-adapter-ant-design@npm:^3.0.11":
+  version: 3.0.11
+  resolution: "@aptos-labs/wallet-adapter-ant-design@npm:3.0.11"
   dependencies:
-    "@aptos-labs/wallet-adapter-react": 3.4.2
+    "@ant-design/icons": ^5.3.7
+    "@aptos-labs/wallet-adapter-react": 3.6.0
     antd: ^5.18.3
   peerDependencies:
     react: ^18
     react-dom: ^18
-  checksum: 5f019d3494e737f9d45f8a3effc662bd122c913c0f8a44709976f7bc4171a87e15b0f79163e10c2006125ac14a13056b535d26c0854ce9947f281802f1eea654
+  checksum: c30fcb18155b4444b4cfaa0f1d6a08cc0d271bd3094d61129397fd3e0cf08c5270c2aaee19683c93ca15eb248f8385f6bd26525ddafaf333e70d4277203caeae
   languageName: node
   linkType: hard
 
-"@aptos-labs/wallet-adapter-core@npm:4.8.1":
-  version: 4.8.1
-  resolution: "@aptos-labs/wallet-adapter-core@npm:4.8.1"
+"@aptos-labs/wallet-adapter-core@npm:4.15.0":
+  version: 4.15.0
+  resolution: "@aptos-labs/wallet-adapter-core@npm:4.15.0"
   dependencies:
-    "@aptos-connect/wallet-adapter-plugin": ^1.0.0
+    "@aptos-connect/wallet-adapter-plugin": ^1.0.1
     "@aptos-labs/wallet-standard": ^0.1.0
-    "@atomrigslab/aptos-wallet-adapter": ^0.1.12
+    "@atomrigslab/aptos-wallet-adapter": ^0.1.20
+    "@mizuwallet-sdk/aptos-wallet-adapter": ^0.2.0
     buffer: ^6.0.3
     eventemitter3: ^4.0.7
     tweetnacl: ^1.0.3
   peerDependencies:
     "@aptos-labs/ts-sdk": ^1.18.1
     aptos: ^1.21.0
-  checksum: 59a1f7dd4b9d52441503328f8d278a9760bbe9073c84afc4a62dd022b03f79070fd76be85e9c6036429fe3c2d89348850d35cd03e5f45141b0a70afacd0a156c
+  checksum: d19f64aea9360b5e7ac05137eddeb8c34fca0895a33fdcfd828dd26e3be644544abc864082b02f4221c277cc21f67e8af23797ca8d0e4b7baacab3243af5bcd2
   languageName: node
   linkType: hard
 
@@ -262,15 +302,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aptos-labs/wallet-adapter-react@npm:3.4.2, @aptos-labs/wallet-adapter-react@npm:^3.4.2":
-  version: 3.4.2
-  resolution: "@aptos-labs/wallet-adapter-react@npm:3.4.2"
+"@aptos-labs/wallet-adapter-react@npm:3.6.0, @aptos-labs/wallet-adapter-react@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "@aptos-labs/wallet-adapter-react@npm:3.6.0"
   dependencies:
-    "@aptos-labs/wallet-adapter-core": 4.8.1
+    "@aptos-labs/wallet-adapter-core": 4.15.0
     "@radix-ui/react-slot": ^1.0.2
   peerDependencies:
     react: ^18
-  checksum: 128cba6f0bf1f1b791e3a0c71bf947d3fc7e76c895885e317a47051dddb67c19e35dbf717d0ee29aebf0b25f373bb5047f296f75a30bcced6785486d4ba90e16
+  checksum: 176abdb5c53a93120384ccc31fd2283f53b2d4ce9fd5f40913f9874db362626698e84d237de29444d15b4af50cea907972ab005518003ddcb4a37ca513b3c441
   languageName: node
   linkType: hard
 
@@ -284,6 +324,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aptos-labs/wallet-standard@npm:0.1.0-ms.1":
+  version: 0.1.0-ms.1
+  resolution: "@aptos-labs/wallet-standard@npm:0.1.0-ms.1"
+  peerDependencies:
+    "@aptos-labs/ts-sdk": ^1.17.0
+    "@wallet-standard/core": ^1.0.3
+  checksum: efbc15fb3ae6393e596dddbe573b17e2cd6744d1b605491fc60bc8676e7dca4b4e69a7a8eaa7f4173b20286ed87633671d55929ba61157337faf1c5377606730
+  languageName: node
+  linkType: hard
+
 "@aptos-labs/wallet-standard@npm:^0.1.0":
   version: 0.1.0
   resolution: "@aptos-labs/wallet-standard@npm:0.1.0"
@@ -294,7 +344,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atomrigslab/aptos-wallet-adapter@npm:^0.1.10, @atomrigslab/aptos-wallet-adapter@npm:^0.1.12":
+"@atomrigslab/aptos-wallet-adapter@npm:^0.1.10":
   version: 0.1.13
   resolution: "@atomrigslab/aptos-wallet-adapter@npm:0.1.13"
   dependencies:
@@ -303,6 +353,27 @@ __metadata:
   peerDependencies:
     "@aptos-labs/ts-sdk": ^1.9.0
   checksum: a46ef7b9f96744a013a6c6ba06d7b2573bb726521462a94441d4c45662d8625675bacdbc00862f9164384a741cb44ecfec2db15a41c84bac6174353436a55363
+  languageName: node
+  linkType: hard
+
+"@atomrigslab/aptos-wallet-adapter@npm:^0.1.20":
+  version: 0.1.21
+  resolution: "@atomrigslab/aptos-wallet-adapter@npm:0.1.21"
+  dependencies:
+    "@aptos-labs/wallet-standard": 0.0.11
+    "@atomrigslab/dekey-web-wallet-provider": 1.2.1
+  peerDependencies:
+    "@aptos-labs/ts-sdk": ^1.9.0
+  checksum: cd70a00d2bd6e0bc3b1482738b726ca76f45a889f417ca943a35f2c2edf52e96159b12fc58fe11ea92101ad0908772c050a9c96441e8900e6be64f7cdfc6b0dc
+  languageName: node
+  linkType: hard
+
+"@atomrigslab/dekey-web-wallet-provider@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@atomrigslab/dekey-web-wallet-provider@npm:1.2.1"
+  dependencies:
+    "@atomrigslab/providers": 1.1.0
+  checksum: 8a43a1fc194687fe69c0c7e0cf87b803aac0e1cb78f2657d9de048c7dc182029456db8bdeca0e9038dcd57152594047def3dc2e0fc8d50ee08e17fec4f7e4c99
   languageName: node
   linkType: hard
 
@@ -332,6 +403,26 @@ __metadata:
     pump: ^3.0.0
     webextension-polyfill-ts: ^0.25.0
   checksum: c49f53398456e21d62ad5bddc5bad4359c33634becfa0e92352369b8a6b60bc4ce832450a6f6dfc5c809c8e059ce3d6144548c8bc7e65fbcbf64925a6b1b78b3
+  languageName: node
+  linkType: hard
+
+"@atomrigslab/providers@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@atomrigslab/providers@npm:1.1.0"
+  dependencies:
+    "@metamask/object-multiplex": ^1.1.0
+    "@metamask/safe-event-emitter": ^2.0.0
+    "@types/chrome": ^0.0.136
+    detect-browser: ^5.2.0
+    eth-rpc-errors: ^4.0.2
+    extension-port-stream: ^2.0.1
+    fast-deep-equal: ^2.0.1
+    is-stream: ^2.0.0
+    json-rpc-engine: ^6.1.0
+    json-rpc-middleware-stream: ^3.0.0
+    pump: ^3.0.0
+    webextension-polyfill-ts: ^0.25.0
+  checksum: 8f70ed98f70299458047f5b05a07807a42bd3fcaf796c41214aafadd539ad0ad8441cdbc4bbf7d2dd633a060f3b8d0b196f25b1ee9c1299dfa7403dc311914a4
   languageName: node
   linkType: hard
 
@@ -578,6 +669,22 @@ __metadata:
     "@babel/helper-validator-identifier": ^7.24.7
     to-fast-properties: ^2.0.0
   checksum: 3e4437fced97e02982972ce5bebd318c47d42c9be2152c0fd28c6f786cc74086cc0a8fb83b602b846e41df37f22c36254338eada1a47ef9d8a1ec92332ca3ea8
+  languageName: node
+  linkType: hard
+
+"@blocto/sdk@npm:^0.10.3":
+  version: 0.10.3
+  resolution: "@blocto/sdk@npm:0.10.3"
+  dependencies:
+    buffer: ^6.0.3
+    eip1193-provider: ^1.0.1
+    js-sha3: ^0.8.0
+  peerDependencies:
+    aptos: ^1.3.14
+  peerDependenciesMeta:
+    aptos:
+      optional: true
+  checksum: efd70beddcd0bfa80d072c980599375855aad6940147345564f816877403e629731317e2a309b6a3cbb3c8f64c88288068f6d0c91671815a9a7d6b1461881894
   languageName: node
   linkType: hard
 
@@ -860,7 +967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-typed-document-node/core@npm:^3.1.1":
+"@graphql-typed-document-node/core@npm:^3.1.1, @graphql-typed-document-node/core@npm:^3.2.0":
   version: 3.2.0
   resolution: "@graphql-typed-document-node/core@npm:3.2.0"
   peerDependencies:
@@ -1050,6 +1157,37 @@ __metadata:
     "@jridgewell/resolve-uri": ^3.1.0
     "@jridgewell/sourcemap-codec": ^1.4.14
   checksum: 956a6f0f6fec060fb48c6bf1f5ec2064e13cd38c8be3873877d4b92b4a27ba58289a34071752671262a3e3c202abcc3fa2aac64d8447b4b0fa1ba3c9047f1c20
+  languageName: node
+  linkType: hard
+
+"@json-rpc-tools/provider@npm:^1.5.5":
+  version: 1.7.6
+  resolution: "@json-rpc-tools/provider@npm:1.7.6"
+  dependencies:
+    "@json-rpc-tools/utils": ^1.7.6
+    axios: ^0.21.0
+    safe-json-utils: ^1.1.1
+    ws: ^7.4.0
+  checksum: c60d73511db7f743c3844d499df6a7e243d5f5493127c00fbf9aec74c95d2e80a3033eb22369c428c2deec263a47cd1b334cd76c84859e30355a6dace893a589
+  languageName: node
+  linkType: hard
+
+"@json-rpc-tools/types@npm:^1.7.6":
+  version: 1.7.6
+  resolution: "@json-rpc-tools/types@npm:1.7.6"
+  dependencies:
+    keyvaluestorage-interface: ^1.0.0
+  checksum: f23ec7d79a78aa4e896d1dff506108bd3da38015028afd997034e6498c1f3c7bedee70618b0d1a73adf13b4d2a6a91146c2e9505487280b3c376e74f5790e77c
+  languageName: node
+  linkType: hard
+
+"@json-rpc-tools/utils@npm:^1.7.6":
+  version: 1.7.6
+  resolution: "@json-rpc-tools/utils@npm:1.7.6"
+  dependencies:
+    "@json-rpc-tools/types": ^1.7.6
+    "@pedrouid/environment": ^1.0.1
+  checksum: 32cac2e8cbf8a15d95415de8ded483c6206e6df392e129ad51acd90a4842511e931156c59cb26036fb9fae8054e8f20b719a35282304f39cd18683a5293cb67d
   languageName: node
   linkType: hard
 
@@ -1342,6 +1480,64 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mizuwallet-sdk/aptos-wallet-adapter@npm:^0.2.0":
+  version: 0.2.3
+  resolution: "@mizuwallet-sdk/aptos-wallet-adapter@npm:0.2.3"
+  dependencies:
+    "@aptos-labs/ts-sdk": ^1.26.0
+    "@aptos-labs/wallet-standard": 0.1.0-ms.1
+    "@blocto/sdk": ^0.10.3
+    "@msafe/aptos-wallet": ^6.1.1
+    buffer: ^6.0.3
+    postmate: ^1.5.2
+  peerDependencies:
+    "@mizuwallet-sdk/core": ">=1.2.0"
+    "@mizuwallet-sdk/protocol": 0.0.1
+  checksum: 2b486231436279f3e6d3570b11e366abf9ef704f4e8f186f9462cd7db8d4dc5dd097e775dd86d24020aaadcdc13dffa25635cb6f71d1bead6eaa1b800fc309f6
+  languageName: node
+  linkType: hard
+
+"@mizuwallet-sdk/core@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@mizuwallet-sdk/core@npm:1.3.0"
+  dependencies:
+    buffer: ^6.0.3
+    jwt-decode: ^4.0.0
+  peerDependencies:
+    "@aptos-labs/ts-sdk": ">=1.14.0"
+    graphql-request: ">=7.0.1"
+  checksum: cef4a839026132dbf809662ded4d790758c5567c027f908fa194f4e6e6bcb2d9291ea6f943c5d7b730dba0c7a6fe6ee160a626ae1e0b2e951b2f2d698c029986
+  languageName: node
+  linkType: hard
+
+"@molt/command@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "@molt/command@npm:0.9.0"
+  dependencies:
+    "@molt/types": 0.2.0
+    alge: 0.8.1
+    chalk: ^5.3.0
+    lodash.camelcase: ^4.3.0
+    lodash.snakecase: ^4.1.1
+    readline-sync: ^1.4.10
+    string-length: ^6.0.0
+    strip-ansi: ^7.1.0
+    ts-toolbelt: ^9.6.0
+    type-fest: ^4.3.1
+    zod: ^3.22.2
+  checksum: 6c81814eb7da2dbac100884d103e345d563613f9f3d7d285024ad20d7f3a3438b84ad1491cd4a5773217d688e6c34b31481fe609e9399aaaa0a45f7c7d68f5c1
+  languageName: node
+  linkType: hard
+
+"@molt/types@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@molt/types@npm:0.2.0"
+  dependencies:
+    ts-toolbelt: ^9.6.0
+  checksum: 64bbf80b34bdf33413e594bdc6ab72bf517e8a828eada052240aefecc17e14f7c71fe2c5c7b70ecad09d075920d82b7e822013ca915f8d5104ba382b80acd1e1
+  languageName: node
+  linkType: hard
+
 "@motionone/animation@npm:^10.15.1, @motionone/animation@npm:^10.16.3":
   version: 10.16.3
   resolution: "@motionone/animation@npm:10.16.3"
@@ -1424,6 +1620,16 @@ __metadata:
     "@motionone/dom": ^10.16.4
     tslib: ^2.3.1
   checksum: 746e38d0ee831829bfac2ce471f3d98a9e37bd8cbdf2706fa3becce69c17f51180a1ee47582d97758d68aafdfc9a187ab47ff216c77254ac994287dabcf266c1
+  languageName: node
+  linkType: hard
+
+"@msafe/aptos-wallet@npm:^6.1.1":
+  version: 6.1.1
+  resolution: "@msafe/aptos-wallet@npm:6.1.1"
+  dependencies:
+    buffer: ^6.0.3
+    json-rpc-protocol: ^0.13.2
+  checksum: 067137f22b89a9986ed1cf70d11e6f8bfe05b8fac062aaedd19c2575635fb7fccee9f99db111271f20ac4dfd7d70a84ca03d1ed1af3d8814cb50c9f5f484cd68
   languageName: node
   linkType: hard
 
@@ -1742,6 +1948,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pedrouid/environment@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@pedrouid/environment@npm:1.0.1"
+  checksum: fd88340ad760f26340a2816c3677f0ca913976e315880891c3de3f028fe64abc9704fb904234dce77a1ff15c22d0b6cbf1d4199a76de6695c2aed8353ce20590
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -1998,9 +2211,10 @@ __metadata:
   resolution: "@scaffold-move/nextjs@workspace:packages/nextjs"
   dependencies:
     "@apollo/client": ^3.10.8
-    "@aptos-labs/wallet-adapter-ant-design": ^2.6.2
-    "@aptos-labs/wallet-adapter-react": ^3.4.2
+    "@aptos-labs/wallet-adapter-ant-design": ^3.0.11
+    "@aptos-labs/wallet-adapter-react": ^3.6.0
     "@heroicons/react": ^2.0.11
+    "@mizuwallet-sdk/core": ^1.3.0
     "@rainbow-me/rainbowkit": 2.1.2
     "@tanstack/react-query": ^5.28.6
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
@@ -2022,6 +2236,7 @@ __metadata:
     eslint-config-prettier: ^9.1.0
     eslint-plugin-prettier: ^5.1.3
     graphql: ^16.9.0
+    graphql-request: ^7.1.0
     next: ^14.0.4
     next-themes: ^0.2.1
     nprogress: ^0.2.0
@@ -3706,6 +3921,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"alge@npm:0.8.1":
+  version: 0.8.1
+  resolution: "alge@npm:0.8.1"
+  dependencies:
+    lodash.ismatch: ^4.4.0
+    remeda: ^1.0.0
+    ts-toolbelt: ^9.6.0
+    zod: ^3.17.3
+  checksum: a7f620a962eb4f00a47c758d78a3962cf0b7b148c0ec4b3fd5d835e42df6dd0184f10b9105a250e43cb2ecc190975f172ebce4028319a3474e5b9def64cef9ce
+  languageName: node
+  linkType: hard
+
 "ansi-escapes@npm:^5.0.0":
   version: 5.0.0
   resolution: "ansi-escapes@npm:5.0.0"
@@ -4134,6 +4361,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:1.7.4":
+  version: 1.7.4
+  resolution: "axios@npm:1.7.4"
+  dependencies:
+    follow-redirects: ^1.15.6
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 0c17039a9acfe6a566fca8431ba5c1b455c83d30ea6157fec68a6722878fcd30f3bd32d172f6bee0c51fe75ca98e6414ddcd968a87b5606b573731629440bfaf
+  languageName: node
+  linkType: hard
+
+"axios@npm:^0.21.0":
+  version: 0.21.4
+  resolution: "axios@npm:0.21.4"
+  dependencies:
+    follow-redirects: ^1.14.0
+  checksum: 44245f24ac971e7458f3120c92f9d66d1fc695e8b97019139de5b0cc65d9b8104647db01e5f46917728edfc0cfd88eb30fc4c55e6053eef4ace76768ce95ff3c
+  languageName: node
+  linkType: hard
+
 "axios@npm:^1.6.0":
   version: 1.7.2
   resolution: "axios@npm:1.7.2"
@@ -4426,7 +4673,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:5.3.0":
+"chalk@npm:5.3.0, chalk@npm:^5.3.0":
   version: 5.3.0
   resolution: "chalk@npm:5.3.0"
   checksum: 623922e077b7d1e9dedaea6f8b9e9352921f8ae3afe739132e0e00c275971bdd331268183b2628cf4ab1727c45ea1f28d7e24ac23ce1db1eb653c414ca8a5a80
@@ -5194,6 +5441,15 @@ __metadata:
   bin:
     edge-runtime: dist/cli/index.js
   checksum: 30f5960b3eb3b6036ed5b8acf604834c13995c72c4035b288e8e0eb056dfcbf16f91888e5308d422a30c6271edae6640278340cf40d1941e3e90f41c7988e471
+  languageName: node
+  linkType: hard
+
+"eip1193-provider@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "eip1193-provider@npm:1.0.1"
+  dependencies:
+    "@json-rpc-tools/provider": ^1.5.5
+  checksum: a56d6a874786b788c1f09f96d329b118ca6b3d381055865bb1ec1bde17da8d433a4141200baa2922108d67ac0d83813841940d2813814e56ea923fc9fafb369a
   languageName: node
   linkType: hard
 
@@ -6368,6 +6624,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"follow-redirects@npm:^1.14.0":
+  version: 1.15.8
+  resolution: "follow-redirects@npm:1.15.8"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 14ea00a27257609328860f7792f4c2ba54e636cbce28ac4ae1d6b039d1f8285253081e43ffd29f7c2bf8854e95ab8f9d1db4e800c90a09d9ee78f75364a06deb
+  languageName: node
+  linkType: hard
+
 "follow-redirects@npm:^1.15.0, follow-redirects@npm:^1.15.6":
   version: 1.15.6
   resolution: "follow-redirects@npm:1.15.6"
@@ -6819,6 +7085,31 @@ __metadata:
   version: 1.4.0
   resolution: "graphemer@npm:1.4.0"
   checksum: bab8f0be9b568857c7bec9fda95a89f87b783546d02951c40c33f84d05bb7da3fd10f863a9beb901463669b6583173a8c8cc6d6b306ea2b9b9d5d3d943c3a673
+  languageName: node
+  linkType: hard
+
+"graphql-request@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "graphql-request@npm:7.1.0"
+  dependencies:
+    "@graphql-typed-document-node/core": ^3.2.0
+    "@molt/command": ^0.9.0
+    zod: ^3.23.8
+  peerDependencies:
+    "@dprint/formatter": ^0.3.0
+    "@dprint/typescript": ^0.91.1
+    dprint: ^0.46.2
+    graphql: 14 - 16
+  peerDependenciesMeta:
+    "@dprint/formatter":
+      optional: true
+    "@dprint/typescript":
+      optional: true
+    dprint:
+      optional: true
+  bin:
+    graffle: build/cli/generate.js
+  checksum: 78808485160c4aad3a04ba037131176fe908e79a42f76bf49a3f1fab4c42184829bf7cc8d7214dcb09ef5a86d0c9a6044d7c1122253bf8453f208c2aaf30a7c9
   languageName: node
   linkType: hard
 
@@ -7625,7 +7916,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-sha3@npm:0.8.0":
+"js-sha3@npm:0.8.0, js-sha3@npm:^0.8.0":
   version: 0.8.0
   resolution: "js-sha3@npm:0.8.0"
   checksum: 75df77c1fc266973f06cce8309ce010e9e9f07ec35ab12022ed29b7f0d9c8757f5a73e1b35aa24840dced0dea7059085aa143d817aea9e188e2a80d569d9adce
@@ -7690,6 +7981,15 @@ __metadata:
     "@metamask/safe-event-emitter": ^2.0.0
     readable-stream: ^2.3.3
   checksum: 9ff56cd40a6ba0a6f3d0226ea100921635120154c602822f0f4fdfa6bf7c61367d1e8cd055b6e7a7639aa19ed51a9ce7fbf2932a2d348b2404c060f75bc1231f
+  languageName: node
+  linkType: hard
+
+"json-rpc-protocol@npm:^0.13.2":
+  version: 0.13.2
+  resolution: "json-rpc-protocol@npm:0.13.2"
+  dependencies:
+    make-error: ^1.3.0
+  checksum: a60c446106ca3ca0092068a572137ae0335a95e175b8cd9056aa0d602a8c35fb2be859382cde967691571ffa69e3e1df7a0abe72b0ef16582fbdf0f70ab85887
   languageName: node
   linkType: hard
 
@@ -7995,6 +8295,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.camelcase@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "lodash.camelcase@npm:4.3.0"
+  checksum: cb9227612f71b83e42de93eccf1232feeb25e705bdb19ba26c04f91e885bfd3dd5c517c4a97137658190581d3493ea3973072ca010aab7e301046d90740393d1
+  languageName: node
+  linkType: hard
+
 "lodash.curry@npm:^4.0.1":
   version: 4.1.1
   resolution: "lodash.curry@npm:4.1.1"
@@ -8037,10 +8344,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.ismatch@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.ismatch@npm:4.4.0"
+  checksum: a393917578842705c7fc1a30fb80613d1ac42d20b67eb26a2a6004d6d61ee90b419f9eb320508ddcd608e328d91eeaa2651411727eaa9a12534ed6ccb02fc705
+  languageName: node
+  linkType: hard
+
 "lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: ad580b4bdbb7ca1f7abf7e1bce63a9a0b98e370cf40194b03380a46b4ed799c9573029599caebc1b14e3f24b111aef72b96674a56cfa105e0f5ac70546cdc005
+  languageName: node
+  linkType: hard
+
+"lodash.snakecase@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "lodash.snakecase@npm:4.1.1"
+  checksum: 1685ed3e83dda6eae5a4dcaee161a51cd210aabb3e1c09c57150e7dd8feda19e4ca0d27d0631eabe8d0f4eaa51e376da64e8c018ae5415417c5890d42feb72a8
   languageName: node
   linkType: hard
 
@@ -8121,7 +8442,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"make-error@npm:^1.1.1":
+"make-error@npm:^1.1.1, make-error@npm:^1.3.0":
   version: 1.3.6
   resolution: "make-error@npm:1.3.6"
   checksum: b86e5e0e25f7f777b77fabd8e2cbf15737972869d852a22b7e73c17623928fccb826d8e46b9951501d3f20e51ad74ba8c59ed584f610526a48f8ccf88aaec402
@@ -9454,6 +9775,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postmate@npm:^1.5.2":
+  version: 1.5.2
+  resolution: "postmate@npm:1.5.2"
+  checksum: 098eb5ea9d90469fbeff0a43e2eb4047157132e61985dfe6eefcb65b612a87ec764b463238373eb76e66ba644ab64d581f40dcf3c0b23877cddc741927968e76
+  languageName: node
+  linkType: hard
+
 "preact@npm:^10.16.0":
   version: 10.19.3
   resolution: "preact@npm:10.19.3"
@@ -10502,6 +10830,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"readline-sync@npm:^1.4.10":
+  version: 1.4.10
+  resolution: "readline-sync@npm:1.4.10"
+  checksum: 4dbd8925af028dc4cb1bb813f51ca3479035199aa5224886b560eec8e768ab27d7ebf11d69a67ed93d5a130b7c994f0bdb77796326e563cf928bbfd560e3747e
+  languageName: node
+  linkType: hard
+
 "real-require@npm:^0.1.0":
   version: 0.1.0
   resolution: "real-require@npm:0.1.0"
@@ -10569,6 +10904,13 @@ __metadata:
     react:
       optional: true
   checksum: 2c3bcd72524bf47672640265e79cba785e0e6837b9b385ccb0a3ea7d00f55a439d9aed3e0ae71e991d88e0d4b2b3158457c92e75fff5ebf99cd46e280068ddeb
+  languageName: node
+  linkType: hard
+
+"remeda@npm:^1.0.0":
+  version: 1.61.0
+  resolution: "remeda@npm:1.61.0"
+  checksum: c080da71953ccc178334ca774f0da5c3f4664ef25ff7bc1e1f09a921ff9c264bbf8be8e0ac876c4a3f851a4d3e017cd454319a0e24610fd744bd8f9177dd4c7b
   languageName: node
   linkType: hard
 
@@ -10789,6 +11131,13 @@ __metadata:
   version: 5.1.2
   resolution: "safe-buffer@npm:5.1.2"
   checksum: f2f1f7943ca44a594893a852894055cf619c1fbcb611237fc39e461ae751187e7baf4dc391a72125e0ac4fb2d8c5c0b3c71529622e6a58f46b960211e704903c
+  languageName: node
+  linkType: hard
+
+"safe-json-utils@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "safe-json-utils@npm:1.1.1"
+  checksum: f82a5833b7f6f25583c46520b3e158da3864d4f6f85b7cd68ec956ae7023395872e834d75f7f6216c109c546d10b6ee15c066d849f75ac2a7b86b8a041b4f01f
   languageName: node
   linkType: hard
 
@@ -11185,6 +11534,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"string-length@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "string-length@npm:6.0.0"
+  dependencies:
+    strip-ansi: ^7.1.0
+  checksum: b171e9e193ec292ad71f8b2a36e20478bf1bac8cd5beec062fb126942d627dfd9311959e271e9ab7b0a383d16b85b9e25a183d15786e30f22104d152e7627f99
+  languageName: node
+  linkType: hard
+
 "string-width-cjs@npm:string-width@^4.2.0, string-width@npm:^1.0.2 || 2 || 3 || 4, string-width@npm:^4.1.0, string-width@npm:^4.2.0, string-width@npm:^4.2.3":
   version: 4.2.3
   resolution: "string-width@npm:4.2.3"
@@ -11284,7 +11642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-ansi@npm:^7.0.1":
+"strip-ansi@npm:^7.0.1, strip-ansi@npm:^7.1.0":
   version: 7.1.0
   resolution: "strip-ansi@npm:7.1.0"
   dependencies:
@@ -11677,6 +12035,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-toolbelt@npm:^9.6.0":
+  version: 9.6.0
+  resolution: "ts-toolbelt@npm:9.6.0"
+  checksum: 9f35fd95d895a5d32ea9fd2e532a695b0bae6cbff6832b77292efa188a0ed1ed6e54f63f74a8920390f3d909a7a3adb20a144686372a8e78b420246a9bd3d58a
+  languageName: node
+  linkType: hard
+
 "tsconfig-paths@npm:^3.14.2":
   version: 3.14.2
   resolution: "tsconfig-paths@npm:3.14.2"
@@ -11748,6 +12113,13 @@ __metadata:
   version: 1.4.0
   resolution: "type-fest@npm:1.4.0"
   checksum: b011c3388665b097ae6a109a437a04d6f61d81b7357f74cbcb02246f2f5bd72b888ae33631b99871388122ba0a87f4ff1c94078e7119ff22c70e52c0ff828201
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.3.1":
+  version: 4.26.0
+  resolution: "type-fest@npm:4.26.0"
+  checksum: f8073dc59a4a5bd897eecb3dfbf9d7716031fc161062ef572c402252a0375cc692c9ae1f50c75c80722964f1eda4011d1edbab36af63a130a53b3c1aab4ed1c5
   languageName: node
   linkType: hard
 
@@ -12579,6 +12951,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ws@npm:^7.4.0":
+  version: 7.5.10
+  resolution: "ws@npm:7.5.10"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ^5.0.2
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: f9bb062abf54cc8f02d94ca86dcd349c3945d63851f5d07a3a61c2fcb755b15a88e943a63cf580cbdb5b74436d67ef6b67f745b8f7c0814e411379138e1863cb
+  languageName: node
+  linkType: hard
+
 "ws@npm:^7.5.1":
   version: 7.5.9
   resolution: "ws@npm:7.5.9"
@@ -12790,6 +13177,13 @@ __metadata:
   version: 0.8.15
   resolution: "zen-observable@npm:0.8.15"
   checksum: b7289084bc1fc74a559b7259faa23d3214b14b538a8843d2b001a35e27147833f4107590b1b44bf5bc7f6dfe6f488660d3a3725f268e09b3925b3476153b7821
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.17.3, zod@npm:^3.22.2, zod@npm:^3.23.8":
+  version: 3.23.8
+  resolution: "zod@npm:3.23.8"
+  checksum: 15949ff82118f59c893dacd9d3c766d02b6fa2e71cf474d5aa888570c469dbf5446ac5ad562bb035bf7ac9650da94f290655c194f4a6de3e766f43febd432c5c
   languageName: node
   linkType: hard
 

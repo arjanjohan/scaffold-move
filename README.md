@@ -41,13 +41,13 @@ cd scaffold-move
 yarn install
 ```
 
-2. ~~Run a local network in  the first terminal:~~
+2. Run a local network in  the first terminal:
 
-<!-- ```
+```
 yarn chain
-``` -->
+```
 
-Movement M1 devnet is hardcoded in this version of Scaffold-Move, so we skip this step.
+**If you are deploying to devnet or testnet, you can skip this step.**
 
 3. On a second terminal, initialize a new account.
 
@@ -90,6 +90,7 @@ For this hackathon I kept the scope small due to the time constraints. I build t
 - Fix colors for dark mode
 - Ensure export default deployedModules satisfies GenericContractsDeclaration
 - Add block explorer page
+- Add indexer and update testnet config
 
 ## Links
 
@@ -97,6 +98,9 @@ For this hackathon I kept the scope small due to the time constraints. I build t
 - [Website](https://scaffold-move-chi.vercel.app/)
 - [Dorahacks](https://dorahacks.io/buidl/13953)
 - [Github](https://github.com/arjanjohan/scaffold-move)
+
+## Deployments
+- [Movement testnet](https://explorer.movementnetwork.xyz/account/0xbe119e3724a7aa44ec3716f070fc36f0603937dcdb06e8277a987a87ade39018/modules/code/onchain_bio?network=testnet)
 
 ## Team
 

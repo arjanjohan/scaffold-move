@@ -5,7 +5,7 @@ const { exec } = require('child_process');
 const minimist = require('minimist');
 
 const args = minimist(process.argv.slice(2));
-const network = args.network || 'movement_devnet || movement_testnet';
+const network = args.network || 'movement_testnet';
 const restUrl = args['rest-url'];
 const faucetUrl = args['faucet-url'];
 const configPath = path.join(__dirname, '../custom_networks.json');
@@ -47,7 +47,10 @@ function updateMoveTomlAddress(tomlPath, newAddress) {
 }
 
 function initCustomNetwork(restUrl, faucetUrl) {
-  const command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network custom --rest-url ${restUrl} --faucet-url ${faucetUrl}`;
+  let command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network custom --rest-url ${restUrl}`;
+  if (faucetUrl) {
+    command += ` --faucet-url ${faucetUrl}`;
+  }
   console.log(`Running command: ${command}`);
   exec(command, (error, stdout, stderr) => {
     if (error) {
@@ -77,12 +80,12 @@ fs.readFile(configPath, 'utf8', (err, data) => {
     const { 'rest-url': configRestUrl, 'faucet-url': configFaucetUrl } = networks[network];
     initCustomNetwork(configRestUrl, configFaucetUrl);
   } else if (network === 'custom') {
-    if (!restUrl || !faucetUrl) {
-      console.error('Error: custom network requires --rest-url and --faucet-url');
+    if (!restUrl) {
+      console.error('Error: custom network requires --rest-url');
       process.exit(1);
     }
     initCustomNetwork(restUrl, faucetUrl);
-  } else {
+  } else if (["devnet", "testnet", "mainnet", "local"].includes(network)) {
     const command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network ${network}`;
     console.log(`Running command: ${command}`);
     exec(command, (error, stdout, stderr) => {
@@ -100,5 +103,9 @@ fs.readFile(configPath, 'utf8', (err, data) => {
       const newAddress = `0x${config.profiles.default.account.replace(/^0x/, '')}`; // Ensure 0x prefix
       updateMoveTomlAddress(moveTomlPath, newAddress);
     });
+  } else {
+    console.error(`Error: Unknown network: ${network}`);
+    process.exit(1);
   }
+  
 });
