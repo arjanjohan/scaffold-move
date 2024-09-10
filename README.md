@@ -1,4 +1,4 @@
-# 🏗 Scaffold-Move
+# 🏗 Scaffold Move
 
 <div align="center">
 
@@ -31,7 +31,7 @@ Before you begin, you need to install the following tools:
 
 ## Quickstart
 
-To get started with Scaffold-Move, follow the steps below:
+To get started with Scaffold Move, follow the steps below:
 
 1. Clone this repo & install dependencies
 
@@ -89,6 +89,7 @@ For this hackathon I kept the scope small due to the time constraints. I build t
   - Group modules under address
 - Ensure export default deployedModules satisfies GenericContractsDeclaration
 - useSubmitTransaction hook: Replace `transaction: InputTransactionData` by moduleName, functionName, args
+- Typescript autocomplete for hooks
 - Fix colors for dark mode
 - Add block explorer page
 - Add indexer and update testnet config
