@@ -6,7 +6,7 @@ interface CoinStore {
   };
 }
 
-export function useGetAccountAPTBalance(address: string) {
+export function useGetAccountMoveBalance(address: string) {
   const { isLoading, data, error } = useGetAccountResources(address);
 
   if (isLoading || error || !data) {

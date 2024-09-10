@@ -4,7 +4,7 @@
 
 ![logo](/assets/logo_small.png)
 <h4 align="center">
-  <a href="https://github.com/arjanjohan/scaffold-move">Documentation</a> |
+  <a href="https://arjanjohan.gitbook.io/scaffold-move">Documentation</a> |
   <a href="https://scaffold-move-chi.vercel.app/">Website</a>
 </h4>
 </div>
@@ -27,7 +27,7 @@ Before you begin, you need to install the following tools:
 - [Node (>= v18.17)](https://nodejs.org/en/download/)
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
-- [Movement CLI](https://aptos.dev/en/build/cli)
+- [Aptos CLI](https://aptos.dev/en/build/cli)
 
 ## Quickstart
 
@@ -87,8 +87,9 @@ For this hackathon I kept the scope small due to the time constraints. I build t
   - Styling Resources tab
   - Fix Vercel bug with Resources tab (Resources only showing on local for now)
   - Group modules under address
-- Fix colors for dark mode
 - Ensure export default deployedModules satisfies GenericContractsDeclaration
+- useSubmitTransaction hook: Replace `transaction: InputTransactionData` by moduleName, functionName, args
+- Fix colors for dark mode
 - Add block explorer page
 - Add indexer and update testnet config
 
@@ -96,7 +97,6 @@ For this hackathon I kept the scope small due to the time constraints. I build t
 
 - [Demo video](https://www.loom.com/share/4491aa1f222e409782a5ede3a7ac5cb0)
 - [Website](https://scaffold-move-chi.vercel.app/)
-- [Dorahacks](https://dorahacks.io/buidl/13953)
 - [Github](https://github.com/arjanjohan/scaffold-move)
 
 ## Deployments

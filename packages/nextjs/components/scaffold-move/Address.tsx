@@ -34,32 +34,6 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   const [addressCopied, setAddressCopied] = useState(false);
 
   const { targetNetwork } = useTargetNetwork();
-
-  // const { data: fetchedEns } = useEnsName({
-  //   address: address,
-  //   chainId: 1,
-  //   query: {
-  //     enabled: isAddress(address ?? ""),
-  //   },
-  // });
-  // const { data: fetchedEnsAvatar } = useEnsAvatar({
-  //   name: fetchedEns ? normalize(fetchedEns) : undefined,
-  //   chainId: 1,
-  //   query: {
-  //     enabled: Boolean(fetchedEns),
-  //     gcTime: 30_000,
-  //   },
-  // });
-
-  // We need to apply this pattern to avoid Hydration errors.
-  // useEffect(() => {
-  //   setEns(fetchedEns);
-  // }, [fetchedEns]);
-
-  // useEffect(() => {
-  //   setEnsAvatar(fetchedEnsAvatar);
-  // }, [fetchedEnsAvatar]);
-
   // Skeleton UI
   if (!address) {
     return (

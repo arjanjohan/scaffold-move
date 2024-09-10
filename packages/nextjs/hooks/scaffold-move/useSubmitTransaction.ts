@@ -35,6 +35,7 @@ const useSubmitTransaction = () => {
     }
   }, [transactionResponse]);
 
+  // TODO: Replace `transaction: InputTransactionData` by moduleName, functionName, args
   async function submitTransaction(transaction: InputTransactionData) {
     setTransactionInProcess(true);
     const signAndSubmitTransactionCall = async (transaction: InputTransactionData): Promise<TransactionResponse> => {
