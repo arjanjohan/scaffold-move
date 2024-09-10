@@ -11,7 +11,7 @@ import {
   DocumentDuplicateIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
-import { BlockieAvatar, isENS } from "~~/components/scaffold-move";
+import { BlockieAvatar } from "~~/components/scaffold-move";
 import { useOutsideClick } from "~~/hooks/scaffold-move";
 import { getTargetNetworks } from "~~/utils/scaffold-move";
 
@@ -47,7 +47,7 @@ export const AddressInfoDropdown = ({
         <summary tabIndex={0} className="btn btn-secondary btn-sm pl-0 pr-2 shadow-md dropdown-toggle gap-0 !h-auto">
           <BlockieAvatar address={address} size={30} ensImage={ensAvatar} />
           <span className="ml-2 mr-1">
-            {isENS(displayName) ? displayName : address?.slice(0, 6) + "..." + address?.slice(-4)}
+            {address?.slice(0, 6) + "..." + address?.slice(-4)}
           </span>
           <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
         </summary>
