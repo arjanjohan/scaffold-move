@@ -1,7 +1,7 @@
 "use client";
 
 import { getFormattedBalanceStr } from "../../utils/scaffold-move/ContentValue/CurrencyValue";
-import { useGetAccountAPTBalance } from "~~/hooks/scaffold-move/useGetAccountAPTBalance";
+import { useGetAccountMoveBalance } from "~~/hooks/scaffold-move/useGetAccountMoveBalance";
 
 type BalanceProps = {
   address: string;
@@ -11,7 +11,7 @@ type BalanceProps = {
  * Display APT balance of an APT address.
  */
 export const Balance = ({ address }: BalanceProps) => {
-  const balance = useGetAccountAPTBalance(address);
+  const balance = useGetAccountMoveBalance(address);
 
   if (!address || balance === null) {
     return (

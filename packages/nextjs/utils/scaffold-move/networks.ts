@@ -5,7 +5,7 @@ import { Chain } from "~~/utils/scaffold-move/chains";
  * Gives the block explorer transaction URL, returns empty string if the network is a local chain
  */
 export function getBlockExplorerTxLink(chainId: string, txnHash: string) {
-  return `https://explorer.${chainId}.m1.movementlabs.xyz/txn/~${txnHash}?network=${chainId}`;
+  return `https://explorer.movementnetwork.xyz/txn/~${txnHash}?network=${chainId}`;
 }
 
 /**
@@ -14,7 +14,7 @@ export function getBlockExplorerTxLink(chainId: string, txnHash: string) {
  */
 export function getBlockExplorerAddressLink(network: Chain, address: string) {
   const chainId = network.id;
-  return `https://explorer.${chainId}.m1.movementlabs.xyz/account/${address}?network=${chainId}`;
+  return `https://explorer.movementnetwork.xyz/account/${address}?network=${chainId}`;
 }
 
 /**

@@ -79,6 +79,86 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
 <!-- - Edit your Move modules test in: `packages/hardhat/test`. To run test use `yarn hardhat:test` -->
 
+## Hooks
+Scaffold Move includes custom hooks to make developing a Move dApp easier.
+
+### useDeployedContractInfo
+Use this hook to fetch details about a deployed Move module, including the ABI and address.
+```
+const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo(contractName);
+
+```
+This example retrieves the details of the deployed contract with the specified name and stores the details in the deployedContractData object.
+
+
+#### Parameters
+| Parameter	| Type | Description |
+| --------- | ---- | ----------- |
+| contractName | string | Name of the contract. |
+
+#### Return Value
+
+`data`: Object containing `address` and `abi` of contract.
+
+### useGetAccountMoveBalance
+Use this hook to fetch the MOVE balance for an addres.
+```
+const balance = useGetAccountMoveBalance(address);
+```
+
+This example retrieves Move balance of the address  and stores the details in the balance object.
+
+#### Parameters
+| Parameter	| Type | Description |
+| --------- | ---- | ----------- |
+| address | string | Address of the account. |
+
+#### Return Value
+
+`balance`: Object containing Move balance for this address.
+
+
+### useGetAccountModules
+
+Use this hook to fetch the MOVE modules that are publish on an addres.
+```
+const { data: accountModules, isLoading: accountModulesLoading } = useGetAccountModules(address);
+```
+
+This example fetches all modules that are published on this address.
+
+#### Parameters
+| Parameter	| Type | Description |
+| --------- | ---- | ----------- |
+| address | string | Address of the account. |
+
+#### Return Value
+
+`moveModuleBytecode`: A list of `MoveModuleBytecode` objects.
+
+### useGetAccountResources
+
+Use this hook to fetch the resources that are available on an addres.
+```
+const { data: accountResources, isLoading: accountResourcesLoading } = useGetAccountResources(address);
+```
+
+This example fetches all resources that are on this address.
+
+#### Parameters
+| Parameter	| Type | Description |
+| --------- | ---- | ----------- |
+| address | string | Address of the account. |
+| options.retry | number \| boolean | Number of retries, or bool `true` for a single retry  |
+
+#### Return Value
+
+`moveResources`: A list of [`MoveResource`](https://aptos.dev/en/network/blockchain/resources) objects.
+
+
+### useSubmitTransaction
+### useTargetNetwork
+
 ## Next steps
 
 For this hackathon I kept the scope small due to the time constraints. I build the most essential and useful features, so that developers can start using Scaffold Move right away. However, there are more features that I want to add to this project after the hackathon. If you have any ideas or suggestions, please reach out to me!
