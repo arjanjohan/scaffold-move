@@ -9,7 +9,7 @@ module.exports = {
     themes: [
       {
         light: {
-          primary: "#ffd016",
+          primary: "#121615",
           "primary-content": "#212638",
           secondary: "#ffd016",
           "secondary-content": "#212638",
@@ -17,7 +17,7 @@ module.exports = {
           "accent-content": "#212638",
           neutral: "#212638",
           "neutral-content": "#ffffff",
-          "base-100": "#ffdf63",
+          "base-100": "#ffde5b",
           "base-200": "#FFEA95",
           "base-300": "#FFF4C9",
           "base-content": "#212638",
@@ -39,54 +39,20 @@ module.exports = {
           },
         },
       },
-      // {
-      //   dark: {
-      //     primary: "#1b1f1e",
-      //     "primary-content": "#ffffff",
-      //     secondary: "#ffd016",
-      //     "secondary-content": "#121615",
-      //     accent: "#ffffff",
-      //     "accent-content": "#F9FBFF",
-      //     neutral: "#F9FBFF",
-      //     "neutral-content": "#ffffff",
-      //     yellow: "#ffd016",
-      //     "base-100": "#1b1f1e",
-      //     "base-200": "#121615",
-      //     "base-300": "#ffd016",
-      //     "base-content": "#ffffff",
-      //     info: "#385183",
-      //     success: "#34EEB6",
-      //     warning: "#FFCF72",
-      //     error: "#FF8863",
-
-      //     "--rounded-btn": "9999rem",
-
-      //     ".tooltip": {
-      //       "--tooltip-tail": "6px",
-      //       "--tooltip-color": "oklch(var(--p))",
-      //     },
-      //     ".link": {
-      //       textUnderlineOffset: "2px",
-      //     },
-      //     ".link:hover": {
-      //       opacity: "80%",
-      //     },
-      //   },
-      // },
       {
         dark: {
-          "primary": "#0D1117",               // Very dark grey (almost black) for primary
-          "primary-content": "#C9D1D9",        // Light grey for primary content
-          "secondary": "#161B22",              // Dark grey for secondary
-          "secondary-content": "#C9D1D9",      // Light grey for secondary content
-          "accent": "#06F7F7",                 // Bright blue accent
-          "accent-content": "#0D1117",         // Dark grey for accent content
-          "neutral": "#C9D1D9",                // Light grey for neutral
-          "neutral-content": "#0D1117",        // Dark grey for neutral content
-          "base-100": "#0D1117",               // Very dark grey for base-100
-          "base-200": "#161B22",               // Dark grey for base-200
-          "base-300": "#21262D",               // Medium dark grey for base-300
-          "base-content": "#C9D1D9",           // Light grey for base content
+        "primary": "#06F7F7",
+        "primary-content": "#C9D1D9",
+        "secondary": "#161B22",
+        "secondary-content": "#C9D1D9",
+        "accent": "#06F7F7",
+        "accent-content": "#0D1117",
+        "neutral": "#C9D1D9",
+        "neutral-content": "#0D1117",
+        "base-100": "#0D1117",
+        "base-200": "#161B22",
+        "base-300": "#21262D",
+        "base-content": "#C9D1D9",
           info: "#385183",
           success: "#34EEB6",
           warning: "#FFCF72",
