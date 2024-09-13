@@ -15,7 +15,7 @@ export function DebugContracts() {
   const contractsData = getAllContracts(targetNetwork.id);
   const contractNames = Object.keys(contractsData) as ContractName[];
 
-  const selectedContractStorageKey = "scaffoldEth2.selectedContract";
+  const selectedContractStorageKey = "scaffoldMove.selectedContract";
 
   const [selectedContract, setSelectedContract] = useLocalStorage<ContractName>(
     selectedContractStorageKey,

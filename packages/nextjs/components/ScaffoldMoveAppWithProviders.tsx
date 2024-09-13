@@ -7,7 +7,7 @@ import { Header } from "~~/components/Header";
 import { ProgressBar } from "~~/components/scaffold-move/ProgressBar";
 import { WalletProvider } from "~~/components/scaffold-move/WalletContext";
 
-const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
+const ScaffoldMoveApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -28,13 +28,13 @@ export const queryClient = new QueryClient({
   },
 });
 
-export const ScaffoldEthAppWithProviders = ({ children }: { children: React.ReactNode }) => {
+export const ScaffoldMoveAppWithProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <ProgressBar />
 
       <WalletProvider>
-        <ScaffoldEthApp>{children}</ScaffoldEthApp>
+        <ScaffoldMoveApp>{children}</ScaffoldMoveApp>
       </WalletProvider>
     </QueryClientProvider>
   );
