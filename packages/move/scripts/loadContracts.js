@@ -3,6 +3,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 const { AptosClient } = require('aptos'); // Assuming you're using the Aptos SDK for JavaScript
 const axios = require('axios'); // Add axios to make HTTP requests
+const { loadExternalModules } = require('../move.config.ts'); // Import from move.config.ts
 
 // Paths to the relevant files
 const moveTomlPath = path.join(__dirname, '../Move.toml');
@@ -60,7 +61,6 @@ function getExistingContractsData(filePath) {
   if (fs.existsSync(filePath)) {
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const match = fileContent.match(/deployedContracts\s*=\s*({[\s\S]*});/);
-    console.log('Match:', fileContent);
     if (match && match[1]) {
       return JSON.parse(match[1]);
     }
@@ -71,7 +71,6 @@ function getExistingContractsData(filePath) {
 // Function to write modules to TypeScript file, preserving other chain data
 function writeModules(filePath, modules, chainId) {
   let existingContracts = getExistingContractsData(filePath);
-  console.log('Existing contracts data:', existingContracts);
 
   const chainIdString = chainId.toString();
   // Update or add the chain data
@@ -110,7 +109,6 @@ async function main() {
 
   // Fetch the chainId from the REST API
   const chainId = await fetchChainId(nodeUrl);
-  console.log(`Chain ID: ${chainId}`);
 
   // Ensure the output directory exists
   const outputDirectory = path.dirname(deployedModulesPath);
@@ -124,7 +122,9 @@ async function main() {
   console.log(`Data for deployed modules at address ${accountAddress} saved successfully.`);
 
   // Fetch and save account modules for each address from Move.toml, excluding the one from config.yaml
-  if (addresses) {
+  console.log('Data for external modules:', loadExternalModules);
+  if (loadExternalModules && addresses) {
+    console.log('Loading external modules...');
     const externalModules = [];
     for (const [name, address] of Object.entries(addresses)) {
       if (address.toLowerCase() !== accountAddress.toLowerCase()) {
@@ -134,8 +134,6 @@ async function main() {
       }
     }
     writeModules(externalModulesPath, externalModules, chainId);
-  } else {
-    console.log('No addresses found in Move.toml.');
   }
 }
 

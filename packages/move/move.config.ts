@@ -1,3 +1,4 @@
+
 const defaultNetwork = 'testnet';
 
 const networks = {
@@ -11,4 +12,8 @@ const networks = {
   // Add any other networks you need here
 };
 
-module.exports = { defaultNetwork, networks };
+// Set to false if external modules should not be loaded via script.
+// If set to true, it will load modules from all addresses declared in move.toml.
+const loadExternalModules = true;
+
+module.exports = { defaultNetwork, networks, loadExternalModules };
