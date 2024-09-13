@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 const { AptosClient } = require('aptos'); // Assuming you're using the Aptos SDK for JavaScript
+const axios = require('axios'); // Add axios to make HTTP requests
 
 // Paths to the relevant files
 const moveTomlPath = path.join(__dirname, '../Move.toml');
@@ -66,6 +67,19 @@ async function getAccountModules(requestParameters, nodeUrl) {
   return client.getAccountModules(address, { ledgerVersion: ledgerVersionBig });
 }
 
+// Function to fetch chainId from the REST API
+async function fetchChainId(nodeUrl) {
+  console.log(`Fetching chain ID from ${nodeUrl}`);
+  if (nodeUrl.includes("movement")) {
+    url = nodeUrl; // Use nodeUrl directly without appending '/v1'
+  } else {
+    url = `${nodeUrl}/v1`; // Default behavior, append '/v1'
+  }
+  const response = await axios.get(url);
+  console.log(response)
+  return response.data.chain_id;
+}
+
 // Main function to perform the tasks
 async function main() {
   const config = parseYaml(configYamlPath);
@@ -73,6 +87,10 @@ async function main() {
   const accountAddress = config.profiles.default.account.replace(/^0x/, ''); // Strip 0x from the account address
 
   const addresses = parseToml(moveTomlPath);
+
+  // Fetch the chainId from the REST API
+  const chainId = await fetchChainId(nodeUrl);
+  console.log(`Chain ID: ${chainId}`);
 
   // Ensure the output directory exists
   const outputDirectory = path.dirname(deployedModulesPath);
@@ -82,7 +100,7 @@ async function main() {
 
   // Fetch and save account modules for the account from config.yaml
   const deployedModules = await getAccountModules({ address: accountAddress }, nodeUrl);
-  writeModules(deployedModulesPath, deployedModules, "testnet", "deployedModules");
+  writeModules(deployedModulesPath, deployedModules, chainId, "deployedModules");
   console.log(`Data for deployed modules at address ${accountAddress} saved successfully.`);
 
   // Fetch and save account modules for each address from Move.toml, excluding the one from config.yaml
@@ -95,7 +113,7 @@ async function main() {
         console.log(`Data for address ${address} saved successfully.`);
       }
     }
-    writeModules(externalModulesPath, externalModules, "testnet", "externalModules");
+    writeModules(externalModulesPath, externalModules, chainId, "externalModules");
   } else {
     console.log('No addresses found in Move.toml.');
   }
