@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
-import { InputBase } from "~~/components/scaffold-eth";
+import { InputBase } from "~~/components/scaffold-move";
 import deployedModules from "~~/contracts/deployedModules";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";

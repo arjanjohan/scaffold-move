@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
-import { ProgressBar } from "~~/components/scaffold-eth/ProgressBar";
+import { ProgressBar } from "~~/components/scaffold-move/ProgressBar";
 import { WalletProvider } from "~~/components/scaffold-move/WalletContext";
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
