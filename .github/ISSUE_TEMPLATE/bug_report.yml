@@ -12,19 +12,8 @@ body:
       label: Is there an existing issue for this?
       description: Please search to see if an issue already exists for the bug you encountered.
       options:
-        - label: I have looked through the [existing issues](https://github.com/scaffold-eth/scaffold-eth-2/issues)
+        - label: I have looked through the [existing issues](https://github.com/arjanjohan/scaffold-move/issues)
           required: true
-
-  - type: dropdown
-    attributes:
-      label: Which method was used to setup Scaffold-ETH 2 ?
-      description: You may select both, if the bug is present in both the methods.
-      multiple: true
-      options:
-        - git clone
-        - npx create-eth@latest
-    validations:
-      required: true
 
   - type: textarea
     attributes:
