@@ -1,7 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import './wallet.css';
+@import "./wallet.css";
 
 :root,
 [data-theme] {

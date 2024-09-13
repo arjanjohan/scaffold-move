@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
 import { FailedTransactionError } from "aptos";
-import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
 export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
 

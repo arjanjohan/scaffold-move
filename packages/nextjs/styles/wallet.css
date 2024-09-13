@@ -4,7 +4,6 @@
 
 .wallet-button {
   @apply flex flex-col items-center mr-1 btn btn-primary !important;
-
 }
 
 .wallet-modal-title {
