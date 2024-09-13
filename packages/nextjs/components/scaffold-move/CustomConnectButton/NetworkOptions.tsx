@@ -1,6 +1,6 @@
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
 import { getTargetNetworks } from "~~/utils/scaffold-move";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 const allowedNetworks = getTargetNetworks();
 

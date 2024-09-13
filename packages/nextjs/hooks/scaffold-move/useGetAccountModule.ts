@@ -1,43 +1,35 @@
 import { ResponseError, withResponseError } from "../client";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { useTargetNetwork } from "./useTargetNetwork";
-import { AptosClient, Types } from "aptos";
+import { Aptos } from "@aptos-labs/ts-sdk";
+import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { Types } from "aptos";
+import { useAptosClient } from "~~/hooks/scaffold-move";
 
 export function getAccountModule(
   requestParameters: {
-    address: string;
+    accountAddress: string;
     moduleName: string;
     ledgerVersion?: number;
   },
-  nodeUrl: string,
+  client: Aptos,
 ): Promise<Types.MoveModuleBytecode> {
-  const client = new AptosClient(nodeUrl);
-  const { address, moduleName, ledgerVersion } = requestParameters;
+  const { accountAddress, moduleName, ledgerVersion } = requestParameters;
   let ledgerVersionBig;
   if (ledgerVersion !== undefined) {
     ledgerVersionBig = BigInt(ledgerVersion);
   }
-  return withResponseError(
-    client.getAccountModule(address, moduleName, {
-      ledgerVersion: ledgerVersionBig,
-    }),
-  );
+  return withResponseError(client.getAccountModule({ accountAddress, moduleName }));
 }
 
-export function useGetAccountModules(address: string): UseQueryResult<Types.MoveModuleBytecode[], ResponseError> {
-
+export function useGetAccountModule(
+  address: string,
+  moduleName: string,
+): UseQueryResult<Types.MoveModuleBytecode, ResponseError> {
   const network = useTargetNetwork();
-  let state = {network_value: ""};
-  // TODO: remove this after implementing custom network support
-  // if (network.targetNetwork.network === Network.CUSTOM) {
-  state.network_value = network.targetNetwork.fullnode ? network.targetNetwork.fullnode : "" ;
-  // } else {
+  const aptosClient = useAptosClient(network.targetNetwork.id);
 
-  // }
-
-  return useQuery<Array<Types.MoveModuleBytecode>, ResponseError>({
-    queryKey: ["accountModules", { address }, state.network_value],
-    queryFn: () => getAccountModules({ address }, state.network_value),
+  return useQuery<Types.MoveModuleBytecode, ResponseError>({
+    queryKey: ["accountModule", { address, moduleName }],
+    queryFn: () => getAccountModule({ accountAddress: address, moduleName }, aptosClient),
   });
 }
-

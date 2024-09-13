@@ -5,20 +5,17 @@ import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-reac
 import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-eth";
 import deployedModules from "~~/contracts/deployedModules";
-import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useAptosClient } from "~~/hooks/scaffold-move";
+import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
 const OnchainBio: NextPage = () => {
-
   const network = useTargetNetwork();
   const aptos = useAptosClient(network.targetNetwork.id);
   if (!deployedModules.testnet || !deployedModules.testnet.onchain_bio) {
     return (
-
-    <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
-    
-      <p className="text-3xl mt-14">onchain_bio module not found!</p>
+      <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
+        <p className="text-3xl mt-14">onchain_bio module not found!</p>
       </div>
     );
   }
