@@ -9,11 +9,11 @@ type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
     [ContractName in keyof T[ChainId]]: T[ChainId][ContractName] & { external?: true };
   };
-} 
+} & 
+// TODO: Figure out how to properly handle this 
 // Added this index signature to allow for flexibility with key types
-// TODO: Figure out how to properly handle this
-& {
-  [key: string]: any; 
+{
+  [key: string]: any;
 };
 
 const deepMergeContracts = <L extends Record<PropertyKey, any>, E extends Record<PropertyKey, any>>(
@@ -53,7 +53,6 @@ export type GenericContractAbi = {
   structs: readonly MoveStruct[];
 };
 
-
 type MoveFunction = {
   name: string;
   visibility: string;
@@ -80,7 +79,6 @@ type MoveStructGenericTypeParam = {
   constraints: readonly string[];
 };
 
-
 type MoveStructField = {
   name: string;
   type: string;
@@ -102,7 +100,7 @@ type IsContractDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key
 
 type ContractsDeclaration = IsContractDeclarationMissing<GenericContractsDeclaration, typeof modulesData>;
 
-type Contracts = ContractsDeclaration[ConfiguredChainId]; // TODO: hardcoded value
+type Contracts = ContractsDeclaration[ConfiguredChainId];
 
 export type ContractName = keyof Contracts;
 export type Contract<TContractName extends ContractName> = Contracts[TContractName];

@@ -1,7 +1,6 @@
-
+import { useDeployedModuleInfo } from "~~/hooks/scaffold-move";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { useDeployedModuleInfo } from "~~/hooks/scaffold-move";
 
 /**
  * Gets a viem instance of the contract present in deployedContracts.ts or externalContracts.ts corresponding to
@@ -26,7 +25,6 @@ export const useScaffoldContract = <
 
   let contract = undefined;
   if (deployedContractData && aptos) {
-
     // TODO: unfinished
-
-  }}
+  }
+};

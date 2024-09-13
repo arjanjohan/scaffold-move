@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { useIsMounted } from "usehooks-ts";
-import { Contract, ContractCodeStatus, ContractName, contracts } from "~~/utils/scaffold-move/contract";
-import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { getAccountModule } from "./useGetAccountModule";
-
+import { useIsMounted } from "usehooks-ts";
+import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
+import { Contract, ContractCodeStatus, ContractName, contracts } from "~~/utils/scaffold-move/contract";
 
 /**
  * Gets the matching contract info for the provided contract name from the contracts present in deployedModules.ts
@@ -14,8 +13,8 @@ export const useDeployedModuleInfo = <TContractName extends ContractName>(contra
   const isMounted = useIsMounted();
   const { targetNetwork } = useTargetNetwork();
   const aptos = useAptosClient(targetNetwork.id);
-  
-  // TODO: what is contract or network is not there?
+
+  // TODO: what if contract or network is not there?
   const deployedModules = contracts?.[targetNetwork.id]?.[contractName.toString()] as Contract<TContractName>;
   const [status, setStatus] = useState<ContractCodeStatus>(ContractCodeStatus.LOADING);
 
@@ -28,11 +27,9 @@ export const useDeployedModuleInfo = <TContractName extends ContractName>(contra
           setStatus(ContractCodeStatus.NOT_FOUND);
           return;
         }
-        
+
         // // Check if contract is deployed on the network
-        getAccountModule({ address: deployedModules.address,
-          moduleName: contractName.toString()
-         }, aptos);
+        getAccountModule({ accountAddress: deployedModules.address, moduleName: contractName.toString() }, aptos);
 
         // const code = await publicClient.getBytecode({
         //   address: deployedContract.address,
