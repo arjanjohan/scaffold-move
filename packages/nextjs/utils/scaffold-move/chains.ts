@@ -16,7 +16,7 @@ type Chains = {
 export const defaultChains: Chains = {
   m1_devnet: {
     id: "4",
-    name: "M1 Devnet",
+    name: "Movement Devnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.devnet.m1.movementlabs.xyz",
     indexer: "https://indexer.devnet.m1.movementlabs.xyz/",
@@ -24,7 +24,7 @@ export const defaultChains: Chains = {
   },
   m1_testnet: {
     id: "27",
-    name: "M1 Testnet",
+    name: "Movement Testnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.testnet.suzuka.movementlabs.xyz/v1",
     indexer: "https://indexer.testnet.m1.movementlabs.xyz/",
