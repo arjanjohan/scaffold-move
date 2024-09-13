@@ -1,4 +1,5 @@
 export * from "./useDeployedContractInfo";
-export * from "./useGetAccountMoveBalance";
+export * from "./useGetAccountNativeBalance";
 export * from "./useGetAccountResources";
 export * from "./useOutsideClick";
+export * from "./useAptosClient";

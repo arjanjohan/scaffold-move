@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
 import { FailedTransactionError } from "aptos";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { aptosClient } from "~~/utils/scaffold-move/aptosClient";
+import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 
 export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
 
@@ -25,7 +25,7 @@ const useSubmitTransaction = () => {
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
 
   const network = useTargetNetwork();
-  const aptos = aptosClient(network.targetNetwork.id);
+  const aptos = useAptosClient(network.targetNetwork.id);
 
   const { signAndSubmitTransaction } = useWallet();
 

@@ -1,5 +1,6 @@
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
 import { getTargetNetworks } from "~~/utils/scaffold-move";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 const allowedNetworks = getTargetNetworks();
 
@@ -8,12 +9,12 @@ type NetworkOptionsProps = {
 };
 
 export const NetworkOptions = ({ hidden = false }: NetworkOptionsProps) => {
-  const chain = "m1_testnet"; // TODO: Get this from wallet?
+  const { network } = useWallet();
 
   return (
     <>
       {allowedNetworks
-        .filter(allowedNetwork => allowedNetwork.id !== chain) // TODO: DELETE
+        .filter(allowedNetwork => allowedNetwork.id !== network?.chainId) // TODO: DELETE
         .map(allowedNetwork => (
           <li key={allowedNetwork.id} className={hidden ? "hidden" : ""}>
             <button

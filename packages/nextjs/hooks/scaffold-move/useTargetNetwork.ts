@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import scaffoldConfig from "~~/scaffold.config";
 import { useGlobalState } from "~~/services/store/store";
 import { Chain } from "~~/utils/scaffold-move/chains";
-import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 
 /**

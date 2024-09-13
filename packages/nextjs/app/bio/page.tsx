@@ -6,14 +6,13 @@ import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-eth";
 import deployedModules from "~~/contracts/deployedModules";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
-import { aptosClient } from "~~/utils/scaffold-move/aptosClient";
+import { useAptosClient } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
 const OnchainBio: NextPage = () => {
 
   const network = useTargetNetwork();
-  console.log("network", network);
-  const aptos = aptosClient("m1_testnet");
+  const aptos = useAptosClient(network.targetNetwork.id);
   if (!deployedModules.testnet || !deployedModules.testnet.onchain_bio) {
     return (
 
