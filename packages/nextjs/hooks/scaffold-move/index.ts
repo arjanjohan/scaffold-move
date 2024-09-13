@@ -1,4 +1,4 @@
-export * from "./useDeployedContractInfo";
+export * from "./useDeployedModuleInfo";
 export * from "./useGetNativeBalance";
 export * from "./useGetAccountResources";
 export * from "./useOutsideClick";

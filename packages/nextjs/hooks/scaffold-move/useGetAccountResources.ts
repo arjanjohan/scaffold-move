@@ -1,8 +1,9 @@
 import { getAccountResources } from "..";
 import { ResponseError } from "../client";
+import { useTargetNetwork } from "./useTargetNetwork";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { Types } from "aptos";
-import { useTargetNetwork } from "./useTargetNetwork";
+import { useAptosClient } from "~~/hooks/scaffold-move";
 
 export function useGetAccountResources(
   address: string,
@@ -10,11 +11,13 @@ export function useGetAccountResources(
     retry?: number | boolean;
   },
 ): UseQueryResult<Types.MoveResource[], ResponseError> {
-
   const network = useTargetNetwork();
-  let state = {network_value: ""};
+  const aptos = useAptosClient(network.targetNetwork.id);
+
+  // TODO
+  let state = { network_value: "" };
   // if (network.targetNetwork.network === Network.CUSTOM) {
-  state.network_value = network.targetNetwork.fullnode ? network.targetNetwork.fullnode : "" ;
+  state.network_value = network.targetNetwork.fullnode ? network.targetNetwork.fullnode : "";
   // } else {
 
   // }

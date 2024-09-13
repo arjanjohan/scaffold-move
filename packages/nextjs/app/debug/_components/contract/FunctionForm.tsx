@@ -9,8 +9,6 @@ import { displayTxResult } from "~~/app/debug/_components/contract";
 import { view } from "~~/hooks";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { Network } from "@aptos-labs/ts-sdk";
-
 
 const zeroInputs = false;
 
@@ -43,9 +41,11 @@ export const FunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
 
   const { account } = useWallet();
   const network = useTargetNetwork();
-  let state = {network_value: ""};
+
+  // TODO: use network from useTargetNetwork
+  let state = { network_value: "" };
   // if (network.targetNetwork.network === Network.CUSTOM) {
-  state.network_value = network.targetNetwork.fullnode ? network.targetNetwork.fullnode : "" ;
+  state.network_value = network.targetNetwork.fullnode ? network.targetNetwork.fullnode : "";
   // } else {
 
   // }

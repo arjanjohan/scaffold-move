@@ -31,7 +31,8 @@ export const Balance = ({ address }: BalanceProps) => {
     <div className="w-full flex items-center justify-center">
       <>
         <span>{getFormattedBalanceStr(balance.toString())}</span>
-        <span className="text-[0.8em] font-bold ml-1">MOVE</span>
+        {/* TODO: Get native ticker instead of hardcoded  */}
+        <span className="text-[0.8em] font-bold ml-1">APT</span>
       </>
     </div>
   );

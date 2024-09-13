@@ -11,16 +11,20 @@ import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
 const OnchainBio: NextPage = () => {
   const network = useTargetNetwork();
-  const aptos = useAptosClient(network.targetNetwork.id);
-  if (!deployedModules.testnet || !deployedModules.testnet.onchain_bio) {
-    return (
+  const chainId : string = network.targetNetwork.id;
+  const aptos = useAptosClient(chainId);
+  const moduleName = "onchain_bio";
+
+  if (!deployedModules[chainId] || !deployedModules[chainId][moduleName]) {
+        return (
       <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
         <p className="text-3xl mt-14">onchain_bio module not found!</p>
       </div>
     );
   }
 
-  const ONCHAIN_BIO = deployedModules.testnet.onchain_bio.abi;
+  
+  const ONCHAIN_BIO = deployedModules["2"].onchain_bio.abi;
 
   const { account } = useWallet();
 

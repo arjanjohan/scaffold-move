@@ -5,7 +5,7 @@ import { ContractReadMethods } from "./ContractReadMethods";
 import { ContractWriteMethods } from "./ContractWriteMethods";
 import { ModuleResources } from "./ModuleResources";
 import { Address, Balance } from "~~/components/scaffold-move";
-import { useDeployedContractInfo } from "~~/hooks/scaffold-move";
+import { useDeployedModuleInfo } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { ContractName } from "~~/utils/scaffold-move/contract";
 
@@ -19,7 +19,7 @@ type ContractUIProps = {
  **/
 export const ContractUI = ({ contractName, className = "" }: ContractUIProps) => {
   const { targetNetwork } = useTargetNetwork();
-  const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo(contractName);
+  const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedModuleInfo(contractName);
 
   if (deployedContractLoading) {
     return (
