@@ -7,7 +7,7 @@ export type Chain = {
   fullnode?: string;
   indexer?: string;
   faucet?: string;
-  blockExplorer?: string;
+  block_explorer?: string;
 };
 
 type Chains = {
@@ -15,23 +15,23 @@ type Chains = {
 };
 
 export const defaultChains: Chains = {
-  m1_devnet: {
+  movement_devnet: {
     id: "4",
     name: "Movement Devnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.devnet.m1.movementlabs.xyz",
     indexer: "https://indexer.devnet.m1.movementlabs.xyz/",
     faucet: "https://faucet2.movementlabs.xyz",
-    blockExplorer: "https://explorer.devnet.m1.movementlabs.xyz",
+    block_explorer: "https://explorer.devnet.m1.movementlabs.xyz",
   },
-  m1_testnet: {
+  movement_testnet: {
     id: "27",
     name: "Movement Testnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.testnet.suzuka.movementlabs.xyz/v1",
     indexer: "https://indexer.testnet.m1.movementlabs.xyz/",
     faucet: "https://faucet.testnet.suzuka.movementlabs.xyz/",
-    blockExplorer: "https://explorer.movementnetwork.xyz",
+    block_explorer: "https://explorer.movementnetwork.xyz",
   },
   aptos_mainnet: {
     id: "1",

@@ -11,13 +11,13 @@ export function getBlockExplorerTxLink(chain: Chain, txnHash: string) {
     return "";
   }
 
-  const blockExplorerBaseURL = chain.blockExplorer;
+  const blockExplorerBaseURL = chain.block_explorer;
 
   // For non Aptos networks, use the configured block explorer
   if (blockExplorerBaseURL) {
-    if (chain.id === defaultChains.m1_devnet.id) {
+    if (chain.id === defaultChains.movement_devnet.id) {
       return `${blockExplorerBaseURL}/txn/${txnHash}?network=devnet`;
-    } else if (chain.id === defaultChains.m1_testnet.id) {
+    } else if (chain.id === defaultChains.movement_testnet.id) {
       return `${blockExplorerBaseURL}/txn/${txnHash}?network=testnet`;
     }
   }
@@ -34,13 +34,13 @@ export function getBlockExplorerAddressLink(chain: Chain, address: string) {
     return "";
   }
 
-  const blockExplorerBaseURL = chain.blockExplorer;
+  const blockExplorerBaseURL = chain.block_explorer;
 
   // For non Aptos networks, use the configured block explorer
   if (blockExplorerBaseURL) {
-    if (chain.id === defaultChains.m1_devnet.id) {
+    if (chain.id === defaultChains.movement_devnet.id) {
       return `${blockExplorerBaseURL}/account/${address}?network=devnet`;
-    } else if (chain.id === defaultChains.m1_testnet.id) {
+    } else if (chain.id === defaultChains.movement_testnet.id) {
       return `${blockExplorerBaseURL}/account/${address}?network=testnet`;
     }
   }
