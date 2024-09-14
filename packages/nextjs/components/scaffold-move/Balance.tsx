@@ -1,19 +1,14 @@
-"use client";
-
 import { getFormattedBalanceStr } from "../../utils/scaffold-move/ContentValue/CurrencyValue";
-import { useGetAccountMoveBalance } from "~~/hooks/scaffold-move/useGetAccountMoveBalance";
+import { useGetNativeBalance } from "~~/hooks/scaffold-move";
 
 type BalanceProps = {
   address: string;
 };
 
-/**
- * Display APT balance of an APT address.
- */
 export const Balance = ({ address }: BalanceProps) => {
-  const balance = useGetAccountMoveBalance(address);
+  const { balance, loading, error } = useGetNativeBalance(address);
 
-  if (!address || balance === null) {
+  if (loading) {
     return (
       <div className="animate-pulse flex space-x-4">
         <div className="rounded-md bg-slate-300 h-6 w-6"></div>
@@ -24,20 +19,20 @@ export const Balance = ({ address }: BalanceProps) => {
     );
   }
 
-  // if (isError) {
-  //   return (
-  //     <div className={`border-2 border-gray-400 rounded-md px-2 flex flex-col items-center max-w-fit cursor-pointer`}>
-  //       <div className="text-warning">Error</div>
-  //     </div>
-  //   );
-  // }
-  // const formattedBalance = balance ? Number(formatEther(balance.value)) : 0;
+  if (error || balance === null) {
+    return (
+      <div className="border-2 border-gray-400 rounded-md px-2 flex flex-col items-center max-w-fit cursor-pointer">
+        <div className="text-warning">Error</div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full flex items-center justify-center">
       <>
-        <span>{getFormattedBalanceStr(balance)}</span>
-        <span className="text-[0.8em] font-bold ml-1">MOVE</span>
+        <span>{getFormattedBalanceStr(balance.toString())}</span>
+        {/* TODO: Get native ticker instead of hardcoded  */}
+        <span className="text-[0.8em] font-bold ml-1">APT</span>
       </>
     </div>
   );

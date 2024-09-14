@@ -1,9 +1,8 @@
-import { defaultChains } from "./chains";
+import { defaultChains } from "../../utils/scaffold-move/chains";
 import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
 
-export function aptosClient(chainId: string) {
-
-  const chain = defaultChains["m1_testnet"]; // TODO: remove hardcoded chain
+export function useAptosClient(chainId: string) {
+  const chain = Object.values(defaultChains).find(chain => chain.id === chainId);
   if (!chain) {
     throw new Error(`Chain with id ${chainId} not found`);
   }
@@ -16,6 +15,5 @@ export function aptosClient(chainId: string) {
       faucet: chain.faucet,
     }),
   });
-
   return new Aptos(aptosConfig);
 }

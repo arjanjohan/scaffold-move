@@ -4,7 +4,7 @@ import { useDebounceValue } from "usehooks-ts";
 import { Address, isAddress } from "viem";
 import { normalize } from "viem/ens";
 import { useEnsAddress, useEnsAvatar, useEnsName } from "wagmi";
-import { CommonInputProps, InputBase, isENS } from "~~/components/scaffold-eth";
+import { CommonInputProps, InputBase, isENS } from "~~/components/scaffold-move";
 
 /**
  * Address input with ENS name resolution

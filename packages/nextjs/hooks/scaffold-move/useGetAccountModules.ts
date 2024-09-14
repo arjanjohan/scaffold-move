@@ -1,21 +1,28 @@
-import { getAccountModules } from "..";
-import { ResponseError } from "../client";
+import { ResponseError, withResponseError } from "../client";
+import { useTargetNetwork } from "./useTargetNetwork";
+import { Aptos } from "@aptos-labs/ts-sdk";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { Types } from "aptos";
-import { useTargetNetwork } from "./useTargetNetwork";
+import { useAptosClient } from "~~/hooks/scaffold-move";
+
+function getAccountModules(
+  requestParameters: { address: string; ledgerVersion?: number },
+  client: Aptos,
+): Promise<Types.MoveModuleBytecode[]> {
+  const { address, ledgerVersion } = requestParameters;
+  let ledgerVersionBig;
+  if (ledgerVersion !== undefined) {
+    ledgerVersionBig = BigInt(ledgerVersion);
+  }
+  return withResponseError(client.getAccountModules({ accountAddress: address }));
+}
 
 export function useGetAccountModules(address: string): UseQueryResult<Types.MoveModuleBytecode[], ResponseError> {
-
   const network = useTargetNetwork();
-  let state = {network_value: ""};
-  // if (network.targetNetwork.network === Network.CUSTOM) {
-  state.network_value = network.targetNetwork.fullnode ? network.targetNetwork.fullnode : "" ;
-  // } else {
-
-  // }
+  const aptosClient = useAptosClient(network.targetNetwork.id);
 
   return useQuery<Array<Types.MoveModuleBytecode>, ResponseError>({
-    queryKey: ["accountModules", { address }, state.network_value],
-    queryFn: () => getAccountModules({ address }, state.network_value),
+    queryKey: ["accountModules", { address }],
+    queryFn: () => getAccountModules({ address }, aptosClient),
   });
 }

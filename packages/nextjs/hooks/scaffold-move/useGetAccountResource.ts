@@ -5,20 +5,22 @@ import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { Types } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 
-export function getAccountResources(
-  requestParameters: { address: string; ledgerVersion?: number },
+export function getAccountResource(
+  requestParameters: { address: string; resourceType: `${string}::${string}::${string}`, 
+    ledgerVersion?: number },
   client: Aptos,
 ): Promise<Types.MoveResource[]> {
   const { address, ledgerVersion } = requestParameters;
-  let ledgerVersionBig;
-  if (ledgerVersion !== undefined) {
-    ledgerVersionBig = BigInt(ledgerVersion);
-  }
-  return withResponseError(client.getAccountResources({ accountAddress: address }));
+  // let ledgerVersionBig;
+  // if (ledgerVersion !== undefined) {
+  //   ledgerVersionBig = BigInt(ledgerVersion);
+  // }
+  return withResponseError(client.getAccountResource({ accountAddress: address, resourceType: requestParameters.resourceType }));  
 }
 
-export function useGetAccountResources(
+export function useGetAccountResource(
   address: string,
+  resourceType: `${string}::${string}::${string}`,
   options?: {
     retry?: number | boolean;
   },
@@ -27,8 +29,8 @@ export function useGetAccountResources(
   const aptosClient = useAptosClient(network.targetNetwork.id);
 
   const test = useQuery<Array<Types.MoveResource>, ResponseError>({
-    queryKey: ["accountResources", { address }],
-    queryFn: () => getAccountResources({ address }, aptosClient),
+    queryKey: ["accountResource", { address, resourceType }],
+    queryFn: () => getAccountResource({ address, resourceType }, aptosClient),
     retry: options?.retry ?? false,
   });
   return test;

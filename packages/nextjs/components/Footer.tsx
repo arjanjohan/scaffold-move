@@ -1,9 +1,7 @@
 import React from "react";
 // import Link from "next/link";
-// import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { SwitchTheme } from "~~/components/SwitchTheme";
-// import { Faucet } from "~~/components/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
 /**

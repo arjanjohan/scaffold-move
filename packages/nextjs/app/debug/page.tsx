@@ -4,7 +4,7 @@ import { getMetadata } from "~~/utils/scaffold-move/getMetadata";
 
 export const metadata = getMetadata({
   title: "Debug Modules",
-  description: "Debug your deployed 🏗 Scaffold-Move modules in an easy way",
+  description: "Debug your deployed 🏗 Scaffold Move modules in an easy way",
 });
 
 const Debug: NextPage = () => {

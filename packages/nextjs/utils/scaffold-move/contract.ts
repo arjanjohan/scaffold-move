@@ -9,6 +9,10 @@ type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
     [ContractName in keyof T[ChainId]]: T[ChainId][ContractName] & { external?: true };
   };
+} & // TODO: Figure out how to properly handle this
+// Added this index signature to allow for flexibility with key types
+{
+  [key: string]: any;
 };
 
 const deepMergeContracts = <L extends Record<PropertyKey, any>, E extends Record<PropertyKey, any>>(
@@ -37,24 +41,55 @@ const modulesData = deepMergeContracts(deployedModulesData, externalModulesData)
 
 export type GenericContract = {
   bytecode: string;
-  abi?: GenericContractAbi;
-  external?: boolean;
+  abi: GenericContractAbi;
 };
 
 export type GenericContractAbi = {
-  address: string; // TODO: address type
+  address: Types.Address;
   name: string;
-  friends: string[]; //TODO: check which type?
-  exposed_functions: Types.MoveFunction[];
-  structs: Types.MoveStruct[];
+  friends: readonly string[];
+  exposed_functions: readonly MoveFunction[];
+  structs: readonly MoveStruct[];
 };
+
+type MoveFunction = {
+  name: string;
+  visibility: string;
+  is_entry: boolean;
+  is_view: boolean;
+  generic_type_params: readonly MoveFunctionGenericTypeParam[];
+  params: readonly string[];
+  return: readonly string[];
+};
+
+type MoveFunctionGenericTypeParam = {
+  constraints: readonly string[];
+};
+
+type MoveStruct = {
+  name: string;
+  is_native: boolean;
+  abilities: readonly string[];
+  generic_type_params: readonly MoveStructGenericTypeParam[];
+  fields: readonly MoveStructField[];
+};
+
+type MoveStructGenericTypeParam = {
+  constraints: readonly string[];
+};
+
+type MoveStructField = {
+  name: string;
+  type: string;
+};
+
 export type GenericContractsDeclaration = {
   [chainId: string]: {
     [contractName: string]: GenericContract;
   };
 };
 
-export const contracts = modulesData as GenericContractsDeclaration | null;
+export const contracts = deployedModulesData as GenericContractsDeclaration | null;
 
 type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
 
@@ -64,7 +99,7 @@ type IsContractDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key
 
 type ContractsDeclaration = IsContractDeclarationMissing<GenericContractsDeclaration, typeof modulesData>;
 
-type Contracts = ContractsDeclaration["testnet"]; // TODO: hardcoded value
+type Contracts = ContractsDeclaration[ConfiguredChainId];
 
 export type ContractName = keyof Contracts;
 export type Contract<TContractName extends ContractName> = Contracts[TContractName];

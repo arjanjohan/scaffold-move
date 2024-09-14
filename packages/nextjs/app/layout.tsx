@@ -1,5 +1,5 @@
 import "@rainbow-me/rainbowkit/styles.css";
-import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithProviders";
+import { ScaffoldMoveAppWithProviders } from "~~/components/ScaffoldMoveAppWithProviders";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
 import { getMetadata } from "~~/utils/scaffold-move/getMetadata";
@@ -9,16 +9,16 @@ export const metadata = getMetadata({
   description: "Built with 🏗 Scaffold-Move",
 });
 
-const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
+const ScaffoldMoveApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning>
       <body>
         <ThemeProvider enableSystem={false} defaultTheme="dark">
-          <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
+          <ScaffoldMoveAppWithProviders>{children}</ScaffoldMoveAppWithProviders>
         </ThemeProvider>
       </body>
     </html>
   );
 };
 
-export default ScaffoldEthApp;
+export default ScaffoldMoveApp;

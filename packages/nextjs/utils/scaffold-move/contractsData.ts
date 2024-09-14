@@ -1,8 +1,7 @@
-import scaffoldConfig from "~~/scaffold.config";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { contracts } from "~~/utils/scaffold-move/contract";
 
-export function getAllContracts() {
-  const contractsData = contracts?.["testnet"]; // TODO: hardcoded value
+export function getAllContracts(chainId: string) {
+  const contractsData = contracts?.[chainId];
   return contractsData ? contractsData : {};
 }
- 
