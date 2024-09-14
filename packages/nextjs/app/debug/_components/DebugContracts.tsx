@@ -5,14 +5,15 @@ import { useLocalStorage } from "usehooks-ts";
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
 import { ContractUI } from "~~/app/debug/_components/contract";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ContractName } from "~~/utils/scaffold-move/contract";
-import { getAllContracts } from "~~/utils/scaffold-move/contractsData";
+import { ContractName } from "~~/utils/scaffold-move/module";
+import { getAllModules } from "~~/utils/scaffold-move/modulesData";
 
 export function DebugContracts() {
   const { targetNetwork } = useTargetNetwork();
 
   // Fetch the contracts data based on the target network
-  const contractsData = getAllContracts(targetNetwork.id);
+  const contractsData = getAllModules(targetNetwork.id);
+  console.log("contractsData", contractsData);
   const contractNames = Object.keys(contractsData) as ContractName[];
 
   const selectedContractStorageKey = "scaffoldMove.selectedContract";

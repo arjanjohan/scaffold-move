@@ -1,6 +1,6 @@
 import { Types } from "aptos";
-import { FunctionForm } from "~~/app/debug/_components/contract";
-import { Contract, ContractName } from "~~/utils/scaffold-move/contract";
+import { WriteFunctionForm } from "~~/app/debug/_components/contract";
+import { Contract, ContractName } from "~~/utils/scaffold-move/module";
 
 export const ContractWriteMethods = ({ deployedContractData }: { deployedContractData: Contract<ContractName> }) => {
   if (!deployedContractData || deployedContractData.abi === undefined) {
@@ -17,7 +17,7 @@ export const ContractWriteMethods = ({ deployedContractData }: { deployedContrac
     <>
       {functionsToDisplay.map((fn: Types.MoveFunction, index: number) => (
         <div key={index}>
-          <FunctionForm key={index} module={deployedContractData.abi!} fn={fn} write={true} />
+          <WriteFunctionForm key={index} module={deployedContractData.abi!} fn={fn} write={true} />
         </div>
       ))}
     </>

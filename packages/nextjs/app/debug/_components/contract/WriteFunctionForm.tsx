@@ -32,7 +32,7 @@ function removeSignerParam(fn: Types.MoveFunction, write: boolean) {
   return fn.params.filter(p => p !== "signer" && p !== "&signer");
 }
 
-export const FunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
+export const WriteFunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
   const [viewInProcess, setViewInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();

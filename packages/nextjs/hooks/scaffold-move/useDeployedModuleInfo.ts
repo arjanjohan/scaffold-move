@@ -3,7 +3,7 @@ import { getAccountModule } from "./useGetAccountModule";
 import { useIsMounted } from "usehooks-ts";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { Contract, ContractCodeStatus, ContractName, contracts } from "~~/utils/scaffold-move/contract";
+import { Contract, ContractCodeStatus, ContractName, contracts } from "~~/utils/scaffold-move/module";
 
 /**
  * Gets the matching contract info for the provided contract name from the contracts present in deployedModules.ts
@@ -26,9 +26,7 @@ export const useDeployedModuleInfo = <TContractName extends ContractName>(contra
           setStatus(ContractCodeStatus.NOT_FOUND);
           return;
         }
-
-        const accountModule = getAccountModule({ accountAddress: deployedModules.address, moduleName: contractName.toString() }, aptos);
-        
+        const accountModule = getAccountModule({ accountAddress: deployedModules.abi.address, moduleName: contractName.toString() }, aptos);
         // If contract code is `0x` => no contract deployed on that address
         if ((await accountModule).bytecode === "0x") {
           setStatus(ContractCodeStatus.NOT_FOUND);

@@ -7,7 +7,7 @@ import { ModuleResources } from "./ModuleResources";
 import { Address, Balance } from "~~/components/scaffold-move";
 import { useDeployedModuleInfo } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ContractName } from "~~/utils/scaffold-move/contract";
+import { ContractName } from "~~/utils/scaffold-move/module";
 
 type ContractUIProps = {
   contractName: ContractName;
@@ -20,7 +20,6 @@ type ContractUIProps = {
 export const ContractUI = ({ contractName, className = "" }: ContractUIProps) => {
   const { targetNetwork } = useTargetNetwork();
   const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedModuleInfo(contractName);
-
   if (deployedContractLoading) {
     return (
       <div className="mt-14">
@@ -31,7 +30,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
   if (!deployedContractData || !deployedContractData.abi) {
     return (
       <p className="text-3xl mt-14">
-        {`No contract found by the name of "${String(contractName)}" on chain "${targetNetwork}"!`}
+        {`No module found by the name of "${String(contractName)}" on chain "${targetNetwork}"!`}
       </p>
     );
   }

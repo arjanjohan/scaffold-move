@@ -1,5 +1,5 @@
 import { AbiFunction, AbiParameter } from "abitype";
-import { AbiParameterTuple } from "~~/utils/scaffold-move/contract";
+import { AbiParameterTuple } from "~~/utils/scaffold-move/module";
 
 /**
  * Generates a key based on function metadata
