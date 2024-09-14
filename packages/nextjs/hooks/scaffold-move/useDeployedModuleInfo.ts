@@ -27,8 +27,13 @@ export const useDeployedModuleInfo = <TContractName extends ContractName>(contra
           return;
         }
 
-        // // Check if contract is deployed on the network
-        getAccountModule({ accountAddress: deployedModules.address, moduleName: contractName.toString() }, aptos);
+        const accountModule = getAccountModule({ accountAddress: deployedModules.address, moduleName: contractName.toString() }, aptos);
+        
+        // If contract code is `0x` => no contract deployed on that address
+        if ((await accountModule).bytecode === "0x") {
+          setStatus(ContractCodeStatus.NOT_FOUND);
+          return;
+        }
 
         setStatus(ContractCodeStatus.DEPLOYED);
       } catch (e) {
