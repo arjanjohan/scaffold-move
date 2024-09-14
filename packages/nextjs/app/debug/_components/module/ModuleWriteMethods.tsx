@@ -7,8 +7,8 @@ export const ModuleWriteMethods = ({
 }: {
   deployedModuleData: Module<ModuleName>;
 }) => {
-  if (!deployedModuleData || deployedModuleData.abi === undefined) {
-    return null;
+  if (!deployedModuleData.abi) {
+    return <p>No ABI available for this module.</p>;
   }
 
   const functionsToDisplay = deployedModuleData.abi.exposed_functions.filter((fn: Types.MoveFunction) => fn.is_entry);
@@ -21,7 +21,7 @@ export const ModuleWriteMethods = ({
     <>
       {functionsToDisplay.map((fn: Types.MoveFunction, index: number) => (
         <div key={index}>
-          <WriteFunctionForm key={index} module={deployedModuleData.abi!} fn={fn} write={true} />
+          <WriteFunctionForm key={index} module={deployedModuleData.abi} fn={fn} write={true} />
         </div>
       ))}
     </>

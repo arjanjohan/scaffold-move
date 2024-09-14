@@ -7,7 +7,7 @@ export const ModuleViewMethods = ({
 }: {
   deployedModuleData: Module<ModuleName>;
 }) => {
-  if (!deployedModuleData || deployedModuleData.abi === undefined) {
+  if (!deployedModuleData || !deployedModuleData.abi) {
     return null;
   }
 
@@ -21,7 +21,7 @@ export const ModuleViewMethods = ({
     <>
       {functionsToDisplay.map((fn: Types.MoveFunction, index: number) => (
         <div key={index}>
-          <WriteFunctionForm key={index} module={deployedModuleData.abi!} fn={fn} write={false} />
+          <WriteFunctionForm key={index} module={deployedModuleData.abi} fn={fn} write={false} />
         </div>
       ))}
     </>

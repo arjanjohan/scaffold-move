@@ -7,7 +7,7 @@ interface ModuleResourcesProps {
 }
 
 export const ModuleResources = ({ deployedModuleData }: ModuleResourcesProps) => {
-  const { isLoading, data, error } = useGetAccountResources(deployedModuleData.abi!.address);
+  const { isLoading, data, error } = useGetAccountResources(deployedModuleData.abi.address);
 
   if (error) {
     return (
