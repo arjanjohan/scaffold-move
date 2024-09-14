@@ -1,8 +1,8 @@
 import { Types } from "aptos";
 import { WriteFunctionForm } from "~~/app/debug/_components/contract";
-import { Contract, ContractName } from "~~/utils/scaffold-move/module";
+import { Module, ModuleName } from "~~/utils/scaffold-move/module";
 
-export const ContractReadMethods = ({ deployedContractData }: { deployedContractData: Contract<ContractName> }) => {
+export const ContractReadMethods = ({ deployedContractData }: { deployedContractData: Module<ModuleName> }) => {
   if (!deployedContractData || deployedContractData.abi === undefined) {
     return null;
   }

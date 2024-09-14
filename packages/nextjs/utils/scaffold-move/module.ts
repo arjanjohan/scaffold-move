@@ -1,13 +1,13 @@
 import { AbiParameter } from "abitype";
 import { Types } from "aptos";
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
-import deployedModulesData from "~~/contracts/deployedModules";
-import externalModulesData from "~~/contracts/externalModules";
+import deployedModulesData from "~~/modules/deployedModules";
+import externalModulesData from "~~/modules/externalModules";
 import scaffoldConfig from "~~/scaffold.config";
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
-    [ContractName in keyof T[ChainId]]: T[ChainId][ContractName] & { external?: true };
+    [ModuleName in keyof T[ChainId]]: T[ChainId][ModuleName] & { external?: true };
   };
 } & // TODO: Figure out how to properly handle this
 // Added this index signature to allow for flexibility with key types
@@ -15,7 +15,7 @@ type AddExternalFlag<T> = {
   [key: string]: any;
 };
 
-const deepMergeContracts = <L extends Record<PropertyKey, any>, E extends Record<PropertyKey, any>>(
+const deepMergeModules = <L extends Record<PropertyKey, any>, E extends Record<PropertyKey, any>>(
   local: L,
   external: E,
 ) => {
@@ -27,8 +27,8 @@ const deepMergeContracts = <L extends Record<PropertyKey, any>, E extends Record
       continue;
     }
     const amendedExternal = Object.fromEntries(
-      Object.entries(external[key] as Record<string, Record<string, unknown>>).map(([contractName, declaration]) => [
-        contractName,
+      Object.entries(external[key] as Record<string, Record<string, unknown>>).map(([moduleName, declaration]) => [
+        moduleName,
         { ...declaration, external: true },
       ]),
     );
@@ -37,14 +37,14 @@ const deepMergeContracts = <L extends Record<PropertyKey, any>, E extends Record
   return result as MergeDeepRecord<AddExternalFlag<L>, AddExternalFlag<E>, { arrayMergeMode: "replace" }>;
 };
 
-const modulesData = deepMergeContracts(deployedModulesData, externalModulesData);
+const modulesData = deepMergeModules(deployedModulesData, externalModulesData);
 
-export type GenericContract = {
+export type GenericModule = {
   bytecode: string;
-  abi: GenericContractAbi;
+  abi: GenericModuleAbi;
 };
 
-export type GenericContractAbi = {
+export type GenericModuleAbi = {
   address: Types.Address;
   name: string;
   friends: readonly string[];
@@ -83,28 +83,28 @@ type MoveStructField = {
   type: string;
 };
 
-export type GenericContractsDeclaration = {
+export type GenericModulesDeclaration = {
   [chainId: string]: {
-    [contractName: string]: GenericContract;
+    [moduleName: string]: GenericModule;
   };
 };
 
-export const contracts = deployedModulesData as GenericContractsDeclaration | null;
+export const modules = deployedModulesData as GenericModulesDeclaration | null;
 
 type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
 
-type IsContractDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key in ConfiguredChainId]: any }
+type IsModuleDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key in ConfiguredChainId]: any }
   ? TNo
   : TYes;
 
-type ContractsDeclaration = IsContractDeclarationMissing<GenericContractsDeclaration, typeof modulesData>;
+type ModulesDeclaration = IsModuleDeclarationMissing<GenericModulesDeclaration, typeof modulesData>;
 
-type Contracts = ContractsDeclaration[ConfiguredChainId];
+type Modules = ModulesDeclaration[ConfiguredChainId];
 
-export type ContractName = keyof Contracts;
-export type Contract<TContractName extends ContractName> = Contracts[TContractName];
+export type ModuleName = keyof Modules;
+export type Module<TModuleName extends ModuleName> = Modules[TModuleName];
 
-export enum ContractCodeStatus {
+export enum ModuleCodeStatus {
   "LOADING",
   "DEPLOYED",
   "NOT_FOUND",

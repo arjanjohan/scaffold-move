@@ -5,40 +5,39 @@ import { useLocalStorage } from "usehooks-ts";
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
 import { ContractUI } from "~~/app/debug/_components/contract";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ContractName } from "~~/utils/scaffold-move/module";
+import { ModuleName } from "~~/utils/scaffold-move/module";
 import { getAllModules } from "~~/utils/scaffold-move/modulesData";
 
-export function DebugContracts() {
+export function DebugModules() {
   const { targetNetwork } = useTargetNetwork();
 
-  // Fetch the contracts data based on the target network
-  const contractsData = getAllModules(targetNetwork.id);
-  console.log("contractsData", contractsData);
-  const contractNames = Object.keys(contractsData) as ContractName[];
+  // Fetch the module data based on the target network
+  const modulesData = getAllModules(targetNetwork.id);
+  const moduleNames = Object.keys(modulesData) as ModuleName[];
 
-  const selectedContractStorageKey = "scaffoldMove.selectedContract";
+  const selectedModuleStorageKey = "scaffoldMove.selectedModule";
 
-  const [selectedContract, setSelectedContract] = useLocalStorage<ContractName>(
-    selectedContractStorageKey,
-    contractNames[0],
+  const [selectedContract, setSelectedContract] = useLocalStorage<ModuleName>(
+    selectedModuleStorageKey,
+    moduleNames[0],
     { initializeWithValue: false },
   );
 
   useEffect(() => {
-    if (!contractNames.includes(selectedContract)) {
-      setSelectedContract(contractNames[0]);
+    if (!moduleNames.includes(selectedContract)) {
+      setSelectedContract(moduleNames[0]);
     }
-  }, [selectedContract, setSelectedContract, contractNames]);
+  }, [selectedContract, setSelectedContract, moduleNames]);
 
   return (
     <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
-      {contractNames.length === 0 ? (
+      {moduleNames.length === 0 ? (
         <p className="text-3xl mt-14">No modules found!</p>
       ) : (
         <>
-          {contractNames.length > 1 && (
+          {moduleNames.length > 1 && (
             <div className="flex flex-row gap-2 w-full max-w-7xl pb-1 px-6 lg:px-10 flex-wrap">
-              {contractNames.map(contractName => (
+              {moduleNames.map(contractName => (
                 <button
                   className={`btn btn-secondary btn-sm font-light hover:border-transparent ${
                     contractName === selectedContract
@@ -49,7 +48,7 @@ export function DebugContracts() {
                   onClick={() => setSelectedContract(contractName)}
                 >
                   {contractName as string}
-                  {contractsData[contractName as string].external && (
+                  {modulesData[contractName as string].external && (
                     <span className="tooltip tooltip-top tooltip-accent" data-tip="External module">
                       <BarsArrowUpIcon className="h-4 w-4 cursor-pointer" />
                     </span>
@@ -58,7 +57,7 @@ export function DebugContracts() {
               ))}
             </div>
           )}
-          {contractNames.map(contractName => (
+          {moduleNames.map(contractName => (
             <ContractUI
               key={contractName as string}
               contractName={contractName}

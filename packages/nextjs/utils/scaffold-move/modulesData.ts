@@ -1,6 +1,6 @@
-import { contracts } from "~~/utils/scaffold-move/module";
+import { modules } from "~~/utils/scaffold-move/module";
 
 export function getAllModules(chainId: string) {
-  const contractsData = contracts?.[chainId];
+  const contractsData = modules?.[chainId];
   return contractsData ? contractsData : {};
 }

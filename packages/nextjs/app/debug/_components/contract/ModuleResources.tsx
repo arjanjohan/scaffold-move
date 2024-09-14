@@ -1,8 +1,8 @@
 import { ModuleResource } from "./ModuleResource";
 import { useGetAccountResources } from "~~/hooks/scaffold-move";
-import { Contract, ContractName } from "~~/utils/scaffold-move/module";
+import { Module, ModuleName } from "~~/utils/scaffold-move/module";
 
-export const ModuleResources = ({ deployedContractData }: { deployedContractData: Contract<ContractName> }) => {
+export const ModuleResources = ({ deployedContractData }: { deployedContractData: Module<ModuleName> }) => {
   const { isLoading, data, error } = useGetAccountResources(deployedContractData.abi!.address);
 
   if (error) {

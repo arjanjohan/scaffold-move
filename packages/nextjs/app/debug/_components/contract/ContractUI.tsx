@@ -7,10 +7,10 @@ import { ModuleResources } from "./ModuleResources";
 import { Address, Balance } from "~~/components/scaffold-move";
 import { useDeployedModuleInfo } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ContractName } from "~~/utils/scaffold-move/module";
+import { ModuleName } from "~~/utils/scaffold-move/module";
 
 type ContractUIProps = {
-  contractName: ContractName;
+  contractName: ModuleName;
   className?: string;
 };
 
