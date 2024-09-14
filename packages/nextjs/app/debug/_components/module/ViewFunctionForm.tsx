@@ -43,7 +43,7 @@ export const ViewFunctionForm = ({ key, module, fn, write }: FunctionFormProps) 
   const network = useTargetNetwork();
 
   // TODO: use network from useTargetNetwork
-  let state = { network_value: "" };
+  const state = { network_value: "" };
   // if (network.targetNetwork.network === Network.CUSTOM) {
   state.network_value = network.targetNetwork.fullnode ? network.targetNetwork.fullnode : "";
   // } else {

@@ -8,9 +8,7 @@ import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
  * @param config - The config settings for the hook
  * @param config.moduleName - deployed module name
  */
-export const useScaffoldModule = <
-  TModuleName extends string,
->({
+export const useScaffoldModule = <TModuleName extends string>({
   moduleName: moduleName,
 }: {
   moduleName: TModuleName;

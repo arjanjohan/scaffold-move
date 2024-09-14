@@ -2,7 +2,11 @@ import { Types } from "aptos";
 import { WriteFunctionForm } from "~~/app/debug/_components/module";
 import { Module, ModuleName } from "~~/utils/scaffold-move/module";
 
-export const ModuleWriteMethods = ({ deployedModuleData: deployedModuleData }: { deployedModuleData: Module<ModuleName> }) => {
+export const ModuleWriteMethods = ({
+  deployedModuleData: deployedModuleData,
+}: {
+  deployedModuleData: Module<ModuleName>;
+}) => {
   if (!deployedModuleData || deployedModuleData.abi === undefined) {
     return null;
   }

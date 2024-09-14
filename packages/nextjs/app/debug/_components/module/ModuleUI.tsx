@@ -1,9 +1,9 @@
 "use client";
 
 // @refresh reset
-import { ModuleWriteMethods } from "./ModuleWriteMethods";
 import { ModuleResources } from "./ModuleResources";
 import { ModuleViewMethods } from "./ModuleViewMethods";
+import { ModuleWriteMethods } from "./ModuleWriteMethods";
 import { Address, Balance } from "~~/components/scaffold-move";
 import { useDeployedModuleInfo } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";

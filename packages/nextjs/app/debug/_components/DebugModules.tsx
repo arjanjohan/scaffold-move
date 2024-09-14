@@ -17,11 +17,9 @@ export function DebugModules() {
 
   const selectedModuleStorageKey = "scaffoldMove.selectedModule";
 
-  const [selectedModule, setSelectedModule] = useLocalStorage<ModuleName>(
-    selectedModuleStorageKey,
-    moduleNames[0],
-    { initializeWithValue: false },
-  );
+  const [selectedModule, setSelectedModule] = useLocalStorage<ModuleName>(selectedModuleStorageKey, moduleNames[0], {
+    initializeWithValue: false,
+  });
 
   useEffect(() => {
     if (!moduleNames.includes(selectedModule)) {

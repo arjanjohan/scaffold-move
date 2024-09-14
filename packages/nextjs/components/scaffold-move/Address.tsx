@@ -61,7 +61,6 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
       <div className="flex-shrink-0">
         <BlockieAvatar
           address={address}
-          // ensImage={ensAvatar}
           size={(blockieSizeMap[size] * 24) / blockieSizeMap["base"]}
         />
       </div>
