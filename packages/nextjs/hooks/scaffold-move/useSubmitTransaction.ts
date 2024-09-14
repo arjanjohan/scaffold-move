@@ -52,7 +52,7 @@ const useSubmitTransaction = () => {
           // await state.aptos_client.waitForTransaction(response["hash"], {
           //   checkSuccess: true,
           // });
-
+          
           await aptos.waitForTransaction(response["hash"]);
 
           return {
