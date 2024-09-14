@@ -20,7 +20,6 @@ function getAccountModules(
 export function useGetAccountModules(address: string): UseQueryResult<Types.MoveModuleBytecode[], ResponseError> {
   const network = useTargetNetwork();
   const aptosClient = useAptosClient(network.targetNetwork.id);
-  console.log("useGetAccountModules", address);
 
   return useQuery<Array<Types.MoveModuleBytecode>, ResponseError>({
     queryKey: ["accountModules", { address }],

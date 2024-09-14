@@ -14,7 +14,6 @@ export const useDeployedModuleInfo = <TContractName extends ContractName>(contra
   const { targetNetwork } = useTargetNetwork();
   const aptos = useAptosClient(targetNetwork.id);
 
-  // TODO: what if contract or network is not there?
   const deployedModules = contracts?.[targetNetwork.id]?.[contractName.toString()] as Contract<TContractName>;
   const [status, setStatus] = useState<ContractCodeStatus>(ContractCodeStatus.LOADING);
 
@@ -31,15 +30,6 @@ export const useDeployedModuleInfo = <TContractName extends ContractName>(contra
         // // Check if contract is deployed on the network
         getAccountModule({ accountAddress: deployedModules.address, moduleName: contractName.toString() }, aptos);
 
-        // const code = await publicClient.getBytecode({
-        //   address: deployedContract.address,
-        // });
-
-        // // If contract code is `0x` => no contract deployed on that address
-        // if (code === "0x") {
-        //   setStatus(ContractCodeStatus.NOT_FOUND);
-        //   return;
-        // }
         setStatus(ContractCodeStatus.DEPLOYED);
       } catch (e) {
         console.error(e);
