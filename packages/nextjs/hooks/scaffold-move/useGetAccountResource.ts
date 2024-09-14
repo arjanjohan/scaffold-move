@@ -11,11 +11,11 @@ export function getAccountResource(
   client: Aptos,
 ): Promise<Types.MoveResource[]> {
   const { address, ledgerVersion } = requestParameters;
-  let ledgerVersionBig;
-  if (ledgerVersion !== undefined) {
-    ledgerVersionBig = BigInt(ledgerVersion);
-  }
-  return withResponseError(client.getAccountResource({ accountAddress: address, resourceType:  }));
+  // let ledgerVersionBig;
+  // if (ledgerVersion !== undefined) {
+  //   ledgerVersionBig = BigInt(ledgerVersion);
+  // }
+  return withResponseError(client.getAccountResource({ accountAddress: address, resourceType: requestParameters.resourceType }));  
 }
 
 export function useGetAccountResource(
@@ -29,7 +29,7 @@ export function useGetAccountResource(
   const aptosClient = useAptosClient(network.targetNetwork.id);
 
   const test = useQuery<Array<Types.MoveResource>, ResponseError>({
-    queryKey: ["accountResources", { address }],
+    queryKey: ["accountResource", { address, resourceType }],
     queryFn: () => getAccountResource({ address, resourceType }, aptosClient),
     retry: options?.retry ?? false,
   });

@@ -15,6 +15,5 @@ export function useAptosClient(chainId: string) {
       faucet: chain.faucet,
     }),
   });
-
   return new Aptos(aptosConfig);
 }
