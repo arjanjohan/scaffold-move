@@ -4,27 +4,17 @@ import { useState } from "react";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-move";
-import deployedModules from "~~/contracts/deployedModules";
 import { useAptosClient } from "~~/hooks/scaffold-move";
+// import { useGetAccountResource } from "~~/hooks/scaffold-move";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { useGetAccountResource } from "~~/hooks/scaffold-move";
+import deployedModules from "~~/modules/deployedModules";
 
 const OnchainBio: NextPage = () => {
   const network = useTargetNetwork();
   const chainId = network.targetNetwork.id;
   const aptos = useAptosClient(chainId);
   const moduleName = "onchain_bio";
-
-  if (!deployedModules[chainId] || !deployedModules[chainId][moduleName]) {
-    return (
-      <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
-        <p className="text-3xl mt-14">onchain_bio module not found!</p>
-      </div>
-    );
-  }
-
-  const ONCHAIN_BIO = deployedModules[chainId].onchain_bio.abi;
 
   const { account } = useWallet();
 
@@ -36,6 +26,16 @@ const OnchainBio: NextPage = () => {
   const [currentBio, setCurrentBio] = useState(null);
 
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
+
+  if (!deployedModules[chainId] || !deployedModules[chainId][moduleName]) {
+    return (
+      <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
+        <p className="text-3xl mt-14">onchain_bio module not found!</p>
+      </div>
+    );
+  }
+
+  const ONCHAIN_BIO = deployedModules[chainId].onchain_bio.abi;
 
   const fetchBio = async () => {
     if (!account) {
@@ -53,18 +53,18 @@ const OnchainBio: NextPage = () => {
         setCurrentBio(bioResource.bio);
 
         // TODO: code below should work but it doesn't
-      // // const bioResource = await aptos.getAccountResource({
-      // //   accountAddress: account?.address,
-      // //   resourceType: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::${resourceName}`,
-      // // });
-      // console.log("account", account);
-      // const bioResource = await useGetAccountResource(account?.address, `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::${resourceName}`);
-      // setAccountHasBio(true);
-      // console.log("bioResource", bioResource);
-      // if (bioResource) {
-      //   console.log("bioResource", bioResource);
-      //   // setCurrentName(bioResource.name);
-      //   // setCurrentBio(bioResource.bio);
+        // // const bioResource = await aptos.getAccountResource({
+        // //   accountAddress: account?.address,
+        // //   resourceType: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::${resourceName}`,
+        // // });
+        // console.log("account", account);
+        // const bioResource = await useGetAccountResource(account?.address, `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::${resourceName}`);
+        // setAccountHasBio(true);
+        // console.log("bioResource", bioResource);
+        // if (bioResource) {
+        //   console.log("bioResource", bioResource);
+        //   // setCurrentName(bioResource.name);
+        //   // setCurrentBio(bioResource.bio);
       } else {
         setCurrentName(null);
         setCurrentBio(null);

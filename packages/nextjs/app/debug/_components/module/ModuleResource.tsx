@@ -1,23 +1,24 @@
 import dynamic from "next/dynamic";
+import { useTheme } from "next-themes";
 import { Types } from "aptos";
 
-const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false });
+const DynamicReactJson = dynamic(() => import("react-json-view"), { ssr: false });
 
-type ModuleResourceProps = {
-  key: number;
+interface ModuleResourceProps {
   resource: Types.MoveResource;
   collapsedByDefault: boolean;
-};
+}
 
 const GROUP_ARRAYS_AFTER_LENGTH = 100;
 const COLLAPSE_STRINGS_AFTER_LENGTH = 80;
 
-export const ModuleResource = ({ key, resource, collapsedByDefault }: ModuleResourceProps) => {
+export const ModuleResource = ({ resource, collapsedByDefault }: ModuleResourceProps) => {
+  const { resolvedTheme } = useTheme();
+  const isDarkMode = resolvedTheme === "dark";
   return (
-    <>
+    <div>
       <div>{resource.type}</div>
       <DynamicReactJson
-        key={key}
         src={resource.data}
         collapseStringsAfterLength={COLLAPSE_STRINGS_AFTER_LENGTH}
         displayObjectSize={false}
@@ -25,7 +26,8 @@ export const ModuleResource = ({ key, resource, collapsedByDefault }: ModuleReso
         quotesOnKeys={false}
         groupArraysAfterLength={GROUP_ARRAYS_AFTER_LENGTH}
         collapsed={collapsedByDefault}
+        theme={isDarkMode ? "twilight" : undefined}
       />
-    </>
+    </div>
   );
 };

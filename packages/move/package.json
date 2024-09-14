@@ -4,7 +4,7 @@
   "scripts": {
     "account": "node scripts/init-account.js",
     "chain": "aptos node run-local-testnet",
-    "publish": "aptos move publish --assume-yes && node scripts/loadContracts.js",
+    "publish": "aptos move publish --assume-yes && node scripts/loadModules.js",
     "compile": "aptos move compile",
     "test": ""
   },

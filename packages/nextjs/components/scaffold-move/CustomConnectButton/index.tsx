@@ -30,7 +30,6 @@ export const CustomConnectButton = () => {
           </div>
           <AddressInfoDropdown
             address={account?.address || ""}
-            displayName={account?.address || ""}
             // ensAvatar={""} // Update this with ENS Avatar if available
             blockExplorerAddressLink={blockExplorerAddressLink}
           />

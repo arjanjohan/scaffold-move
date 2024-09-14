@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { TransactionReceipt } from "viem";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
-import { ObjectFieldDisplay } from "~~/app/debug/_components/contract";
+import { ObjectFieldDisplay } from "~~/app/debug/_components/module";
 import { replacer } from "~~/utils/scaffold-move/common";
 
 export const TxReceipt = ({ txResult }: { txResult: TransactionReceipt }) => {

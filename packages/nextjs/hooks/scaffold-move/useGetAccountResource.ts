@@ -6,8 +6,7 @@ import { Types } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 
 export function getAccountResource(
-  requestParameters: { address: string; resourceType: `${string}::${string}::${string}`, 
-    ledgerVersion?: number },
+  requestParameters: { address: string; resourceType: `${string}::${string}::${string}`; ledgerVersion?: number },
   client: Aptos,
 ): Promise<Types.MoveResource[]> {
   const { address, ledgerVersion } = requestParameters;
@@ -15,7 +14,9 @@ export function getAccountResource(
   // if (ledgerVersion !== undefined) {
   //   ledgerVersionBig = BigInt(ledgerVersion);
   // }
-  return withResponseError(client.getAccountResource({ accountAddress: address, resourceType: requestParameters.resourceType }));  
+  return withResponseError(
+    client.getAccountResource({ accountAddress: address, resourceType: requestParameters.resourceType }),
+  );
 }
 
 export function useGetAccountResource(

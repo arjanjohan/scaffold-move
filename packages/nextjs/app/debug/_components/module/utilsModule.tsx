@@ -1,5 +1,5 @@
 import { AbiFunction, AbiParameter } from "abitype";
-import { AbiParameterTuple } from "~~/utils/scaffold-move/contract";
+import { AbiParameterTuple } from "~~/utils/scaffold-move/module";
 
 /**
  * Generates a key based on function metadata
@@ -52,7 +52,7 @@ const deepParseValues = (value: any): any => {
 /**
  * parses form input with array support
  */
-const getParsedContractFunctionArgs = (form: Record<string, any>) => {
+const getParsedModuleFunctionArgs = (form: Record<string, any>) => {
   return Object.keys(form).map(key => {
     const valueOfArg = form[key];
 
@@ -142,7 +142,7 @@ const transformAbiFunction = (abiFunction: AbiFunction): AbiFunction => {
 export {
   getFunctionInputKey,
   getInitialFormState,
-  getParsedContractFunctionArgs,
+  getParsedModuleFunctionArgs as getParsedModuleFunctionArgs,
   getInitalTupleFormState,
   getInitalTupleArrayFormState,
   transformAbiFunction,

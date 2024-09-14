@@ -6,21 +6,18 @@ import { Types } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 
 export function getAccountModule(
-  requestParameters: {
-    accountAddress: string;
-    moduleName: string;
-    ledgerVersion?: number;
-  },
+  requestParameters: { accountAddress: string; moduleName: string; ledgerVersion?: number },
   client: Aptos,
 ): Promise<Types.MoveModuleBytecode> {
-  const { accountAddress, moduleName, ledgerVersion } = requestParameters;
-  let ledgerVersionBig;
-  if (ledgerVersion !== undefined) {
-    ledgerVersionBig = BigInt(ledgerVersion);
-  }
-  return withResponseError(client.getAccountModule({ accountAddress, moduleName }));
-}
+  const { accountAddress, moduleName } = requestParameters;
 
+  try {
+    return client.getAccountModule({ accountAddress, moduleName });
+  } catch (error) {
+    console.error("AVH Error in getAccountModule:", error);
+    throw error; // Re-throw to propagate to outer try/catch
+  }
+}
 export function useGetAccountModule(
   address: string,
   moduleName: string,

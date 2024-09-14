@@ -3,28 +3,23 @@ import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
 /**
- * Gets a viem instance of the contract present in deployedContracts.ts or externalContracts.ts corresponding to
+ * Gets an instance of the module present in deployedModules.ts or externalModules.ts corresponding to
  * targetNetworks configured in scaffold.config.ts. Optional walletClient can be passed for doing write transactions.
  * @param config - The config settings for the hook
- * @param config.contractName - deployed contract name
- * @param config.walletClient - optional walletClient from wagmi useWalletClient hook can be passed for doing write transactions
+ * @param config.moduleName - deployed module name
  */
-export const useScaffoldContract = <
-  TContractName extends string,
-  // TWalletClient extends Exclude<GetWalletClientReturnType, null> | undefined,
->({
-  contractName,
-  // walletClient,
+export const useScaffoldModule = <TModuleName extends string>({
+  moduleName: moduleName,
 }: {
-  contractName: TContractName;
-  // walletClient?: TWalletClient | null;
+  moduleName: TModuleName;
 }) => {
-  const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedModuleInfo(contractName);
+  const { data: deployedModuleData, isLoading: deployedModuleLoading } = useDeployedModuleInfo(moduleName);
   const { targetNetwork } = useTargetNetwork();
   const aptos = useAptosClient(targetNetwork.id);
 
-  let contract = undefined;
-  if (deployedContractData && aptos) {
+  let module = undefined;
+  if (!deployedModuleLoading && deployedModuleData && aptos) {
     // TODO: unfinished
   }
+  return module;
 };
