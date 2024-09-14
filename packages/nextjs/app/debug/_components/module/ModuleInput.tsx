@@ -14,7 +14,7 @@ import {
 } from "~~/components/scaffold-move";
 import { AbiParameterTuple } from "~~/utils/scaffold-move/module";
 
-type ContractInputProps = {
+type ModuleInputProps = {
   setForm: Dispatch<SetStateAction<Record<string, any>>>;
   form: Record<string, any> | undefined;
   stateObjectKey: string;
@@ -24,7 +24,7 @@ type ContractInputProps = {
 /**
  * Generic Input component to handle input's based on their function param type
  */
-export const ContractInput = ({ setForm, form, stateObjectKey, paramType }: ContractInputProps) => {
+export const ModuleInput = ({ setForm, form, stateObjectKey, paramType }: ModuleInputProps) => {
   const inputProps = {
     name: stateObjectKey,
     value: form?.[stateObjectKey],

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
-import { ContractUI } from "~~/app/debug/_components/contract";
+import { ModuleUI } from "~~/app/debug/_components/module";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { ModuleName } from "~~/utils/scaffold-move/module";
 import { getAllModules } from "~~/utils/scaffold-move/modulesData";
@@ -17,17 +17,17 @@ export function DebugModules() {
 
   const selectedModuleStorageKey = "scaffoldMove.selectedModule";
 
-  const [selectedContract, setSelectedContract] = useLocalStorage<ModuleName>(
+  const [selectedModule, setSelectedModule] = useLocalStorage<ModuleName>(
     selectedModuleStorageKey,
     moduleNames[0],
     { initializeWithValue: false },
   );
 
   useEffect(() => {
-    if (!moduleNames.includes(selectedContract)) {
-      setSelectedContract(moduleNames[0]);
+    if (!moduleNames.includes(selectedModule)) {
+      setSelectedModule(moduleNames[0]);
     }
-  }, [selectedContract, setSelectedContract, moduleNames]);
+  }, [selectedModule, setSelectedModule, moduleNames]);
 
   return (
     <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
@@ -37,18 +37,18 @@ export function DebugModules() {
         <>
           {moduleNames.length > 1 && (
             <div className="flex flex-row gap-2 w-full max-w-7xl pb-1 px-6 lg:px-10 flex-wrap">
-              {moduleNames.map(contractName => (
+              {moduleNames.map(moduleName => (
                 <button
                   className={`btn btn-secondary btn-sm font-light hover:border-transparent ${
-                    contractName === selectedContract
+                    moduleName === selectedModule
                       ? "bg-base-300 hover:bg-base-300 no-animation"
                       : "bg-base-100 hover:bg-secondary"
                   }`}
-                  key={contractName as string}
-                  onClick={() => setSelectedContract(contractName)}
+                  key={moduleName as string}
+                  onClick={() => setSelectedModule(moduleName)}
                 >
-                  {contractName as string}
-                  {modulesData[contractName as string].external && (
+                  {moduleName as string}
+                  {modulesData[moduleName as string].external && (
                     <span className="tooltip tooltip-top tooltip-accent" data-tip="External module">
                       <BarsArrowUpIcon className="h-4 w-4 cursor-pointer" />
                     </span>
@@ -57,11 +57,11 @@ export function DebugModules() {
               ))}
             </div>
           )}
-          {moduleNames.map(contractName => (
-            <ContractUI
-              key={contractName as string}
-              contractName={contractName}
-              className={contractName === selectedContract ? "" : "hidden"}
+          {moduleNames.map(moduleName => (
+            <ModuleUI
+              key={moduleName as string}
+              moduleName={moduleName}
+              className={moduleName === selectedModule ? "" : "hidden"}
             />
           ))}
         </>

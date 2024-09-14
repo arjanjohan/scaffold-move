@@ -1,7 +1,7 @@
+import { useTargetNetwork } from "./useTargetNetwork";
 import { Aptos } from "@aptos-labs/ts-sdk";
 import { Types } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move";
-import { useTargetNetwork } from "./useTargetNetwork";
 
 export type ViewArguments = {
   module_address: string;

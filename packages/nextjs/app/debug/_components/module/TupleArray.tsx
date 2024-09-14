@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { ContractInput } from "./ContractInput";
-import { getFunctionInputKey, getInitalTupleArrayFormState } from "./utilsContract";
+import { ModuleInput } from "./ModuleInput";
+import { getFunctionInputKey, getInitalTupleArrayFormState } from "./utilsModule";
 import { replacer } from "~~/utils/scaffold-move/common";
 import { AbiParameterTuple } from "~~/utils/scaffold-move/module";
 
@@ -118,9 +118,7 @@ export const TupleArray = ({ abiTupleParameter, setParentForm, parentStateObject
                     param,
                     index,
                   );
-                  return (
-                    <ContractInput setForm={setForm} form={form} key={key} stateObjectKey={key} paramType={param} />
-                  );
+                  return <ModuleInput setForm={setForm} form={form} key={key} stateObjectKey={key} paramType={param} />;
                 })}
               </div>
             </div>

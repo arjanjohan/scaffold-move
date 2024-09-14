@@ -5,14 +5,14 @@ import { encodeInputArgsForViewRequest } from "../../../../utils/utils";
 import { parseTypeTag } from "@aptos-labs/ts-sdk";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
 import { Types } from "aptos";
-import { displayTxResult } from "~~/app/debug/_components/contract";
+import { displayTxResult } from "~~/app/debug/_components/module";
 import { view } from "~~/hooks";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
 const zeroInputs = false;
 
-type ContractFormType = {
+type ModuleFormType = {
   typeArgs: string[];
   args: string[];
   ledgerVersion?: string;
@@ -32,12 +32,12 @@ function removeSignerParam(fn: Types.MoveFunction, write: boolean) {
   return fn.params.filter(p => p !== "signer" && p !== "&signer");
 }
 
-export const WriteFunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
+export const ViewFunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
   const [viewInProcess, setViewInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<ContractFormType>({ typeArgs: [], args: [] });
+  const [data, setData] = useState<ModuleFormType>({ typeArgs: [], args: [] });
 
   const { account } = useWallet();
   const network = useTargetNetwork();

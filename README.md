@@ -87,12 +87,10 @@ For this hackathon I kept the scope small due to the time constraints. I build t
   - Styling Resources tab
   - Fix Vercel bug with Resources tab (Resources only showing on local for now)
   - Group modules under address
-- Ensure export default deployedModules satisfies GenericContractsDeclaration
 - useSubmitTransaction hook: Replace `transaction: InputTransactionData` by moduleName, functionName, args
 - Typescript autocomplete for hooks
-- Fix colors for dark mode
 - Add block explorer page
-- Add indexer and update testnet config
+- Add indexer and faucet for Movement testnet
 
 ## Links
 

@@ -29,7 +29,7 @@ const Home: NextPage = () => {
             </code>
           </p>
           <p className="text-center text-lg">
-            Edit your smart contract{" "}
+            Edit your Move module{" "}
             <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
               OnchainBio.move
             </code>{" "}
@@ -45,7 +45,7 @@ const Home: NextPage = () => {
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <BugAntIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Tinker with your smart contract using the{" "}
+                Tinker with your Move modules using the{" "}
                 <Link href="/debug" passHref className="link">
                   Debug Modules
                 </Link>{" "}

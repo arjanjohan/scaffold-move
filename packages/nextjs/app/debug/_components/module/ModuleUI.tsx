@@ -1,36 +1,36 @@
 "use client";
 
 // @refresh reset
-import { ContractReadMethods } from "./ContractReadMethods";
-import { ContractWriteMethods } from "./ContractWriteMethods";
+import { ModuleWriteMethods } from "./ModuleWriteMethods";
 import { ModuleResources } from "./ModuleResources";
+import { ModuleViewMethods } from "./ModuleViewMethods";
 import { Address, Balance } from "~~/components/scaffold-move";
 import { useDeployedModuleInfo } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { ModuleName } from "~~/utils/scaffold-move/module";
 
-type ContractUIProps = {
-  contractName: ModuleName;
+type ModuleUIProps = {
+  moduleName: ModuleName;
   className?: string;
 };
 
 /**
- * UI component to interface with deployed contracts.
+ * UI component to interface with deployed modules.
  **/
-export const ContractUI = ({ contractName, className = "" }: ContractUIProps) => {
+export const ModuleUI = ({ moduleName: moduleName, className = "" }: ModuleUIProps) => {
   const { targetNetwork } = useTargetNetwork();
-  const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedModuleInfo(contractName);
-  if (deployedContractLoading) {
+  const { data: deployedModuleData, isLoading: deployedModuleLoading } = useDeployedModuleInfo(moduleName);
+  if (deployedModuleLoading) {
     return (
       <div className="mt-14">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
   }
-  if (!deployedContractData || !deployedContractData.abi) {
+  if (!deployedModuleData || !deployedModuleData.abi) {
     return (
       <p className="text-3xl mt-14">
-        {`No module found by the name of "${String(contractName)}" on chain "${targetNetwork}"!`}
+        {`No module found by the name of "${String(moduleName)}" on chain "${targetNetwork}"!`}
       </p>
     );
   }
@@ -42,11 +42,11 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
           <div className="bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl px-6 lg:px-8 mb-6 space-y-1 py-4">
             <div className="flex">
               <div className="flex flex-col gap-1">
-                <span className="font-bold">{String(contractName)}</span>
-                <Address address={deployedContractData.abi.address} />
+                <span className="font-bold">{String(moduleName)}</span>
+                <Address address={deployedModuleData.abi.address} />
                 <div className="flex gap-1 items-center">
                   <span className="font-bold text-sm">Balance:</span>
-                  <Balance address={deployedContractData.abi.address} />
+                  <Balance address={deployedModuleData.abi.address} />
                 </div>
               </div>
             </div>
@@ -66,7 +66,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
                 </div>
               </div>
               <div className="p-5 divide-y divide-base-300">
-                <ContractReadMethods deployedContractData={deployedContractData} />
+                <ModuleViewMethods deployedModuleData={deployedModuleData} />
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
                 </div>
               </div>
               <div className="p-5 divide-y divide-base-300">
-                <ContractWriteMethods deployedContractData={deployedContractData} />
+                <ModuleWriteMethods deployedModuleData={deployedModuleData} />
               </div>
             </div>
           </div>
@@ -90,7 +90,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
                 </div>
               </div>
               <div className="p-5 divide-y divide-base-300">
-                <ModuleResources deployedContractData={deployedContractData} />
+                <ModuleResources deployedModuleData={deployedModuleData} />
               </div>
             </div>
           </div>

@@ -6,19 +6,19 @@ import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { Module, ModuleCodeStatus, ModuleName, modules } from "~~/utils/scaffold-move/module";
 
 /**
- * Gets the matching contract info for the provided contract name from the contracts present in deployedModules.ts
+ * Gets the matching module info for the provided module name from the modules present in deployedModules.ts
  * and externalModules.ts corresponding to targetNetworks configured in scaffold.config.ts
  */
-export const useDeployedModuleInfo = <TContractName extends ModuleName>(contractName: TContractName) => {
+export const useDeployedModuleInfo = <TModuleName extends ModuleName>(moduleName: TModuleName) => {
   const isMounted = useIsMounted();
   const { targetNetwork } = useTargetNetwork();
   const aptos = useAptosClient(targetNetwork.id);
 
-  const deployedModules = modules?.[targetNetwork.id]?.[contractName.toString()] as Module<TContractName>;
+  const deployedModules = modules?.[targetNetwork.id]?.[moduleName.toString()] as Module<TModuleName>;
   const [status, setStatus] = useState<ModuleCodeStatus>(ModuleCodeStatus.LOADING);
 
   useEffect(() => {
-    const checkContractDeployment = async () => {
+    const checkModuleDeployment = async () => {
       try {
         if (!isMounted() || !aptos) return;
 
@@ -26,8 +26,11 @@ export const useDeployedModuleInfo = <TContractName extends ModuleName>(contract
           setStatus(ModuleCodeStatus.NOT_FOUND);
           return;
         }
-        const accountModule = getAccountModule({ accountAddress: deployedModules.abi.address, moduleName: contractName.toString() }, aptos);
-        // If contract code is `0x` => no contract deployed on that address
+        const accountModule = getAccountModule(
+          { accountAddress: deployedModules.abi.address, moduleName: moduleName.toString() },
+          aptos,
+        );
+        // If module code is `0x` => no module deployed on that address
         if ((await accountModule).bytecode === "0x") {
           setStatus(ModuleCodeStatus.NOT_FOUND);
           return;
@@ -40,8 +43,8 @@ export const useDeployedModuleInfo = <TContractName extends ModuleName>(contract
       }
     };
 
-    checkContractDeployment();
-  }, [isMounted, contractName, deployedModules]);
+    checkModuleDeployment();
+  }, [isMounted, moduleName, deployedModules]);
 
   return {
     data: status === ModuleCodeStatus.DEPLOYED ? deployedModules : undefined,
