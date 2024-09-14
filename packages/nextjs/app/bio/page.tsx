@@ -8,6 +8,7 @@ import deployedModules from "~~/contracts/deployedModules";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
+import { useGetAccountResource } from "~~/hooks/scaffold-move";
 
 const OnchainBio: NextPage = () => {
   const network = useTargetNetwork();
@@ -50,6 +51,20 @@ const OnchainBio: NextPage = () => {
       if (bioResource) {
         setCurrentName(bioResource.name);
         setCurrentBio(bioResource.bio);
+
+        // TODO: code below should work but it doesn't
+      // // const bioResource = await aptos.getAccountResource({
+      // //   accountAddress: account?.address,
+      // //   resourceType: `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::${resourceName}`,
+      // // });
+      // console.log("account", account);
+      // const bioResource = await useGetAccountResource(account?.address, `${ONCHAIN_BIO.address}::${ONCHAIN_BIO.name}::${resourceName}`);
+      // setAccountHasBio(true);
+      // console.log("bioResource", bioResource);
+      // if (bioResource) {
+      //   console.log("bioResource", bioResource);
+      //   // setCurrentName(bioResource.name);
+      //   // setCurrentBio(bioResource.bio);
       } else {
         setCurrentName(null);
         setCurrentBio(null);
