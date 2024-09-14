@@ -1,27 +1,27 @@
-import { useTargetNetwork } from "./useTargetNetwork";
+import { Aptos } from "@aptos-labs/ts-sdk";
 import { Types } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move";
+import { useTargetNetwork } from "./useTargetNetwork";
 
-export type AccountNativeBalanceArguments = {
+export type ViewArguments = {
   module_address: string;
   module_name: string;
   function_name: string;
-  ty_args: string[];
-  address: Types.Address;
+  ty_args?: string[];
+  function_args?: string[];
 };
 
-// TODO: incomplete and untested
-export const useView = async (args: AccountNativeBalanceArguments): Promise<[any]> => {
+export const useView = async (request: ViewArguments): Promise<Types.MoveValue[]> => {
   const network = useTargetNetwork();
   const aptos = useAptosClient(network.targetNetwork.id);
 
-  const { module_address, module_name, function_name, ty_args, address } = args;
-  const viewResult = await aptos.view<[any]>({
+  const viewResult = await aptos.view({
     payload: {
-      function: `${module_address}::${module_name}::${function_name}`,
-      typeArguments: ty_args,
-      functionArguments: [address],
+      function: `${request.module_address}::${request.module_name}::${request.function_name}`,
+      typeArguments: request.ty_args || [],
+      functionArguments: request.function_args || [],
     },
   });
-  return await viewResult;
+
+  return viewResult;
 };

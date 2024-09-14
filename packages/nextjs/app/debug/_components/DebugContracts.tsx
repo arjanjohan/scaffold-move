@@ -4,12 +4,12 @@ import { useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
 import { ContractUI } from "~~/app/debug/_components/contract";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { ContractName } from "~~/utils/scaffold-move/contract";
 import { getAllContracts } from "~~/utils/scaffold-move/contractsData";
-import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
 export function DebugContracts() {
-  const { targetNetwork } = useTargetNetwork(); 
+  const { targetNetwork } = useTargetNetwork();
 
   // Fetch the contracts data based on the target network
   const contractsData = getAllContracts(targetNetwork.id);

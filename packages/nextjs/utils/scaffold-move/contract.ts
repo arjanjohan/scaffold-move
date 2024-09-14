@@ -9,8 +9,7 @@ type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
     [ContractName in keyof T[ChainId]]: T[ChainId][ContractName] & { external?: true };
   };
-} & 
-// TODO: Figure out how to properly handle this 
+} & // TODO: Figure out how to properly handle this
 // Added this index signature to allow for flexibility with key types
 {
   [key: string]: any;

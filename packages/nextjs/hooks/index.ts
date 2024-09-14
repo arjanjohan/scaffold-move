@@ -94,7 +94,6 @@ import { AptosClient, Types } from "aptos";
 //   return withResponseError(client.getAccount(address));
 // }
 
-
 // export function getAccountResource(
 //   requestParameters: {
 //     address: string;
