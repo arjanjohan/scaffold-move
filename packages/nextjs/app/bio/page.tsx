@@ -23,7 +23,7 @@ const OnchainBio: NextPage = () => {
     );
   }
 
-  const ONCHAIN_BIO = deployedModules["2"].onchain_bio.abi;
+  const ONCHAIN_BIO = deployedModules[chainId].onchain_bio.abi;
 
   const { account } = useWallet();
 
