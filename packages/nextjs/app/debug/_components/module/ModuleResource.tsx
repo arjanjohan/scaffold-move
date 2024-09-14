@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
-import { useTheme } from "next-themes";
 import { Types } from "aptos";
+import { useTheme } from "next-themes";
 
 const DynamicReactJson = dynamic(() => import("react-json-view"), { ssr: false });
 

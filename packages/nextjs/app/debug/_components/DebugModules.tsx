@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
+// import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
 import { ModuleUI } from "~~/app/debug/_components/module";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { ModuleName } from "~~/utils/scaffold-move/module";
@@ -46,11 +46,12 @@ export function DebugModules() {
                   onClick={() => setSelectedModule(moduleName)}
                 >
                   {moduleName as string}
-                  {modulesData[moduleName as string].external && (
+                  {/* TODO: fix this below */}
+                  {/* {modulesData[moduleName as string].external && (
                     <span className="tooltip tooltip-top tooltip-accent" data-tip="External module">
                       <BarsArrowUpIcon className="h-4 w-4 cursor-pointer" />
                     </span>
-                  )}
+                  )} */}
                 </button>
               ))}
             </div>

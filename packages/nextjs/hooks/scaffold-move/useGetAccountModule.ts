@@ -1,4 +1,4 @@
-import { ResponseError, withResponseError } from "../client";
+import { ResponseError } from "../client";
 import { useTargetNetwork } from "./useTargetNetwork";
 import { Aptos } from "@aptos-labs/ts-sdk";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
@@ -14,7 +14,6 @@ export function getAccountModule(
   try {
     return client.getAccountModule({ accountAddress, moduleName });
   } catch (error) {
-    console.error("AVH Error in getAccountModule:", error);
     throw error; // Re-throw to propagate to outer try/catch
   }
 }

@@ -1,8 +1,3 @@
-import { useTargetNetwork } from "./useTargetNetwork";
-import { Aptos } from "@aptos-labs/ts-sdk";
-import { Types } from "aptos";
-import { useAptosClient } from "~~/hooks/scaffold-move";
-
 export type ViewArguments = {
   module_address: string;
   module_name: string;
@@ -11,10 +6,7 @@ export type ViewArguments = {
   function_args?: string[];
 };
 
-export const useView = async (request: ViewArguments): Promise<Types.MoveValue[]> => {
-  const network = useTargetNetwork();
-  const aptos = useAptosClient(network.targetNetwork.id);
-
+export const fetchViewData = async (request: ViewArguments, aptos: any): Promise<any[]> => {
   const viewResult = await aptos.view({
     payload: {
       function: `${request.module_address}::${request.module_name}::${request.function_name}`,

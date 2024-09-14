@@ -1,6 +1,9 @@
-import { modules } from "~~/utils/scaffold-move/module";
+import { GenericModule, modules } from "~~/utils/scaffold-move/module";
 
 export function getAllModules(chainId: string) {
-  const modulesData = modules?.[chainId];
-  return modulesData ? modulesData : {};
+  return modules?.[chainId] ?? {};
+}
+
+export function getModule(moduleName: string, chainId: string): GenericModule | undefined {
+  return modules?.[chainId]?.[moduleName] ?? undefined;
 }

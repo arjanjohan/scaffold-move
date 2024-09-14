@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { encodeInputArgsForViewRequest } from "../../../../utils/utils";
 import { parseTypeTag } from "@aptos-labs/ts-sdk";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
 import { Types } from "aptos";
-import { displayTxResult } from "~~/app/debug/_components/module";
-import { view } from "~~/hooks";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
@@ -25,17 +22,12 @@ type FunctionFormProps = {
   write: boolean;
 };
 
-function removeSignerParam(fn: Types.MoveFunction, write: boolean) {
-  if (!write) {
-    return fn.params;
-  }
+function removeSignerParam(fn: Types.MoveFunction) {
   return fn.params.filter(p => p !== "signer" && p !== "&signer");
 }
 
-export const WriteFunctionForm = ({ key, module, fn, write }: FunctionFormProps) => {
+export const WriteFunctionForm = ({ key, module, fn }: FunctionFormProps) => {
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
-  const [viewInProcess, setViewInProcess] = useState(false);
-  const [result, setResult] = useState<Types.MoveValue[]>();
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ModuleFormType>({ typeArgs: [], args: [] });
 
@@ -50,7 +42,7 @@ export const WriteFunctionForm = ({ key, module, fn, write }: FunctionFormProps)
 
   // }
 
-  const fnParams = removeSignerParam(fn, write);
+  const fnParams = removeSignerParam(fn);
 
   const convertArgument = (arg: string | null | undefined, type: string): any => {
     if (typeof arg !== "string") {
@@ -102,13 +94,11 @@ export const WriteFunctionForm = ({ key, module, fn, write }: FunctionFormProps)
 
     try {
       await submitTransaction(payload);
-      console.log("AVH tx response", transactionResponse);
 
       if (transactionResponse?.transactionSubmitted) {
         console.log("function_interacted", fn.name, {
           txn_status: transactionResponse.success ? "success" : "failed",
         });
-        console.log("AVH tx response", transactionResponse);
         if (!transactionResponse.success) {
           setError("❌ Transaction failed");
         } else {
@@ -119,41 +109,6 @@ export const WriteFunctionForm = ({ key, module, fn, write }: FunctionFormProps)
       console.error("⚡️ ~ file: FunctionForm.tsx:handleWrite ~ error", e);
       setError("❌ Transaction failed: " + e.message);
     }
-  };
-
-  const handleView = async () => {
-    let viewRequest: Types.ViewRequest;
-
-    try {
-      viewRequest = {
-        function: `${module.address}::${module.name}::${fn.name}`,
-        type_arguments: data.typeArgs,
-        arguments: data.args.map((arg, i) => {
-          return encodeInputArgsForViewRequest(fn.params[i], arg);
-        }),
-      };
-    } catch (e: any) {
-      console.error("Parsing arguments failed: " + e?.message);
-      setError("Parsing arguments failed: " + e.message);
-      return;
-    }
-    setViewInProcess(true);
-    try {
-      const result = await view(viewRequest, state.network_value, data.ledgerVersion);
-      setResult(result);
-      console.log("function_interacted", fn.name, { txn_status: "success" });
-      setError(null); // Clear any previous error
-    } catch (e: any) {
-      let error = e.message ?? JSON.stringify(e);
-      const prefix = "Error:";
-      if (error.startsWith(prefix)) {
-        error = error.substring(prefix.length).trim();
-      }
-      setResult(undefined);
-      setError("❌ View request failed: " + error);
-      console.log("function_interacted", fn.name, { txn_status: "failed" });
-    }
-    setViewInProcess(false);
   };
 
   return (
@@ -181,59 +136,35 @@ export const WriteFunctionForm = ({ key, module, fn, write }: FunctionFormProps)
           );
         })}
 
-        {write && (
-          <div className="flex flex-col md:flex-row justify-between gap-2 flex-wrap">
-            <div className="flex-grow basis-0">
-              {transactionResponse !== null && transactionResponse?.transactionSubmitted && (
-                <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
-                  <p className="font-bold m-0 mb-1">Result:</p>
-                  <pre className="whitespace-pre-wrap break-words">
-                    {transactionResponse.success ? "✅ transaction successful. txreceipt: " : "❌ transaction failed"}
-                  </pre>
-                </div>
-              )}
-              {error && (
-                <div className="bg-red-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
-                  <p className="font-bold m-0 mb-1">Error:</p>
-                  <pre className="whitespace-pre-wrap break-words">{error}</pre>
-                </div>
-              )}
-              {/* TODO: Add TxReceipt for Move */}
-              {/* {displayedTxResult ? <TxReceipt txResult={displayedTxResult} /> : null} */}
-            </div>
+        <div className="flex flex-col md:flex-row justify-between gap-2 flex-wrap">
+          <div className="flex-grow basis-0">
+            {transactionResponse !== null && transactionResponse?.transactionSubmitted && (
+              <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
+                <p className="font-bold m-0 mb-1">Result:</p>
+                <pre className="whitespace-pre-wrap break-words">
+                  {transactionResponse.success ? "✅ transaction successful. txreceipt: " : "❌ transaction failed"}
+                </pre>
+              </div>
+            )}
+            {error && (
+              <div className="bg-red-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
+                <p className="font-bold m-0 mb-1">Error:</p>
+                <pre className="whitespace-pre-wrap break-words">{error}</pre>
+              </div>
+            )}
+            {/* TODO: Add TxReceipt for Move */}
+            {/* {displayedTxResult ? <TxReceipt txResult={displayedTxResult} /> : null} */}
+          </div>
 
-            <button
-              className="btn btn-secondary btn-sm"
-              disabled={transactionInProcess || !account}
-              onClick={handleWrite}
-            >
-              {transactionInProcess && <span className="loading loading-spinner loading-xs"></span>}
-              Send 💸
-            </button>
-          </div>
-        )}
-        {!write && (
-          <div className="flex flex-col md:flex-row justify-between gap-2 flex-wrap">
-            <div className="flex-grow w-full md:max-w-[80%]">
-              {result !== null && result !== undefined && (
-                <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
-                  <p className="font-bold m-0 mb-1">Result:</p>
-                  <pre className="whitespace-pre-wrap break-words">{displayTxResult(result, "sm")}</pre>
-                </div>
-              )}
-              {error && (
-                <div className="bg-red-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
-                  <p className="font-bold m-0 mb-1">Error:</p>
-                  <pre className="whitespace-pre-wrap break-words">{error}</pre>
-                </div>
-              )}
-            </div>
-            <button className="btn btn-secondary btn-sm" disabled={viewInProcess} onClick={handleView}>
-              {viewInProcess && <span className="loading loading-spinner loading-xs"></span>}
-              Read 📡
-            </button>
-          </div>
-        )}
+          <button
+            className="btn btn-secondary btn-sm"
+            disabled={transactionInProcess || !account}
+            onClick={handleWrite}
+          >
+            {transactionInProcess && <span className="loading loading-spinner loading-xs"></span>}
+            Send 💸
+          </button>
+        </div>
       </div>
     </div>
   );
