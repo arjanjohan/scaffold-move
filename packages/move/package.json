@@ -12,6 +12,6 @@
     "minimist": "^1.2.8"
   },
   "devDependencies": {
-    "@types/minimist": "^1"
+    "@types/minimist": "^1.2.5"
   }
 }

@@ -98,11 +98,10 @@ const OnchainBio: NextPage = () => {
 
   return (
     <div className="flex items-center flex-col flex-grow">
-      <div className="flex flex-col items-center bg-base-100 shadow-lg shadow-secondary border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
+      <div className="flex flex-col items-center bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl p-6 mt-8 w-full max-w-lg">
         <div className="text-xl">Your Onchain Bio</div>
       </div>
-
-      <div className="flex flex-col space-y-4 bg-base-100 shadow-lg shadow-secondary border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
+      <div className="flex flex-col space-y-4 bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl p-6 mt-8 w-full max-w-lg">
         <div className="flex items-center ml-2">
           <span className="text-xs font-medium mr-2 leading-none">Your Name</span>
         </div>
@@ -119,8 +118,7 @@ const OnchainBio: NextPage = () => {
           Register Bio
         </button>
       </div>
-
-      <div className="flex flex-col items-center space-y-4 bg-base-100 shadow-lg shadow-secondary border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
+      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
         <button className="btn btn-secondary mt-2" disabled={!account} onClick={fetchBio}>
           Fetch Bio
         </button>
