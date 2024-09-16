@@ -1,4 +1,4 @@
-import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
+import { Network } from "@aptos-labs/ts-sdk";
 
 export type Chain = {
   id: string;
@@ -44,7 +44,7 @@ export const defaultChains: Chains = {
     network: Network.TESTNET,
   },
   aptos_devnet: {
-    id: "65",
+    id: "148",
     name: "Aptos Devnet",
     network: Network.DEVNET,
   },

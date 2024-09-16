@@ -5,9 +5,9 @@ import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-reac
 import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-move";
 import { useAptosClient } from "~~/hooks/scaffold-move";
+import { useGetModule } from "~~/hooks/scaffold-move/useGetModule";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { getModule } from "~~/utils/scaffold-move/modulesData";
 
 // Alert Component for showing error messages or warnings
 const Alert = ({ message }: { message: string }) => (
@@ -31,11 +31,11 @@ const OnchainBio: NextPage = () => {
 
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
 
-  const moveModule = getModule("onchain_bio", chainId);
-  const bioModule = moveModule?.abi;
+  const moveModule = useGetModule("onchain_bio");
+  const bioAbi = moveModule?.abi;
 
   // If the bioModule or ABI is not found, show an alert message and return early
-  if (!bioModule) {
+  if (!bioAbi) {
     return <Alert message="Onchain Bio module not found!" />;
   }
 
@@ -48,9 +48,9 @@ const OnchainBio: NextPage = () => {
 
       const bioResource = await aptos.getAccountResource({
         accountAddress: account.address,
-        resourceType: `${bioModule.address}::${bioModule.name}::${resourceName}`,
+        resourceType: `${bioAbi.address}::${bioAbi.name}::${resourceName}`,
       });
-
+      console;
       if (bioResource) {
         setAccountHasBio(true);
         setCurrentName(bioResource.name);
@@ -74,7 +74,7 @@ const OnchainBio: NextPage = () => {
     try {
       const transaction: InputTransactionData = {
         data: {
-          function: `${bioModule.address}::${bioModule.name}::register`,
+          function: `${bioAbi.address}::${bioAbi.name}::register`,
           functionArguments: [inputName, inputBio],
         },
       };

@@ -3,7 +3,7 @@ import { Types } from "aptos";
 import { displayTxResult } from "~~/app/debug/_components/module";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { fetchViewData } from "~~/utils/scaffold-move/fetchViewData";
+import { view } from "~~/utils/scaffold-move/view";
 
 const zeroInputs = false;
 
@@ -27,16 +27,15 @@ export const ViewFunctionForm = ({ key, module, fn }: FunctionFormProps) => {
 
   const fnParams = fn.params;
 
-  // Use hooks inside the component
   const network = useTargetNetwork();
-  const aptos = useAptosClient(network.targetNetwork.id); // Using hook here
+  const aptos = useAptosClient(network.targetNetwork.id);
 
   const handleView = async () => {
     setViewInProcess(true);
     setError(null);
 
     try {
-      const viewResult = await fetchViewData(
+      const viewResult = await view(
         {
           module_address: module.address,
           module_name: module.name,

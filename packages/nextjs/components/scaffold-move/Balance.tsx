@@ -1,12 +1,12 @@
 import { getFormattedBalanceStr } from "../../utils/scaffold-move/ContentValue/CurrencyValue";
-import { useGetNativeBalance } from "~~/hooks/scaffold-move";
+import { useGetAccountNativeBalance } from "~~/hooks/scaffold-move";
 
 type BalanceProps = {
   address: string;
 };
 
 export const Balance = ({ address }: BalanceProps) => {
-  const { balance, loading, error } = useGetNativeBalance(address);
+  const { balance, loading, error } = useGetAccountNativeBalance(address);
 
   if (loading) {
     return (

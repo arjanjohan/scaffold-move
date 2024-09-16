@@ -9,14 +9,15 @@
 </h4>
 </div>
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Move blockchains like Aptos and Movement M1. It's designed to make it easier for developers to create and deploy Move modules and build user interfaces that interact with those modules.
+🧪 Scaffold Move is an open-source, up-to-date toolkit for building decentralized applications (dapps) on Aptos or any other Move blockchain. It's designed to make it easier for developers to create and deploy Move modules and build user interfaces that interact with those modules.
 
 ⚙️ Built using NextJS, Tailwind and Typescript.
 
+- 🛫 **Deployment scripts**: Scripts to simplify and automate the deployment workflow.
 - ✅ **Module Hot Reload**: Your frontend auto-adapts to your Move modules as you edit it.
 - 🪝 **Custom hooks**: Collection of React hooks to simplify interactions with Move modules .
 - 🧱 **Components**: Collection of common web3 components to quickly build your frontend.
-- 🔐 **Integration with Wallet Providers**: Connect your Petra Wallet and interact with the Aptos or Movement M1 network.
+- 🔐 **Integration with Wallet Providers**: Connect your any Aptos and interact with the Aptos network from your frontend.
 
 ![Debug Modules tab](assets/debug.png)
 
@@ -77,25 +78,20 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 
 - Edit your Move module `OnchainBio.move` in `packages/move/sources`
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-<!-- - Edit your Move modules test in: `packages/hardhat/test`. To run test use `yarn hardhat:test` -->
+<!-- - Edit your Move modules test in: `packages/move/test`. To run test use `yarn hardhat:test` -->
 
 ## Next steps
 
 For this hackathon I kept the scope small due to the time constraints. I build the most essential and useful features, so that developers can start using Scaffold Move right away. However, there are more features that I want to add to this project after the hackathon. If you have any ideas or suggestions, please reach out to me!
 
-- Debug page
-  - Styling Resources tab
-  - Fix Vercel bug with Resources tab (Resources only showing on local for now)
-  - Group modules under address
-- useSubmitTransaction hook: Replace `transaction: InputTransactionData` by moduleName, functionName, args
-- Typescript autocomplete for hooks
-- Add block explorer page
-- Add indexer and faucet for Movement testnet
-
+- Debug page: Group modules by address
+- Add documentation for 
 ## Links
 
-- [Demo video](https://www.loom.com/share/4491aa1f222e409782a5ede3a7ac5cb0)
+- [Documentation](https://arjanjohan.gitbook.io/scaffold-move)
 - [Website](https://scaffold-move-chi.vercel.app/)
+- [Pitch deck]()
+- [Demo video](https://www.loom.com/share/4491aa1f222e409782a5ede3a7ac5cb0)
 - [Github](https://github.com/arjanjohan/scaffold-move)
 
 ## Deployments

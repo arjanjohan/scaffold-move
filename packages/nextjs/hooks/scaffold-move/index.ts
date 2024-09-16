@@ -1,5 +1,5 @@
 export * from "./useDeployedModuleInfo";
-export * from "./useGetNativeBalance";
+export * from "./useGetAccountNativeBalance";
 export * from "./useGetAccountResource";
 export * from "./useGetAccountResources";
 export * from "./useOutsideClick";
