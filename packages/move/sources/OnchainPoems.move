@@ -1,7 +1,6 @@
 module OnchainBio::onchain_poems {
 
-  use std::string::{Self, String};
-  use std::signer;
+  use std::string::{String};
 
   struct Inscription has key, store, drop {
       poem: String,
