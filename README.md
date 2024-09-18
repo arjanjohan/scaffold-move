@@ -9,15 +9,18 @@
 </h4>
 </div>
 
-🧪 Scaffold Move is an open-source, up-to-date toolkit for building decentralized applications (dapps) on Aptos or any other Move blockchain. It's designed to make it easier for developers to create and deploy Move modules and build user interfaces that interact with those modules.
+🧪 Scaffold Move is an open-source, cutting-edge toolkit for building decentralized applications (dApps) on Aptos or any other Move-based blockchain. It's designed to streamline the process of creating and deploying Move modules and building user interfaces that interact seamlessly with those modules.
 
-⚙️ Built using NextJS, Tailwind and Typescript.
+⚙️ Built using Next.js, Tailwind CSS, and TypeScript.
 
-- 🛫 **Deployment scripts**: Scripts to simplify and automate the deployment workflow.
-- ✅ **Module Hot Reload**: Your frontend auto-adapts to your Move modules as you edit it.
-- 🪝 **Custom hooks**: Collection of React hooks to simplify interactions with Move modules .
-- 🧱 **Components**: Collection of common web3 components to quickly build your frontend.
-- 🔐 **Integration with Wallet Providers**: Connect your any Aptos and interact with the Aptos network from your frontend.
+Key Features:
+- 🛫 **Deployment Scripts**: Simplify and automate your deployment workflow.
+- ✅ **Module Hot Reload**: Your frontend automatically adapts to changes in your Move modules as you edit them.
+- 🪝 **Custom Hooks**: A collection of React hooks to simplify interactions with Move modules.
+- 🧱 **Components**: A library of common Web3 components to rapidly build your frontend.
+- 🔐 **Wallet Integration**: Connect to any Aptos-compatible wallet and interact with the Aptos network directly from your frontend.
+
+Perfect for hackathons, prototyping, or launching your next Move project!
 
 ![Debug Modules tab](assets/debug.png)
 
@@ -80,12 +83,21 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
 <!-- - Edit your Move modules test in: `packages/move/test`. To run test use `yarn hardhat:test` -->
 
-## Next steps
+## Future Development
 
-For this hackathon I kept the scope small due to the time constraints. I build the most essential and useful features, so that developers can start using Scaffold Move right away. However, there are more features that I want to add to this project after the hackathon. If you have any ideas or suggestions, please reach out to me!
+Scaffold Move has successfully implemented core features essential for Move developers, providing a robust foundation for building decentralized applications. The current version offers a streamlined development experience with hot module reloading, custom hooks, and seamless wallet integration.
 
-- Debug page: Group modules by address
-- Add documentation for 
+Looking ahead, we have an exciting roadmap of enhancements and new features planned:
+
+- Add a testing framework for Move modules.
+- Implement custom network switching, which is currently not available in the Aptos Wallet Adapter. Once [our PR](https://github.com/aptos-labs/aptos-wallet-adapter/pull/425) is merged, this feature will be added to Scaffold Move.
+- Enhance documentation and tutorials for easier onboarding.
+- Develop additional pre-built components for common dApp functionalities.
+
+We're committed to evolving Scaffold Move based on community feedback and emerging best practices in the Move ecosystem. For a detailed list of upcoming features and to contribute ideas, please check our [GitHub Issues](https://github.com/arjanjohan/scaffold-move/issues).
+
+Your input is valuable! If you have suggestions or want to contribute, we encourage you to get involved and help shape the future of Scaffold Move. Join our [developer Telegram channel](https://t.me/+lOn2MJawQlc1YjA8) to connect with the community and stay updated on the latest developments.
+
 ## Links
 
 - [Documentation](https://arjanjohan.gitbook.io/scaffold-move)
