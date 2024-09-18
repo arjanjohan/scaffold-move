@@ -4,6 +4,7 @@ const yaml = require('js-yaml');
 const { AptosClient } = require('aptos'); // Assuming you're using the Aptos SDK for JavaScript
 const axios = require('axios'); // Add axios to make HTTP requests
 const { loadExternalModules } = require('../move.config.ts'); // Import from move.config.ts
+const deploymentsDir = path.join(__dirname, '../deployments');
 
 // Paths to the relevant files
 const moveTomlPath = path.join(__dirname, '../Move.toml');
@@ -68,19 +69,39 @@ function getExistingModulesData(filePath) {
   return {};
 }
 
-// Function to write modules to TypeScript file, preserving other chain data
-function writeModules(filePath, modules, chainId, variableName) {
-  let existingModules = getExistingModulesData(filePath);
+// New function to write chain-specific modules
+function writeChainModules(chainId, modules, isDeployed) {
+  const chainDir = path.join(deploymentsDir, chainId.toString());
+  if (!fs.existsSync(chainDir)) {
+    fs.mkdirSync(chainDir, { recursive: true });
+  }
 
-  const chainIdString = chainId.toString();
-  // Update or add the chain data
-  existingModules[chainIdString] = modules.reduce((acc, module) => {
+  const fileName = isDeployed ? 'deployedModules.json' : 'externalModules.json';
+  const filePath = path.join(chainDir, fileName);
+
+  const moduleData = modules.reduce((acc, module) => {
     acc[module.abi.name] = {
       bytecode: module.bytecode,
       abi: module.abi
     };
     return acc;
   }, {});
+
+  fs.writeFileSync(filePath, JSON.stringify(moduleData, null, 2), 'utf-8');
+}
+
+// Updated writeModules function
+function writeModules(filePath, variableName) {
+  const allChainDirs = fs.readdirSync(deploymentsDir);
+  const allModules = {};
+
+  allChainDirs.forEach(chainDir => {
+    const chainModulesPath = path.join(deploymentsDir, chainDir, `${variableName}.json`);
+    if (fs.existsSync(chainModulesPath)) {
+      const chainModules = JSON.parse(fs.readFileSync(chainModulesPath, 'utf-8'));
+      allModules[chainDir] = chainModules;
+    }
+  });
 
   // Generate file content
   const fileContent = `
@@ -90,13 +111,14 @@ function writeModules(filePath, modules, chainId, variableName) {
    */
   import { GenericModulesDeclaration } from "~~/utils/scaffold-move/module";
 
-  const ${variableName} = ${JSON.stringify(existingModules, null, 2)} as const;
+  const ${variableName} = ${JSON.stringify(allModules, null, 2)} as const;
 
   export default ${variableName} satisfies GenericModulesDeclaration;
   `;
 
   fs.writeFileSync(filePath, fileContent.trim(), 'utf-8');
 }
+
 
 // Main function to perform the tasks
 async function main() {
@@ -115,9 +137,14 @@ async function main() {
     fs.mkdirSync(outputDirectory, { recursive: true });
   }
 
+  if (!fs.existsSync(deploymentsDir)) {
+    fs.mkdirSync(deploymentsDir, { recursive: true });
+  }
+
   // Fetch and save account modules for the account from config.yaml
   const deployedModules = await getAccountModules({ address: accountAddress }, nodeUrl);
-  writeModules(deployedModulesPath, deployedModules, chainId, "deployedModules"); // Write deployed modules
+  writeChainModules(chainId, deployedModules, true);
+  writeModules(deployedModulesPath, "deployedModules");
   console.log(`Data for deployed modules at address ${accountAddress} saved successfully.`);
 
   // Fetch and save account modules for each address from Move.toml, excluding the one from config.yaml
@@ -132,7 +159,8 @@ async function main() {
         console.log(`Data for address ${address} saved successfully.`);
       }
     }
-    writeModules(externalModulesPath, externalModules, chainId, "externalModules"); // Write external modules
+    writeChainModules(chainId, externalModules, false);
+    writeModules(externalModulesPath, "externalModules");
   }
 }
 
