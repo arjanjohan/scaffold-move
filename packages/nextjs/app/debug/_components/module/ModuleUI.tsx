@@ -30,7 +30,7 @@ export const ModuleUI = ({ moduleName: moduleName, className = "" }: ModuleUIPro
   if (!deployedModuleData || !deployedModuleData.abi) {
     return (
       <p className="text-3xl mt-14">
-        {`No module found by the name of "${String(moduleName)}" on chain "${targetNetwork}"!`}
+        {`No module found by the name of "${String(moduleName)}" on chain "${targetNetwork.id}"!`}
       </p>
     );
   }

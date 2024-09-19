@@ -14,12 +14,11 @@ type ModuleFormType = {
 };
 
 type FunctionFormProps = {
-  key: number;
   module: Types.MoveModule;
   fn: Types.MoveFunction;
 };
 
-export const ViewFunctionForm = ({ key, module, fn }: FunctionFormProps) => {
+export const ViewFunctionForm = ({ module, fn }: FunctionFormProps) => {
   const [viewInProcess, setViewInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();
   const [error, setError] = useState<string | null>(null);
@@ -54,7 +53,7 @@ export const ViewFunctionForm = ({ key, module, fn }: FunctionFormProps) => {
     }
   };
   return (
-    <div key={key} className="py-5 space-y-3 first:pt-0 last:pb-1">
+    <div className="py-5 space-y-3 first:pt-0 last:pb-1">
       <div className={`flex gap-3 ${zeroInputs ? "flex-row justify-between items-center" : "flex-col"}`}>
         <p className="font-medium my-0 break-words">{fn.name}</p>
         {fnParams.map((param, i) => (

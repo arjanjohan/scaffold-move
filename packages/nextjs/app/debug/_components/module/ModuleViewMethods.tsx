@@ -21,7 +21,7 @@ export const ModuleViewMethods = ({
     <>
       {functionsToDisplay.map((fn: Types.MoveFunction, index: number) => (
         <div key={index}>
-          <ViewFunctionForm key={index} module={deployedModuleData.abi} fn={fn} />
+          <ViewFunctionForm module={deployedModuleData.abi} fn={fn} />
         </div>
       ))}
     </>
