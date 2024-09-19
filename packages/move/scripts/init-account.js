@@ -51,49 +51,54 @@ function initCustomNetwork(restUrl, faucetUrl) {
   if (faucetUrl) {
     command += ` --faucet-url ${faucetUrl}`;
   }
-  console.log(`Running command: ${command}`);
+  console.log(`Initializing custom network...`);
   exec(command, (error, stdout, stderr) => {
     if (error) {
-      console.error(`Error: ${error.message}`);
+      console.log(stdout);
+      console.log(`Failed to initialize custom network. Please check your network settings.`);
+      process.exit(1);
     }
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
-    }
-    console.log(stdout);
-    // Update the Move.toml address after the network initialization
-    const config = parseYaml(configYamlPath);
-    const newAddress = `0x${config.profiles.default.account.replace(/^0x/, '')}`; // Ensure 0x prefix
-    updateMoveTomlAddress(moveTomlPath, newAddress);
+    console.log(`Custom network initialized successfully.`);
+    updateMoveTomlAfterInit();
   });
 }
 
-// Check if network exists in the config
+function initPredefinedNetwork(network) {
+  const command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network ${network}`;
+  console.log(`Initializing ${network} network...`);
+  exec(command, (error, stdout, stderr) => {
+    if (error) {
+      console.log(`Failed to initialize ${network} network. Please try again.`);
+      process.exit(1);
+    }
+    console.log(`${network} network initialized successfully.`);
+    updateMoveTomlAfterInit();
+  });
+}
+
+function updateMoveTomlAfterInit() {
+  try {
+    const config = parseYaml(configYamlPath);
+    const newAddress = `0x${config.profiles.default.account.replace(/^0x/, '')}`; // Ensure 0x prefix
+    updateMoveTomlAddress(moveTomlPath, newAddress);
+  } catch (error) {
+    console.log(`Failed to update Move.toml. Please check your configuration files.`);
+  }
+}
+
+
 if (network in networks) {
   const { 'rest-url': configRestUrl, 'faucet-url': configFaucetUrl } = networks[network];
   initCustomNetwork(configRestUrl, configFaucetUrl);
 } else if (network === 'custom') {
   if (!restUrl) {
-    console.error('Error: custom network requires --rest-url');
+    console.log('Error: custom network requires --rest-url');
     process.exit(1);
   }
   initCustomNetwork(restUrl, faucetUrl);
 } else if (["devnet", "testnet", "mainnet", "local"].includes(network)) {
-  const command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network ${network}`;
-  console.log(`Running command: ${command}`);
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error: ${error.message}`);
-    }
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
-    }
-    console.log(stdout);
-    // Update the Move.toml address after the network initialization
-    const config = parseYaml(configYamlPath);
-    const newAddress = `0x${config.profiles.default.account.replace(/^0x/, '')}`; // Ensure 0x prefix
-    updateMoveTomlAddress(moveTomlPath, newAddress);
-  });
+  initPredefinedNetwork(network);
 } else {
-  console.error(`Error: Unknown network: ${network}`);
+  console.log(`Error: Unknown network: ${network}`);
   process.exit(1);
 }
