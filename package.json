@@ -12,6 +12,7 @@
     "account": "yarn workspace @scaffold-move/move account",
     "chain": "yarn workspace @scaffold-move/move chain",
     "deploy": "yarn workspace @scaffold-move/move publish",
+    "publish": "yarn workspace @scaffold-move/move publish",
     "compile": "yarn workspace @scaffold-move/move compile",
     "test": "",
     "format": "yarn next:format",

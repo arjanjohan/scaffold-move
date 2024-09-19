@@ -24,7 +24,6 @@ type AddressInfoDropdownProps = {
 
 export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: AddressInfoDropdownProps) => {
   const [addressCopied, setAddressCopied] = useState(false);
-
   const [selectingNetwork, setSelectingNetwork] = useState(false);
   const dropdownRef = useRef<HTMLDetailsElement>(null);
   const closeDropdown = () => {
@@ -33,7 +32,11 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
   };
   useOutsideClick(dropdownRef, closeDropdown);
 
-  const { disconnect } = useWallet();
+  const { disconnect, wallet } = useWallet();
+
+  // Check if connected wallet is Petra or Pontem
+  const isNetworkSwitchingDisabled = wallet?.name === "Petra" || wallet?.name === "Pontem";
+
   return (
     <>
       <details ref={dropdownRef} className="dropdown dropdown-end leading-3">
@@ -76,6 +79,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
               </CopyToClipboard>
             )}
           </li>
+          {/* TODO: Add QR functionality */}
           <li className={selectingNetwork ? "hidden" : ""}>
             <label htmlFor="qrcode-modal" className="btn-sm !rounded-xl flex gap-3 py-3">
               <QrCodeIcon className="h-6 w-4 ml-2 sm:ml-0" />
@@ -98,11 +102,16 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
           {allowedNetworks.length > 1 ? (
             <li className={selectingNetwork ? "hidden" : ""}>
               <button
-                className="btn-sm !rounded-xl flex gap-3 py-3"
+                className={`btn-sm !rounded-xl flex gap-3 py-3 ${
+                  isNetworkSwitchingDisabled ? "opacity-50 cursor-not-allowed" : ""
+                }`}
                 type="button"
                 onClick={() => {
-                  setSelectingNetwork(true);
+                  if (!isNetworkSwitchingDisabled) {
+                    setSelectingNetwork(true);
+                  }
                 }}
+                disabled={isNetworkSwitchingDisabled} // Disable the button if Petra or Pontem is connected
               >
                 <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Switch Network</span>
               </button>

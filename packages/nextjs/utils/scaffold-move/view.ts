@@ -1,3 +1,5 @@
+import { Aptos } from "@aptos-labs/ts-sdk";
+
 export type ViewArguments = {
   module_address: string;
   module_name: string;
@@ -6,7 +8,7 @@ export type ViewArguments = {
   function_args?: string[];
 };
 
-export const fetchViewData = async (request: ViewArguments, aptos: any): Promise<any[]> => {
+export const view = async (request: ViewArguments, aptos: Aptos): Promise<any[]> => {
   const viewResult = await aptos.view({
     payload: {
       function: `${request.module_address}::${request.module_name}::${request.function_name}`,

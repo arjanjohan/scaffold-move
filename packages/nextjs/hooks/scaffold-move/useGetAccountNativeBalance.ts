@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
-export const useGetNativeBalance = (address: string) => {
+export const useGetAccountNativeBalance = (address: string) => {
   const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);

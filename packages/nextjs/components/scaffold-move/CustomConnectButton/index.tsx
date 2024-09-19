@@ -2,6 +2,7 @@
 
 import { Balance } from "../Balance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
+import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 // import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
@@ -33,6 +34,7 @@ export const CustomConnectButton = () => {
             // ensAvatar={""} // Update this with ENS Avatar if available
             blockExplorerAddressLink={blockExplorerAddressLink}
           />
+          <AddressQRCodeModal address={account?.address || ""} modalId="qrcode-modal" />
         </>
       )}
     </>

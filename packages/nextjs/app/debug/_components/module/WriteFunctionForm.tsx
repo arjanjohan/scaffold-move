@@ -16,7 +16,6 @@ type ModuleFormType = {
 };
 
 type FunctionFormProps = {
-  key: number;
   module: Types.MoveModule;
   fn: Types.MoveFunction;
   write: boolean;
@@ -26,7 +25,7 @@ function removeSignerParam(fn: Types.MoveFunction) {
   return fn.params.filter(p => p !== "signer" && p !== "&signer");
 }
 
-export const WriteFunctionForm = ({ key, module, fn }: FunctionFormProps) => {
+export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ModuleFormType>({ typeArgs: [], args: [] });
@@ -112,7 +111,7 @@ export const WriteFunctionForm = ({ key, module, fn }: FunctionFormProps) => {
   };
 
   return (
-    <div key={key} className="py-5 space-y-3 first:pt-0 last:pb-1">
+    <div className="py-5 space-y-3 first:pt-0 last:pb-1">
       <div className={`flex gap-3 ${zeroInputs ? "flex-row justify-between items-center" : "flex-col"}`}>
         <p className="font-medium my-0 break-words">{fn.name}</p>
         {fnParams.map((param, i) => {
