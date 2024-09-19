@@ -34,23 +34,23 @@ export const defaultChains: Chains = {
     block_explorer: "https://explorer.movementnetwork.xyz",
   },
   aptos_mainnet: {
-    id: "1",
+    id: NetworkToChainId[Network.MAINNET].toString(),
     name: "Aptos Mainnet",
     network: Network.MAINNET,
   },
   aptos_testnet: {
-    id: "2",
+    id: NetworkToChainId[Network.TESTNET].toString(),
     name: "Aptos Testnet",
     network: Network.TESTNET,
   },
   aptos_devnet: {
-    // TODO: This fix doesnt work, need to find a better solution
-    id: NetworkToChainId[Network.DEVNET] ? NetworkToChainId[Network.DEVNET].toString() : "149",
+    // TODO: Hardcoded chainId for now, need to find a better solution
+    id: "149",
     name: "Aptos Devnet",
     network: Network.DEVNET,
   },
   local: {
-    id: "4",
+    id: NetworkToChainId[Network.LOCAL].toString(),
     name: "Local",
     network: Network.LOCAL,
   },
