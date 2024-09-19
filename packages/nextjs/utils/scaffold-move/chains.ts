@@ -1,4 +1,4 @@
-import { Network } from "@aptos-labs/ts-sdk";
+import { Network, NetworkToChainId } from "@aptos-labs/ts-sdk";
 
 export type Chain = {
   id: string;
@@ -44,7 +44,8 @@ export const defaultChains: Chains = {
     network: Network.TESTNET,
   },
   aptos_devnet: {
-    id: "148",
+    // TODO: This fix doesnt work, need to find a better solution
+    id: NetworkToChainId[Network.DEVNET] ? NetworkToChainId[Network.DEVNET].toString() : "149",
     name: "Aptos Devnet",
     network: Network.DEVNET,
   },
