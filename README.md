@@ -92,7 +92,9 @@ Looking ahead, we have an exciting roadmap of enhancements and new features plan
 - Add a testing framework for Move modules.
 - Implement custom network switching, which is currently not available in the Aptos Wallet Adapter. Once [our PR](https://github.com/aptos-labs/aptos-wallet-adapter/pull/425) is merged, this feature will be added to Scaffold Move.
 - Enhance documentation and tutorials for easier onboarding.
+- Migrate documentation from Gitbook to Docusaurus.
 - Develop additional pre-built components for common dApp functionalities.
+- Integrate different templates/configurations (similar to [create-aptos-dapp](https://aptos.dev/en/build/create-aptos-dapp))
 
 We're committed to evolving Scaffold Move based on community feedback and emerging best practices in the Move ecosystem. For a detailed list of upcoming features and to contribute ideas, please check our [GitHub Issues](https://github.com/arjanjohan/scaffold-move/issues).
 
@@ -103,6 +105,7 @@ Your input is valuable! If you have suggestions or want to contribute, we encour
 - [Documentation](https://arjanjohan.gitbook.io/scaffold-move)
 - [Website](https://scaffold-move-chi.vercel.app/)
 - [Pitch deck]()
+- [Telegram Community](https://t.me/+lOn2MJawQlc1YjA8)
 - [Demo video](https://www.loom.com/share/4491aa1f222e409782a5ede3a7ac5cb0)
 - [Github](https://github.com/arjanjohan/scaffold-move)
 
