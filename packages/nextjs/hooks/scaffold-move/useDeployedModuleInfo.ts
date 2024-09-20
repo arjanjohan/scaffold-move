@@ -14,7 +14,7 @@ export const useDeployedModuleInfo = <TModuleName extends ModuleName>(moduleName
   const { targetNetwork } = useTargetNetwork();
   const aptos = useAptosClient(targetNetwork.id);
 
-  const deployedModules = modules?.[targetNetwork.id]?.[moduleName.toString()] as Module<TModuleName>;
+  const deployedModules = modules?.[targetNetwork.id]?.[moduleName as ModuleName] as Module<TModuleName>;
   const [status, setStatus] = useState<ModuleCodeStatus>(ModuleCodeStatus.LOADING);
 
   useEffect(() => {

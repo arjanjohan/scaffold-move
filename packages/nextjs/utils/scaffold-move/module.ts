@@ -12,9 +12,9 @@ type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
     [ModuleName in keyof T[ChainId]]: T[ChainId][ModuleName] & { external?: true };
   };
-} & {
-  // Added this index signature to allow for flexibility with key types // TODO: Figure out how to properly handle this
-  [key: string]: any;
+// } & {
+//   // Added this index signature to allow for flexibility with key types // TODO: Figure out how to properly handle this
+//   [key: string]: any;
 };
 
 const deepMergeModules = <L extends Record<PropertyKey, any>, E extends Record<PropertyKey, any>>(
@@ -102,6 +102,7 @@ type IsModuleDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key i
 type ModulesDeclaration = IsModuleDeclarationMissing<GenericModulesDeclaration, typeof modulesData>;
 
 type Modules = ModulesDeclaration[ConfiguredChainId];
+
 
 export type ModuleName = keyof Modules;
 export type Module<TModuleName extends ModuleName> = Modules[TModuleName];
