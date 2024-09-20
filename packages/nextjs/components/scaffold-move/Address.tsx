@@ -63,10 +63,6 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
       </div>
       {disableAddressLink ? (
         <span className={`ml-1.5 text-${size} font-normal`}>{displayAddress}</span>
-      ) : targetNetwork.id === "local" ? (
-        <span className={`ml-1.5 text-${size} font-normal`}>
-          <Link href={blockExplorerAddressLink}>{displayAddress}</Link>
-        </span>
       ) : (
         <a
           className={`ml-1.5 text-${size} font-normal`}

@@ -26,7 +26,7 @@ export const NetworkOptions = ({ hidden = false }: NetworkOptionsProps) => {
   return (
     <>
       {allowedNetworks
-        .filter(allowedNetwork => allowedNetwork.id !== network?.chainId)
+        .filter(allowedNetwork => allowedNetwork.id !== Number(network?.chainId))
         .map(allowedNetwork => {
           const isCustomNetwork = allowedNetwork.network === Network.CUSTOM;
 
