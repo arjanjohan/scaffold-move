@@ -1,7 +1,7 @@
 import { Network, NetworkToChainId } from "@aptos-labs/ts-sdk";
 
 export type Chain = {
-  id: string;
+  id: number;
   name: string;
   network: Network;
   fullnode?: string;
@@ -16,7 +16,7 @@ type Chains = {
 
 export const defaultChains: Chains = {
   movement_devnet: {
-    id: "4",
+    id: 4,
     name: "Movement Devnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.devnet.m1.movementlabs.xyz",
@@ -25,7 +25,7 @@ export const defaultChains: Chains = {
     block_explorer: "https://explorer.devnet.m1.movementlabs.xyz",
   },
   movement_testnet: {
-    id: "27",
+    id: 27,
     name: "Movement Testnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.testnet.suzuka.movementlabs.xyz/v1",
@@ -34,23 +34,23 @@ export const defaultChains: Chains = {
     block_explorer: "https://explorer.movementnetwork.xyz",
   },
   aptos_mainnet: {
-    id: NetworkToChainId[Network.MAINNET].toString(),
+    id: NetworkToChainId[Network.MAINNET],
     name: "Aptos Mainnet",
     network: Network.MAINNET,
   },
   aptos_testnet: {
-    id: NetworkToChainId[Network.TESTNET].toString(),
+    id: NetworkToChainId[Network.TESTNET],
     name: "Aptos Testnet",
     network: Network.TESTNET,
   },
   aptos_devnet: {
     // TODO: Hardcoded chainId for now, need to find a better solution
-    id: "149",
+    id: 149,
     name: "Aptos Devnet",
     network: Network.DEVNET,
   },
   local: {
-    id: NetworkToChainId[Network.LOCAL].toString(),
+    id: NetworkToChainId[Network.LOCAL],
     name: "Local",
     network: Network.LOCAL,
   },

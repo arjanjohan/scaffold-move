@@ -111,14 +111,17 @@ function writeModules(filePath, variableName) {
    */
   import { GenericModulesDeclaration } from "~~/utils/scaffold-move/module";
 
-  const ${variableName} = ${JSON.stringify(allModules, null, 2)} as const;
+  const ${variableName} = {
+    ${Object.entries(allModules).reduce((content, [chainId, chainConfig]) => {
+      return `${content}${parseInt(chainId).toFixed(0)}:${JSON.stringify(chainConfig, null, 2)},`;
+    }, '')}
+  } as const;
 
   export default ${variableName} satisfies GenericModulesDeclaration;
   `;
 
   fs.writeFileSync(filePath, fileContent.trim(), 'utf-8');
-}
-
+  }
 
 // Main function to perform the tasks
 async function main() {

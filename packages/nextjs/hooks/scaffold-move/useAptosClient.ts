@@ -1,7 +1,7 @@
 import { defaultChains } from "../../utils/scaffold-move/chains";
 import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
 
-export function useAptosClient(chainId: string) {
+export function useAptosClient(chainId: number) {
   const chain = Object.values(defaultChains).find(chain => chain.id === chainId);
   if (!chain) {
     throw new Error(`Chain with id ${chainId} not found`);
