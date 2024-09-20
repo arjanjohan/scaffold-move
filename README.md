@@ -4,7 +4,7 @@
 
 ![logo](/assets/logo_small.png)
 <h4 align="center">
-  <a href="https://arjanjohan.gitbook.io/scaffold-move">Documentation</a> |
+  <a href="https://scaffold-move-docs.vercel.app/">Documentation</a> |
   <a href="https://scaffold-move-chi.vercel.app/">Website</a>
 </h4>
 </div>
@@ -13,7 +13,6 @@
 
 ⚙️ Built using Move, Aptos TS SDK, Next.js, Tailwind CSS, and TypeScript.
 
-Key Features:
 - 🛫 **Deployment Scripts**: Simplify and automate your deployment workflow.
 - ✅ **Module Hot Reload**: Your frontend automatically adapts to changes in your Move modules as you edit them.
 - 🪝 **Custom Hooks**: A collection of React hooks to simplify interactions with Move modules.
@@ -90,9 +89,8 @@ Scaffold Move has successfully implemented core features essential for Move deve
 Looking ahead, we have an exciting roadmap of enhancements and new features planned:
 
 - Add a testing framework for Move modules.
-- Implement custom network switching, which is currently not available in the Aptos Wallet Adapter. Once [our PR](https://github.com/aptos-labs/aptos-wallet-adapter/pull/425) is merged, this feature will be added to Scaffold Move.
-- Enhance documentation and tutorials for easier onboarding.
-- Migrate documentation from Gitbook to Docusaurus.
+- Add custom networks to network switching. This is currently not available in the Aptos Wallet Adapter. Once [our PR](https://github.com/aptos-labs/aptos-wallet-adapter/pull/425) is merged, this feature will be added to Scaffold Move.
+- Enhance documentation and create tutorials for easier onboarding.
 - Develop additional pre-built components for common dApp functionalities.
 - Integrate different templates/configurations (similar to [create-aptos-dapp](https://aptos.dev/en/build/create-aptos-dapp))
 
@@ -102,9 +100,9 @@ Your input is valuable! If you have suggestions or want to contribute, we encour
 
 ## Links
 
-- [Documentation](https://arjanjohan.gitbook.io/scaffold-move)
+- [Documentation](https://scaffold-move-docs.vercel.app/)
 - [Website](https://scaffold-move-chi.vercel.app/)
-- [Pitch deck]()
+- [Pitch deck](https://docs.google.com/presentation/d/1jtmK_ovNIO3gprsLseHifV5Qv8vve2dBbvlYiycxbZI/edit?usp=sharing)
 - [Telegram Community](https://t.me/+lOn2MJawQlc1YjA8)
 - [Demo video](https://www.loom.com/share/4491aa1f222e409782a5ede3a7ac5cb0)
 - [Github](https://github.com/arjanjohan/scaffold-move)
