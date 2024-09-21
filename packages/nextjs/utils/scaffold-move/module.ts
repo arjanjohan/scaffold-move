@@ -1,7 +1,4 @@
-
-import {
-  AbiParameter,
-} from "abitype";
+import { AbiParameter } from "abitype";
 import { Types } from "aptos";
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedModulesData from "~~/modules/deployedModules";

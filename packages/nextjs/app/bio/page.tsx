@@ -1,13 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
+import { InputTransactionData, Types, useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-move";
-import { useAptosClient } from "~~/hooks/scaffold-move";
+import { useGetAccountResource } from "~~/hooks/scaffold-move";
 import { useGetModule } from "~~/hooks/scaffold-move/useGetModule";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
-import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
+
+// TODO: Fix this workaround
+// Add this interface near the top of the file
+interface BioResource extends Types.MoveResource {
+  name: string;
+  bio: string;
+}
 
 // Alert Component for showing error messages or warnings
 const Alert = ({ message }: { message: string }) => (
@@ -18,9 +24,6 @@ const Alert = ({ message }: { message: string }) => (
 
 const OnchainBio: NextPage = () => {
   const { account } = useWallet();
-  const network = useTargetNetwork();
-  const chainId = network.targetNetwork.id;
-  const aptos = useAptosClient(chainId);
 
   const [inputName, setInputName] = useState<string>("");
   const [inputBio, setInputBio] = useState<string>("");
@@ -34,6 +37,8 @@ const OnchainBio: NextPage = () => {
   const moveModule = useGetModule("onchain_bio");
   const bioAbi = moveModule?.abi;
 
+  const { data: bioResource, refetch: refetchBio } = useGetAccountResource("onchain_bio", "Bio");
+
   // If the bioModule or ABI is not found, show an alert message and return early
   if (!bioAbi) {
     return <Alert message="Onchain Bio module not found!" />;
@@ -44,17 +49,14 @@ const OnchainBio: NextPage = () => {
     if (!account) return;
 
     try {
-      const resourceName = "Bio";
-
-      const bioResource = await aptos.getAccountResource({
-        accountAddress: account.address,
-        resourceType: `${bioAbi.address}::${bioAbi.name}::${resourceName}`,
-      });
+      await refetchBio();
       console;
       if (bioResource) {
         setAccountHasBio(true);
-        setCurrentName(bioResource.name);
-        setCurrentBio(bioResource.bio);
+
+        // TODO: Fix this workaround
+        setCurrentName((bioResource as BioResource).name);
+        setCurrentBio((bioResource as BioResource).bio);
       } else {
         clearBio();
       }
