@@ -102,6 +102,7 @@ const OnchainBio: NextPage = () => {
     <div className="flex items-center flex-col flex-grow">
       <div className="flex flex-col items-center bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl p-6 mt-8 w-full max-w-lg">
         <div className="text-xl">Your Onchain Bio</div>
+        {/* TODO: Add address and balance here */}
       </div>
       <div className="flex flex-col space-y-4 bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl p-6 mt-8 w-full max-w-lg">
         <div className="flex items-center ml-2">
