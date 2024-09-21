@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useGetModule } from "./useGetModule";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
 import { FailedTransactionError } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
+import { ModuleName } from "~~/utils/scaffold-move/module";
 
 export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
 
@@ -20,14 +22,28 @@ export type TransactionResponseOnError = {
   message: string;
 };
 
-const useSubmitTransaction = () => {
+const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModuleName) => {
   const [transactionResponse, setTransactionResponse] = useState<TransactionResponse | null>(null);
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
+  const [moduleAddress, setModuleAddress] = useState<string | null>(null);
 
   const network = useTargetNetwork();
   const aptos = useAptosClient(network.targetNetwork.id);
 
+  // TODO: with Nightly wallet it can fail because network is mismatched.
   const { signAndSubmitTransaction } = useWallet();
+
+  const moveModule = useGetModule(moduleName.toString());
+  if (!moveModule) {
+    throw new Error("Module not found");
+  }
+  useEffect(() => {
+    if (moveModule) {
+      setModuleAddress(moveModule.abi.address);
+    } else {
+      throw new Error("Module not found");
+    }
+  }, [moveModule]);
 
   useEffect(() => {
     if (transactionResponse !== null) {
@@ -35,8 +51,14 @@ const useSubmitTransaction = () => {
     }
   }, [transactionResponse]);
 
-  // TODO: Replace `transaction: InputTransactionData` by moduleName, functionName, args
-  async function submitTransaction(transaction: InputTransactionData) {
+  async function submitTransaction(functionName: string, args: any[]) {
+    const transaction: InputTransactionData = {
+      data: {
+        function: `${moduleAddress}::${moduleName.toString()}::${functionName}`,
+        functionArguments: args,
+      },
+    };
+
     setTransactionInProcess(true);
     const signAndSubmitTransactionCall = async (transaction: InputTransactionData): Promise<TransactionResponse> => {
       const responseOnError: TransactionResponseOnError = {
@@ -46,14 +68,14 @@ const useSubmitTransaction = () => {
       let response;
       try {
         response = await signAndSubmitTransaction(transaction);
-
         // transaction submit succeed
-        if ("hash" in response) {
-          // await state.aptos_client.waitForTransaction(response["hash"], {
-          //   checkSuccess: true,
-          // });
-
-          await aptos.waitForTransaction(response["hash"]);
+        if (response.hash) {
+          await aptos.waitForTransaction({
+            transactionHash: response.hash,
+            options: {
+              checkSuccess: true,
+            },
+          });
 
           return {
             transactionSubmitted: true,

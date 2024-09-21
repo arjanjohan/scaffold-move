@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { parseTypeTag } from "@aptos-labs/ts-sdk";
-import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { Types } from "aptos";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
@@ -26,7 +26,7 @@ function removeSignerParam(fn: Types.MoveFunction) {
 }
 
 export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
-  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
+  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(module.name.toString());
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ModuleFormType>({ typeArgs: [], args: [] });
 
@@ -80,19 +80,14 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
   };
 
   const handleWrite = async () => {
-    const payload: InputTransactionData = {
-      data: {
-        function: `${module.address}::${module.name}::${fn.name}`,
-        typeArguments: data.typeArgs,
-        functionArguments: data.args.map((arg, i) => {
-          const type = fnParams[i];
-          return convertArgument(arg, type);
-        }),
-      },
-    };
+    // const typeArguments = data.typeArgs;
+    const functionArguments = data.args.map((arg, i) => {
+      const type = fnParams[i];
+      return convertArgument(arg, type);
+    });
 
     try {
-      await submitTransaction(payload);
+      await submitTransaction(fn.name, functionArguments);
 
       if (transactionResponse?.transactionSubmitted) {
         console.log("function_interacted", fn.name, {

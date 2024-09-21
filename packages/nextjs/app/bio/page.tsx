@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { InputTransactionData, Types, useWallet } from "@aptos-labs/wallet-adapter-react";
+import { Types, useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-move";
 import { useGetAccountResource } from "~~/hooks/scaffold-move";
@@ -32,7 +32,7 @@ const OnchainBio: NextPage = () => {
   const [currentName, setCurrentName] = useState<string | null>(null);
   const [currentBio, setCurrentBio] = useState<string | null>(null);
 
-  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction();
+  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction("onchain_bio");
 
   const moveModule = useGetModule("onchain_bio");
   const bioAbi = moveModule?.abi;
@@ -74,16 +74,9 @@ const OnchainBio: NextPage = () => {
     }
 
     try {
-      const transaction: InputTransactionData = {
-        data: {
-          function: `${bioAbi.address}::${bioAbi.name}::register`,
-          functionArguments: [inputName, inputBio],
-        },
-      };
+      await submitTransaction("register", [inputName, inputBio]);
 
-      await submitTransaction(transaction);
-      await fetchBio();
-
+      // await fetchBio();
       if (transactionResponse?.transactionSubmitted) {
         console.log("Transaction successful:", transactionResponse.success ? "success" : "failed");
       }
