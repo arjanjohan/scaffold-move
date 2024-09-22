@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { parseTypeTag } from "@aptos-labs/ts-sdk";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { Types } from "aptos";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
+import { GenericModuleAbi, MoveFunction } from "~~/utils/scaffold-move/module";
 
 const zeroInputs = false;
 
@@ -16,12 +16,12 @@ type ModuleFormType = {
 };
 
 type FunctionFormProps = {
-  module: Types.MoveModule;
-  fn: Types.MoveFunction;
+  module: GenericModuleAbi;
+  fn: MoveFunction;
   write: boolean;
 };
 
-function removeSignerParam(fn: Types.MoveFunction) {
+function removeSignerParam(fn: MoveFunction) {
   return fn.params.filter(p => p !== "signer" && p !== "&signer");
 }
 

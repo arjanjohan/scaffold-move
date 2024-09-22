@@ -3,15 +3,13 @@ import { Types } from "aptos";
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedModulesData from "~~/modules/deployedModules";
 import externalModulesData from "~~/modules/externalModules";
-import scaffoldConfig from "~~/scaffold.config";
+
+// import scaffoldConfig from "~~/scaffold.config";
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
     [ModuleName in keyof T[ChainId]]: T[ChainId][ModuleName] & { external?: true };
   };
-} & {
-  // Added this index signature to allow for flexibility with key types // TODO: Figure out how to properly handle this
-  [key: string]: any;
 };
 
 const deepMergeModules = <L extends Record<PropertyKey, any>, E extends Record<PropertyKey, any>>(
@@ -41,6 +39,7 @@ const modulesData = deepMergeModules(deployedModulesData, externalModulesData);
 export type GenericModule = {
   bytecode: string;
   abi: GenericModuleAbi;
+  external?: true;
 };
 
 export type GenericModuleAbi = {
@@ -51,7 +50,7 @@ export type GenericModuleAbi = {
   structs: readonly MoveStruct[];
 };
 
-type MoveFunction = {
+export type MoveFunction = {
   name: string;
   visibility: string;
   is_entry: boolean;
@@ -88,9 +87,10 @@ export type GenericModulesDeclaration = {
   };
 };
 
-export const modules = deployedModulesData as GenericModulesDeclaration | null;
+export const modules = modulesData as GenericModulesDeclaration | null;
 
-type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
+// type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
+type ConfiguredChainId = 0;
 
 type IsModuleDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key in ConfiguredChainId]: any }
   ? TNo
