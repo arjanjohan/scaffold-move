@@ -4,10 +4,9 @@ import { useTargetNetwork } from "./useTargetNetwork";
 import { Aptos } from "@aptos-labs/ts-sdk";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
-import { Types } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 
-export function getAccountResource(
+export function getAccountResource<T = any>(
   requestParameters: {
     address: string;
     moduleAddress: string;
@@ -16,7 +15,7 @@ export function getAccountResource(
     ledgerVersion?: number;
   },
   client: Aptos,
-): Promise<Types.MoveResource> {
+): Promise<T> {
   const { address, moduleAddress, moduleName, resourceName, ledgerVersion } = requestParameters;
 
   const resourceType: `${string}::${string}::${string}` = `${moduleAddress}::${moduleName}::${resourceName}`;
@@ -26,17 +25,17 @@ export function getAccountResource(
   }
   return withResponseError(
     client.getAccountResource({ accountAddress: address, resourceType, options: { ledgerVersion: ledgerVersionBig } }),
-  );
+  ).then(result => result as unknown as T);
 }
 
-export function useGetAccountResource(
+export function useGetAccountResource<T = any>(
   moduleName: string,
   resourceName: string,
   address?: string,
   options?: {
     retry?: number | boolean;
   },
-): UseQueryResult<Types.MoveResource, ResponseError> {
+): UseQueryResult<T, ResponseError> {
   const network = useTargetNetwork();
   const aptosClient = useAptosClient(network.targetNetwork.id);
   const moduleAddress = useGetModule(moduleName)?.abi.address ?? "";
@@ -44,10 +43,9 @@ export function useGetAccountResource(
 
   // If address is not provided, use the wallet address
   // Default to empty string if account is not connected
-  // Empty string will lead to ResponseError
   const resourceAddress = address || account?.address || "";
 
-  return useQuery<Types.MoveResource, ResponseError>({
+  return useQuery<T, ResponseError>({
     queryKey: ["accountResource", { address: resourceAddress, moduleAddress, moduleName, resourceName }],
     queryFn: () =>
       getAccountResource({ address: resourceAddress, moduleAddress, moduleName, resourceName }, aptosClient),

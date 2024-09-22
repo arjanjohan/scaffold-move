@@ -1,19 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Types, useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
 import { InputBase } from "~~/components/scaffold-move";
 import { useGetAccountResource } from "~~/hooks/scaffold-move";
 import { useGetModule } from "~~/hooks/scaffold-move/useGetModule";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
-
-// TODO: Fix this workaround
-// Add this interface near the top of the file
-interface BioResource extends Types.MoveResource {
-  name: string;
-  bio: string;
-}
 
 // Alert Component for showing error messages or warnings
 const Alert = ({ message }: { message: string }) => (
@@ -55,8 +48,8 @@ const OnchainBio: NextPage = () => {
         setAccountHasBio(true);
 
         // TODO: Fix this workaround
-        setCurrentName((bioResource as BioResource).name);
-        setCurrentBio((bioResource as BioResource).bio);
+        setCurrentName(bioResource.name);
+        setCurrentBio(bioResource.bio);
       } else {
         clearBio();
       }
