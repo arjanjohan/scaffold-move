@@ -7,6 +7,7 @@ import { InputBase } from "~~/components/scaffold-move";
 import { useGetAccountResource } from "~~/hooks/scaffold-move";
 import { useGetModule } from "~~/hooks/scaffold-move/useGetModule";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
+import { useView } from "~~/hooks/scaffold-move/useView";
 
 // Alert Component for showing error messages or warnings
 const Alert = ({ message }: { message: string }) => (
@@ -31,6 +32,8 @@ const OnchainBio: NextPage = () => {
   const bioAbi = moveModule?.abi;
 
   const { data: bioResource, refetch: refetchBio } = useGetAccountResource("onchain_bio", "Bio");
+
+  const { data: bioView, isLoading: isLoadingBioView, refetch: refetchBioView } = useView({ moduleName: "onchain_bio", functionName: "get_bio", args: [account?.address] });
 
   // If the bioModule or ABI is not found, show an alert message and return early
   if (!bioAbi) {
@@ -109,7 +112,7 @@ const OnchainBio: NextPage = () => {
       </div>
       <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
         <button className="btn btn-secondary mt-2" disabled={!account} onClick={fetchBio}>
-          Fetch Bio
+          Fetch Bio Resource
         </button>
 
         {accountHasBio && !transactionInProcess && (
@@ -122,6 +125,22 @@ const OnchainBio: NextPage = () => {
               <span className="text-xs font-medium mr-2 leading-none">Bio:</span>
             </div>
             <div className="w-full flex flex-col space-y-2">{currentBio}</div>
+          </div>
+        )}
+      </div>
+
+
+      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
+        <button className="btn btn-secondary mt-2" disabled={!account} onClick={() => refetchBioView()}>
+          Fetch Bio View
+        </button>
+
+        {bioView && !isLoadingBioView &&(
+          <div className="space-y-4 w-full max-w-lg">
+            <div className="flex items-center">
+              <span className="text-xs font-medium mr-2 leading-none">Bio:</span>
+            </div>
+            <div className="w-full flex flex-col space-y-2">{bioView}</div>
           </div>
         )}
       </div>
