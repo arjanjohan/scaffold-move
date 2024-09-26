@@ -104,11 +104,8 @@ Your input is valuable! If you have suggestions or want to contribute, we encour
 - [Website](https://scaffold-move-chi.vercel.app/)
 - [Pitch deck](https://docs.google.com/presentation/d/1jtmK_ovNIO3gprsLseHifV5Qv8vve2dBbvlYiycxbZI/edit?usp=sharing)
 - [Telegram Community](https://t.me/+lOn2MJawQlc1YjA8)
-- [Demo video](https://www.loom.com/share/4491aa1f222e409782a5ede3a7ac5cb0)
+- [Demo video](https://youtu.be/0PPJb1M8ukQ)
 - [Github](https://github.com/arjanjohan/scaffold-move)
-
-## Deployments
-- [Movement testnet](https://explorer.movementnetwork.xyz/account/0xbe119e3724a7aa44ec3716f070fc36f0603937dcdb06e8277a987a87ade39018/modules/code/onchain_bio?network=testnet)
 
 ## Team
 
