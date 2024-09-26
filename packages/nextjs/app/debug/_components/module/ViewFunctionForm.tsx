@@ -3,6 +3,7 @@ import { Types } from "aptos";
 import { displayTxResult } from "~~/app/debug/_components/module";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
+import { GenericModuleAbi, MoveFunction } from "~~/utils/scaffold-move/module";
 import { view } from "~~/utils/scaffold-move/view";
 
 const zeroInputs = false;
@@ -14,8 +15,8 @@ type ModuleFormType = {
 };
 
 type FunctionFormProps = {
-  module: Types.MoveModule;
-  fn: Types.MoveFunction;
+  module: GenericModuleAbi;
+  fn: MoveFunction;
 };
 
 export const ViewFunctionForm = ({ module, fn }: FunctionFormProps) => {
