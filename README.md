@@ -111,7 +111,7 @@ Your input is valuable! If you have suggestions or want to contribute, we encour
 
 None of this would have been possible without the great work done in:
 - [Scaffold-ETH 2](https://github.com/scaffold-eth/scaffold-eth-2)
-- [Aptos block explorer](https://github.com/aptos-labs/explorer)
+- [Aptos Explorer](https://github.com/aptos-labs/explorer)
 
 ## Team
 
