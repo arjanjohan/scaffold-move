@@ -27,7 +27,7 @@ export function getBlockExplorerTxLink(chain: Chain, txnHash: string) {
 
 /**
  * Gives the block explorer URL for a given address.
- * Defaults to Etherscan if no (wagmi) block explorer is configured for the network.
+ * Defaults to Aptoslabs explorer if no block explorer is configured for the network.
  */
 export function getBlockExplorerAddressLink(chain: Chain, address: string) {
   if (chain.network === Network.LOCAL) {
