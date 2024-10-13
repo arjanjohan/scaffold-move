@@ -1,5 +1,4 @@
 import { ReactElement, useState } from "react";
-import { TransactionBase, TransactionReceipt, formatEther, isAddress, isHex } from "viem";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
 import { Address } from "~~/components/scaffold-move";
 import { replacer } from "~~/utils/scaffold-move/common";
@@ -9,8 +8,6 @@ type DisplayContent =
   | number
   | bigint
   | Record<string, any>
-  | TransactionBase
-  | TransactionReceipt
   | undefined
   | unknown;
 
@@ -59,7 +56,7 @@ const NumberDisplay = ({ value }: { value: bigint }) => {
 
   return (
     <div className="flex items-baseline">
-      {isEther ? "Ξ" + formatEther(value) : String(value)}
+      String(value)
       <span
         className="tooltip tooltip-secondary font-sans ml-2"
         data-tip={isEther ? "Multiply by 1e18" : "Divide by 1e18"}
