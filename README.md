@@ -107,6 +107,12 @@ Your input is valuable! If you have suggestions or want to contribute, we encour
 - [Demo video](https://youtu.be/0PPJb1M8ukQ)
 - [Github](https://github.com/arjanjohan/scaffold-move)
 
+## Credits
+
+None of this would have been possible without the great work done in:
+- [Scaffold-ETH 2](https://github.com/scaffold-eth/scaffold-eth-2)
+- [Aptos block explorer](https://github.com/aptos-labs/explorer)
+
 ## Team
 
 - [arjanjohan](https://x.com/arjanjohan/)
