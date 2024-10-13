@@ -1,9 +1,10 @@
 import { NetworkOptions } from "./NetworkOptions";
-import { useDisconnect } from "wagmi";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+
 import { ArrowLeftOnRectangleIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export const WrongNetworkDropdown = () => {
-  const { disconnect } = useDisconnect();
+  const { disconnect } = useWallet();
 
   return (
     <div className="dropdown dropdown-end mr-2">
