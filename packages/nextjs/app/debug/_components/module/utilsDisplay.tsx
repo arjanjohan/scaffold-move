@@ -2,6 +2,7 @@ import { ReactElement, useState } from "react";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
 import { Address } from "~~/components/scaffold-move";
 import { replacer } from "~~/utils/scaffold-move/common";
+import { isValidAccountAddress, isHex } from "~~/utils/scaffold-move";
 
 type DisplayContent =
   | string
@@ -26,7 +27,7 @@ export const displayTxResult = (
   }
 
   if (typeof displayContent === "string") {
-    if (isAddress(displayContent)) {
+    if (isValidAccountAddress(displayContent)) {
       return <Address address={displayContent} size={fontSize} />;
     }
 
