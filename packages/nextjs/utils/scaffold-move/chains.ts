@@ -8,11 +8,15 @@ export type Chain = {
   indexer?: string;
   faucet?: string;
   block_explorer?: string;
+  ans_endpoint?: string;
 };
 
 type Chains = {
   [key: string]: Chain;
 };
+
+export type NetworkName = keyof typeof defaultChains;
+
 
 export const defaultChains: Chains = {
   movement_devnet: {
@@ -20,7 +24,7 @@ export const defaultChains: Chains = {
     name: "Movement Devnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.devnet.m1.movementlabs.xyz",
-    indexer: "https://indexer.devnet.m1.movementlabs.xyz/",
+    indexer: "https://indexer.devnet.m1.movementlabs.xyz",
     faucet: "https://faucet2.movementlabs.xyz",
     block_explorer: "https://explorer.devnet.m1.movementlabs.xyz",
   },
@@ -29,8 +33,8 @@ export const defaultChains: Chains = {
     name: "Movement Testnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.testnet.suzuka.movementlabs.xyz/v1",
-    indexer: "https://indexer.testnet.m1.movementlabs.xyz/",
-    faucet: "https://faucet.testnet.suzuka.movementlabs.xyz/",
+    indexer: "https://indexer.testnet.m1.movementlabs.xyz",
+    faucet: "https://faucet.testnet.suzuka.movementlabs.xyz",
     block_explorer: "https://explorer.movementnetwork.xyz",
   },
   aptos_mainnet: {
