@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { getBlockExplorerAddressLink } from "~~/utils/scaffold-move";
+import { getBlockExplorerAddressLink, isValidAccountAddress } from "~~/utils/scaffold-move";
 
 type AddressProps = {
   address?: string;
@@ -28,7 +28,7 @@ const blockieSizeMap = {
  * Displays an address (or ENS) with a Blockie image and option to copy address.
  */
 export const Address = ({ address, disableAddressLink, format, size = "base" }: AddressProps) => {
-  // const [ens, setEns] = useState<string | null>();
+  const [ans, setAns] = useState<string | null>();
   // const [ensAvatar, setEnsAvatar] = useState<string | null>();
   const [addressCopied, setAddressCopied] = useState(false);
 
@@ -48,9 +48,23 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   const blockExplorerAddressLink = getBlockExplorerAddressLink(targetNetwork, address);
   let displayAddress = address?.slice(0, 6) + "..." + address?.slice(-4);
 
-  // if (ens) {
-  //   displayAddress = ens;
-  // } else
+
+  const { data: fetchedEns } = useAnsName({
+    address: address,
+    chainId: 1,
+    query: {
+      enabled: isValidAccountAddress(checkSumAddress ?? ""),
+    },
+  });
+
+  // We need to apply this pattern to avoid Hydration errors.
+  useEffect(() => {
+    setAns(fetchedAns);
+  }, [fetchedAns]);
+
+  if (ans) {
+    displayAddress = ans;
+  } else
   if (format === "long") {
     displayAddress = address;
   }
