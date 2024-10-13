@@ -34,14 +34,10 @@ const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModul
   const { signAndSubmitTransaction } = useWallet();
 
   const moveModule = useGetModule(moduleName.toString());
-  if (!moveModule) {
-    throw new Error("Module not found");
-  }
+  
   useEffect(() => {
     if (moveModule) {
       setModuleAddress(moveModule.abi.address);
-    } else {
-      throw new Error("Module not found");
     }
   }, [moveModule]);
 
