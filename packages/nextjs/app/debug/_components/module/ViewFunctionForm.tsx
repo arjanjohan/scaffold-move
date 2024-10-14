@@ -3,6 +3,7 @@ import { Types } from "aptos";
 import { displayTxResult } from "~~/app/debug/_components/module";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
+import { view } from "~~/hooks/scaffold-move/useView";
 import { GenericModuleAbi, MoveFunction } from "~~/utils/scaffold-move/module";
 
 const zeroInputs = false;
