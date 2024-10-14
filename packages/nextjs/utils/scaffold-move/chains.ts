@@ -15,8 +15,7 @@ type Chains = {
   [key: string]: Chain;
 };
 
-export type NetworkName = keyof typeof defaultChains;
-
+const ANS_ENDPOINT = "https://www.aptosnames.com/";
 
 export const defaultChains: Chains = {
   movement_devnet: {
@@ -41,11 +40,13 @@ export const defaultChains: Chains = {
     id: NetworkToChainId[Network.MAINNET],
     name: "Aptos Mainnet",
     network: Network.MAINNET,
+    ans_endpoint: ANS_ENDPOINT,
   },
   aptos_testnet: {
     id: NetworkToChainId[Network.TESTNET],
     name: "Aptos Testnet",
     network: Network.TESTNET,
+    ans_endpoint: ANS_ENDPOINT,
   },
   aptos_devnet: {
     // TODO: Hardcoded chainId for now, need to find a better solution

@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-move";
+import { useGetANS } from "~~/hooks/scaffold-move/useGetANS";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { getBlockExplorerAddressLink, isValidAccountAddress } from "~~/utils/scaffold-move";
+import { getBlockExplorerAddressLink } from "~~/utils/scaffold-move";
 
 type AddressProps = {
   address?: string;
@@ -33,6 +34,15 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   const [addressCopied, setAddressCopied] = useState(false);
 
   const { targetNetwork } = useTargetNetwork();
+  const { data: fetchedAns } = useGetANS(address);
+
+  let displayAddress = address?.slice(0, 6) + "..." + address?.slice(-4);
+
+  // We need to apply this pattern to avoid Hydration errors.
+  useEffect(() => {
+    setAns(fetchedAns);
+  }, [fetchedAns]);
+
   // Skeleton UI
   if (!address) {
     return (
@@ -46,26 +56,10 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   }
 
   const blockExplorerAddressLink = getBlockExplorerAddressLink(targetNetwork, address);
-  let displayAddress = address?.slice(0, 6) + "..." + address?.slice(-4);
-
-
-  const { data: fetchedEns } = useAnsName({
-    address: address,
-    chainId: 1,
-    query: {
-      enabled: isValidAccountAddress(checkSumAddress ?? ""),
-    },
-  });
-
-  // We need to apply this pattern to avoid Hydration errors.
-  useEffect(() => {
-    setAns(fetchedAns);
-  }, [fetchedAns]);
 
   if (ans) {
     displayAddress = ans;
-  } else
-  if (format === "long") {
+  } else if (format === "long") {
     displayAddress = address;
   }
 
