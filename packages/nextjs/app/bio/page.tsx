@@ -33,7 +33,11 @@ const OnchainBio: NextPage = () => {
 
   const { data: bioResource, refetch: refetchBio } = useGetAccountResource("onchain_bio", "Bio");
 
-  const { data: bioView, isLoading: isLoadingBioView, refetch: refetchBioView } = useView({ moduleName: "onchain_bio", functionName: "get_bio", args: [account?.address] });
+  const {
+    data: bioView,
+    isLoading: isLoadingBioView,
+    refetch: refetchBioView,
+  } = useView({ moduleName: "onchain_bio", functionName: "get_bio", args: [account?.address] });
 
   // If the bioModule or ABI is not found, show an alert message and return early
   if (!bioAbi) {
@@ -129,13 +133,12 @@ const OnchainBio: NextPage = () => {
         )}
       </div>
 
-
       <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
         <button className="btn btn-secondary mt-2" disabled={!account} onClick={() => refetchBioView()}>
           Fetch Bio View
         </button>
 
-        {bioView && !isLoadingBioView &&(
+        {bioView && !isLoadingBioView && (
           <div className="space-y-4 w-full max-w-lg">
             <div className="flex items-center">
               <span className="text-xs font-medium mr-2 leading-none">Bio:</span>
