@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
-// import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
+import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
 import { ModuleUI } from "~~/app/debug/_components/module";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ModuleName } from "~~/utils/scaffold-move/module";
+import { GenericModule, ModuleName } from "~~/utils/scaffold-move/module";
 import { getAllModules } from "~~/utils/scaffold-move/modulesData";
 
 export function DebugModules() {
@@ -47,11 +47,11 @@ export function DebugModules() {
                 >
                   {moduleName as string}
                   {/* TODO: fix this below */}
-                  {/* {modulesData[moduleName as string].external && (
+                  {(modulesData[moduleName] as GenericModule).external && (
                     <span className="tooltip tooltip-top tooltip-accent" data-tip="External module">
                       <BarsArrowUpIcon className="h-4 w-4 cursor-pointer" />
                     </span>
-                  )} */}
+                  )}
                 </button>
               ))}
             </div>
