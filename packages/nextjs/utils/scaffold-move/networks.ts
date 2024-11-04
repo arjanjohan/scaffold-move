@@ -1,28 +1,12 @@
 import { Network } from "@aptos-labs/ts-sdk";
 import scaffoldConfig from "~~/scaffold.config";
 import { Chain } from "~~/utils/scaffold-move/chains";
-import { defaultChains } from "~~/utils/scaffold-move/chains";
 
 /**
  * Gives the block explorer transaction URL, returns empty string if the network is a local chain
  */
 export function getBlockExplorerTxLink(chain: Chain, txnHash: string) {
-  if (chain.network === Network.LOCAL) {
-    return "";
-  }
-
-  const blockExplorerBaseURL = chain.block_explorer;
-
-  // For non Aptos networks, use the configured block explorer
-  if (blockExplorerBaseURL) {
-    if (chain.id === defaultChains.movement_devnet.id) {
-      return `${blockExplorerBaseURL}/txn/${txnHash}?network=devnet`;
-    } else if (chain.id === defaultChains.movement_testnet.id) {
-      return `${blockExplorerBaseURL}/txn/${txnHash}?network=testnet`;
-    }
-  }
-
-  return `https://explorer.aptoslabs.com//txn/~${txnHash}?network=${chain.network}`;
+  return buildExplorerUrl(chain, "txn", txnHash);
 }
 
 /**
@@ -30,22 +14,20 @@ export function getBlockExplorerTxLink(chain: Chain, txnHash: string) {
  * Defaults to Aptoslabs explorer if no block explorer is configured for the network.
  */
 export function getBlockExplorerAddressLink(chain: Chain, address: string) {
+  return buildExplorerUrl(chain, "account", address);
+}
+
+function buildExplorerUrl(chain: Chain, path: string, param: string) {
   if (chain.network === Network.LOCAL) {
     return "";
   }
 
-  const blockExplorerBaseURL = chain.block_explorer;
-
-  // For non Aptos networks, use the configured block explorer
-  if (blockExplorerBaseURL) {
-    if (chain.id === defaultChains.movement_devnet.id) {
-      return `${blockExplorerBaseURL}/account/${address}?network=devnet`;
-    } else if (chain.id === defaultChains.movement_testnet.id) {
-      return `${blockExplorerBaseURL}/account/${address}?network=testnet`;
-    }
+  if (chain.block_explorer) {
+    const networkParam = chain.explorer_network_param ? `?network=${chain.explorer_network_param}` : "";
+    return `${chain.block_explorer}/${path}/${param}${networkParam}`;
   }
 
-  return `https://explorer.aptoslabs.com/account/${address}?network=${chain.network}`;
+  return `https://explorer.aptoslabs.com/${path}/${param}?network=${chain.network}`;
 }
 
 /**
