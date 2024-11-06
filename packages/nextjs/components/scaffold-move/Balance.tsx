@@ -6,7 +6,7 @@ type BalanceProps = {
 };
 
 export const Balance = ({ address }: BalanceProps) => {
-  const { balance, loading, error } = useGetAccountNativeBalance(address);
+  const { balance, loading, error, nativeTokenSymbol } = useGetAccountNativeBalance(address);
 
   if (loading) {
     return (
@@ -31,8 +31,7 @@ export const Balance = ({ address }: BalanceProps) => {
     <div className="w-full flex items-center justify-center">
       <>
         <span>{getFormattedBalanceStr(balance.toString())}</span>
-        {/* TODO: Get native ticker instead of hardcoded  */}
-        <span className="text-[0.8em] font-bold ml-1">APT</span>
+        <span className="text-[0.8em] font-bold ml-1">{nativeTokenSymbol}</span>
       </>
     </div>
   );

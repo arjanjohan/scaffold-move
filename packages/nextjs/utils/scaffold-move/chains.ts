@@ -8,6 +8,8 @@ export type Chain = {
   indexer?: string;
   faucet?: string;
   block_explorer?: string;
+  explorer_network_param?: string;
+  native_token_symbol?: string;
 };
 
 type Chains = {
@@ -23,15 +25,30 @@ export const defaultChains: Chains = {
     indexer: "https://indexer.devnet.m1.movementlabs.xyz/",
     faucet: "https://faucet2.movementlabs.xyz",
     block_explorer: "https://explorer.devnet.m1.movementlabs.xyz",
+    explorer_network_param: "devnet",
+    native_token_symbol: "MOVE",
   },
-  movement_testnet: {
+  movement_suzuka_testnet: {
     id: 27,
-    name: "Movement Testnet",
+    name: "Movement Suzuka Testnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.testnet.suzuka.movementlabs.xyz/v1",
     indexer: "https://indexer.testnet.m1.movementlabs.xyz/",
     faucet: "https://faucet.testnet.suzuka.movementlabs.xyz/",
     block_explorer: "https://explorer.movementnetwork.xyz",
+    explorer_network_param: "testnet",
+    native_token_symbol: "MOVE",
+  },
+  movement_testnet: {
+    id: 177,
+    name: "Movement Porto Testnet",
+    network: Network.CUSTOM,
+    fullnode: "https://aptos.testnet.porto.movementlabs.xyz/v1",
+    indexer: "https://indexer.testnet.porto.movementnetwork.xyz/v1/graphql",
+    faucet: "https://mizu.testnet.porto.movementnetwork.xyz/",
+    block_explorer: "https://explorer.movementnetwork.xyz",
+    explorer_network_param: "porto-testnet",
+    native_token_symbol: "MOVE",
   },
   aptos_mainnet: {
     id: NetworkToChainId[Network.MAINNET],

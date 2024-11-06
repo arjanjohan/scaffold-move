@@ -7,8 +7,12 @@ const networks = {
     'faucet-url': 'https://devnet.m1.movementlabs.xyz/',
   },
   movement_testnet: {
-    'rest-url': 'https://aptos.testnet.suzuka.movementlabs.xyz/v1',
+    "rest-url": "https://aptos.testnet.porto.movementlabs.xyz/v1"
   },
+  // Old testnet for reference
+  suzuka_testnet: {
+    "rest-url": "https://aptos.testnet.suzuka.movementlabs.xyz/v1"
+  }
   // Add any other networks you need here
 };
 

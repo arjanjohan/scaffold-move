@@ -22,6 +22,7 @@ export const useGetAccountNativeBalance = (address?: string) => {
 
       try {
         const result = await aptosClient.getAccountAPTAmount({ accountAddress });
+
         setBalance(result);
       } catch (e) {
         setError(true);
@@ -33,5 +34,5 @@ export const useGetAccountNativeBalance = (address?: string) => {
     fetchBalance();
   }, [address, account, aptosClient]);
 
-  return { balance, loading, error };
+  return { balance, loading, error, nativeTokenSymbol: network.targetNetwork.native_token_symbol || "APT" };
 };
