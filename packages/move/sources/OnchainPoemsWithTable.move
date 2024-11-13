@@ -1,4 +1,4 @@
-module OnchainBio::onchain_poems_with_table {
+module deployment_addr::onchain_poems_with_table {
   use std::signer;
   use std::string::String;
   use aptos_framework::event;

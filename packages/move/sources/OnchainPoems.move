@@ -1,4 +1,4 @@
-module OnchainBio::onchain_poems {
+module deployment_addr::onchain_poems {
 
   use std::string::{String};
 

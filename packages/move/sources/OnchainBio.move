@@ -1,4 +1,4 @@
-module OnchainBio::onchain_bio {
+module deployment_addr::onchain_bio {
   use std::string::{String};
   use std::signer;
 
