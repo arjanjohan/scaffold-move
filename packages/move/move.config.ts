@@ -12,7 +12,14 @@ const networks = {
   // Old testnet for reference
   suzuka_testnet: {
     "rest-url": "https://aptos.testnet.suzuka.movementlabs.xyz/v1"
-  }
+  },
+  bardock_testnet: {
+    "rest-url": "https://aptos.testnet.bardock.movementlabs.xyz/v1",
+    // "faucet-url": "https://faucet.testnet.bardock.movementnetwork.xyz/",
+  },
+  movement_mainnet: {
+    "rest-url": "https://mainnet.movementnetwork.xyz/v1"
+  },
   // Add any other networks you need here
 };
 
