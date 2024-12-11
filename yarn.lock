@@ -897,6 +897,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@khizab/connectors@npm:0.0.37":
+  version: 0.0.37
+  resolution: "@khizab/connectors@npm:0.0.37"
+  peerDependencies:
+    "@aptos-labs/ts-sdk": 1.x
+    "@khizab/core": 0.0.37
+    typescript: ">=5.0.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 9450c7f89903a96f08a1431ffa3cc12bb8fb662722dd46a3bd75eb161fd260327fc9cd959f7fdc10248d807b7cf8ff54c136c199a92aa556aad778878a84a2a3
+  languageName: node
+  linkType: hard
+
+"@khizab/core@npm:0.0.37":
+  version: 0.0.37
+  resolution: "@khizab/core@npm:0.0.37"
+  dependencies:
+    eventemitter3: 5.0.1
+    zustand: 4.4.1
+  peerDependencies:
+    "@aptos-labs/ts-sdk": 1.x
+    "@tanstack/query-core": ">=5.0.0"
+    typescript: ">=5.0.4"
+  peerDependenciesMeta:
+    "@tanstack/query-core":
+      optional: true
+    typescript:
+      optional: true
+  checksum: 7f45debacd8a3ecd5922358775ffed95dded62c7e70bea16c4fb0c0a81d1a52eb7325644af0c9daeb1066b5c03466b0dad764c3436deafa497025b33345b75a9
+  languageName: node
+  linkType: hard
+
 "@lit-labs/ssr-dom-shim@npm:^1.0.0, @lit-labs/ssr-dom-shim@npm:^1.1.0":
   version: 1.2.1
   resolution: "@lit-labs/ssr-dom-shim@npm:1.2.1"
@@ -1937,6 +1970,7 @@ __metadata:
     "@mizuwallet-sdk/core": ^1.3.2
     "@rainbow-me/rainbowkit": 2.1.6
     "@tanstack/react-query": ^5.56.2
+    "@telegram-apps/bridge": ^1.2.1
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
     "@types/node": ^17.0.45
     "@types/nprogress": ^0.2.3
@@ -1954,6 +1988,7 @@ __metadata:
     eslint-plugin-prettier: ^5.2.1
     graphql: ^16.9.0
     graphql-request: ^7.1.0
+    khizab: ^0.0.37
     next: ^14.0.4
     next-themes: ^0.2.1
     nprogress: ^0.2.0
@@ -2270,6 +2305,49 @@ __metadata:
   peerDependencies:
     react: ^18 || ^19
   checksum: 7819a3a316c95df41844bd6e3435511594c3762320c21ee1ef2205ede18a87faae4556ff84d52b36ba17c99540b9554e72a5acf0c225481bdaf107ea79ace815
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/bridge@npm:^1.2.1":
+  version: 1.7.1
+  resolution: "@telegram-apps/bridge@npm:1.7.1"
+  dependencies:
+    "@telegram-apps/signals": ^1.1.0
+    "@telegram-apps/toolkit": ^1.0.0
+    "@telegram-apps/transformers": ^1.2.0
+    "@telegram-apps/types": ^1.2.0
+  checksum: 032d55091a2cdea1e3dbd1e348dd82cac254a4a301a3eb44d42ee6a64fab6850dc694b78fd493cc2679f19ddf7b9b978401bfc99670f23595ae2aeb898345fcb
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/signals@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@telegram-apps/signals@npm:1.1.0"
+  checksum: 05d9bf22b550c8b5996e6e4ea744bbd514c84fa3fdd219c7f73ed39a4e9b7e87c71d272c15448183fc40d2aa43bc9f8fc87a1359195ec8d9d611fcda4f51bfd5
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/toolkit@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@telegram-apps/toolkit@npm:1.0.0"
+  checksum: 46c340d78998c3750c32c4b887061214a308bc771f133b350bc39470a77663ada9f7be603bfecc01a5d31cf60f581224c822cfb73acdc7ca4529b9c8adb036a2
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/transformers@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@telegram-apps/transformers@npm:1.2.0"
+  dependencies:
+    "@telegram-apps/toolkit": ^1.0.0
+    "@telegram-apps/types": ^1.2.0
+  checksum: 4f839f14bfe507f2ba3b83cb0f394c08c93f299632e9000f3cfcfcf7822e6a75128076a56176fcd7bf624894cc23c91de60cad31ca43ff0ef40f8ecd27393ad9
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/types@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@telegram-apps/types@npm:1.2.0"
+  checksum: 563babf28d58f568e3e11737fa14f5192759bb5028f041e7d00004afba54009677d0cdb5b5f4f9243e0cc012f1db04e62debc8b66c923dab768851ecfbae47c7
   languageName: node
   linkType: hard
 
@@ -7899,6 +7977,25 @@ __metadata:
   version: 1.0.0
   resolution: "keyvaluestorage-interface@npm:1.0.0"
   checksum: e20530e71b738dc094ad170a91a98d4b9bdc772dd9044b23cdaaa102aafa8997b1ac867550a1e66ba1d64fcaa949214df31aed18413b4bac31e5fe1f2c76c9de
+  languageName: node
+  linkType: hard
+
+"khizab@npm:^0.0.37":
+  version: 0.0.37
+  resolution: "khizab@npm:0.0.37"
+  dependencies:
+    "@khizab/connectors": 0.0.37
+    "@khizab/core": 0.0.37
+    use-sync-external-store: 1.2.0
+  peerDependencies:
+    "@aptos-labs/ts-sdk": 1.x
+    "@tanstack/react-query": ">=5.0.0"
+    react: ">=18"
+    typescript: ">=5.0.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: d9b813cb40b57e96393564f0a1344049f83173dc2dc8dfcbb110dca02eea109ce9a6ec0cbb87dd85d3dd92c4b2772e0da3010f099b8d73db8bbac5c7d4b7fec7
   languageName: node
   linkType: hard
 
