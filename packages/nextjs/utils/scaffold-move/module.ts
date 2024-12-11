@@ -1,14 +1,12 @@
 import { AbiParameter } from "abitype";
+import type { MoveAbility, MoveFunctionVisibility } from "@aptos-labs/ts-sdk";
 import { Types } from "aptos";
+import { UseReadContractParameters } from "khizab";
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedModulesData from "~~/modules/deployedModules";
 import externalModulesData from "~~/modules/externalModules";
-import type {
-  MoveAbility,
-  MoveFunctionVisibility,
-} from '@aptos-labs/ts-sdk'
-
-// import scaffoldConfig from "~~/scaffold.config";
+import scaffoldConfig from "~~/scaffold.config";
+import type { ExtractAbiFunction, ExtractAbiFunctionNames } from "~~/utils/scaffold-move/abi";
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
@@ -96,7 +94,7 @@ export const modules = modulesData as GenericModulesDeclaration | null;
 // type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
 type ConfiguredChainId = 0;
 
-type IsModuleDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key in ConfiguredChainId]: any }
+export type IsModuleDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key in ConfiguredChainId]: any }
   ? TNo
   : TYes;
 
@@ -107,16 +105,72 @@ type Modules = ModulesDeclaration[ConfiguredChainId];
 export type ModuleName = keyof Modules;
 export type Module<TModuleName extends ModuleName> = Modules[TModuleName];
 
-
 type InferModuleAbi<TModule> = TModule extends { abi: infer TAbi } ? TAbi : never;
 
 export type ModuleAbi<TModuleName extends ModuleName = ModuleName> = InferModuleAbi<Module<TModuleName>>;
-
 
 export enum ModuleCodeStatus {
   "LOADING",
   "DEPLOYED",
   "NOT_FOUND",
 }
+
+export type FunctionNamesWithInputs<TModuleName extends ModuleName> = Exclude<
+  Extract<
+    ModuleAbi<TModuleName>,
+    {
+      type: "function";
+    }
+  >,
+  {
+    inputs: readonly [];
+  }
+>["name"];
+
+type Expand<T> = T extends object ? (T extends infer O ? { [K in keyof O]: O[K] } : never) : T;
+
+type UnionToIntersection<U> = Expand<(U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never>;
+
+type OptionalTuple<T> = T extends readonly [infer H, ...infer R] ? readonly [H | undefined, ...OptionalTuple<R>] : T;
+
+export type AbiFunctionInputs<TAbi extends GenericModuleAbi, TFunctionName extends string> = ExtractAbiFunction<
+  TAbi,
+  TFunctionName
+>["params"];
+
+// export type AbiFunctionArguments<TAbi extends GenericModuleAbi, TFunctionName extends string> = AbiParametersToPrimitiveTypes<
+//   AbiFunctionInputs<TAbi, TFunctionName>
+// >;
+
+// type UseScaffoldArgsParam<
+//   TModuleName extends ModuleName,
+//   TFunctionName extends ExtractAbiFunctionNames<ModuleAbi<TModuleName>>,
+// > =
+//   TFunctionName extends FunctionNamesWithInputs<TModuleName>
+//     ? {
+//         args: OptionalTuple<UnionToIntersection<AbiFunctionArguments<ModuleAbi<TModuleName>, TFunctionName>>>;
+//       }
+//     : {
+//         args?: never;
+//       };
+
+export type UseViewConfig<
+  TModuleName extends ModuleName,
+  TFunctionName extends ExtractAbiFunctionNames<ModuleAbi<TModuleName>>,
+> = {
+  moduleName: TModuleName;
+  functionName: string;
+  args?: any[];
+  tyArgs?: string[];
+  watch?: boolean;
+}
+;
+// & IsModuleDeclarationMissing<
+//   Partial<UseReadContractParameters>,
+//   {
+//     functionName: TFunctionName;
+//   } & UseScaffoldArgsParam<TModuleName, TFunctionName> &
+//     Omit<UseReadContractParameters, "chainId" | "abi" | "address" | "functionName" | "args">
+// >;
 
 export type AbiParameterTuple = Extract<AbiParameter, { type: "tuple" | `tuple[${string}]` }>;

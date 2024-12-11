@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useGetModule } from "./useGetModule";
 import { Aptos } from "@aptos-labs/ts-sdk";
+import { UseReadContractParameters } from "wagmi";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ModuleName } from "~~/utils/scaffold-move/module";
+import type { ExtractAbiFunctionNames } from "~~/utils/scaffold-move/abi";
+import { ModuleAbi, ModuleName, UseViewConfig } from "~~/utils/scaffold-move/module";
 
 export type ViewArguments = {
   module_address: string;
@@ -25,21 +27,16 @@ export const view = async (request: ViewArguments, aptos: Aptos): Promise<any[]>
   return viewResult;
 };
 
-export type UseViewConfig<TModuleName extends ModuleName> = {
-  moduleName: TModuleName;
-  functionName: string;
-  args?: any[];
-  tyArgs?: string[];
-  watch?: boolean;
-};
-
-export const useView = <TModuleName extends ModuleName>({
+export const useView = <
+  TModuleName extends ModuleName,
+  TFunctionName extends ExtractAbiFunctionNames<ModuleAbi<TModuleName>>,
+>({
   moduleName,
   functionName,
   args = [],
   tyArgs = [],
   watch = false,
-}: UseViewConfig<TModuleName>) => {
+}: UseViewConfig<TModuleName, TFunctionName>) => {
   const network = useTargetNetwork();
   const aptos = useAptosClient(network.targetNetwork.id);
   const [data, setData] = useState<any[] | null>(null);
