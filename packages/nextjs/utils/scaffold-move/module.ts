@@ -3,6 +3,10 @@ import { Types } from "aptos";
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedModulesData from "~~/modules/deployedModules";
 import externalModulesData from "~~/modules/externalModules";
+import type {
+  MoveAbility,
+  MoveFunctionVisibility,
+} from '@aptos-labs/ts-sdk'
 
 // import scaffoldConfig from "~~/scaffold.config";
 
@@ -52,7 +56,7 @@ export type GenericModuleAbi = {
 
 export type MoveFunction = {
   name: string;
-  visibility: string;
+  visibility: MoveFunctionVisibility[keyof MoveFunctionVisibility];
   is_entry: boolean;
   is_view: boolean;
   generic_type_params: readonly MoveFunctionGenericTypeParam[];
@@ -67,7 +71,7 @@ type MoveFunctionGenericTypeParam = {
 type MoveStruct = {
   name: string;
   is_native: boolean;
-  abilities: readonly string[];
+  abilities: readonly MoveAbility[keyof MoveAbility][];
   generic_type_params: readonly MoveStructGenericTypeParam[];
   fields: readonly MoveStructField[];
 };
@@ -102,6 +106,12 @@ type Modules = ModulesDeclaration[ConfiguredChainId];
 
 export type ModuleName = keyof Modules;
 export type Module<TModuleName extends ModuleName> = Modules[TModuleName];
+
+
+type InferModuleAbi<TModule> = TModule extends { abi: infer TAbi } ? TAbi : never;
+
+export type ModuleAbi<TModuleName extends ModuleName = ModuleName> = InferModuleAbi<Module<TModuleName>>;
+
 
 export enum ModuleCodeStatus {
   "LOADING",
