@@ -1,9 +1,13 @@
 [package]
-name = 'onchain_bio'
+name = 'nft_launchpad'
 version = '1.0.0'
-[dependencies.AptosFramework]
-git = 'https://github.com/aptos-labs/aptos-core.git'
-rev = 'main'
-subdir = 'aptos-move/framework/aptos-framework'                                                                                                                                                                                            
+
+[dependencies]
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-core.git", rev = "mainnet", subdir = "aptos-move/framework/aptos-framework" }
+AptosTokenObjects = { git = "https://github.com/aptos-labs/aptos-core.git", rev = "mainnet", subdir = "aptos-move/framework/aptos-token-objects" }
+TokenMinter = { git = "https://github.com/aptos-labs/token-minter.git", rev = "main", subdir = "token-minter" }
+                                                                                                                                                                                   
 [addresses]
-deployment_addr='0xf6f67805e60b18ee9ced00c3f71e030b2487af5480610e9324dd14d6f6b92690'
+deployment_addr='0x8a6d4f6149ed43262e1a5780257758c56d4f34a4b0bde63fc96ed77783229219'
+initial_creator_addr='0x8a6d4f6149ed43262e1a5780257758c56d4f34a4b0bde63fc96ed77783229219'
+minter='0x3c41ff6b5845e0094e19888cba63773591be9de59cafa9e582386f6af15dd490'

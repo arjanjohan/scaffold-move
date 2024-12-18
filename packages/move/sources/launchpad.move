@@ -147,7 +147,7 @@ module deployment_addr::launchpad {
     /// Update creator address
     public entry fun update_creator(sender: &signer, new_creator: address) acquires Config {
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global_mut<Config>(@launchpad_addr);
+        let config = borrow_global_mut<Config>(@deployment_addr);
         assert!(is_admin(config, sender_addr), EONLY_ADMIN_CAN_UPDATE_CREATOR);
         config.creator_addr = new_creator;
     }
@@ -155,7 +155,7 @@ module deployment_addr::launchpad {
     /// Set pending admin of the contract, then pending admin can call accept_admin to become admin
     public entry fun set_pending_admin(sender: &signer, new_admin: address) acquires Config {
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global_mut<Config>(@launchpad_addr);
+        let config = borrow_global_mut<Config>(@deployment_addr);
         assert!(is_admin(config, sender_addr), EONLY_ADMIN_CAN_SET_PENDING_ADMIN);
         config.pending_admin_addr = option::some(new_admin);
     }
@@ -163,7 +163,7 @@ module deployment_addr::launchpad {
     /// Accept admin of the contract
     public entry fun accept_admin(sender: &signer) acquires Config {
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global_mut<Config>(@launchpad_addr);
+        let config = borrow_global_mut<Config>(@deployment_addr);
         assert!(config.pending_admin_addr == option::some(sender_addr), ENOT_PENDING_ADMIN);
         config.admin_addr = sender_addr;
         config.pending_admin_addr = option::none();
@@ -172,7 +172,7 @@ module deployment_addr::launchpad {
     /// Update mint enabled
     public entry fun update_mint_enabled(sender: &signer, collection_obj: Object<Collection>, enabled: bool) acquires Config, CollectionConfig {
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global_mut<Config>(@launchpad_addr);
+        let config = borrow_global_mut<Config>(@deployment_addr);
         assert!(is_admin(config, sender_addr), EONLY_ADMIN_CAN_UPDATE_MINT_ENABLED);
         let collection_obj_addr = object::object_address(&collection_obj);
         let collection_config = borrow_global_mut<CollectionConfig>(collection_obj_addr);
@@ -182,7 +182,7 @@ module deployment_addr::launchpad {
     /// Update mint fee collector address
     public entry fun update_mint_fee_collector(sender: &signer, new_mint_fee_collector: address) acquires Config {
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global_mut<Config>(@launchpad_addr);
+        let config = borrow_global_mut<Config>(@deployment_addr);
         assert!(is_admin(config, sender_addr), EONLY_ADMIN_CAN_UPDATE_MINT_FEE_COLLECTOR);
         config.mint_fee_collector_addr = new_mint_fee_collector;
     }
@@ -213,7 +213,7 @@ module deployment_addr::launchpad {
         public_mint_fee_per_nft: Option<u64>,
     ) acquires Registry, Config, CollectionConfig, CollectionOwnerObjConfig {
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global<Config>(@launchpad_addr);
+        let config = borrow_global<Config>(@deployment_addr);
         assert!(
             is_admin(config, sender_addr) || is_creator(config, sender_addr),
             EONLY_ADMIN_OR_CREATOR_CAN_CREATE_COLLECTION
@@ -221,18 +221,30 @@ module deployment_addr::launchpad {
 
         let royalty = royalty(&mut royalty_percentage, sender_addr);
 
-        let collection_owner_obj_constructor_ref = &object::create_object(@launchpad_addr);
+        let collection_owner_obj_constructor_ref = &object::create_object(@deployment_addr);
         let collection_owner_obj_signer = &object::generate_signer(collection_owner_obj_constructor_ref);
 
-        let collection_obj_constructor_ref =
-            &collection::create_fixed_collection(
-                collection_owner_obj_signer,
-                description,
-                max_supply,
-                name,
+        if (max_supply == 0) {
+            let collection_obj_constructor_ref =
+                &collection::create_unlimited_collection(
+                    collection_owner_obj_signer,
+                    description,
+                    max_supply,
+                    name,
                 royalty,
                 uri,
             );
+        } else {
+            let collection_obj_constructor_ref =
+                &collection::create_fixed_collection(
+                    collection_owner_obj_signer,
+                    description,
+                    max_supply,
+                    name,
+                    royalty,
+                    uri,
+                );
+        }
         let collection_obj_signer = &object::generate_signer(collection_obj_constructor_ref);
         let collection_obj_addr = signer::address_of(collection_obj_signer);
         let collection_obj = object::object_from_constructor_ref(collection_obj_constructor_ref);
@@ -283,7 +295,7 @@ module deployment_addr::launchpad {
             );
         };
 
-        let registry = borrow_global_mut<Registry>(@launchpad_addr);
+        let registry = borrow_global_mut<Registry>(@deployment_addr);
         vector::push_back(&mut registry.collection_objects, collection_obj);
 
         event::emit(CreateCollectionEvent {
@@ -357,35 +369,35 @@ module deployment_addr::launchpad {
     #[view]
     /// Get creator, creator is the address that is allowed to create collections
     public fun get_creator(): address acquires Config {
-        let config = borrow_global<Config>(@launchpad_addr);
+        let config = borrow_global<Config>(@deployment_addr);
         config.creator_addr
     }
 
     #[view]
     /// Get contract admin
     public fun get_admin(): address acquires Config {
-        let config = borrow_global<Config>(@launchpad_addr);
+        let config = borrow_global<Config>(@deployment_addr);
         config.admin_addr
     }
 
     #[view]
     /// Get contract pending admin
     public fun get_pending_admin(): Option<address> acquires Config {
-        let config = borrow_global<Config>(@launchpad_addr);
+        let config = borrow_global<Config>(@deployment_addr);
         config.pending_admin_addr
     }
 
     #[view]
     /// Get mint fee collector address
     public fun get_mint_fee_collector(): address acquires Config {
-        let config = borrow_global<Config>(@launchpad_addr);
+        let config = borrow_global<Config>(@deployment_addr);
         config.mint_fee_collector_addr
     }
 
     #[view]
     /// Get all collections created using this contract
     public fun get_registry(): vector<Object<Collection>> acquires Registry {
-        let registry = borrow_global<Registry>(@launchpad_addr);
+        let registry = borrow_global<Registry>(@deployment_addr);
         registry.collection_objects
     }
 
@@ -459,8 +471,8 @@ module deployment_addr::launchpad {
         if (sender == config.admin_addr) {
             true
         } else {
-            if (object::is_object(@launchpad_addr)) {
-                let obj = object::address_to_object<ObjectCore>(@launchpad_addr);
+            if (object::is_object(@deployment_addr)) {
+                let obj = object::address_to_object<ObjectCore>(@deployment_addr);
                 object::is_owner(obj, sender)
             } else {
                 false
