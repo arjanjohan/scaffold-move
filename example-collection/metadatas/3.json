@@ -7,6 +7,22 @@
     {
       "trait_type": "jersey_color",
       "value": "red"
+    },
+    {
+      "trait_type": "jersey_number",
+      "value": "8"
+    },
+    {
+      "trait_type": "skin",
+      "value": "white"
+    },
+    {
+      "trait_type": "hair",
+      "value": "black"
+    },
+    {
+      "trait_type": "shoes",
+      "value": "black"
     }
   ]
 }
