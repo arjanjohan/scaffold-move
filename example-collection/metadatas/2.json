@@ -1,0 +1,12 @@
+{
+  "description": "Player with black and white jersey",
+  "image": "to_fill_after_upload",
+  "name": "Player Black and White",
+  "external_url": "https://your_project_url.io/1",
+  "attributes": [
+    {
+      "trait_type": "jersey_color",
+      "value": "black-and-white"
+    }
+  ]
+}
