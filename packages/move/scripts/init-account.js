@@ -64,7 +64,8 @@ function initCustomNetwork(restUrl, faucetUrl) {
 }
 
 function initPredefinedNetwork(network) {
-  const command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network ${network}`;
+  const skipFaucet = network === 'testnet' ? ' --skip-faucet' : '';
+  const command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network ${network}${skipFaucet}`;
   console.log(`Initializing ${network} network...`);
   exec(command, (error, stdout, stderr) => {
     if (error) {
