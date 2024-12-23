@@ -20,8 +20,16 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/",
   },
   {
-    label: "Bio",
-    href: "/bio",
+    label: "My NFTs",
+    href: "/my-nfts",
+  },
+  {
+    label: "Collections",
+    href: "/collections",
+  },
+  {
+    label: "Create",
+    href: "/create",
   },
   {
     label: "Debug Modules",
