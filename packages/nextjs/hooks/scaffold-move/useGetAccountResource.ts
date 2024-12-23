@@ -31,6 +31,7 @@ export function getAccountResource<T = any>(
 export function useGetAccountResource<T = any>(
   moduleName: string,
   resourceName: string,
+  externalModuleAddress?: string,
   address?: string,
   options?: {
     retry?: number | boolean;
@@ -38,7 +39,7 @@ export function useGetAccountResource<T = any>(
 ): UseQueryResult<T, ResponseError> {
   const network = useTargetNetwork();
   const aptosClient = useAptosClient(network.targetNetwork.id);
-  const moduleAddress = useGetModule(moduleName)?.abi.address ?? "";
+  const moduleAddress = externalModuleAddress ? externalModuleAddress : useGetModule(moduleName)?.abi.address;
   const { account } = useWallet();
 
   // If address is not provided, use the wallet address
@@ -47,8 +48,12 @@ export function useGetAccountResource<T = any>(
 
   return useQuery<T, ResponseError>({
     queryKey: ["accountResource", { address: resourceAddress, moduleAddress, moduleName, resourceName }],
-    queryFn: () =>
-      getAccountResource({ address: resourceAddress, moduleAddress, moduleName, resourceName }, aptosClient),
+    queryFn: () => {
+      if (!moduleAddress) {
+        throw new Error(`Module address not found for module: ${moduleName}`);
+      }
+      return getAccountResource({ address: resourceAddress, moduleAddress, moduleName, resourceName }, aptosClient);
+    },
     retry: options?.retry ?? false,
   });
 }
