@@ -1,4 +1,4 @@
-module deployment_addr::launchpad {
+module deployment_addr::launchpad_simple {
     use std::option::{Self, Option};
     use std::signer;
     use std::string::{Self, String};
@@ -19,9 +19,13 @@ module deployment_addr::launchpad {
     use minter::token_components;
     use minter::collection_components;
 
+    /// Only admin can update creator
+    const EONLY_ADMIN_CAN_UPDATE_CREATOR: u64 = 1;
+
     /// Only admin can update mint fee collector
     const EONLY_ADMIN_CAN_UPDATE_MINT_FEE_COLLECTOR: u64 = 4;
-    
+    /// Only admin can update mint enabled
+    const EONLY_ADMIN_CAN_UPDATE_MINT_ENABLED: u64 = 11;
     /// Mint is disabled
     const EMINT_IS_DISABLED: u64 = 12;
     /// Cannot mint 0 amount
@@ -40,7 +44,7 @@ module deployment_addr::launchpad {
     struct CreateCollectionEvent has store, drop {
         collection_owner_obj: Object<CollectionOwnerObjConfig>,
         collection_obj: Object<Collection>,
-        max_supply: u64,
+        max_supply: Option<u64>,
         name: String,
         description: String,
         uri: String,
@@ -75,6 +79,8 @@ module deployment_addr::launchpad {
     struct CollectionConfig has key {
         // Key is stage, value is mint fee denomination
         mint_fee_per_nft: u64,
+        mint_enabled: bool,
+        unique_item_count: u64,
         collection_owner_obj: Object<CollectionOwnerObjConfig>,
         extend_ref: object::ExtendRef,
     }
@@ -104,7 +110,23 @@ module deployment_addr::launchpad {
     }
 
     // ================================= Entry Functions ================================= //
-   
+    /// Update mint enabled
+    public entry fun update_mint_enabled(sender: &signer, collection_obj: Object<Collection>, enabled: bool) acquires Config, CollectionConfig {
+        let sender_addr = signer::address_of(sender);
+        let config = borrow_global_mut<Config>(@deployment_addr);
+        assert!(is_admin(config, sender_addr), EONLY_ADMIN_CAN_UPDATE_MINT_ENABLED);
+        let collection_obj_addr = object::object_address(&collection_obj);
+        let collection_config = borrow_global_mut<CollectionConfig>(collection_obj_addr);
+        collection_config.mint_enabled = enabled;
+    }
+
+    /// Update mint fee collector address
+    public entry fun update_mint_fee_collector(sender: &signer, new_mint_fee_collector: address) acquires Config {
+        let sender_addr = signer::address_of(sender);
+        let config = borrow_global_mut<Config>(@deployment_addr);
+        assert!(is_admin(config, sender_addr), EONLY_ADMIN_CAN_UPDATE_MINT_FEE_COLLECTOR);
+        config.mint_fee_collector_addr = new_mint_fee_collector;
+    }
 
     /// Create a collection, only admin or creator can create collection
     public entry fun create_collection(
@@ -112,7 +134,8 @@ module deployment_addr::launchpad {
         description: String,
         name: String,
         uri: String,
-        max_supply: u64,
+        max_supply: Option<u64>,
+        unique_item_count: u64,
         royalty_percentage: Option<u64>,
         // Pre mint amount to creator
         pre_mint_amount: Option<u64>,
@@ -128,15 +151,28 @@ module deployment_addr::launchpad {
         let collection_owner_obj_constructor_ref = &object::create_object(@deployment_addr);
         let collection_owner_obj_signer = &object::generate_signer(collection_owner_obj_constructor_ref);
         
-        let collection_obj_constructor_ref =
+        let collection_obj_constructor_ref: &object::ConstructorRef;
+
+        if (option::is_none(&max_supply)) {
+            collection_obj_constructor_ref =
+                &collection::create_unlimited_collection(
+                    collection_owner_obj_signer,
+                    description,
+                    name,
+                royalty,
+                uri,
+            );
+        } else {
+            collection_obj_constructor_ref =
                 &collection::create_fixed_collection(
                     collection_owner_obj_signer,
                     description,
-                    max_supply,
+                    *option::borrow(&max_supply),
                     name,
                     royalty,
                     uri,
                 );
+        };
         let collection_obj_signer = &object::generate_signer(collection_obj_constructor_ref);
         let collection_obj_addr = signer::address_of(collection_obj_signer);
         let collection_obj = object::object_from_constructor_ref(collection_obj_constructor_ref);
@@ -150,6 +186,8 @@ module deployment_addr::launchpad {
         let collection_owner_obj = object::object_from_constructor_ref(collection_owner_obj_constructor_ref);
         move_to(collection_obj_signer, CollectionConfig {
             mint_fee_per_nft: *option::borrow_with_default(&mint_fee_per_nft, &DEFAULT_MINT_FEE_PER_NFT),
+            mint_enabled: true,
+            unique_item_count,
             extend_ref: object::generate_extend_ref(collection_obj_constructor_ref),
             collection_owner_obj,
         });
@@ -189,6 +227,7 @@ module deployment_addr::launchpad {
         amount: u64,
     ) acquires CollectionConfig, CollectionOwnerObjConfig, Config {
         assert!(amount > 0, ECANNOT_MINT_ZERO);
+        assert!(is_mint_enabled(collection_obj), EMINT_IS_DISABLED);
         let sender_addr = signer::address_of(sender);
 
 
@@ -218,7 +257,6 @@ module deployment_addr::launchpad {
         config.admin_addr
     }
 
-
     #[view]
     /// Get mint fee collector address
     public fun get_mint_fee_collector(): address acquires Config {
@@ -226,12 +264,27 @@ module deployment_addr::launchpad {
         config.mint_fee_collector_addr
     }
 
-
     #[view]
     /// Get all collections created using this contract
     public fun get_registry(): vector<Object<Collection>> acquires Registry {
         let registry = borrow_global<Registry>(@deployment_addr);
         registry.collection_objects
+    }
+
+    #[view]
+    /// Get unique item count for the collection
+    public fun get_unique_item_count(collection_obj: Object<Collection>): u64 acquires CollectionConfig {
+        let collection_config = borrow_global<CollectionConfig>(object::object_address(&collection_obj));
+        collection_config.unique_item_count
+    }
+
+
+    #[view]
+    /// Is mint enabled for the collection
+    public fun is_mint_enabled(collection_obj: Object<Collection>): bool acquires CollectionConfig {
+        let collection_addr = object::object_address(&collection_obj);
+        let collection_config = borrow_global<CollectionConfig>(collection_addr);
+        collection_config.mint_enabled
     }
 
     #[view]
