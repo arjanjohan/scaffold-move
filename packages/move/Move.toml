@@ -9,5 +9,4 @@ TokenMinter = { git = "https://github.com/aptos-labs/token-minter.git", rev = "m
 
 [addresses]
 deployment_addr='_'
-initial_creator_addr='_'
 minter='0x3c41ff6b5845e0094e19888cba63773591be9de59cafa9e582386f6af15dd490'
