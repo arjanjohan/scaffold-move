@@ -1,16 +1,16 @@
 {
-  "description": "Player with red jersey",
+  "description": "Player with blue jersey",
   "image": "to_fill_after_upload",
-  "name": "Player Red",
+  "name": "Player Blue",
   "external_url": "https://your_project_url.io/1",
   "attributes": [
     {
       "trait_type": "jersey_color",
-      "value": "red"
+      "value": "blue"
     },
     {
       "trait_type": "jersey_number",
-      "value": "8"
+      "value": "10"
     },
     {
       "trait_type": "skin",
