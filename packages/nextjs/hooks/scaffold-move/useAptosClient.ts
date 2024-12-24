@@ -17,8 +17,8 @@ export function useAptosClient(chainId: number) {
       faucet: chain.faucet,
     }),
     ...(aptosApiKey && {
-      apiKey: aptosApiKey
-    })
+      apiKey: aptosApiKey,
+    }),
   });
   return new Aptos(aptosConfig);
 }
