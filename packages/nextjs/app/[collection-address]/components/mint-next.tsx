@@ -15,7 +15,7 @@ const MintNext = ({ collectionDetails }: MintNextProps) => {
   const collectionAddress = collectionDetails.collection_address;
   const availableMints = collectionDetails?.max_supply - collectionDetails?.current_supply;
 
-  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(MODULE_NAME);
+  const { submitTransaction } = useSubmitTransaction(MODULE_NAME);
   const [mintAmount, setMintAmount] = useState(1);
 
   return (

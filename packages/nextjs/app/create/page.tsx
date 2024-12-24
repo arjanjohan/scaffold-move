@@ -27,10 +27,8 @@ const Create: NextPage = () => {
   // Internal state
   const [isUploading, setIsUploading] = useState(false);
 
-  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(MODULE_NAME);
-
-  const moveModule = useGetModule(MODULE_NAME);
-  const abi = moveModule?.abi;
+  const { submitTransaction, transactionResponse } = useSubmitTransaction(MODULE_NAME);
+  const launchpadModule = useGetModule(MODULE_NAME);
 
   // On create collection button clicked
   const createCollection = async () => {
@@ -79,8 +77,8 @@ const Create: NextPage = () => {
         <div className="text-xl">Create Collection</div>
         <p className="text-sm mb-2">This page is for artists to upload their NFT collection.</p>
         <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
-          <p className="my-2 font-medium">Connected Address:</p>
-          <Address address={account?.address} />
+          <p className="my-2 font-medium">Launchpad Address:</p>
+          <Address address={launchpadModule?.abi.address} />
           {/* TODO: check if the address is whitelisted as an artist */}
         </div>{" "}
       </div>
@@ -90,7 +88,7 @@ const Create: NextPage = () => {
 
         <div className="flex flex-col items-start justify-between">
           <Input
-            className="hidden"
+            // className="hidden"
             ref={inputRef}
             id="upload"
             disabled={isUploading || !account}
@@ -110,7 +108,9 @@ const Create: NextPage = () => {
                 className="text-error"
                 onClick={() => {
                   setFiles(null);
-                  inputRef.current!.value = "";
+                  if (inputRef.current) {
+                    inputRef.current.value = "";
+                  }
                 }}
               >
                 Clear

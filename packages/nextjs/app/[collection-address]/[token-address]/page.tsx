@@ -11,8 +11,6 @@ import { getIpfsUrl } from "~~/utils/nft-minting/ipfsUploader";
 
 const MyNftsPage: NextPage = () => {
   const params = useParams();
-  const collectionAddress =
-    typeof params["collection-address"] === "string" ? params["collection-address"] : params["collection-address"][0];
   const itemAddress =
     typeof params["token-address"] === "string" ? params["token-address"] : params["token-address"][1];
   const { data: itemDetails } = useGetCollectionItemDetails(itemAddress);
