@@ -7,13 +7,11 @@ import { useView } from "~~/hooks/scaffold-move/useView";
 const MODULE_NAME = process.env.NEXT_PUBLIC_MODULE_NAME ?? "launchpad";
 
 const CollectionsPage: NextPage = () => {
-  const { data: registry, isLoading: isLoadingRegistry } = useView({
+  const { data: registry } = useView({
     moduleName: MODULE_NAME,
     functionName: "get_registry",
   });
 
-  // TODO: Add a loading state
-  // TODO: Add state for empty registry
   return (
     <div className="container mx-auto p-4 sm:p-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">

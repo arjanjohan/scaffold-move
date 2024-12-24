@@ -1,6 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
-import { ImportCandidate } from "ipfs-core-types/dist/src/utils";
-import { create } from "ipfs-http-client";
+import { ImportCandidate, create } from "kubo-rpc-client";
 
 const projectId = process.env.NEXT_PUBLIC_IPFS_PROJECT_ID;
 const projectSecret = process.env.NEXT_PUBLIC_IPFS_PROJECT_SECRET;
@@ -124,7 +122,7 @@ export const uploadCollectionData = async (
   // Step 1: Upload main image files and corresponding metadata files
   await Promise.all(
     nftImageMetadatas.map(async (metadataFile, index) => {
-      const metadata: ImageMetadata = JSON.parse(await metadataFile.text());
+      const metadata: TokenMetadata = JSON.parse(await metadataFile.text());
       const imageFile = imageFiles[index];
 
       // Upload image file
@@ -166,6 +164,9 @@ export const getIpfsHash = (ipfsUri: string) => {
 };
 
 export const getIpfsMetadata = async (ipfsHash: string) => {
+  if (ipfsHash == "") {
+    return null;
+  }
   for await (const file of ipfsClient.get(ipfsHash)) {
     // The file is of type unit8array so we need to convert it to string
     const content = new TextDecoder().decode(file);

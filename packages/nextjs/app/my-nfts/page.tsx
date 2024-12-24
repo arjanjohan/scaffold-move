@@ -2,20 +2,17 @@
 
 import { useState } from "react";
 import { NftItem } from "./components/nft-item";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
-import { useGetIpfsMetadata } from "~~/hooks/nft-minting/useGetIpfsMetadata";
 import { useGetOwnedNfts } from "~~/hooks/nft-minting/useGetOwnedNfts";
 import { useView } from "~~/hooks/scaffold-move/useView";
 
 const MODULE_NAME = process.env.NEXT_PUBLIC_MODULE_NAME ?? "launchpad";
 
 const MyNfts: NextPage = () => {
-  const { account } = useWallet();
   const { data } = useGetOwnedNfts();
   const [selectedCollections, setSelectedCollections] = useState<string[]>(["all"]);
 
-  const { data: registry, isLoading: isLoadingRegistry } = useView({
+  const { data: registry } = useView({
     moduleName: MODULE_NAME,
     functionName: "get_registry",
   });
@@ -79,7 +76,7 @@ const MyNfts: NextPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         {filteredNfts?.map((nft: any) => (
-          <div key={`${nft.token_address}`}>
+          <div key={`${nft.token_data_id}_${nft.current_token_data.collection_id}`}>
             <NftItem tokenAddress={nft.token_data_id} collectionAddress={nft.current_token_data.collection_id} />
           </div>
         ))}
