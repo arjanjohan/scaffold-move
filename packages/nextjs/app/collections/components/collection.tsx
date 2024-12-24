@@ -2,6 +2,7 @@ import Link from "next/link";
 import NftImage from "~~/components/nft-minting/nft-image";
 import { useGetCollectionDetails } from "~~/hooks/nft-minting/useGetCollectionDetails";
 import { useGetIpfsMetadata } from "~~/hooks/nft-minting/useGetIpfsMetadata";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { CollectionMetadata, getIpfsHash, getIpfsUrl } from "~~/utils/nft-minting/ipfsUploader";
 
 interface CollectionProps {
@@ -9,11 +10,11 @@ interface CollectionProps {
 }
 
 export const Collection = ({ collectionAddress }: CollectionProps) => {
+  const { targetNetwork } = useTargetNetwork();
   const { data: collectionDetails } = useGetCollectionDetails(collectionAddress);
-  const ipfs_metadata: CollectionMetadata = useGetIpfsMetadata(
+  const ipfs_metadata = useGetIpfsMetadata<CollectionMetadata>(
     collectionDetails?.uri ? getIpfsHash(collectionDetails.uri) : "",
   ).data;
-  console.log("AVH ipfs_metadata", ipfs_metadata);
 
   if (!collectionDetails || !ipfs_metadata) {
     return null;
@@ -41,7 +42,7 @@ export const Collection = ({ collectionAddress }: CollectionProps) => {
             <span>
               Mint Fee:
               <br />
-              {collectionDetails.mint_fee ?? 0} APT
+              {collectionDetails.mint_fee ?? 0} {targetNetwork.native_token_symbol || "APT"}
             </span>
           </div>
 
