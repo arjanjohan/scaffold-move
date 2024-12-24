@@ -10,7 +10,16 @@ const nextConfig = {
     ignoreDuringBuilds: process.env.NEXT_PUBLIC_IGNORE_BUILD_ERROR === "true",
   },
   images: {
-    domains: ["ipfs.io", "nft-metadata.testnet.aptoslabs.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "nft-metadata.testnet.aptoslabs.com",
+      },
+      {
+        protocol: "https",
+        hostname: "ipfs.io",
+      },
+    ],
   },
   webpack: config => {
     config.resolve.fallback = { fs: false, net: false, tls: false };
