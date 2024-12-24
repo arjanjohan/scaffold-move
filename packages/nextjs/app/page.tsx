@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
-import { ArrowRightIcon, DocumentDuplicateIcon, PlusCircleIcon, PhotoIcon, WalletIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowRightIcon,
+  DocumentDuplicateIcon,
+  PhotoIcon,
+  PlusCircleIcon,
+  WalletIcon,
+} from "@heroicons/react/24/outline";
 
 const Home: NextPage = () => {
   const { account: connectedAccount } = useWallet();
@@ -13,7 +19,7 @@ const Home: NextPage = () => {
       <div className="flex items-center flex-col flex-grow pt-10">
         <div className="px-5">
           <h1 className="text-center">
-          <span className="block text-4xl font-bold">Scaffold Move NFT Template</span>
+            <span className="block text-4xl font-bold">Scaffold Move NFT Template</span>
             <span className="block text-xl">Create and launch your NFT collection in minutes</span>
           </h1>
         </div>
@@ -26,7 +32,12 @@ const Home: NextPage = () => {
                 <h2 className="text-xl font-bold mb-2">1. Fork and Setup</h2>
                 <p>
                   Start by forking the{" "}
-                  <a href="https://github.com/arjanjohan/scaffold-move/tree/nft-minting" className="link link-primary" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://github.com/arjanjohan/scaffold-move/tree/nft-minting"
+                    className="link link-primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     repository
                   </a>{" "}
                   and following the setup instructions in the README.
@@ -47,11 +58,21 @@ const Home: NextPage = () => {
                     Create
                   </Link>{" "}
                   page to upload your NFT collection. You can use our{" "}
-                  <a href="https://github.com/arjanjohan/scaffold-move/tree/nft-minting/example-collection" className="link link-primary" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://github.com/arjanjohan/scaffold-move/tree/nft-minting/example-collection"
+                    className="link link-primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     example collection
                   </a>{" "}
                   or{" "}
-                  <a href="https://raw.githubusercontent.com/arjanjohan/scaffold-move/nft-minting/example-collection.zip" className="link link-primary" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://raw.githubusercontent.com/arjanjohan/scaffold-move/nft-minting/example-collection.zip"
+                    className="link link-primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     download the template as a zip file
                   </a>
                   .
@@ -77,9 +98,7 @@ const Home: NextPage = () => {
               <ArrowRightIcon className="h-12 w-12 text-primary" />
               <div>
                 <h2 className="text-xl font-bold mb-2">4. Start Minting</h2>
-                <p>
-                  On your collection page, click the Mint button to mint your new NFTs.
-                </p>
+                <p>On your collection page, click the Mint button to mint your new NFTs.</p>
               </div>
             </div>
 
