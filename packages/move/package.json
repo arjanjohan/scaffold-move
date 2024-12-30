@@ -7,7 +7,9 @@
     "deploy": "aptos move publish --assume-yes && node scripts/loadModules.js",
     "publish": "aptos move publish --assume-yes && node scripts/loadModules.js",
     "compile": "aptos move compile",
-    "test": ""
+    "test": "aptos move test",
+    "format": "aptos move fmt",
+    "document": "aptos move document"
   },
   "dependencies": {
     "aptos": "^1.21.0",
