@@ -61,7 +61,21 @@ yarn deploy
 
 This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/loadModules.js` to make the new modules available in the nextjs frontend.
 
-5. On a third terminal, start your NextJS app:
+5. Configure the environment variables to the NextJS app.
+
+Copy `packages/nextjs/.env.example` to `packages/nextjs/.env` and fill the values. 
+The Aptos API key can be request from the [Aptos Build page](https://developers.aptoslabs.com/). The IPFS project ID and secret should be setup on [Infura](https://www.infura.io/). Finally make sure the module name matches your launchpad move module name, as this value is used troughout the app.
+```
+
+NEXT_PUBLIC_APTOS_API_KEY=
+
+NEXT_PUBLIC_IPFS_PROJECT_ID=
+NEXT_PUBLIC_IPFS_PROJECT_SECRET=
+
+NEXT_PUBLIC_MODULE_NAME="launchpad"
+```
+
+6. On a third terminal, start your NextJS app:
 
 ```
 yarn start
