@@ -64,7 +64,7 @@ This command deploys the move modules to the selected network. The modules are l
 5. Configure the environment variables to the NextJS app.
 
 Copy `packages/nextjs/.env.example` to `packages/nextjs/.env` and fill the values. 
-The Aptos API key can be request from the [Aptos Build page](https://developers.aptoslabs.com/). The IPFS project ID and secret should be setup on [Infura](https://www.infura.io/). Finally make sure the module name matches your launchpad move module name, as this value is used troughout the app.
+The Aptos API key can be requested from the [Aptos Build page](https://developers.aptoslabs.com/). The IPFS project ID and secret should be setup on [Infura](https://www.infura.io/). Finally make sure the module name matches your launchpad move module name, as this value is used throughout the app.
 ```
 
 NEXT_PUBLIC_APTOS_API_KEY=
