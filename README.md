@@ -101,10 +101,8 @@ Your input is valuable! If you have suggestions or want to contribute, we encour
 ## Links
 
 - [Documentation](https://scaffold-move-docs.vercel.app/)
-- [Website](https://scaffold-move-chi.vercel.app/)
-- [Pitch deck](https://docs.google.com/presentation/d/1jtmK_ovNIO3gprsLseHifV5Qv8vve2dBbvlYiycxbZI/edit?usp=sharing)
+- [Example deployment](https://scaffold-move-chi.vercel.app/)
 - [Telegram Community](https://t.me/+lOn2MJawQlc1YjA8)
-- [Demo video](https://youtu.be/0PPJb1M8ukQ)
 - [Github](https://github.com/arjanjohan/scaffold-move)
 
 ## Credits
@@ -113,6 +111,6 @@ None of this would have been possible without the great work done in:
 - [Scaffold-ETH 2](https://github.com/scaffold-eth/scaffold-eth-2)
 - [Aptos Explorer](https://github.com/aptos-labs/explorer)
 
-## Team
+## Built by
 
 - [arjanjohan](https://x.com/arjanjohan/)
