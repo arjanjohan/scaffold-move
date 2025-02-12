@@ -3,7 +3,7 @@ import { useGetModule } from "./useGetModule";
 import { Aptos } from "@aptos-labs/ts-sdk";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ModuleName } from "~~/utils/scaffold-move/module";
+import { ModuleName, ChainModules, ModuleViewFunctionNames, ModuleViewFunctions } from "~~/utils/scaffold-move/module";
 
 export type ViewArguments = {
   module_address: string;
@@ -25,21 +25,29 @@ export const view = async (request: ViewArguments, aptos: Aptos): Promise<any[]>
   return viewResult;
 };
 
-export type UseViewConfig<TModuleName extends ModuleName> = {
+export type UseViewConfig<
+  TModuleName extends keyof ChainModules,
+  TFunctionName extends ModuleViewFunctionNames<TModuleName>
+> = {
   moduleName: TModuleName;
-  functionName: string;
-  args?: any[];
+  functionName: TFunctionName;
+  args: ModuleViewFunctions<TModuleName>[TFunctionName]["args"];
   tyArgs?: string[];
   watch?: boolean;
 };
 
-export const useView = <TModuleName extends ModuleName>({
+
+
+export const useView = <
+  TModuleName extends keyof ChainModules,
+  TFunctionName extends ModuleViewFunctionNames<TModuleName>
+>({
   moduleName,
   functionName,
-  args = [],
+  args,
   tyArgs = [],
   watch = false,
-}: UseViewConfig<TModuleName>) => {
+}: UseViewConfig<TModuleName, TFunctionName>) => {
   const network = useTargetNetwork();
   const aptos = useAptosClient(network.targetNetwork.id);
   const [data, setData] = useState<any[] | null>(null);
@@ -65,10 +73,11 @@ export const useView = <TModuleName extends ModuleName>({
       const request: ViewArguments = {
         module_address: moduleAddress,
         module_name: moduleName.toString(),
-        function_name: functionName,
+        function_name: functionName.toString(),
         ty_args: tyArgs,
-        function_args: args,
+        function_args: Array.from(args).map(arg => String(arg)),
       };
+      console.log("request", request);
       const result = await view(request, aptos);
       setData(result);
     } catch (err) {
@@ -85,7 +94,7 @@ export const useView = <TModuleName extends ModuleName>({
       const interval = setInterval(fetchData, 10000); // Adjust the interval as needed
       return () => clearInterval(interval);
     }
-  }, [moduleName, functionName, ...args, ...tyArgs, watch]);
+  }, [moduleName, functionName, JSON.stringify(args), JSON.stringify(tyArgs), watch]);
 
   return { data, error, isLoading, refetch: fetchData };
 };

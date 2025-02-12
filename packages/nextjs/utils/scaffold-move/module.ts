@@ -3,8 +3,65 @@ import { Types } from "aptos";
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedModulesData from "~~/modules/deployedModules";
 import externalModulesData from "~~/modules/externalModules";
+import scaffoldConfig from "~~/scaffold.config";
+import latestChainId from "~~/modules/latestChainId";
 
-// import scaffoldConfig from "~~/scaffold.config";
+// Helper type to extract function parameters from Move parameter strings
+type ExtractMoveParam<T extends string> = 
+  T extends `&signer` ? never :
+  T extends `0x1::string::String` ? string :
+  T extends "address" ? string :
+  T extends "bool" ? boolean :
+  T extends "u8" ? number :
+  T extends "u16" ? number :
+  T extends "u32" ? number :
+  T extends "u64" ? number :
+  T extends "u128" ? number :
+  T extends "u256" ? number :
+  T extends `vector<${infer Inner}>` ? ExtractMoveParam<Inner>[] :
+  unknown;
+
+// Modified to properly transform the array
+type ExtractMoveParams<T extends readonly string[]> = {
+  [K in keyof T]: ExtractMoveParam<T[K]>;
+};
+
+// Helper type to extract function return types from Move return strings
+type ExtractMoveReturns<T extends readonly string[]> = {
+  [K in keyof T]: T[K] extends `0x1::string::String`
+    ? string
+    : T[K] extends "address"
+    ? string
+    : T[K] extends "u64"
+    ? number
+    : unknown; // Add more type mappings as needed
+};
+
+// Get all modules for a specific chain
+export type ChainModules = 
+  typeof modulesData[ConfiguredChainId];
+
+// Get all view functions for a module
+type ViewFunctions<TModule extends GenericModule> = {
+  [K in TModule["abi"]["exposed_functions"][number]["name"] as 
+    Extract<TModule["abi"]["exposed_functions"][number], { name: K }>["is_view"] extends true ? K : never]: 
+    Extract<TModule["abi"]["exposed_functions"][number], { name: K; is_view: true }> extends infer F extends MoveFunction
+      ? {
+          args: ExtractMoveParams<F["params"]>;
+          returns: ExtractMoveReturns<F["return"]>;
+        }
+      : never;
+};
+
+// Get all view functions for a specific module
+export type ModuleViewFunctions<
+  TModuleName extends keyof ChainModules
+> = ViewFunctions<Extract<ChainModules[TModuleName], GenericModule>>;
+
+// Get function names that are view functions
+export type ModuleViewFunctionNames<
+  TModuleName extends keyof ChainModules
+> = keyof ModuleViewFunctions<TModuleName>;
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
@@ -89,14 +146,15 @@ export type GenericModulesDeclaration = {
 
 export const modules = modulesData as GenericModulesDeclaration | null;
 
+// TODO: Figure out why getting the chainId from config is not working. 
 // type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
-type ConfiguredChainId = 0;
+type ConfiguredChainId = typeof latestChainId;
 
 type IsModuleDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key in ConfiguredChainId]: any }
   ? TNo
   : TYes;
 
-type ModulesDeclaration = IsModuleDeclarationMissing<GenericModulesDeclaration, typeof modulesData>;
+export type ModulesDeclaration = IsModuleDeclarationMissing<GenericModulesDeclaration, typeof modulesData>;
 
 type Modules = ModulesDeclaration[ConfiguredChainId];
 
