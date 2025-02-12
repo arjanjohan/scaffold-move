@@ -7,10 +7,11 @@ const { loadExternalModules } = require('../move.config.ts'); // Import from mov
 const deploymentsDir = path.join(__dirname, '../deployments');
 
 // Paths to the relevant files
-const moveTomlPath = path.join(__dirname, '../Move.toml');
-const configYamlPath = path.join(__dirname, '../.aptos/config.yaml');
+const moveTomlPath =        path.join(__dirname, '../Move.toml');
+const configYamlPath =      path.join(__dirname, '../.aptos/config.yaml');
 const deployedModulesPath = path.join(__dirname, '../../../packages/nextjs/modules/deployedModules.ts');
 const externalModulesPath = path.join(__dirname, '../../../packages/nextjs/modules/externalModules.ts');
+const otherModulePath =     path.join(__dirname, '../../../packages/nextjs/modules/latestChainId.ts');
 
 // Function to parse the TOML file and extract addresses
 function parseToml(filePath) {
@@ -165,6 +166,11 @@ async function main() {
     writeChainModules(chainId, externalModules, false);
     writeModules(externalModulesPath, "externalModules");
   }
+
+  const chainIdContent = `const latestChainId = ${chainId};\nexport default latestChainId;\n`;
+  fs.writeFileSync(otherModulePath, chainIdContent, 'utf-8');
+  console.log(`Chain ID ${chainId} written to ${otherModulePath}`);
+
 }
 
 main().catch(console.error);
