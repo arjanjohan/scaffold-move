@@ -4,9 +4,19 @@ import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-reac
 import { FailedTransactionError } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ModuleName } from "~~/utils/scaffold-move/module";
+import { ModuleName, ModuleNonViewFunctionNames, ModuleNonViewFunctions } from "~~/utils/scaffold-move/module";
 
 export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
+
+export type UseSubmitTransactionConfig<
+  TModuleName extends ModuleName,
+  TFunctionName extends ModuleNonViewFunctionNames<TModuleName>
+> = {
+  moduleName: TModuleName;
+  functionName: TFunctionName;
+  args: [...ModuleNonViewFunctions<TModuleName>[TFunctionName]["args"]];
+  tyArgs?: string[];
+};
 
 // "submission" here means that the transaction is posted on chain and gas is paid.
 // However, the status of the transaction might not be "success".
@@ -21,8 +31,10 @@ export type TransactionResponseOnError = {
   transactionSubmitted: false;
   message: string;
 };
-
-const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModuleName) => {
+const useSubmitTransaction = <
+  TModuleName extends ModuleName,
+  TFunctionName extends ModuleNonViewFunctionNames<TModuleName>
+>(moduleName: TModuleName) => {
   const [transactionResponse, setTransactionResponse] = useState<TransactionResponse | null>(null);
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
   const [moduleAddress, setModuleAddress] = useState<string | null>(null);
@@ -51,13 +63,18 @@ const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModul
     }
   }, [transactionResponse]);
 
-  async function submitTransaction(functionName: string, args: any[]) {
+  async function submitTransaction(
+    functionName: TFunctionName,
+    args: [...ModuleNonViewFunctions<TModuleName>[TFunctionName]["args"]],
+    tyArgs: string[] = []
+  ) {
     const transaction: InputTransactionData = {
       data: {
-        function: `${moduleAddress}::${moduleName.toString()}::${functionName}`,
-        functionArguments: args,
+        function: `${moduleAddress}::${moduleName.toString()}::${functionName.toString()}`,
+        functionArguments: args.map(arg => String(arg)),
       },
     };
+    console.log("transaction", transaction);
 
     setTransactionInProcess(true);
     const signAndSubmitTransactionCall = async (transaction: InputTransactionData): Promise<TransactionResponse> => {

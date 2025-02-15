@@ -5,7 +5,7 @@ import { parseTypeTag } from "@aptos-labs/ts-sdk";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { GenericModuleAbi, MoveFunction } from "~~/utils/scaffold-move/module";
+import { FilterNever, GenericModuleAbi, ModuleName, ModuleNonViewFunctionNames, MoveFunction } from "~~/utils/scaffold-move/module";
 
 const zeroInputs = false;
 
@@ -26,7 +26,7 @@ function removeSignerParam(fn: MoveFunction) {
 }
 
 export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
-  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(module.name.toString());
+  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(module.name as ModuleName);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ModuleFormType>({ typeArgs: [], args: [] });
 
@@ -84,11 +84,13 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
     const functionArguments = data.args.map((arg, i) => {
       const type = fnParams[i];
       return convertArgument(arg, type);
-    });
+    }) as FilterNever<typeof fn["params"]>;
 
     try {
-      await submitTransaction(fn.name, functionArguments);
-
+      await submitTransaction(
+        fn.name as ModuleNonViewFunctionNames<ModuleName>, 
+        functionArguments
+      );
       if (transactionResponse?.transactionSubmitted) {
         console.log("function_interacted", fn.name, {
           txn_status: transactionResponse.success ? "success" : "failed",

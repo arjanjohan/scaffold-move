@@ -6,25 +6,34 @@ import externalModulesData from "~~/modules/externalModules";
 import scaffoldConfig from "~~/scaffold.config";
 import latestChainId from "~~/modules/latestChainId";
 
+// Add these debug types
+type MoveBaseTypes = {
+  "0x1::string::String": string;
+  "address": `0x${string}`;
+  "bool": boolean;
+  "u8": number;
+  "u16": number;
+  "u32": number;
+  "u64": number;
+  "u128": number;
+  "u256": number;
+};
+
 // Helper type to extract function parameters from Move parameter strings
 type ExtractMoveParam<T extends string> = 
-  T extends `&signer` ? never :
-  T extends `0x1::string::String` ? string :
-  T extends "address" ? string :
-  T extends "bool" ? boolean :
-  T extends "u8" ? number :
-  T extends "u16" ? number :
-  T extends "u32" ? number :
-  T extends "u64" ? number :
-  T extends "u128" ? number :
-  T extends "u256" ? number :
+  T extends "&signer" ? never :
+  T extends keyof MoveBaseTypes ? MoveBaseTypes[T] :
   T extends `vector<${infer Inner}>` ? ExtractMoveParam<Inner>[] :
+  T extends `0x1::object::Object<${string}>` ? `0x${string}` :
   unknown;
 
-// Modified to properly transform the array
-type ExtractMoveParams<T extends readonly string[]> = {
-  [K in keyof T]: ExtractMoveParam<T[K]>;
-};
+export type FilterNever<T extends readonly any[]> = T extends readonly [infer First, ...infer Rest]
+  ? ExtractMoveParam<First & string> extends never
+    ? FilterNever<Rest>
+    : [ExtractMoveParam<First & string>, ...FilterNever<Rest>]
+  : [];
+
+type ExtractMoveParams<T extends readonly string[]> = FilterNever<T>;
 
 // Helper type to extract function return types from Move return strings
 type ExtractMoveReturns<T extends readonly string[]> = {
@@ -62,6 +71,30 @@ export type ModuleViewFunctions<
 export type ModuleViewFunctionNames<
   TModuleName extends keyof ChainModules
 > = keyof ModuleViewFunctions<TModuleName>;
+
+// Get all non-view functions for a module
+type NonViewFunctions<TModule extends GenericModule> = {
+  [K in TModule["abi"]["exposed_functions"][number]["name"] as 
+    Extract<TModule["abi"]["exposed_functions"][number], { name: K }>["is_view"] extends false ? K : never]: 
+    Extract<TModule["abi"]["exposed_functions"][number], { name: K; is_view: false }> extends infer F extends MoveFunction
+      ? {
+          args: ExtractMoveParams<F["params"]>;
+          returns: ExtractMoveReturns<F["return"]>;
+        }
+      : never;
+};
+
+// Get all non-view functions for a specific module
+export type ModuleNonViewFunctions<
+  TModuleName extends keyof ChainModules
+> = NonViewFunctions<Extract<ChainModules[TModuleName], GenericModule>>;
+
+// Get function names that are non-view functions
+export type ModuleNonViewFunctionNames<
+  TModuleName extends keyof ChainModules
+> = keyof ModuleNonViewFunctions<TModuleName>;
+
+
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
