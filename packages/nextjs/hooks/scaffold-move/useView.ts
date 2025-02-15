@@ -3,7 +3,8 @@ import { useGetModule } from "./useGetModule";
 import { Aptos } from "@aptos-labs/ts-sdk";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ModuleName, ChainModules, ModuleViewFunctionNames, ModuleViewFunctions } from "~~/utils/scaffold-move/module";
+import { ChainModules, ModuleViewFunctionNames, ModuleViewFunctions } from "~~/utils/scaffold-move/module";
+import { processArguments } from "~~/utils/scaffold-move/arguments";
 
 export type ViewArguments = {
   module_address: string;
@@ -27,7 +28,7 @@ export const view = async (request: ViewArguments, aptos: Aptos): Promise<any[]>
 
 export type UseViewConfig<
   TModuleName extends keyof ChainModules,
-  TFunctionName extends ModuleViewFunctionNames<TModuleName>
+  TFunctionName extends ModuleViewFunctionNames<TModuleName>,
 > = {
   moduleName: TModuleName;
   functionName: TFunctionName;
@@ -36,11 +37,9 @@ export type UseViewConfig<
   watch?: boolean;
 };
 
-
-
 export const useView = <
   TModuleName extends keyof ChainModules,
-  TFunctionName extends ModuleViewFunctionNames<TModuleName>
+  TFunctionName extends ModuleViewFunctionNames<TModuleName>,
 >({
   moduleName,
   functionName,
@@ -70,17 +69,21 @@ export const useView = <
     setError(null);
 
     try {
+      
       const request: ViewArguments = {
         module_address: moduleAddress,
         module_name: moduleName.toString(),
         function_name: functionName.toString(),
         ty_args: tyArgs,
-        function_args: Array.from(args).map(arg => String(arg)),
+        function_args: processArguments(args),
       };
+
       console.log("request", request);
       const result = await view(request, aptos);
+      console.log("result: ", result);
       setData(result);
     } catch (err) {
+      console.log("error: ", err);
       setError(err instanceof Error ? err : new Error("An error occurred"));
     } finally {
       setIsLoading(false);

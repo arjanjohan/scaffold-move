@@ -5,12 +5,13 @@ import { FailedTransactionError } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { ModuleName, ModuleNonViewFunctionNames, ModuleNonViewFunctions } from "~~/utils/scaffold-move/module";
+import { processArguments } from "~~/utils/scaffold-move/arguments";
 
 export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
 
 export type UseSubmitTransactionConfig<
   TModuleName extends ModuleName,
-  TFunctionName extends ModuleNonViewFunctionNames<TModuleName>
+  TFunctionName extends ModuleNonViewFunctionNames<TModuleName>,
 > = {
   moduleName: TModuleName;
   functionName: TFunctionName;
@@ -33,8 +34,10 @@ export type TransactionResponseOnError = {
 };
 const useSubmitTransaction = <
   TModuleName extends ModuleName,
-  TFunctionName extends ModuleNonViewFunctionNames<TModuleName>
->(moduleName: TModuleName) => {
+  TFunctionName extends ModuleNonViewFunctionNames<TModuleName>,
+>(
+  moduleName: TModuleName,
+) => {
   const [transactionResponse, setTransactionResponse] = useState<TransactionResponse | null>(null);
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
   const [moduleAddress, setModuleAddress] = useState<string | null>(null);
@@ -66,12 +69,13 @@ const useSubmitTransaction = <
   async function submitTransaction(
     functionName: TFunctionName,
     args: [...ModuleNonViewFunctions<TModuleName>[TFunctionName]["args"]],
-    tyArgs: string[] = []
+    tyArgs: string[] = [], // TODO: Implement this
   ) {
     const transaction: InputTransactionData = {
       data: {
         function: `${moduleAddress}::${moduleName.toString()}::${functionName.toString()}`,
-        functionArguments: args.map(arg => String(arg)),
+        typeArguments: tyArgs || [],
+        functionArguments: processArguments(args),
       },
     };
     console.log("transaction", transaction);

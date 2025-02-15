@@ -5,13 +5,19 @@ import { parseTypeTag } from "@aptos-labs/ts-sdk";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { FilterNever, GenericModuleAbi, ModuleName, ModuleNonViewFunctionNames, MoveFunction } from "~~/utils/scaffold-move/module";
+import {
+  FilterNever,
+  GenericModuleAbi,
+  ModuleName,
+  ModuleNonViewFunctionNames,
+  MoveFunction,
+} from "~~/utils/scaffold-move/module";
 
 const zeroInputs = false;
 
 type ModuleFormType = {
   typeArgs: string[];
-  args: string[];
+  args: (string | null)[];
   ledgerVersion?: string;
 };
 
@@ -26,10 +32,14 @@ function removeSignerParam(fn: MoveFunction) {
 }
 
 export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
-  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(module.name as ModuleName);
+  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(
+    module.name as ModuleName,
+  );
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<ModuleFormType>({ typeArgs: [], args: [] });
-
+  const [data, setData] = useState<ModuleFormType>({ 
+    typeArgs: [], 
+    args: Array(fn.params.length).fill(null) 
+  });
   const { account } = useWallet();
   const network = useTargetNetwork();
 
@@ -84,13 +94,10 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
     const functionArguments = data.args.map((arg, i) => {
       const type = fnParams[i];
       return convertArgument(arg, type);
-    }) as FilterNever<typeof fn["params"]>;
+    }) as FilterNever<(typeof fn)["params"]>;
 
     try {
-      await submitTransaction(
-        fn.name as ModuleNonViewFunctionNames<ModuleName>, 
-        functionArguments
-      );
+      await submitTransaction(fn.name as ModuleNonViewFunctionNames<ModuleName>, functionArguments);
       if (transactionResponse?.transactionSubmitted) {
         console.log("function_interacted", fn.name, {
           txn_status: transactionResponse.success ? "success" : "failed",
@@ -123,7 +130,7 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
                   className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
                   onChange={e => {
                     const newArgs = [...data.args];
-                    newArgs[i] = e.target.value;
+                    newArgs[i] = e.target.value.trim() === '' ? null : e.target.value;
                     setData({ ...data, args: newArgs });
                   }}
                 />

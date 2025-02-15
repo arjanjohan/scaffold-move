@@ -5,12 +5,13 @@ import { useAptosClient } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { view } from "~~/hooks/scaffold-move/useView";
 import { GenericModuleAbi, MoveFunction } from "~~/utils/scaffold-move/module";
+import { processArguments } from "~~/utils/scaffold-move/arguments";
 
 const zeroInputs = false;
 
 type ModuleFormType = {
   typeArgs: string[];
-  args: string[];
+  args: (string | null)[];
   ledgerVersion?: string;
 };
 
@@ -23,8 +24,10 @@ export const ViewFunctionForm = ({ module, fn }: FunctionFormProps) => {
   const [viewInProcess, setViewInProcess] = useState(false);
   const [result, setResult] = useState<Types.MoveValue[]>();
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<ModuleFormType>({ typeArgs: [], args: [] });
-
+  const [data, setData] = useState<ModuleFormType>({ 
+    typeArgs: [], 
+    args: Array(fn.params.length).fill(null) 
+  });
   const fnParams = fn.params;
 
   const network = useTargetNetwork();
@@ -33,7 +36,6 @@ export const ViewFunctionForm = ({ module, fn }: FunctionFormProps) => {
   const handleView = async () => {
     setViewInProcess(true);
     setError(null);
-
     try {
       const viewResult = await view(
         {
@@ -41,7 +43,7 @@ export const ViewFunctionForm = ({ module, fn }: FunctionFormProps) => {
           module_name: module.name,
           function_name: fn.name,
           ty_args: data.typeArgs,
-          function_args: data.args,
+          function_args: processArguments(data.args),
         },
         aptos,
       );
@@ -68,7 +70,7 @@ export const ViewFunctionForm = ({ module, fn }: FunctionFormProps) => {
                 className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
                 onChange={e => {
                   const newArgs = [...data.args];
-                  newArgs[i] = e.target.value;
+                  newArgs[i] = e.target.value.trim() === '' ? null : e.target.value;
                   setData({ ...data, args: newArgs });
                 }}
               />
