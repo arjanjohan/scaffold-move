@@ -42,13 +42,7 @@ type ExtractMoveParams<T extends readonly string[]> = FilterNever<T>;
 
 // Helper type to extract function return types from Move return strings
 type ExtractMoveReturns<T extends readonly string[]> = {
-  [K in keyof T]: T[K] extends `0x1::string::String`
-    ? string
-    : T[K] extends "address"
-      ? string
-      : T[K] extends "u64"
-        ? number
-        : unknown; // Add more type mappings as needed
+  [K in keyof T]: ExtractMoveParam<T[K] & string>;
 };
 
 // Get all modules for a specific chain

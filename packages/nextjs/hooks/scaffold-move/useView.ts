@@ -49,7 +49,7 @@ export const useView = <
 }: UseViewConfig<TModuleName, TFunctionName>) => {
   const network = useTargetNetwork();
   const aptos = useAptosClient(network.targetNetwork.id);
-  const [data, setData] = useState<any[] | null>(null);
+  const [data, setData] = useState<ModuleViewFunctions<TModuleName>[TFunctionName]["returns"] | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
