@@ -10,8 +10,8 @@ export type ViewArguments = {
   module_address: string;
   module_name: string;
   function_name: string;
-  ty_args?: string[];
-  function_args?: string[];
+  ty_args: string[];
+  function_args: string[];
 };
 
 export const view = async (request: ViewArguments, aptos: Aptos): Promise<any[]> => {
@@ -33,7 +33,9 @@ export type UseViewConfig<
   moduleName: TModuleName;
   functionName: TFunctionName;
   args: ModuleViewFunctions<TModuleName>[TFunctionName]["args"];
-  tyArgs?: string[];
+} & (ModuleViewFunctions<TModuleName>[TFunctionName]["tyArgs"] extends []
+  ? { tyArgs?: never }
+  : { tyArgs: ModuleViewFunctions<TModuleName>[TFunctionName]["tyArgs"] }) & {
   watch?: boolean;
 };
 
@@ -44,7 +46,7 @@ export const useView = <
   moduleName,
   functionName,
   args,
-  tyArgs = [],
+  tyArgs,
   watch = false,
 }: UseViewConfig<TModuleName, TFunctionName>) => {
   const network = useTargetNetwork();
@@ -74,7 +76,7 @@ export const useView = <
         module_address: moduleAddress,
         module_name: moduleName.toString(),
         function_name: functionName.toString(),
-        ty_args: tyArgs,
+        ty_args: tyArgs || [],
         function_args: processArguments(args),
       };
 
@@ -97,7 +99,7 @@ export const useView = <
       const interval = setInterval(fetchData, 10000); // Adjust the interval as needed
       return () => clearInterval(interval);
     }
-  }, [moduleName, functionName, JSON.stringify(args), JSON.stringify(tyArgs), watch]);
+  }, [moduleName, functionName, JSON.stringify(args), watch]);
 
   return { data, error, isLoading, refetch: fetchData };
 };

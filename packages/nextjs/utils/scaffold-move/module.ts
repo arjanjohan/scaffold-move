@@ -4,7 +4,10 @@ import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedModulesData from "~~/modules/deployedModules";
 import externalModulesData from "~~/modules/externalModules";
 import latestChainId from "~~/modules/latestChainId";
-import scaffoldConfig from "~~/scaffold.config";
+// import scaffoldConfig from "~~/scaffold.config";
+
+// Helper type to create a tuple of any type with specific length
+type TupleOfLength<L extends number, T = any> = [T, ...T[]] & { length: L };
 
 // Add these debug types
 type MoveBaseTypes = {
@@ -59,6 +62,11 @@ type ViewFunctions<TModule extends GenericModule> = {
     MoveFunction
     ? {
         args: ExtractMoveParams<F["params"]>;
+        tyArgs: F["generic_type_params"] extends readonly MoveFunctionGenericTypeParam[]
+          ? F["generic_type_params"]["length"] extends 0
+            ? []
+            : TupleOfLength<F["generic_type_params"]["length"]>
+          : never;
         returns: ExtractMoveReturns<F["return"]>;
       }
     : never;
@@ -83,6 +91,11 @@ type NonViewFunctions<TModule extends GenericModule> = {
     MoveFunction
     ? {
         args: ExtractMoveParams<F["params"]>;
+        tyArgs: F["generic_type_params"] extends readonly MoveFunctionGenericTypeParam[]
+          ? F["generic_type_params"]["length"] extends 0
+            ? []
+            : TupleOfLength<F["generic_type_params"]["length"]>
+          : never;
         returns: ExtractMoveReturns<F["return"]>;
       }
     : never;
@@ -94,8 +107,7 @@ export type ModuleNonViewFunctions<TModuleName extends keyof ChainModules> = Non
 >;
 
 // Get function names that are non-view functions
-export type ModuleNonViewFunctionNames<TModuleName extends keyof ChainModules> =
-  keyof ModuleNonViewFunctions<TModuleName>;
+export type ModuleNonViewFunctionNames<TModuleName extends keyof ChainModules> =   keyof ModuleNonViewFunctions<TModuleName>;
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
