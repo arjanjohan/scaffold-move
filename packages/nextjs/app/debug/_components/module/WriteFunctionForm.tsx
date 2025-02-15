@@ -35,10 +35,12 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(
     module.name as ModuleName,
   );
+  const fnParams = removeSignerParam(fn);
+
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ModuleFormType>({ 
     typeArgs: [], 
-    args: Array(fn.params.length).fill(null) 
+    args: Array(fnParams.length).fill(null) 
   });
   const { account } = useWallet();
   const network = useTargetNetwork();
@@ -51,7 +53,6 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
 
   // }
 
-  const fnParams = removeSignerParam(fn);
 
   const convertArgument = (arg: string | null | undefined, type: string): any => {
     if (typeof arg !== "string") {
