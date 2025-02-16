@@ -3,8 +3,8 @@ import { useGetModule } from "./useGetModule";
 import { Aptos } from "@aptos-labs/ts-sdk";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ChainModules, ModuleViewFunctionNames, ModuleViewFunctions } from "~~/utils/scaffold-move/module";
 import { processArguments } from "~~/utils/scaffold-move/arguments";
+import { ChainModules, ModuleViewFunctionNames, ModuleViewFunctions } from "~~/utils/scaffold-move/module";
 
 export type ViewArguments = {
   module_address: string;
@@ -36,8 +36,8 @@ export type UseViewConfig<
 } & (ModuleViewFunctions<TModuleName>[TFunctionName]["tyArgs"] extends []
   ? { tyArgs?: never }
   : { tyArgs: ModuleViewFunctions<TModuleName>[TFunctionName]["tyArgs"] }) & {
-  watch?: boolean;
-};
+    watch?: boolean;
+  };
 
 export const useView = <
   TModuleName extends keyof ChainModules,
@@ -71,7 +71,6 @@ export const useView = <
     setError(null);
 
     try {
-      
       const request: ViewArguments = {
         module_address: moduleAddress,
         module_name: moduleName.toString(),

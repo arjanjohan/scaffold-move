@@ -4,6 +4,7 @@ import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedModulesData from "~~/modules/deployedModules";
 import externalModulesData from "~~/modules/externalModules";
 import latestChainId from "~~/modules/latestChainId";
+
 // import scaffoldConfig from "~~/scaffold.config";
 
 // Helper type to create a tuple of any type with specific length
@@ -85,9 +86,9 @@ type NonViewFunctions<TModule extends GenericModule> = {
   [K in TModule["abi"]["exposed_functions"][number]["name"] as Extract<
     TModule["abi"]["exposed_functions"][number],
     { name: K }
-  >["is_view"] extends false
+  >["is_entry"] extends true
     ? K
-    : never]: Extract<TModule["abi"]["exposed_functions"][number], { name: K; is_view: false }> extends infer F extends
+    : never]: Extract<TModule["abi"]["exposed_functions"][number], { name: K; is_entry: true }> extends infer F extends
     MoveFunction
     ? {
         args: ExtractMoveParams<F["params"]>;
@@ -107,7 +108,8 @@ export type ModuleNonViewFunctions<TModuleName extends keyof ChainModules> = Non
 >;
 
 // Get function names that are non-view functions
-export type ModuleNonViewFunctionNames<TModuleName extends keyof ChainModules> =   keyof ModuleNonViewFunctions<TModuleName>;
+export type ModuleNonViewFunctionNames<TModuleName extends keyof ChainModules> =
+  keyof ModuleNonViewFunctions<TModuleName>;
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {

@@ -38,9 +38,9 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
   const fnParams = removeSignerParam(fn);
 
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<ModuleFormType>({ 
-    typeArgs: [], 
-    args: Array(fnParams.length).fill(null) 
+  const [data, setData] = useState<ModuleFormType>({
+    typeArgs: [],
+    args: Array(fnParams.length).fill(null),
   });
   const { account } = useWallet();
   const network = useTargetNetwork();
@@ -52,7 +52,6 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
   // } else {
 
   // }
-
 
   const convertArgument = (arg: string | null | undefined, type: string): any => {
     if (typeof arg !== "string") {
@@ -131,7 +130,7 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
                   className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
                   onChange={e => {
                     const newArgs = [...data.args];
-                    newArgs[i] = e.target.value.trim() === '' ? null : e.target.value;
+                    newArgs[i] = e.target.value.trim() === "" ? null : e.target.value;
                     setData({ ...data, args: newArgs });
                   }}
                 />

@@ -4,20 +4,25 @@ import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-reac
 import { FailedTransactionError } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { ModuleName, ModuleNonViewFunctionNames, ModuleNonViewFunctions } from "~~/utils/scaffold-move/module";
 import { processArguments } from "~~/utils/scaffold-move/arguments";
+import {
+  ChainModules,
+  ModuleName,
+  ModuleNonViewFunctionNames,
+  ModuleNonViewFunctions,
+  ModuleViewFunctions,
+} from "~~/utils/scaffold-move/module";
 
-export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
-
-export type UseSubmitTransactionConfig<
-  TModuleName extends ModuleName,
+export type TransactionArguments<
+  TModuleName extends keyof ChainModules,
   TFunctionName extends ModuleNonViewFunctionNames<TModuleName>,
 > = {
-  moduleName: TModuleName;
   functionName: TFunctionName;
-  args: [...ModuleNonViewFunctions<TModuleName>[TFunctionName]["args"]];
-  tyArgs?: string[];
+  args: ModuleNonViewFunctions<TModuleName>[TFunctionName]["args"];
+  tyArgs?: ModuleNonViewFunctions<TModuleName>[TFunctionName]["tyArgs"];
 };
+
+export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
 
 // "submission" here means that the transaction is posted on chain and gas is paid.
 // However, the status of the transaction might not be "success".
@@ -66,15 +71,17 @@ const useSubmitTransaction = <
     }
   }, [transactionResponse]);
 
-  async function submitTransaction(
+  async function submitTransaction<TFunctionName extends ModuleNonViewFunctionNames<TModuleName>>(
     functionName: TFunctionName,
-    args: [...ModuleNonViewFunctions<TModuleName>[TFunctionName]["args"]],
-    tyArgs: string[] = [], // TODO: Implement this
+    args: ModuleNonViewFunctions<TModuleName>[TFunctionName]["args"],
+    ...tyArgs: ModuleNonViewFunctions<TModuleName>[TFunctionName]["tyArgs"] extends []
+      ? [undefined?]
+      : [ModuleNonViewFunctions<TModuleName>[TFunctionName]["tyArgs"]]
   ) {
     const transaction: InputTransactionData = {
       data: {
         function: `${moduleAddress}::${moduleName.toString()}::${functionName.toString()}`,
-        typeArguments: tyArgs || [],
+        typeArguments: tyArgs[0] || [],
         functionArguments: processArguments(args),
       },
     };
