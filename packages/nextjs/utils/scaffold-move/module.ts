@@ -82,7 +82,7 @@ export type ModuleViewFunctions<TModuleName extends keyof ChainModules> = ViewFu
 export type ModuleViewFunctionNames<TModuleName extends keyof ChainModules> = keyof ModuleViewFunctions<TModuleName>;
 
 // Get all non-view functions for a module
-type NonViewFunctions<TModule extends GenericModule> = {
+type EntryFunctions<TModule extends GenericModule> = {
   [K in TModule["abi"]["exposed_functions"][number]["name"] as Extract<
     TModule["abi"]["exposed_functions"][number],
     { name: K }
@@ -103,13 +103,13 @@ type NonViewFunctions<TModule extends GenericModule> = {
 };
 
 // Get all non-view functions for a specific module
-export type ModuleNonViewFunctions<TModuleName extends keyof ChainModules> = NonViewFunctions<
+export type ModuleEntryFunctions<TModuleName extends keyof ChainModules> = EntryFunctions<
   Extract<ChainModules[TModuleName], GenericModule>
 >;
 
 // Get function names that are non-view functions
-export type ModuleNonViewFunctionNames<TModuleName extends keyof ChainModules> =
-  keyof ModuleNonViewFunctions<TModuleName>;
+export type ModuleEntryFunctionNames<TModuleName extends keyof ChainModules> =
+  keyof ModuleEntryFunctions<TModuleName>;
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {

@@ -8,18 +8,18 @@ import { processArguments } from "~~/utils/scaffold-move/arguments";
 import {
   ChainModules,
   ModuleName,
-  ModuleNonViewFunctionNames,
-  ModuleNonViewFunctions,
+  ModuleEntryFunctionNames,
+  ModuleEntryFunctions,
   ModuleViewFunctions,
 } from "~~/utils/scaffold-move/module";
 
 export type TransactionArguments<
   TModuleName extends keyof ChainModules,
-  TFunctionName extends ModuleNonViewFunctionNames<TModuleName>,
+  TFunctionName extends ModuleEntryFunctionNames<TModuleName>,
 > = {
   functionName: TFunctionName;
-  args: ModuleNonViewFunctions<TModuleName>[TFunctionName]["args"];
-  tyArgs?: ModuleNonViewFunctions<TModuleName>[TFunctionName]["tyArgs"];
+  args: ModuleEntryFunctions<TModuleName>[TFunctionName]["args"];
+  tyArgs?: ModuleEntryFunctions<TModuleName>[TFunctionName]["tyArgs"];
 };
 
 export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
@@ -39,7 +39,7 @@ export type TransactionResponseOnError = {
 };
 const useSubmitTransaction = <
   TModuleName extends ModuleName,
-  TFunctionName extends ModuleNonViewFunctionNames<TModuleName>,
+  TFunctionName extends ModuleEntryFunctionNames<TModuleName>,
 >(
   moduleName: TModuleName,
 ) => {
@@ -71,12 +71,12 @@ const useSubmitTransaction = <
     }
   }, [transactionResponse]);
 
-  async function submitTransaction<TFunctionName extends ModuleNonViewFunctionNames<TModuleName>>(
+  async function submitTransaction<TFunctionName extends ModuleEntryFunctionNames<TModuleName>>(
     functionName: TFunctionName,
-    args: ModuleNonViewFunctions<TModuleName>[TFunctionName]["args"],
-    ...tyArgs: ModuleNonViewFunctions<TModuleName>[TFunctionName]["tyArgs"] extends []
+    args: ModuleEntryFunctions<TModuleName>[TFunctionName]["args"],
+    ...tyArgs: ModuleEntryFunctions<TModuleName>[TFunctionName]["tyArgs"] extends []
       ? [undefined?]
-      : [ModuleNonViewFunctions<TModuleName>[TFunctionName]["tyArgs"]]
+      : [ModuleEntryFunctions<TModuleName>[TFunctionName]["tyArgs"]]
   ) {
     const transaction: InputTransactionData = {
       data: {
