@@ -108,8 +108,7 @@ export type ModuleEntryFunctions<TModuleName extends keyof ChainModules> = Entry
 >;
 
 // Get function names that are non-view functions
-export type ModuleEntryFunctionNames<TModuleName extends keyof ChainModules> =
-  keyof ModuleEntryFunctions<TModuleName>;
+export type ModuleEntryFunctionNames<TModuleName extends keyof ChainModules> = keyof ModuleEntryFunctions<TModuleName>;
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
@@ -198,9 +197,7 @@ export const modules = modulesData as GenericModulesDeclaration | null;
 // type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
 type ConfiguredChainId = typeof latestChainId;
 
-type IsModuleDeclarationMissing<TYes, TNo> = typeof modulesData extends { [key in ConfiguredChainId]: any }
-  ? TNo
-  : TYes;
+type IsModuleDeclarationMissing<TYes, TNo> = typeof modulesData extends Record<ConfiguredChainId, any> ? TNo : TYes;
 
 export type ModulesDeclaration = IsModuleDeclarationMissing<GenericModulesDeclaration, typeof modulesData>;
 

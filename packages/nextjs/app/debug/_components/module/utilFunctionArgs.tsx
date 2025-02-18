@@ -6,7 +6,7 @@ export const useFunctionArguments = (typeParamsLength: number, paramsLength: num
     args: Array(paramsLength).fill(null),
   });
 
- const handleTypeArgChange = (index: number, value: string) => {
+  const handleTypeArgChange = (index: number, value: string) => {
     const newTypeArgs = [...data.typeArgs];
     newTypeArgs[index] = value;
     setData({ ...data, typeArgs: newTypeArgs });

@@ -7,10 +7,9 @@ import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { processArguments } from "~~/utils/scaffold-move/arguments";
 import {
   ChainModules,
-  ModuleName,
   ModuleEntryFunctionNames,
   ModuleEntryFunctions,
-  ModuleViewFunctions,
+  ModuleName,
 } from "~~/utils/scaffold-move/module";
 
 export type TransactionArguments<
@@ -37,12 +36,7 @@ export type TransactionResponseOnError = {
   transactionSubmitted: false;
   message: string;
 };
-const useSubmitTransaction = <
-  TModuleName extends ModuleName,
-  TFunctionName extends ModuleEntryFunctionNames<TModuleName>,
->(
-  moduleName: TModuleName,
-) => {
+const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModuleName) => {
   const [transactionResponse, setTransactionResponse] = useState<TransactionResponse | null>(null);
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
   const [moduleAddress, setModuleAddress] = useState<string | null>(null);

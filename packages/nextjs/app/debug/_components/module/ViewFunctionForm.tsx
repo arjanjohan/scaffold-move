@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useFunctionArguments } from "./utilFunctionArgs";
 import { Types } from "aptos";
 import { displayTxResult } from "~~/app/debug/_components/module";
 import { useAptosClient } from "~~/hooks/scaffold-move";
@@ -6,7 +7,6 @@ import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { view } from "~~/hooks/scaffold-move/useView";
 import { processArguments } from "~~/utils/scaffold-move/arguments";
 import { GenericModuleAbi, MoveFunction } from "~~/utils/scaffold-move/module";
-import { useFunctionArguments } from "./utilFunctionArgs";
 
 type FunctionFormProps = {
   module: GenericModuleAbi;
@@ -19,7 +19,7 @@ export const ViewFunctionForm = ({ module, fn }: FunctionFormProps) => {
   const [error, setError] = useState<string | null>(null);
   const { data, handleTypeArgChange, handleArgChange } = useFunctionArguments(
     fn.generic_type_params.length,
-    fn.params.length
+    fn.params.length,
   );
 
   const network = useTargetNetwork();
@@ -52,21 +52,25 @@ export const ViewFunctionForm = ({ module, fn }: FunctionFormProps) => {
       <div className={"flex gap-3 flex-col"}>
         <p className="font-medium my-0 break-words">{fn.name}</p>
         {/* Type Arguments */}
-        {data.typeArgs.map((_, i) => (
-          console.log(data.typeArgs),
-          <div key={`type-arg-${i}`} className="flex flex-col gap-1.5 w-full">
-            <div className="flex items-center mt-2 ml-2">
-              <span className="block text-xs font-extralight leading-none">{`T${i}:`}</span>
-            </div>
-            <div className={"flex border-2 border-base-300 bg-base-200 rounded-full text-accent"}>
-              <input
-                placeholder={`Type Argument ${i}`}
-                className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
-                onChange={e => handleTypeArgChange(i, e.target.value)}
-              />
-            </div>
-          </div>
-        ))}
+        {data.typeArgs.map(
+          (_, i) => (
+            console.log(data.typeArgs),
+            (
+              <div key={`type-arg-${i}`} className="flex flex-col gap-1.5 w-full">
+                <div className="flex items-center mt-2 ml-2">
+                  <span className="block text-xs font-extralight leading-none">{`T${i}:`}</span>
+                </div>
+                <div className={"flex border-2 border-base-300 bg-base-200 rounded-full text-accent"}>
+                  <input
+                    placeholder={`Type Argument ${i}`}
+                    className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
+                    onChange={e => handleTypeArgChange(i, e.target.value)}
+                  />
+                </div>
+              </div>
+            )
+          ),
+        )}
         {/* Function Arguments */}
         {fn.params.map((param, i) => (
           <div key={`arg-${i}`} className="flex flex-col gap-1.5 w-full">
