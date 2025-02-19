@@ -16,7 +16,7 @@
   "dependencies": {
     "@apollo/client": "^3.12.4",
     "@aptos-labs/wallet-adapter-ant-design": "^3.0.23",
-    "@aptos-labs/wallet-adapter-react": "^3.7.9",
+    "@aptos-labs/wallet-adapter-react": "3.7.8",
     "@heroicons/react": "^2.1.5",
     "@mizuwallet-sdk/core": "^1.4.0",
     "@rainbow-me/rainbowkit": "2.1.6",

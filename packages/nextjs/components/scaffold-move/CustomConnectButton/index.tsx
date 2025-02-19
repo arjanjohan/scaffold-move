@@ -3,7 +3,7 @@
 import { Balance } from "../Balance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
-import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
+import { WalletSelector } from "./WalletSelector";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 // import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
