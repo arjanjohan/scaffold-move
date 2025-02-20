@@ -38,7 +38,7 @@ const OnchainBio: NextPage = () => {
     data: bioView,
     isLoading: isLoadingBioView,
     refetch: refetchBioView,
-  } = useView({ moduleName: "onchain_bio", functionName: "get_bio", args: [account?.address] });
+  } = useView({ moduleName: "onchain_bio", functionName: "get_bio", args: [account?.address as `0x${string}`] });
 
   // If the bioModule or ABI is not found, show an alert message and return early
   if (!bioAbi) {

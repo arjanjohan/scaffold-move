@@ -1,19 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { useFunctionArguments } from "./utilFunctionArgs";
 import { parseTypeTag } from "@aptos-labs/ts-sdk";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { GenericModuleAbi, MoveFunction } from "~~/utils/scaffold-move/module";
-
-const zeroInputs = false;
-
-type ModuleFormType = {
-  typeArgs: string[];
-  args: string[];
-  ledgerVersion?: string;
-};
+import {
+  FilterNever,
+  GenericModuleAbi,
+  ModuleEntryFunctionNames,
+  ModuleEntryFunctions,
+  ModuleName,
+  MoveFunction,
+} from "~~/utils/scaffold-move/module";
 
 type FunctionFormProps = {
   module: GenericModuleAbi;
@@ -26,10 +26,16 @@ function removeSignerParam(fn: MoveFunction) {
 }
 
 export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
-  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(module.name.toString());
-  const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<ModuleFormType>({ typeArgs: [], args: [] });
+  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(
+    module.name as ModuleName,
+  );
+  const fnParams = removeSignerParam(fn);
 
+  const [error, setError] = useState<string | null>(null);
+  const { data, handleTypeArgChange, handleArgChange } = useFunctionArguments(
+    fn.generic_type_params.length,
+    fnParams.length,
+  );
   const { account } = useWallet();
   const network = useTargetNetwork();
 
@@ -40,8 +46,6 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
   // } else {
 
   // }
-
-  const fnParams = removeSignerParam(fn);
 
   const convertArgument = (arg: string | null | undefined, type: string): any => {
     if (typeof arg !== "string") {
@@ -84,11 +88,14 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
     const functionArguments = data.args.map((arg, i) => {
       const type = fnParams[i];
       return convertArgument(arg, type);
-    });
+    }) as FilterNever<(typeof fn)["params"]>;
 
     try {
-      await submitTransaction(fn.name, functionArguments);
-
+      await submitTransaction(
+        fn.name as ModuleEntryFunctionNames<ModuleName>,
+        functionArguments,
+        data.typeArgs as ModuleEntryFunctions<ModuleName>[ModuleEntryFunctionNames<ModuleName>]["tyArgs"],
+      ); // TODO: add type arguments
       if (transactionResponse?.transactionSubmitted) {
         console.log("function_interacted", fn.name, {
           txn_status: transactionResponse.success ? "success" : "failed",
@@ -107,8 +114,29 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
 
   return (
     <div className="py-5 space-y-3 first:pt-0 last:pb-1">
-      <div className={`flex gap-3 ${zeroInputs ? "flex-row justify-between items-center" : "flex-col"}`}>
+      <div className={"flex gap-3 flex-col"}>
         <p className="font-medium my-0 break-words">{fn.name}</p>
+        {/* Type Arguments */}
+        {data.typeArgs.map(
+          (_, i) => (
+            console.log(data.typeArgs),
+            (
+              <div key={`type-arg-${i}`} className="flex flex-col gap-1.5 w-full">
+                <div className="flex items-center mt-2 ml-2">
+                  <span className="block text-xs font-extralight leading-none">{`T${i}:`}</span>
+                </div>
+                <div className={"flex border-2 border-base-300 bg-base-200 rounded-full text-accent"}>
+                  <input
+                    placeholder={`Type Argument ${i}`}
+                    className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
+                    onChange={e => handleTypeArgChange(i, e.target.value)}
+                  />
+                </div>
+              </div>
+            )
+          ),
+        )}
+        {/* Function Arguments */}
         {fnParams.map((param, i) => {
           return (
             <div key={`arg-${i}`} className="flex flex-col gap-1.5 w-full">
@@ -119,11 +147,7 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
                 <input
                   placeholder={param}
                   className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
-                  onChange={e => {
-                    const newArgs = [...data.args];
-                    newArgs[i] = e.target.value;
-                    setData({ ...data, args: newArgs });
-                  }}
+                  onChange={e => handleArgChange(i, e.target.value)}
                 />
               </div>
             </div>
