@@ -89,13 +89,11 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
       const type = fnParams[i];
       return convertArgument(arg, type);
     }) as FilterNever<(typeof fn)["params"]>;
+    const typeArguments =
+      data.typeArgs as ModuleEntryFunctions<ModuleName>[ModuleEntryFunctionNames<ModuleName>]["tyArgs"];
 
     try {
-      await submitTransaction(
-        fn.name as ModuleEntryFunctionNames<ModuleName>,
-        functionArguments,
-        data.typeArgs as ModuleEntryFunctions<ModuleName>[ModuleEntryFunctionNames<ModuleName>]["tyArgs"],
-      ); // TODO: add type arguments
+      await submitTransaction(fn.name as ModuleEntryFunctionNames<ModuleName>, functionArguments, typeArguments);
       if (transactionResponse?.transactionSubmitted) {
         console.log("function_interacted", fn.name, {
           txn_status: transactionResponse.success ? "success" : "failed",

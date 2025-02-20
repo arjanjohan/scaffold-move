@@ -4,7 +4,7 @@ import { Aptos } from "@aptos-labs/ts-sdk";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { processArguments } from "~~/utils/scaffold-move/arguments";
-import { ChainModules, ModuleViewFunctionNames, ModuleViewFunctions } from "~~/utils/scaffold-move/module";
+import { ModuleName, ModuleViewFunctionNames, ModuleViewFunctions } from "~~/utils/scaffold-move/module";
 
 export type ViewArguments = {
   module_address: string;
@@ -27,22 +27,21 @@ export const view = async (request: ViewArguments, aptos: Aptos): Promise<any[]>
 };
 
 export type UseViewConfig<
-  TModuleName extends keyof ChainModules,
+  TModuleName extends ModuleName,
   TFunctionName extends ModuleViewFunctionNames<TModuleName>,
 > = {
   moduleName: TModuleName;
   functionName: TFunctionName;
-  args: ModuleViewFunctions<TModuleName>[TFunctionName]["args"];
-} & (ModuleViewFunctions<TModuleName>[TFunctionName]["tyArgs"] extends []
-  ? { tyArgs?: never }
-  : { tyArgs: ModuleViewFunctions<TModuleName>[TFunctionName]["tyArgs"] }) & {
+} & (ModuleViewFunctions<TModuleName>[TFunctionName]["args"] extends []
+  ? { args?: never }
+  : { args: ModuleViewFunctions<TModuleName>[TFunctionName]["args"] }) &
+  (ModuleViewFunctions<TModuleName>[TFunctionName]["tyArgs"] extends []
+    ? { tyArgs?: never }
+    : { tyArgs: ModuleViewFunctions<TModuleName>[TFunctionName]["tyArgs"] }) & {
     watch?: boolean;
   };
 
-export const useView = <
-  TModuleName extends keyof ChainModules,
-  TFunctionName extends ModuleViewFunctionNames<TModuleName>,
->({
+export const useView = <TModuleName extends ModuleName, TFunctionName extends ModuleViewFunctionNames<TModuleName>>({
   moduleName,
   functionName,
   args,
@@ -63,7 +62,7 @@ export const useView = <
   const moduleAddress = moveModule.abi.address;
 
   const fetchData = async () => {
-    if (args.some(arg => arg === undefined)) {
+    if (args && args.some(arg => arg === undefined)) {
       return;
     }
 
@@ -76,7 +75,7 @@ export const useView = <
         module_name: moduleName.toString(),
         function_name: functionName.toString(),
         ty_args: tyArgs || [],
-        function_args: processArguments(args),
+        function_args: processArguments(args || []),
       };
 
       console.log("request", request);
