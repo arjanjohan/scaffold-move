@@ -5,21 +5,7 @@ import { FailedTransactionError } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { processArguments } from "~~/utils/scaffold-move/arguments";
-import {
-  ChainModules,
-  ModuleEntryFunctionNames,
-  ModuleEntryFunctions,
-  ModuleName,
-} from "~~/utils/scaffold-move/module";
-
-export type TransactionArguments<
-  TModuleName extends keyof ChainModules,
-  TFunctionName extends ModuleEntryFunctionNames<TModuleName>,
-> = {
-  functionName: TFunctionName;
-  args: ModuleEntryFunctions<TModuleName>[TFunctionName]["args"];
-  tyArgs?: ModuleEntryFunctions<TModuleName>[TFunctionName]["tyArgs"];
-};
+import { ModuleEntryFunctionNames, ModuleEntryFunctions, ModuleName } from "~~/utils/scaffold-move/module";
 
 export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
 
@@ -67,16 +53,14 @@ const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModul
 
   async function submitTransaction<TFunctionName extends ModuleEntryFunctionNames<TModuleName>>(
     functionName: TFunctionName,
-    args: ModuleEntryFunctions<TModuleName>[TFunctionName]["args"],
-    ...tyArgs: ModuleEntryFunctions<TModuleName>[TFunctionName]["tyArgs"] extends []
-      ? [undefined?]
-      : [ModuleEntryFunctions<TModuleName>[TFunctionName]["tyArgs"]]
+    args?: ModuleEntryFunctions<TModuleName>[TFunctionName]["args"],
+    tyArgs?: ModuleEntryFunctions<TModuleName>[TFunctionName]["tyArgs"],
   ) {
     const transaction: InputTransactionData = {
       data: {
         function: `${moduleAddress}::${moduleName.toString()}::${functionName.toString()}`,
-        typeArguments: tyArgs[0] || [],
-        functionArguments: processArguments(args),
+        typeArguments: tyArgs || [],
+        functionArguments: processArguments(args || []),
       },
     };
     console.log("transaction", transaction);

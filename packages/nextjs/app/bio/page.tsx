@@ -9,6 +9,7 @@ import { useGetAccountResource } from "~~/hooks/scaffold-move";
 import { useGetModule } from "~~/hooks/scaffold-move/useGetModule";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useView } from "~~/hooks/scaffold-move/useView";
+import { AddressInput } from "~~/types/scaffold-move";
 
 // Alert Component for showing error messages or warnings
 const Alert = ({ message }: { message: string }) => (
@@ -38,7 +39,7 @@ const OnchainBio: NextPage = () => {
     data: bioView,
     isLoading: isLoadingBioView,
     refetch: refetchBioView,
-  } = useView({ moduleName: "onchain_bio", functionName: "get_bio", args: [account?.address as `0x${string}`] });
+  } = useView({ moduleName: "onchain_bio", functionName: "get_bio", args: [account?.address as AddressInput] });
 
   // If the bioModule or ABI is not found, show an alert message and return early
   if (!bioAbi) {
