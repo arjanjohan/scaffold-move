@@ -3,7 +3,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 const { exec } = require('child_process');
 const minimist = require('minimist');
-const { defaultNetwork, networks } = require('../move.config.ts'); // Import from move.config.ts
+const { defaultNetwork, networks } = require('../move.config.js'); // Import from move.config.js
 
 const args = minimist(process.argv.slice(2));
 const network = args.network || defaultNetwork; // Use default network from config
@@ -29,7 +29,7 @@ function updateMoveTomlAddress(tomlPath, newAddress) {
     if (addressesContent) {
       const firstAddressLine = addressesContent.split('\n')[0];
       const firstAddressKey = firstAddressLine.split('=')[0].trim();
-      
+
       // Remove the current first address line
       const newAddressesContent = addressesContent.replace(firstAddressLine, `${firstAddressKey}='${newAddress}'`);
       toml = toml.replace(addressesMatch[1], `\n${newAddressesContent}\n`);
@@ -44,6 +44,11 @@ function updateMoveTomlAddress(tomlPath, newAddress) {
 
   fs.writeFileSync(tomlPath, toml, 'utf-8');
   console.log(`Move.toml updated with new address: ${newAddress}`);
+  // For Movement testnet, prompt user to get tokens from the faucet
+  if (network === 'movement_testnet') {
+    console.log('\nTo get test tokens for Movement Testnet, visit:');
+    console.log('https://faucet.movementnetwork.xyz/?network=bardock');
+  }
 }
 
 function initCustomNetwork(restUrl, faucetUrl) {

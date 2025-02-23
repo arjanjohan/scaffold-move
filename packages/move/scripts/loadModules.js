@@ -3,7 +3,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 const { AptosClient } = require('aptos'); // Assuming you're using the Aptos SDK for JavaScript
 const axios = require('axios'); // Add axios to make HTTP requests
-const { loadExternalModules } = require('../move.config.ts'); // Import from move.config.ts
+const { loadExternalModules } = require('../move.config.js'); // Import from move.config.js
 const deploymentsDir = path.join(__dirname, '../deployments');
 
 // Paths to the relevant files
