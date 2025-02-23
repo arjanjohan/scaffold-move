@@ -28,29 +28,7 @@ export const defaultChains: Chains = {
     explorer_network_param: "devnet",
     native_token_symbol: "MOVE",
   },
-  movement_suzuka_testnet: {
-    id: 27,
-    name: "Movement Suzuka Testnet",
-    network: Network.CUSTOM,
-    fullnode: "https://aptos.testnet.suzuka.movementlabs.xyz/v1",
-    indexer: "https://indexer.testnet.m1.movementlabs.xyz/",
-    faucet: "https://faucet.testnet.suzuka.movementlabs.xyz/",
-    block_explorer: "https://explorer.movementnetwork.xyz",
-    explorer_network_param: "testnet",
-    native_token_symbol: "MOVE",
-  },
   movement_testnet: {
-    id: 177,
-    name: "Movement Porto Testnet",
-    network: Network.CUSTOM,
-    fullnode: "https://aptos.testnet.porto.movementlabs.xyz/v1",
-    indexer: "https://indexer.testnet.porto.movementnetwork.xyz/v1/graphql",
-    faucet: "https://mizu.testnet.porto.movementnetwork.xyz/",
-    block_explorer: "https://explorer.movementnetwork.xyz",
-    explorer_network_param: "testnet",
-    native_token_symbol: "MOVE",
-  },
-  movement_bardock_testnet: {
     id: 250,
     name: "Movement Bardock Testnet",
     network: Network.CUSTOM,
@@ -82,8 +60,7 @@ export const defaultChains: Chains = {
     network: Network.TESTNET,
   },
   aptos_devnet: {
-    // TODO: Hardcoded chainId for now, need to find a better solution
-    id: 149,
+    id: 149, // TODO: Hardcoded chainId for now, need to find a better solution
     name: "Aptos Devnet",
     network: Network.DEVNET,
   },
