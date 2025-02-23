@@ -19,7 +19,6 @@ async function main() {
   const configPath = path.join(__dirname, '../.aptos/config.yaml');
   const config = parseYaml(configPath);
   const network = config.profiles.default.network;
-  const faucetUrl = config.profiles.default.faucet_url;
 
   // Determine if network is custom (localhost or custom URL)
   const isCustomNetwork = network.includes('Custom');

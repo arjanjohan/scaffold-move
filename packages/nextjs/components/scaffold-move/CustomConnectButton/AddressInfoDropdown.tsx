@@ -3,9 +3,10 @@ import { NetworkOptions } from "./NetworkOptions";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import {
-  ArrowLeftOnRectangleIcon,
+  ArrowLeftEndOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
   ArrowsRightLeftIcon,
+  BanknotesIcon,
   CheckCircleIcon,
   ChevronDownIcon,
   DocumentDuplicateIcon,
@@ -13,7 +14,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-move";
 import { useOutsideClick } from "~~/hooks/scaffold-move";
-import { getTargetNetworks } from "~~/utils/scaffold-move";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
+import { getFaucetAddressLink, getTargetNetworks } from "~~/utils/scaffold-move";
 
 const allowedNetworks = getTargetNetworks();
 
@@ -33,6 +35,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
   useOutsideClick(dropdownRef, closeDropdown);
 
   const { disconnect, wallet } = useWallet();
+  const { targetNetwork } = useTargetNetwork();
 
   // Check if connected wallet is Petra or Pontem
   const isNetworkSwitchingDisabled = wallet?.name === "Petra" || wallet?.name === "Pontem";
@@ -79,7 +82,6 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
               </CopyToClipboard>
             )}
           </li>
-          {/* TODO: Add QR functionality */}
           <li className={selectingNetwork ? "hidden" : ""}>
             <label htmlFor="qrcode-modal" className="btn-sm !rounded-xl flex gap-3 py-3">
               <QrCodeIcon className="h-6 w-4 ml-2 sm:ml-0" />
@@ -118,12 +120,25 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
             </li>
           ) : null}
           <li className={selectingNetwork ? "hidden" : ""}>
+            <button className="btn-sm !rounded-xl flex gap-3 py-3" type="button">
+              <BanknotesIcon className="h-6 w-4 ml-2 sm:ml-0" />
+              <a
+                target="_blank"
+                href={getFaucetAddressLink(targetNetwork)}
+                rel="noopener noreferrer"
+                className="whitespace-nowrap"
+              >
+                Faucet
+              </a>
+            </button>
+          </li>
+          <li className={selectingNetwork ? "hidden" : ""}>
             <button
               className="menu-item text-error btn-sm !rounded-xl flex gap-3 py-3"
               type="button"
               onClick={() => disconnect()}
             >
-              <ArrowLeftOnRectangleIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Disconnect</span>
+              <ArrowLeftEndOnRectangleIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Disconnect</span>
             </button>
           </li>
         </ul>

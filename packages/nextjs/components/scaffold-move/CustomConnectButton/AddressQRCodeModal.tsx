@@ -21,7 +21,9 @@ export const AddressQRCodeModal = ({ address, modalId }: AddressQRCodeModalProps
             <div className="space-y-3 py-6">
               <div className="flex flex-col items-center gap-6">
                 <QRCodeSVG value={address} size={256} />
-                <Address address={address} format="long" disableAddressLink />
+                <div className="break-all">
+                  <Address address={address} format="long" disableAddressLink />
+                </div>
               </div>
             </div>
           </label>
