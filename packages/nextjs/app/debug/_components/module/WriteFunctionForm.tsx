@@ -14,6 +14,7 @@ import {
   ModuleName,
   MoveFunction,
 } from "~~/utils/scaffold-move/module";
+import { getBlockExplorerTxLink } from "~~/utils/scaffold-move/networks";
 
 type FunctionFormProps = {
   module: GenericModuleAbi;
@@ -38,14 +39,6 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
   );
   const { account } = useWallet();
   const network = useTargetNetwork();
-
-  // TODO: use network from useTargetNetwork
-  const state = { network_value: "" };
-  // if (network.targetNetwork.network === Network.CUSTOM) {
-  state.network_value = network.targetNetwork.fullnode ? network.targetNetwork.fullnode : "";
-  // } else {
-
-  // }
 
   const convertArgument = (arg: string | null | undefined, type: string): any => {
     if (typeof arg !== "string") {
@@ -156,9 +149,28 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
           <div className="flex-grow basis-0">
             {transactionResponse !== null && transactionResponse?.transactionSubmitted && (
               <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
-                <p className="font-bold m-0 mb-1">Result:</p>
                 <pre className="whitespace-pre-wrap break-words">
-                  {transactionResponse.success ? "✅ transaction successful. txreceipt: " : "❌ transaction failed"}
+                  <span className="font-bold">Result: </span>
+                  {transactionResponse.success ? (
+                    <>
+                      ✅ transaction successful
+                      {getBlockExplorerTxLink(network.targetNetwork, transactionResponse.transactionHash) && (
+                        <>
+                          <br />
+                          <a
+                            href={getBlockExplorerTxLink(network.targetNetwork, transactionResponse.transactionHash)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline"
+                          >
+                            View on Explorer
+                          </a>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    "❌ transaction failed"
+                  )}
                 </pre>
               </div>
             )}
@@ -168,8 +180,6 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
                 <pre className="whitespace-pre-wrap break-words">{error}</pre>
               </div>
             )}
-            {/* TODO: Add TxReceipt for Move */}
-            {/* {displayedTxResult ? <TxReceipt txResult={displayedTxResult} /> : null} */}
           </div>
 
           <button

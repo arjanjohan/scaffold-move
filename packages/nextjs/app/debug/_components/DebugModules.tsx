@@ -46,7 +46,6 @@ export function DebugModules() {
                   onClick={() => setSelectedModule(moduleName)}
                 >
                   {moduleName as string}
-                  {/* TODO: fix this below */}
                   {(modulesData[moduleName] as GenericModule).external && (
                     <span className="tooltip tooltip-top tooltip-accent" data-tip="External module">
                       <BarsArrowUpIcon className="h-4 w-4 cursor-pointer" />

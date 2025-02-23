@@ -30,7 +30,6 @@ const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModul
   const network = useTargetNetwork();
   const aptos = useAptosClient(network.targetNetwork.id);
 
-  // TODO: with Nightly wallet it can fail because network is mismatched.
   const { signAndSubmitTransaction } = useWallet();
 
   const moveModule = useGetModule(moduleName.toString());

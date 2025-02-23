@@ -3,6 +3,16 @@ import scaffoldConfig from "~~/scaffold.config";
 import { Chain } from "~~/utils/scaffold-move/chains";
 
 /**
+ * Gives the faucet address URL, returns empty string if the faucet is not defined (mainnet or local chain)
+ */
+export function getFaucetAddressLink(chain: Chain) {
+  if (chain.faucet === "") {
+    return "";
+  }
+  return chain.faucet;
+}
+
+/**
  * Gives the block explorer transaction URL, returns empty string if the network is a local chain
  */
 export function getBlockExplorerTxLink(chain: Chain, txnHash: string) {

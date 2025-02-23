@@ -17,48 +17,15 @@ type Chains = {
 };
 
 export const defaultChains: Chains = {
-  movement_devnet: {
-    id: 4,
-    name: "Movement Devnet",
-    network: Network.CUSTOM,
-    fullnode: "https://aptos.devnet.m1.movementlabs.xyz",
-    indexer: "https://indexer.devnet.m1.movementlabs.xyz/",
-    faucet: "https://faucet2.movementlabs.xyz",
-    block_explorer: "https://explorer.devnet.m1.movementlabs.xyz",
-    explorer_network_param: "devnet",
-    native_token_symbol: "MOVE",
-  },
-  movement_suzuka_testnet: {
-    id: 27,
-    name: "Movement Suzuka Testnet",
-    network: Network.CUSTOM,
-    fullnode: "https://aptos.testnet.suzuka.movementlabs.xyz/v1",
-    indexer: "https://indexer.testnet.m1.movementlabs.xyz/",
-    faucet: "https://faucet.testnet.suzuka.movementlabs.xyz/",
-    block_explorer: "https://explorer.movementnetwork.xyz",
-    explorer_network_param: "testnet",
-    native_token_symbol: "MOVE",
-  },
   movement_testnet: {
-    id: 177,
-    name: "Movement Porto Testnet",
-    network: Network.CUSTOM,
-    fullnode: "https://aptos.testnet.porto.movementlabs.xyz/v1",
-    indexer: "https://indexer.testnet.porto.movementnetwork.xyz/v1/graphql",
-    faucet: "https://mizu.testnet.porto.movementnetwork.xyz/",
-    block_explorer: "https://explorer.movementnetwork.xyz",
-    explorer_network_param: "testnet",
-    native_token_symbol: "MOVE",
-  },
-  movement_bardock_testnet: {
     id: 250,
     name: "Movement Bardock Testnet",
     network: Network.CUSTOM,
     fullnode: "https://aptos.testnet.bardock.movementlabs.xyz/v1",
     indexer: "",
-    faucet: "https://faucet.testnet.bardock.movementnetwork.xyz/",
+    faucet: "https://faucet.movementnetwork.xyz/?network=bardock",
     block_explorer: "https://explorer.movementnetwork.xyz",
-    explorer_network_param: "testnet",
+    explorer_network_param: "bardock+testnet",
     native_token_symbol: "MOVE",
   },
   movement_mainnet: {
@@ -80,12 +47,7 @@ export const defaultChains: Chains = {
     id: NetworkToChainId[Network.TESTNET],
     name: "Aptos Testnet",
     network: Network.TESTNET,
-  },
-  aptos_devnet: {
-    // TODO: Hardcoded chainId for now, need to find a better solution
-    id: 149,
-    name: "Aptos Devnet",
-    network: Network.DEVNET,
+    faucet: "https://aptos.dev/en/network/faucet",
   },
   local: {
     id: NetworkToChainId[Network.LOCAL],

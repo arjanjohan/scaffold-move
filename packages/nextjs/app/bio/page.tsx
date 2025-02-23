@@ -52,11 +52,8 @@ const OnchainBio: NextPage = () => {
 
     try {
       await refetchBio();
-      console;
       if (bioResource) {
         setAccountHasBio(true);
-
-        // TODO: Fix this workaround
         setCurrentName(bioResource.name);
         setCurrentBio(bioResource.bio);
       } else {

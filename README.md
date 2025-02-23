@@ -44,15 +44,7 @@ cd scaffold-move
 yarn install
 ```
 
-2. Run a local network in  the first terminal:
-
-```
-yarn chain
-```
-
-**If you are deploying to devnet or testnet, you can skip this step.**
-
-3. On a second terminal, initialize a new account.
+2. THen, initialize a new account.
 
 ```
 yarn account
@@ -60,7 +52,9 @@ yarn account
 
 This command overwrites `packages/move/.aptos/config.yaml` with a new Aptos account. The new address is copied over to the first address in the Move.toml file. If no address exists in this file, it is added on a new line.
 
-4. Deploy the test modules:
+Use the `--network` tag to define a network to create the account on. Alternatively, you can change the `defaultNetwork` value in `packages/move/move.config.js`.
+
+3. Deploy the test modules:
 
 ```
 yarn deploy
@@ -68,7 +62,7 @@ yarn deploy
 
 This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/loadModules.js` to make the new modules available in the nextjs frontend.
 
-5. On a third terminal, start your NextJS app:
+4. On a second terminal, start your NextJS app:
 
 ```
 yarn start
@@ -110,6 +104,7 @@ Your input is valuable! If you have suggestions or want to contribute, we encour
 None of this would have been possible without the great work done in:
 - [Scaffold-ETH 2](https://github.com/scaffold-eth/scaffold-eth-2)
 - [Aptos Explorer](https://github.com/aptos-labs/explorer)
+- [Aptos Wallet Adapter](https://github.com/aptos-labs/aptos-wallet-adapter)
 
 ## Built by
 
