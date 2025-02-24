@@ -7,7 +7,7 @@ import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import {
-  FilterNever,
+  ExtractMoveParams,
   GenericModuleAbi,
   ModuleEntryFunctionNames,
   ModuleEntryFunctions,
@@ -81,7 +81,7 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
     const functionArguments = data.args.map((arg, i) => {
       const type = fnParams[i];
       return convertArgument(arg, type);
-    }) as FilterNever<(typeof fn)["params"]>;
+    }) as ExtractMoveParams<(typeof fn)["params"]>;
     const typeArguments =
       data.typeArgs as ModuleEntryFunctions<ModuleName>[ModuleEntryFunctionNames<ModuleName>]["tyArgs"];
 
