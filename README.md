@@ -60,7 +60,7 @@ Use the `--network` tag to define a network to create the account on. Alternativ
 yarn deploy
 ```
 
-This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/loadModules.js` to make the new modules available in the nextjs frontend.
+This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/load-modules.js` to make the new modules available in the nextjs frontend.
 
 4. On a second terminal, start your NextJS app:
 
