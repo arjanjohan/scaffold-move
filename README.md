@@ -11,6 +11,8 @@
 
 🧪 Scaffold Move is an open-source, cutting-edge toolkit for building decentralized applications (dApps) on Aptos or any other Move-based blockchain. It's designed to streamline the process of creating and deploying Move modules and building user interfaces that interact seamlessly with those modules.
 
+ This NFT template uses a simplified Move Module based on the Aptos NFT launchpad from the [Aptos NFT minting dapp template](https://github.com/aptos-labs/create-aptos-dapp/tree/main/templates/nft-minting-dapp-template).
+
 ⚙️ Built using Move, Aptos TS SDK, Next.js, Tailwind CSS, and TypeScript.
 
 - 🛫 **Deployment Scripts**: Simplify and automate your deployment workflow.
@@ -44,7 +46,7 @@ cd scaffold-move
 yarn install
 ```
 
-2. THen, initialize a new account.
+2. Then, initialize a new account.
 
 ```
 yarn account
@@ -54,7 +56,13 @@ This command overwrites `packages/move/.aptos/config.yaml` with a new Aptos acco
 
 Use the `--network` tag to define a network to create the account on. Alternatively, you can change the `defaultNetwork` value in `packages/move/move.config.js`.
 
-3. Deploy the test modules:
+3. Depending on the network, make sure the correct address for the token-minter module is configured.
+```
+minter='0x3c41ff6b5845e0094e19888cba63773591be9de59cafa9e582386f6af15dd490' // aptos testnet
+minter='0x768ba4825a2266cead251160e871faf90af491a4d4a3856f31e2cdcd9778b08c' // movement porto testnet
+```
+
+4. Deploy the test modules:
 
 ```
 yarn deploy
@@ -62,7 +70,21 @@ yarn deploy
 
 This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/loadModules.js` to make the new modules available in the nextjs frontend.
 
-4. On a second terminal, start your NextJS app:
+5. Configure the environment variables for the NextJS app.
+
+Copy packages/nextjs/.env.example to packages/nextjs/.env and fill all values.
+The Aptos API key can be requested from the [Aptos Build page](https://developers.aptoslabs.com/). The IPFS project ID and secret should be setup on [Infura](https://www.infura.io/). Finally make sure the module name matches your launchpad move module name, as this value is used throughout the app.
+
+```
+NEXT_PUBLIC_APTOS_API_KEY=
+
+NEXT_PUBLIC_IPFS_PROJECT_ID=
+NEXT_PUBLIC_IPFS_PROJECT_SECRET=
+
+NEXT_PUBLIC_MODULE_NAME="launchpad"
+```
+
+6. On a second terminal, start your NextJS app:
 
 ```
 yarn start
@@ -72,32 +94,19 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 
 **What's next**:
 
-- Edit your Move module `OnchainBio.move` in `packages/move/sources`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-<!-- - Edit your Move modules test in: `packages/move/test`. To run test use `yarn hardhat:test` -->
+- Create a collection by uploading the collection files. If you didn't create a collection yet, feel free to use or modify the [example-collection](example-collection) (also available as [a zip file](example-collection.zip)).
+- After creating your collection, view it on the `/collections` page. Click on your a collection to mint your NFT!
 
 ## Future Development
-
-Scaffold Move has successfully implemented core features essential for Move developers, providing a robust foundation for building decentralized applications. The current version offers a streamlined development experience with hot module reloading, custom hooks, and seamless wallet integration.
-
-Looking ahead, we have an exciting roadmap of enhancements and new features planned:
-
-- Add a testing framework for Move modules.
-- Add custom networks to network switching. This is currently not available in the Aptos Wallet Adapter. Once [our PR](https://github.com/aptos-labs/aptos-wallet-adapter/pull/425) is merged, this feature will be added to Scaffold Move.
-- Enhance documentation and create tutorials for easier onboarding.
-- Develop additional pre-built components for common dApp functionalities.
-- Integrate different templates/configurations (similar to [create-aptos-dapp](https://aptos.dev/en/build/create-aptos-dapp))
-
-We're committed to evolving Scaffold Move based on community feedback and emerging best practices in the Move ecosystem. For a detailed list of upcoming features and to contribute ideas, please check our [GitHub Issues](https://github.com/arjanjohan/scaffold-move/issues).
-
-Your input is valuable! If you have suggestions or want to contribute, we encourage you to get involved and help shape the future of Scaffold Move. Join our [developer Telegram channel](https://t.me/+lOn2MJawQlc1YjA8) to connect with the community and stay updated on the latest developments.
+This is a first version of the NFT Launchpad template. Your input is valuable - whether you find bugs, have suggestions, or want to contribute, we encourage you to get involved and help shape the future of Scaffold Move. Join our [developer Telegram channel](https://t.me/+lOn2MJawQlc1YjA8) to connect with the community, report issues, and stay updated on the latest developments.
 
 ## Links
 
 - [Documentation](https://scaffold-move-docs.vercel.app/)
-- [Example deployment](https://scaffold-move-chi.vercel.app/)
+- [Scaffold Move Github](https://github.com/arjanjohan/scaffold-move)
+- [Movement Developer Portal: NFT Learning Path](https://developer.movementnetwork.xyz/learning-paths/nft)
+- [Aptos Docs: Digital Aseet](https://aptos.dev/en/build/smart-contracts/digital-asset)
 - [Telegram Community](https://t.me/+lOn2MJawQlc1YjA8)
-- [Github](https://github.com/arjanjohan/scaffold-move)
 
 ## Credits
 
