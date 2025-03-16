@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGetModule } from "./useGetModule";
-import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
+import { InputTransactionData, useWallet } from "@scaffold-move/wallet-adapter-react";
 import { FailedTransactionError } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";

@@ -2,7 +2,7 @@ import { ResponseError, withResponseError } from "../client";
 import { useGetModule } from "./useGetModule";
 import { useTargetNetwork } from "./useTargetNetwork";
 import { Aptos } from "@aptos-labs/ts-sdk";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@scaffold-move/wallet-adapter-react";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 

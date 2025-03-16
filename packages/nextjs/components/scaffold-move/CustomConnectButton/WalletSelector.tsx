@@ -11,7 +11,7 @@ import {
   isInstallRequired,
   truncateAddress,
   useWallet,
-} from "@aptos-labs/wallet-adapter-react";
+} from "@scaffold-move/wallet-adapter-react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import scaffoldConfig from "~~/scaffold.config";
 

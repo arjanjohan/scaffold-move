@@ -5,7 +5,7 @@ import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { WalletSelector } from "./WalletSelector";
 import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@scaffold-move/wallet-adapter-react";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { getBlockExplorerAddressLink } from "~~/utils/scaffold-move";
 

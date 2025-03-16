@@ -1,6 +1,6 @@
 // Import your notification utility
 import { Network } from "@aptos-labs/ts-sdk";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@scaffold-move/wallet-adapter-react";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
 import { getTargetNetworks } from "~~/utils/scaffold-move";
 import { notification } from "~~/utils/scaffold-move/notification";

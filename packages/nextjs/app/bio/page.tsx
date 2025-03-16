@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@scaffold-move/wallet-adapter-react";
 import type { NextPage } from "next";
 import { Address, InputBase } from "~~/components/scaffold-move";
 import { useGetAccountResource } from "~~/hooks/scaffold-move";
