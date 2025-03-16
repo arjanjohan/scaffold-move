@@ -33,7 +33,7 @@ export function useGetAccountResources(
   // If address is not provided, use the wallet address
   // Default to empty string if account is not connected
   // Empty string will lead to ResponseError
-  const resourceAddress = address || account?.address || "";
+  const resourceAddress = address || account?.address?.toString() || "";
 
   return useQuery<Array<Types.MoveResource>, ResponseError>({
     queryKey: ["accountResources", { address: resourceAddress }],

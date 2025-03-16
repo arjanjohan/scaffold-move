@@ -2,7 +2,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   AboutAptosConnect,
   AboutAptosConnectEducationScreen,
-  AnyAptosWallet,
+  AdapterNotDetectedWallet,
+  AdapterWallet,
   AptosPrivacyPolicy,
   WalletItem,
   WalletSortingOptions,
@@ -56,7 +57,7 @@ export function WalletSelector({ isModalOpen, setModalOpen, ...walletSortingOpti
     }
   };
 
-  const buttonText = account?.ansName || truncateAddress(account?.address) || "Unknown";
+  const buttonText = account?.ansName || truncateAddress(account?.address?.toString()) || "Unknown";
 
   const renderEducationScreens = (screen: AboutAptosConnectEducationScreen) => (
     <dialog open className="modal modal-open">
@@ -188,7 +189,7 @@ export function WalletSelector({ isModalOpen, setModalOpen, ...walletSortingOpti
 }
 
 interface WalletRowProps {
-  wallet: AnyAptosWallet;
+  wallet: AdapterWallet | AdapterNotDetectedWallet;
   onConnect?: () => void;
 }
 

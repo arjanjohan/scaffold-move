@@ -39,7 +39,11 @@ const OnchainBio: NextPage = () => {
     data: bioView,
     isLoading: isLoadingBioView,
     refetch: refetchBioView,
-  } = useView({ moduleName: "onchain_bio", functionName: "get_bio", args: [account?.address as AddressInput] });
+  } = useView({
+    moduleName: "onchain_bio",
+    functionName: "get_bio",
+    args: [account?.address?.toString() as AddressInput],
+  });
 
   // If the bioModule or ABI is not found, show an alert message and return early
   if (!bioAbi) {
@@ -98,7 +102,7 @@ const OnchainBio: NextPage = () => {
         <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
           <p className="my-2 font-medium">Connected Address:</p>
 
-          <Address address={account?.address} />
+          <Address address={account?.address?.toString()} />
         </div>{" "}
       </div>
       <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">

@@ -14,7 +14,9 @@ export const CustomConnectButton = () => {
 
   const { account, connected, network } = useWallet();
 
-  const blockExplorerAddressLink = account ? getBlockExplorerAddressLink(targetNetwork, account?.address) : undefined;
+  const blockExplorerAddressLink = account
+    ? getBlockExplorerAddressLink(targetNetwork, account?.address?.toString())
+    : undefined;
 
   return (
     <>
@@ -25,15 +27,15 @@ export const CustomConnectButton = () => {
       ) : (
         <>
           <div className="flex flex-col items-center mr-1">
-            <Balance address={account?.address as string} />
+            <Balance address={account?.address?.toString() || ""} />
             <span className="text-xs">{targetNetwork ? targetNetwork.name : "Loading..."}</span>
           </div>
           <AddressInfoDropdown
-            address={account?.address || ""}
+            address={account?.address?.toString() || ""}
             // ensAvatar={""} // Update this with ENS Avatar if available
             blockExplorerAddressLink={blockExplorerAddressLink}
           />
-          <AddressQRCodeModal address={account?.address || ""} modalId="qrcode-modal" />
+          <AddressQRCodeModal address={account?.address?.toString() || ""} modalId="qrcode-modal" />
         </>
       )}
     </>

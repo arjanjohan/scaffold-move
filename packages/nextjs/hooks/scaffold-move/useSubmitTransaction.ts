@@ -89,7 +89,7 @@ const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModul
           };
         }
         // transaction failed
-        return { ...responseOnError, message: response.message };
+        return { ...responseOnError, message: response.hash };
       } catch (error) {
         if (error instanceof FailedTransactionError) {
           return {

@@ -1,5 +1,5 @@
 
-const defaultNetwork = 'movement_testnet';
+const defaultNetwork = 'testnet';
 // const overrideMoveVersion = 'move-1'; // Uncomment to use Move-1 for all networks
 
 const networks = {
