@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@scaffold-move/wallet-adapter-react";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 

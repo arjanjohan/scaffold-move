@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useFunctionArguments } from "./utilFunctionArgs";
 import { parseTypeTag } from "@aptos-labs/ts-sdk";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@scaffold-move/wallet-adapter-react";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import {

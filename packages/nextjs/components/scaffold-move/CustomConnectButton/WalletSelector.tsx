@@ -2,7 +2,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   AboutAptosConnect,
   AboutAptosConnectEducationScreen,
-  AnyAptosWallet,
+  AdapterNotDetectedWallet,
+  AdapterWallet,
   AptosPrivacyPolicy,
   WalletItem,
   WalletSortingOptions,
@@ -10,7 +11,7 @@ import {
   isInstallRequired,
   truncateAddress,
   useWallet,
-} from "@aptos-labs/wallet-adapter-react";
+} from "@scaffold-move/wallet-adapter-react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import scaffoldConfig from "~~/scaffold.config";
 
@@ -56,7 +57,7 @@ export function WalletSelector({ isModalOpen, setModalOpen, ...walletSortingOpti
     }
   };
 
-  const buttonText = account?.ansName || truncateAddress(account?.address) || "Unknown";
+  const buttonText = account?.ansName || truncateAddress(account?.address?.toString()) || "Unknown";
 
   const renderEducationScreens = (screen: AboutAptosConnectEducationScreen) => (
     <dialog open className="modal modal-open">
@@ -188,7 +189,7 @@ export function WalletSelector({ isModalOpen, setModalOpen, ...walletSortingOpti
 }
 
 interface WalletRowProps {
-  wallet: AnyAptosWallet;
+  wallet: AdapterWallet | AdapterNotDetectedWallet;
   onConnect?: () => void;
 }
 

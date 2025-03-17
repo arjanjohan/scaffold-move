@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { NetworkOptions } from "./NetworkOptions";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@scaffold-move/wallet-adapter-react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import {
   ArrowLeftEndOnRectangleIcon,
