@@ -5,8 +5,6 @@ import deployedModulesData from "~~/modules/deployedModules";
 import externalModulesData from "~~/modules/externalModules";
 import latestChainId from "~~/modules/latestChainId";
 
-// import scaffoldConfig from "~~/scaffold.config";
-
 // Helper type to create a tuple of any type with specific length
 type TupleOfLength<L extends number, T = any> = [T, ...T[]] & { length: L };
 
@@ -36,13 +34,13 @@ type ExtractMoveParam<T extends string> = T extends "&signer"
           ? ExtractMoveParam<Inner> | null
           : unknown;
 
-export type FilterNever<T extends readonly any[]> = T extends readonly [infer First, ...infer Rest]
+type FilterNever<T extends readonly any[]> = T extends readonly [infer First, ...infer Rest]
   ? ExtractMoveParam<First & string> extends never
     ? FilterNever<Rest>
     : [ExtractMoveParam<First & string>, ...FilterNever<Rest>]
   : [];
 
-type ExtractMoveParams<T extends readonly string[]> = FilterNever<T>;
+export type ExtractMoveParams<T extends readonly string[]> = FilterNever<T>;
 
 // Helper type to extract function return types from Move return strings
 type ExtractMoveReturns<T extends readonly string[]> = {
@@ -50,7 +48,7 @@ type ExtractMoveReturns<T extends readonly string[]> = {
 };
 
 // Get all modules for a specific chain
-export type ChainModules = (typeof modulesData)[ConfiguredChainId];
+type ChainModules = (typeof modulesData)[ConfiguredChainId];
 
 // Get all view functions for a module
 type ViewFunctions<TModule extends GenericModule> = {
@@ -199,7 +197,7 @@ type ConfiguredChainId = typeof latestChainId;
 
 type IsModuleDeclarationMissing<TYes, TNo> = typeof modulesData extends Record<ConfiguredChainId, any> ? TNo : TYes;
 
-export type ModulesDeclaration = IsModuleDeclarationMissing<GenericModulesDeclaration, typeof modulesData>;
+type ModulesDeclaration = IsModuleDeclarationMissing<GenericModulesDeclaration, typeof modulesData>;
 
 type Modules = ModulesDeclaration[ConfiguredChainId];
 
