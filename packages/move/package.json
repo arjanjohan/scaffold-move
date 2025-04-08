@@ -4,7 +4,7 @@
   "scripts": {
     "account": "node scripts/init-account.js",
     "chain": "aptos node run-local-testnet",
-    "deploy": "node scripts/deploy.js && node scripts/loadModules.js",
+    "deploy": "node scripts/deploy.js && node scripts/load-modules.js",
     "compile": "aptos move compile",
     "test": "aptos move test",
     "format": "aptos move fmt",
