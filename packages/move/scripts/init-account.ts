@@ -1,25 +1,18 @@
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
-const { exec } = require('child_process');
-const minimist = require('minimist');
-const { defaultNetwork, networks } = require('../move.config.js');
+import * as fs from 'fs';
+import { exec } from 'child_process';
+import minimist from 'minimist';
+import { defaultNetwork, networks } from '../move.config';
+import { getConfigPath, getMoveTomlPath, parseYaml } from './utils';
 
 const args = minimist(process.argv.slice(2));
-const network = args.network || defaultNetwork; // Use default network from config
+const network = args.network || defaultNetwork; // Use default network from config if not provided
 const restUrl = args['rest-url'];
 const faucetUrl = args['faucet-url'];
-const moveTomlPath = path.join(__dirname, '../Move.toml');
-const configYamlPath = path.join(__dirname, '../.aptos/config.yaml');
-
-// Function to parse the YAML config file
-function parseYaml(filePath) {
-  const yamlContent = fs.readFileSync(filePath, 'utf-8');
-  return yaml.load(yamlContent);
-}
+const moveTomlPath = getMoveTomlPath();
+const configYamlPath = getConfigPath();
 
 // Function to update the first address in the Move.toml file
-function updateMoveTomlAddress(tomlPath, newAddress) {
+function updateMoveTomlAddress(tomlPath: string, newAddress: string): void {
   let toml = fs.readFileSync(tomlPath, 'utf-8');
   const addressesSectionRegex = /\[addresses\]([\s\S]*?)(?=\[|$)/;
   const addressesMatch = toml.match(addressesSectionRegex);
@@ -46,7 +39,7 @@ function updateMoveTomlAddress(tomlPath, newAddress) {
   console.log(`Move.toml updated with new address: ${newAddress}`);
 }
 
-function initCustomNetwork(restUrl, faucetUrl) {
+function initCustomNetwork(restUrl: string, faucetUrl?: string): void {
   let command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network custom --rest-url ${restUrl}`;
   if (faucetUrl) {
     command += ` --faucet-url ${faucetUrl}`;
@@ -68,7 +61,7 @@ function initCustomNetwork(restUrl, faucetUrl) {
   });
 }
 
-function initPredefinedNetwork(network) {
+function initPredefinedNetwork(network: string): void {
   const skipFaucet = network === 'testnet' ? ' --skip-faucet' : '';
   const command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network ${network}${skipFaucet}`;
   console.log(`Initializing ${network} network...`);
@@ -82,16 +75,15 @@ function initPredefinedNetwork(network) {
   });
 }
 
-function updateMoveTomlAfterInit() {
+function updateMoveTomlAfterInit(): void {
   try {
     const config = parseYaml(configYamlPath);
-    const newAddress = `0x${config.profiles.default.account.replace(/^0x/, '')}`; // Ensure 0x prefix
+    const newAddress = `0x${config.profiles.default.account?.replace(/^0x/, '') || ''}`; // Ensure 0x prefix
     updateMoveTomlAddress(moveTomlPath, newAddress);
   } catch (error) {
     console.log(`Failed to update Move.toml. Please check your configuration files.`);
   }
 }
-
 
 if (network in networks) {
   const { 'rest-url': configRestUrl, 'faucet-url': configFaucetUrl } = networks[network];

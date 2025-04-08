@@ -2,21 +2,25 @@
   "name": "@scaffold-move/move",
   "packageManager": "yarn@3.2.3",
   "scripts": {
-    "account": "node scripts/init-account.js",
+    "account": "ts-node scripts/init-account.ts",
     "chain": "aptos node run-local-testnet",
-    "deploy": "node scripts/deploy.js && node scripts/load-modules.js",
+    "deploy": "ts-node scripts/deploy.ts && ts-node scripts/load-modules.ts",
     "compile": "aptos move compile",
     "test": "aptos move test",
     "format": "aptos move fmt",
-    "document": "aptos move document"
+    "document": "aptos move document",
+    "build": "tsc"
   },
   "dependencies": {
-    "aptos": "^1.21.0",
+    "@aptos-labs/ts-sdk": "^1.38.0",
     "js-yaml": "^4.1.0",
     "minimist": "^1.2.8"
   },
   "devDependencies": {
     "@types/js-yaml": "^4",
-    "@types/minimist": "^1.2.5"
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^20.11.24",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }
