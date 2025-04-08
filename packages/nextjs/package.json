@@ -21,7 +21,6 @@
     "@scaffold-move/wallet-adapter-react": "^4.1.2",
     "@tanstack/react-query": "^5.56.2",
     "@telegram-apps/bridge": "^1.9.0",
-    "aptos": "^1.21.0",
     "blo": "^1.2.0",
     "daisyui": "4.12.10",
     "graphql": "^16.10.0",
