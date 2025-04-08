@@ -1,5 +1,5 @@
 import { NetworkOptions } from "./NetworkOptions";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@scaffold-move/wallet-adapter-react";
 import { ArrowLeftEndOnRectangleIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export const WrongNetworkDropdown = () => {

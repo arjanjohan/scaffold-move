@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@scaffold-move/wallet-adapter-react";
 import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-move";
@@ -20,7 +20,7 @@ const Home: NextPage = () => {
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             <p className="my-2 font-medium">Connected Address:</p>
 
-            <Address address={connectedAccount?.address} />
+            <Address address={connectedAccount?.address?.toString()} />
           </div>
           <p className="text-center text-lg">
             Get started by editing{" "}

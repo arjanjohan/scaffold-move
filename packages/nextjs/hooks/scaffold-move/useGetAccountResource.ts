@@ -2,7 +2,7 @@ import { ResponseError, withResponseError } from "../client";
 import { useGetModule } from "./useGetModule";
 import { useTargetNetwork } from "./useTargetNetwork";
 import { Aptos } from "@aptos-labs/ts-sdk";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@scaffold-move/wallet-adapter-react";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 
@@ -31,7 +31,7 @@ export function getAccountResource<T = any>(
 export function useGetAccountResource<T = any>(
   moduleName: string,
   resourceName: string,
-  externalModuleAddress?: string,
+  // externalModuleAddress?: string,
   address?: string,
   options?: {
     retry?: number | boolean;
@@ -39,12 +39,12 @@ export function useGetAccountResource<T = any>(
 ): UseQueryResult<T, ResponseError> {
   const network = useTargetNetwork();
   const aptosClient = useAptosClient(network.targetNetwork.id);
-  const moduleAddress = externalModuleAddress ? externalModuleAddress : useGetModule(moduleName)?.abi.address;
+  const moduleAddress = useGetModule(moduleName)?.abi.address;
   const { account } = useWallet();
 
   // If address is not provided, use the wallet address
   // Default to empty string if account is not connected
-  const resourceAddress = address || account?.address || "";
+  const resourceAddress = address || account?.address?.toString() || "";
 
   return useQuery<T, ResponseError>({
     queryKey: ["accountResource", { address: resourceAddress, moduleAddress, moduleName, resourceName }],
