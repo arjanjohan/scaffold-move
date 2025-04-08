@@ -1,24 +1,38 @@
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
-const { AptosClient } = require('aptos'); // Assuming you're using the Aptos SDK for JavaScript
-const axios = require('axios'); // Add axios to make HTTP requests
-const { loadExternalModules } = require('../move.config.js');
+import * as fs from 'fs';
+import * as path from 'path';
+import { Aptos, AptosConfig, Network, MoveModuleBytecode } from '@aptos-labs/ts-sdk';
+import axios from 'axios';
+import { loadExternalModules } from '../move.config';
+import { getConfigPath, getMoveTomlPath, parseYaml, getAccountFromConfig } from './utils';
+
 const deploymentsDir = path.join(__dirname, '../deployments');
 
 // Paths to the relevant files
-const moveTomlPath =        path.join(__dirname, '../Move.toml');
-const configYamlPath =      path.join(__dirname, '../.aptos/config.yaml');
 const deployedModulesPath = path.join(__dirname, '../../../packages/nextjs/modules/deployedModules.ts');
 const externalModulesPath = path.join(__dirname, '../../../packages/nextjs/modules/externalModules.ts');
-const otherModulePath =     path.join(__dirname, '../../../packages/nextjs/modules/latestChainId.ts');
+const otherModulePath = path.join(__dirname, '../../../packages/nextjs/modules/latestChainId.ts');
+
+interface Addresses {
+  [key: string]: string;
+}
+
+interface ModuleData {
+  [key: string]: {
+    bytecode: string;
+    abi: any;
+  };
+}
+
+interface ChainModules {
+  [chainId: string]: ModuleData;
+}
 
 // Function to parse the TOML file and extract addresses
-function parseToml(filePath) {
+function parseToml(filePath: string): Addresses | null {
   const toml = fs.readFileSync(filePath, 'utf-8');
   const addressesSection = toml.match(/\[addresses\]([\s\S]*?)(?=\[|$)/);
   if (addressesSection) {
-    const addresses = {};
+    const addresses: Addresses = {};
     const lines = addressesSection[1].trim().split('\n');
     lines.forEach(line => {
       const [key, value] = line.split('=').map(part => part.trim().replace(/['"]+/g, ''));
@@ -29,26 +43,30 @@ function parseToml(filePath) {
   return null;
 }
 
-// Function to parse the YAML config file
-function parseYaml(filePath) {
-  const yamlContent = fs.readFileSync(filePath, 'utf-8');
-  return yaml.load(yamlContent);
-}
-
 // Function to fetch account modules
-async function getAccountModules(requestParameters, nodeUrl) {
-  const client = new AptosClient(nodeUrl);
+async function getAccountModules(
+  requestParameters: { address: string; ledgerVersion?: string },
+  nodeUrl: string
+): Promise<MoveModuleBytecode[]> {
+  const aptosConfig = new AptosConfig({
+    network: Network.CUSTOM,
+    fullnode: nodeUrl,
+  });
+  const client = new Aptos(aptosConfig);
   const { address, ledgerVersion } = requestParameters;
-  let ledgerVersionBig;
+  let ledgerVersionBig: bigint | undefined;
   if (ledgerVersion !== undefined) {
     ledgerVersionBig = BigInt(ledgerVersion);
   }
-  return client.getAccountModules(address, { ledgerVersion: ledgerVersionBig });
+  console.log(client);
+  console.log(address);
+  console.log(ledgerVersionBig);
+  return client.getAccountModules({ accountAddress: address });
 }
 
 // Function to fetch chainId from the REST API
-async function fetchChainId(nodeUrl) {
-  let url;
+async function fetchChainId(nodeUrl: string): Promise<number> {
+  let url: string;
   if (nodeUrl.includes("movement")) {
     url = nodeUrl; // Use nodeUrl directly without appending '/v1'
   } else {
@@ -59,7 +77,7 @@ async function fetchChainId(nodeUrl) {
 }
 
 // Function to get existing module data
-function getExistingModulesData(filePath) {
+function getExistingModulesData(filePath: string): ModuleData {
   if (fs.existsSync(filePath)) {
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const match = fileContent.match(/deployedModules\s*=\s*({[\s\S]*});/);
@@ -70,8 +88,8 @@ function getExistingModulesData(filePath) {
   return {};
 }
 
-// New function to write chain-specific modules
-function writeChainModules(chainId, modules, isDeployed) {
+// Function to write chain-specific modules
+function writeChainModules(chainId: number, modules: MoveModuleBytecode[], isDeployed: boolean): void {
   const chainDir = path.join(deploymentsDir, chainId.toString());
   if (!fs.existsSync(chainDir)) {
     fs.mkdirSync(chainDir, { recursive: true });
@@ -80,21 +98,23 @@ function writeChainModules(chainId, modules, isDeployed) {
   const fileName = isDeployed ? 'deployedModules.json' : 'externalModules.json';
   const filePath = path.join(chainDir, fileName);
 
-  const moduleData = modules.reduce((acc, module) => {
-    acc[module.abi.name] = {
-      bytecode: module.bytecode,
-      abi: module.abi
-    };
+  const moduleData = modules.reduce((acc: ModuleData, module) => {
+    if (module.abi?.name) {
+      acc[module.abi.name] = {
+        bytecode: module.bytecode,
+        abi: module.abi
+      };
+    }
     return acc;
   }, {});
 
   fs.writeFileSync(filePath, JSON.stringify(moduleData, null, 2), 'utf-8');
 }
 
-// Updated writeModules function
-function writeModules(filePath, variableName) {
+// Function to write modules
+function writeModules(filePath: string, variableName: string): void {
   const allChainDirs = fs.readdirSync(deploymentsDir);
-  const allModules = {};
+  const allModules: ChainModules = {};
 
   allChainDirs.forEach(chainDir => {
     const chainModulesPath = path.join(deploymentsDir, chainDir, `${variableName}.json`);
@@ -122,15 +142,15 @@ function writeModules(filePath, variableName) {
   `;
 
   fs.writeFileSync(filePath, fileContent.trim(), 'utf-8');
-  }
+}
 
 // Main function to perform the tasks
-async function main() {
-  const config = parseYaml(configYamlPath);
-  const nodeUrl = config.profiles.default.rest_url;
-  const accountAddress = config.profiles.default.account.replace(/^0x/, ''); // Strip 0x from the account address
+async function main(): Promise<void> {
+  const config = parseYaml(getConfigPath());
+  const nodeUrl = config.profiles.default.rest_url || '';
+  const accountAddress = getAccountFromConfig().replace(/^0x/, ''); // Strip 0x from the account address
 
-  const addresses = parseToml(moveTomlPath);
+  const addresses = parseToml(getMoveTomlPath());
 
   // Fetch the chainId from the REST API
   const chainId = await fetchChainId(nodeUrl);
@@ -155,7 +175,7 @@ async function main() {
   console.log('Data for external modules:', loadExternalModules);
   if (loadExternalModules && addresses) {
     console.log('Loading external modules...');
-    const externalModules = [];
+    const externalModules: MoveModuleBytecode[] = [];
     for (const [name, address] of Object.entries(addresses)) {
       if (address.toLowerCase() !== accountAddress.toLowerCase()) {
         const modules = await getAccountModules({ address }, nodeUrl);
@@ -170,7 +190,6 @@ async function main() {
   const chainIdContent = `const latestChainId = ${chainId};\nexport default latestChainId;\n`;
   fs.writeFileSync(otherModulePath, chainIdContent, 'utf-8');
   console.log(`Chain ID ${chainId} written to ${otherModulePath}`);
-
 }
 
 main().catch(console.error);

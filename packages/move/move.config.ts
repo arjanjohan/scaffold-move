@@ -1,8 +1,15 @@
+interface NetworkConfig {
+  "rest-url": string;
+  "faucet-url"?: string;
+}
+
+interface Networks {
+  [key: string]: NetworkConfig;
+}
 
 const defaultNetwork = 'movement_testnet';
-// const overrideMoveVersion = 'move-1'; // Uncomment to use Move-1 for all networks
 
-const networks = {
+const networks: Networks = {
   movement_testnet: {
     "rest-url": "https://testnet.bardock.movementnetwork.xyz/v1",
     // "faucet-url": "https://faucet.testnet.bardock.movementnetwork.xyz/",
@@ -16,4 +23,4 @@ const networks = {
 // If set to true, it will load modules from all addresses declared in move.toml.
 const loadExternalModules = true;
 
-module.exports = { defaultNetwork, networks, loadExternalModules };
+export { defaultNetwork, networks, loadExternalModules };
