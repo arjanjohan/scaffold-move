@@ -46,10 +46,11 @@ function parseToml(filePath: string): Addresses | null {
 // Function to fetch account modules
 async function getAccountModules(
   requestParameters: { address: string; ledgerVersion?: string },
-  nodeUrl: string
+  network: Network,
+  nodeUrl?: string
 ): Promise<MoveModuleBytecode[]> {
   const aptosConfig = new AptosConfig({
-    network: Network.CUSTOM,
+    network,
     fullnode: nodeUrl,
   });
   const client = new Aptos(aptosConfig);
@@ -58,9 +59,6 @@ async function getAccountModules(
   if (ledgerVersion !== undefined) {
     ledgerVersionBig = BigInt(ledgerVersion);
   }
-  console.log(client);
-  console.log(address);
-  console.log(ledgerVersionBig);
   return client.getAccountModules({ accountAddress: address });
 }
 
@@ -148,6 +146,13 @@ function writeModules(filePath: string, variableName: string): void {
 async function main(): Promise<void> {
   const config = parseYaml(getConfigPath());
   const nodeUrl = config.profiles.default.rest_url || '';
+  const network: Network = {
+    'Custom': Network.CUSTOM,
+    'Mainnet': Network.MAINNET,
+    'Devnet': Network.DEVNET,
+    'Testnet': Network.TESTNET
+  }[config.profiles.default.network || 'Custom'] || Network.CUSTOM;
+
   const accountAddress = getAccountFromConfig().replace(/^0x/, ''); // Strip 0x from the account address
 
   const addresses = parseToml(getMoveTomlPath());
@@ -166,7 +171,7 @@ async function main(): Promise<void> {
   }
 
   // Fetch and save account modules for the account from config.yaml
-  const deployedModules = await getAccountModules({ address: accountAddress }, nodeUrl);
+  const deployedModules = await getAccountModules({ address: accountAddress }, network, network === Network.CUSTOM ? nodeUrl : undefined);
   writeChainModules(chainId, deployedModules, true);
   writeModules(deployedModulesPath, "deployedModules");
   console.log(`Data for deployed modules at address ${accountAddress} saved successfully.`);
@@ -178,7 +183,7 @@ async function main(): Promise<void> {
     const externalModules: MoveModuleBytecode[] = [];
     for (const [name, address] of Object.entries(addresses)) {
       if (address.toLowerCase() !== accountAddress.toLowerCase()) {
-        const modules = await getAccountModules({ address }, nodeUrl);
+        const modules = await getAccountModules({ address }, network, network === Network.CUSTOM ? nodeUrl : undefined);
         externalModules.push(...modules);
         console.log(`Data for address ${address} saved successfully.`);
       }
