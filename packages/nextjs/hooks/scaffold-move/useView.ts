@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useGetModule } from "./useGetModule";
 import { Aptos } from "@aptos-labs/ts-sdk";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
@@ -61,8 +61,11 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
 
   const moduleAddress = moveModule.abi.address;
 
-  const fetchData = async () => {
-    if (args && args.some(arg => arg === undefined)) {
+  // Memoize args to avoid stringifying in the dependency array
+  const argsString = JSON.stringify(args);
+
+  const fetchData = useCallback(async () => {
+    if (args && args.some((arg: any) => arg === undefined)) {
       return;
     }
 
@@ -88,7 +91,7 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [moduleAddress, moduleName, functionName, tyArgs, argsString, aptos]);
 
   useEffect(() => {
     fetchData();
@@ -97,7 +100,7 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
       const interval = setInterval(fetchData, 10000); // Adjust the interval as needed
       return () => clearInterval(interval);
     }
-  }, [moduleName, functionName, JSON.stringify(args), watch]);
+  }, [fetchData, watch]);
 
   return { data, error, isLoading, refetch: fetchData };
 };
