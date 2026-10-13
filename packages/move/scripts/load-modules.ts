@@ -9,7 +9,6 @@ const deploymentsDir = path.join(__dirname, '../deployments');
 // Paths to the relevant files
 const deployedModulesPath = path.join(__dirname, '../../../packages/nextjs/modules/deployedModules.ts');
 const externalModulesPath = path.join(__dirname, '../../../packages/nextjs/modules/externalModules.ts');
-const otherModulePath = path.join(__dirname, '../../../packages/nextjs/modules/latestChainId.ts');
 
 interface Addresses {
   [key: string]: string;
@@ -184,10 +183,6 @@ async function main(): Promise<void> {
     writeChainModules(chainId, externalModules, false);
     writeModules(externalModulesPath, "externalModules");
   }
-
-  const chainIdContent = `const latestChainId = ${chainId};\nexport default latestChainId;\n`;
-  fs.writeFileSync(otherModulePath, chainIdContent, 'utf-8');
-  console.log(`Chain ID ${chainId} written to ${otherModulePath}`);
 }
 
 main().catch(console.error);

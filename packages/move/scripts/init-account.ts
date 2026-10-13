@@ -1,13 +1,14 @@
 import * as fs from 'fs';
 import { exec } from 'child_process';
 import minimist from 'minimist';
-import { defaultChains } from '@scaffold-move/common';
+import { Chain, defaultChains } from '@scaffold-move/common';
 import { defaultNetwork } from '../move.config';
 import { getConfigPath, getMoveTomlPath, parseYaml } from './utils';
 
 const args = minimist(process.argv.slice(2));
 const network = args.network || defaultNetwork; // Use default network from config if not provided
-const chain = defaultChains[network];
+const chains: Record<string, Chain> = defaultChains;
+const chain = chains[network];
 const restUrl = args['rest-url'];
 const faucetUrl = args['faucet-url'];
 const moveTomlPath = getMoveTomlPath();

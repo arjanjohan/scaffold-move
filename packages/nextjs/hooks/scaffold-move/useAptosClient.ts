@@ -1,10 +1,10 @@
 import { Aptos, AptosConfig, NetworkToNetworkName } from "@aptos-labs/ts-sdk";
-import { defaultChains } from "@scaffold-move/common";
+import { Chain, defaultChains } from "@scaffold-move/common";
 
 const aptosApiKey = process.env.NEXT_PUBLIC_APTOS_API_KEY;
 
 export function useAptosClient(chainId: number) {
-  const chain = Object.values(defaultChains).find(chain => chain.id === chainId);
+  const chain = Object.values<Chain>(defaultChains).find(chain => chain.id === chainId);
   if (!chain) {
     throw new Error(`Chain with id ${chainId} not found`);
   }

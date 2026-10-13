@@ -3,7 +3,7 @@ import { Types } from "aptos";
 import type { MergeDeepRecord } from "type-fest/source/merge-deep";
 import deployedModulesData from "~~/modules/deployedModules";
 import externalModulesData from "~~/modules/externalModules";
-import latestChainId from "~~/modules/latestChainId";
+import scaffoldConfig from "~~/scaffold.config";
 
 // Helper type to create a tuple of any type with specific length
 type TupleOfLength<L extends number, T = any> = [T, ...T[]] & { length: L };
@@ -195,9 +195,7 @@ export type GenericModulesDeclaration = {
 
 export const modules = modulesData as GenericModulesDeclaration | null;
 
-// TODO: Figure out why getting the chainId from config is not working.
-// type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
-type ConfiguredChainId = typeof latestChainId;
+type ConfiguredChainId = (typeof scaffoldConfig)["targetNetworks"][0]["id"];
 
 type IsModuleDeclarationMissing<TYes, TNo> = typeof modulesData extends Record<ConfiguredChainId, any> ? TNo : TYes;
 

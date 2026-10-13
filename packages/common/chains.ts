@@ -22,7 +22,8 @@ export type Chain = {
   | { network: Exclude<NetworkName, "custom">; fullnode?: undefined }
 );
 
-export const defaultChains: Record<string, Chain> = {
+// `as const` keeps chain ids literal, so the frontend can type modules per chain from scaffold.config
+export const defaultChains = {
   movement_testnet: {
     id: 250,
     name: "Movement Testnet",
@@ -65,4 +66,4 @@ export const defaultChains: Record<string, Chain> = {
     name: "Local",
     network: "local",
   },
-};
+} as const satisfies Record<string, Chain>;
