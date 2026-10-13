@@ -12,7 +12,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@aptos-labs/ts-sdk": "^1.38.0",
+    "@aptos-labs/ts-sdk": "^5.2.1",
     "axios": "^1.8.4",
     "got": "11.8.6",
     "js-yaml": "^4.1.0",
