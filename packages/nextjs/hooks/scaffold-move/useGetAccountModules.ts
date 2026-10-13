@@ -14,7 +14,9 @@ function getAccountModules(
   if (ledgerVersion !== undefined) {
     ledgerVersionBig = BigInt(ledgerVersion);
   }
-  return withResponseError(client.getAccountModules({ accountAddress: address }));
+  return withResponseError(
+    client.getAccountModules({ accountAddress: address, options: { ledgerVersion: ledgerVersionBig } }),
+  );
 }
 
 export function useGetAccountModules(address: string): UseQueryResult<Types.MoveModuleBytecode[], ResponseError> {
@@ -22,7 +24,7 @@ export function useGetAccountModules(address: string): UseQueryResult<Types.Move
   const aptosClient = useAptosClient(network.targetNetwork.id);
 
   return useQuery<Array<Types.MoveModuleBytecode>, ResponseError>({
-    queryKey: ["accountModules", { address }],
+    queryKey: ["accountModules", { chainId: network.targetNetwork.id, address }],
     queryFn: () => getAccountModules({ address }, aptosClient),
   });
 }

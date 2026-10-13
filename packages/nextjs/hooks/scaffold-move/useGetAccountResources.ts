@@ -1,7 +1,7 @@
 import { ResponseError, withResponseError } from "../client";
 import { useTargetNetwork } from "./useTargetNetwork";
 import { Aptos } from "@aptos-labs/ts-sdk";
-import { useWallet } from "@scaffold-move/wallet-adapter-react";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { Types } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move";
@@ -31,13 +31,13 @@ export function useGetAccountResources(
   const { account } = useWallet();
 
   // If address is not provided, use the wallet address
-  // Default to empty string if account is not connected
-  // Empty string will lead to ResponseError
+  // Default to empty string if account is not connected, the query is skipped then
   const resourceAddress = address || account?.address?.toString() || "";
 
   return useQuery<Array<Types.MoveResource>, ResponseError>({
-    queryKey: ["accountResources", { address: resourceAddress }],
+    queryKey: ["accountResources", { chainId: network.targetNetwork.id, address: resourceAddress }],
     queryFn: () => getAccountResources({ address: resourceAddress }, aptosClient),
+    enabled: !!resourceAddress,
     retry: options?.retry ?? false,
   });
 }

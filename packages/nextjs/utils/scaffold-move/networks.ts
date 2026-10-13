@@ -1,43 +1,34 @@
-import { Network } from "@aptos-labs/ts-sdk";
+import { Chain } from "@scaffold-move/common";
 import scaffoldConfig from "~~/scaffold.config";
-import { Chain } from "~~/utils/scaffold-move/chains";
 
 /**
- * Gives the faucet address URL, returns empty string if the faucet is not defined (mainnet or local chain)
+ * Gives the faucet page URL, returns empty string if the faucet is not defined (mainnet or local chain)
  */
 export function getFaucetAddressLink(chain: Chain) {
-  if (chain.faucet === "") {
-    return "";
-  }
-  return chain.faucet;
+  return chain.faucet_url ?? "";
 }
 
 /**
- * Gives the block explorer transaction URL, returns empty string if the network is a local chain
+ * Gives the block explorer transaction URL, returns empty string if the network has no block explorer
  */
 export function getBlockExplorerTxLink(chain: Chain, txnHash: string) {
   return buildExplorerUrl(chain, "txn", txnHash);
 }
 
 /**
- * Gives the block explorer URL for a given address.
- * Defaults to Aptoslabs explorer if no block explorer is configured for the network.
+ * Gives the block explorer URL for a given address, returns empty string if the network has no block explorer
  */
 export function getBlockExplorerAddressLink(chain: Chain, address: string) {
   return buildExplorerUrl(chain, "account", address);
 }
 
 function buildExplorerUrl(chain: Chain, path: string, param: string) {
-  if (chain.network === Network.LOCAL) {
+  if (!chain.block_explorer) {
     return "";
   }
 
-  if (chain.block_explorer) {
-    const networkParam = chain.explorer_network_param ? `?network=${chain.explorer_network_param}` : "";
-    return `${chain.block_explorer}/${path}/${param}${networkParam}`;
-  }
-
-  return `https://explorer.aptoslabs.com/${path}/${param}?network=${chain.network}`;
+  const networkParam = chain.explorer_network_param ? `?network=${chain.explorer_network_param}` : "";
+  return `${chain.block_explorer}/${path}/${param}${networkParam}`;
 }
 
 /**

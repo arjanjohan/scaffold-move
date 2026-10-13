@@ -1,6 +1,6 @@
+import { Chain } from "@scaffold-move/common";
 import { create } from "zustand";
 import scaffoldConfig from "~~/scaffold.config";
-import { Chain } from "~~/utils/scaffold-move/chains";
 
 /**
  * Zustand Store

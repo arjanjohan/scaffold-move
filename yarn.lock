@@ -55,45 +55,43 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aptos-connect/wallet-adapter-plugin@npm:2.4.1":
-  version: 2.4.1
-  resolution: "@aptos-connect/wallet-adapter-plugin@npm:2.4.1"
+"@aptos-connect/wallet-adapter-plugin@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@aptos-connect/wallet-adapter-plugin@npm:3.0.4"
   dependencies:
-    "@aptos-connect/wallet-api": ^0.1.9
-    "@identity-connect/crypto": ^0.2.5
-    "@identity-connect/dapp-sdk": ^0.10.4
+    "@aptos-connect/wallet-api": 0.6.1
+    "@aptos-labs/wallet-standard": ^0.5.0
+    "@identity-connect/crypto": 0.3.1
+    "@identity-connect/dapp-sdk": 0.16.2
   peerDependencies:
-    "@aptos-labs/ts-sdk": ^1.33.1
-    "@aptos-labs/wallet-standard": ^0.3.0
-  checksum: 3b1dfabeb672b6b990f218d705e99dd7f903deb43ade05d1ada753a8eff9ffc5189ce08a3d7849cb304077bea8f2f982d67fa835a06cff9835ae4bbf544f4f06
+    "@aptos-labs/ts-sdk": ^5 || ^6
+  checksum: d6c697deab1b0af2a3f24dbe016e99916c55a7919af5a5b7c9c9010ad8f54473288c966365e7f777fe26aeea5626bb59eb91f20d374c0712a0755220ffbb0f5b
   languageName: node
   linkType: hard
 
-"@aptos-connect/wallet-api@npm:^0.1.6, @aptos-connect/wallet-api@npm:^0.1.9":
-  version: 0.1.9
-  resolution: "@aptos-connect/wallet-api@npm:0.1.9"
+"@aptos-connect/wallet-api@npm:0.6.1":
+  version: 0.6.1
+  resolution: "@aptos-connect/wallet-api@npm:0.6.1"
   dependencies:
-    "@aptos-labs/wallet-standard": ^0.3.0
-    "@identity-connect/api": ^0.7.0
+    "@aptos-labs/wallet-standard": ^0.5.2
+    "@identity-connect/api": 0.8.0
   peerDependencies:
-    "@aptos-labs/ts-sdk": ^1.33.1
-    aptos: ^1.20.0
-  checksum: d545f956bec10d98d7947df21ff64a2629521a74015ca44857cefa7f26992a51ce34c1ef5b01b83eff1c45f21b19c1e2cace6d00d5ba47cc63ce871a1d42ccbb
+    "@aptos-labs/ts-sdk": ^5 || ^6
+  checksum: ca88e56299fdd6ef0620703e0c0db41164da71250437bf44c1c18b4edf7eab5a7568e66d3c5003b1359a93a021bee88f04dd015b8be21a6ed2db9a7b9a36b6b0
   languageName: node
   linkType: hard
 
-"@aptos-connect/web-transport@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "@aptos-connect/web-transport@npm:0.1.3"
+"@aptos-connect/web-transport@npm:0.6.2":
+  version: 0.6.2
+  resolution: "@aptos-connect/web-transport@npm:0.6.2"
   dependencies:
-    "@aptos-connect/wallet-api": ^0.1.9
+    "@aptos-connect/wallet-api": 0.6.1
     uuid: ^9.0.1
   peerDependencies:
-    "@aptos-labs/ts-sdk": ^1.33.1
-    "@aptos-labs/wallet-standard": ^0.3.0
+    "@aptos-labs/ts-sdk": ^5 || ^6
+    "@aptos-labs/wallet-standard": ^0.5.0
     "@telegram-apps/bridge": ^1.0.0
-    aptos: ^1.20.0
-  checksum: 3eccbbfc7fda864816ed5f5e1d4a8a6b66e71cc7968c2f49e9f8e10a55c5c4f1eca24653ce1eaacd079677ca53250d38b498c9a9274c1b6591d59cccd51b8008
+  checksum: 631790f01ae6c90144cdd9b05c40c2be26c7c88caaafa2dbc8b1d917bb5b69071fac77287bd762a122ae131a95c2fed2cd5c285c4516062a4cfbec84500dc387
   languageName: node
   linkType: hard
 
@@ -118,120 +116,65 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aptos-labs/aptos-client@npm:^1.1.0":
-  version: 1.2.0
-  resolution: "@aptos-labs/aptos-client@npm:1.2.0"
+"@aptos-labs/aptos-client@npm:^2.1.0":
+  version: 2.2.0
+  resolution: "@aptos-labs/aptos-client@npm:2.2.0"
   peerDependencies:
-    axios: ^1.8.4
     got: ^11.8.6
-  checksum: 598862cbf29f25e93e6a349afe8322b039061f023d89d01b10e8661861ee930741fe16f844a94e3fc71d82fd2684efe15d1944f0640cd2ca08f906a9840ba5f9
+  checksum: 46dc26839cf5662dab6f0f84725ab65884e1ed9f3ee00b9a6add1bfcdc712a97f8e202acfb420ee451ca32302058d860551d525821d4dabdd09a3df5b7cd778e
   languageName: node
   linkType: hard
 
-"@aptos-labs/aptos-dynamic-transaction-composer@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "@aptos-labs/aptos-dynamic-transaction-composer@npm:0.1.3"
-  checksum: 5488a3c54efd259e21ee15c1853d42866e8d96111ed6bc5b4c1078c8f734f832c453b28839d65e3b9470fe209531a4a05fd380d17beb61973a80ec5d9ea6676c
-  languageName: node
-  linkType: hard
-
-"@aptos-labs/script-composer-pack@npm:^0.0.9":
-  version: 0.0.9
-  resolution: "@aptos-labs/script-composer-pack@npm:0.0.9"
-  dependencies:
-    "@aptos-labs/aptos-dynamic-transaction-composer": ^0.1.3
-  checksum: 94aa39091f2ee3a5062a752840a73a0fe23f19ea7e62b79c000584d0686d85d2280a52667ad08b5449259b489aa365fc7f925d4c18686010ce6159f1b06c90bd
-  languageName: node
-  linkType: hard
-
-"@aptos-labs/ts-sdk@npm:^1.26.0, @aptos-labs/ts-sdk@npm:^1.38.0, @aptos-labs/ts-sdk@npm:^1.9.1":
-  version: 1.38.0
-  resolution: "@aptos-labs/ts-sdk@npm:1.38.0"
+"@aptos-labs/ts-sdk@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "@aptos-labs/ts-sdk@npm:5.2.1"
   dependencies:
     "@aptos-labs/aptos-cli": ^1.0.2
-    "@aptos-labs/aptos-client": ^1.1.0
-    "@aptos-labs/script-composer-pack": ^0.0.9
-    "@noble/curves": ^1.6.0
+    "@aptos-labs/aptos-client": ^2.1.0
+    "@noble/curves": ^1.9.0
     "@noble/hashes": ^1.5.0
     "@scure/bip32": ^1.4.0
     "@scure/bip39": ^1.3.0
     eventemitter3: ^5.0.1
-    form-data: ^4.0.0
     js-base64: ^3.7.7
     jwt-decode: ^4.0.0
     poseidon-lite: ^0.2.0
-  checksum: 781033da6867f722a36881509ba114645df709dbd0875050f160a48f3130af125ddfa74c121126780f12ef1173ac20d04110c14b73c7978ad209188a0b335215
+  checksum: 1c49339cf5fd352b4126853c9e361e70981a650b20c7a23024c9640ced42be2d0dd9f94ff212307935fe61d828e3ec5ec8fe82d9d76118dce11201f7271a3a52
   languageName: node
   linkType: hard
 
-"@aptos-labs/wallet-standard@npm:0.0.11":
-  version: 0.0.11
-  resolution: "@aptos-labs/wallet-standard@npm:0.0.11"
+"@aptos-labs/wallet-adapter-core@npm:8.5.1":
+  version: 8.5.1
+  resolution: "@aptos-labs/wallet-adapter-core@npm:8.5.1"
   dependencies:
-    "@aptos-labs/ts-sdk": ^1.9.1
-    "@wallet-standard/core": 1.0.3
-  checksum: 7cc2661dfa27ba2be276c87ddf794866f9f438712a88adc92d5b89364fa4f27db161045e6197061727b257da5deaf9fa416da23ab1d297f05bbea9053b88eb6f
+    "@aptos-connect/wallet-adapter-plugin": ^3.0.4
+    "@aptos-labs/wallet-standard": ^0.5.2
+    eventemitter3: ^5.0.1
+  peerDependencies:
+    "@aptos-labs/ts-sdk": ^5.1.1
+  checksum: 16a681956e02c6688f0ebbc5ff4b783544f856e3d1c6e49c63cf62e2bd691d3f8ee1ad618e8141052b9429d3c74104d6dbd50a87d413dbd913de7705eacb6b8d
   languageName: node
   linkType: hard
 
-"@aptos-labs/wallet-standard@npm:0.1.0-ms.1":
-  version: 0.1.0-ms.1
-  resolution: "@aptos-labs/wallet-standard@npm:0.1.0-ms.1"
+"@aptos-labs/wallet-adapter-react@npm:^8.3.3":
+  version: 8.3.3
+  resolution: "@aptos-labs/wallet-adapter-react@npm:8.3.3"
+  dependencies:
+    "@aptos-labs/wallet-adapter-core": 8.5.1
+    "@radix-ui/react-slot": ^1.0.2
   peerDependencies:
-    "@aptos-labs/ts-sdk": ^1.17.0
+    react: ^18.0.0 || ^19.0.0
+  checksum: 4122b2980cfed71a226f629311ad4644c495eaf15805120636005a3972ab7d19e01a73770a0bbfda6413863f026804c16585fce787bef8e3ad150a5a85d5d984
+  languageName: node
+  linkType: hard
+
+"@aptos-labs/wallet-standard@npm:^0.5.0, @aptos-labs/wallet-standard@npm:^0.5.2":
+  version: 0.5.2
+  resolution: "@aptos-labs/wallet-standard@npm:0.5.2"
+  peerDependencies:
+    "@aptos-labs/ts-sdk": ^3.1.3 || ^4.0.0 || ^5.0.0
     "@wallet-standard/core": ^1.0.3
-  checksum: efbc15fb3ae6393e596dddbe573b17e2cd6744d1b605491fc60bc8676e7dca4b4e69a7a8eaa7f4173b20286ed87633671d55929ba61157337faf1c5377606730
-  languageName: node
-  linkType: hard
-
-"@aptos-labs/wallet-standard@npm:^0.3.0":
-  version: 0.3.1
-  resolution: "@aptos-labs/wallet-standard@npm:0.3.1"
-  peerDependencies:
-    "@aptos-labs/ts-sdk": ^1.37.1
-    "@wallet-standard/core": ^1.0.3
-  checksum: 2330bcf5ce8c3709efd94d116d1cd1445f27aa82e950ec3d82e0c7a5f8b7c50fae2d64dfeca4f721c4b8ce8ec1f2cbdd23dbba74fdcaccc94e5168f94f927333
-  languageName: node
-  linkType: hard
-
-"@atomrigslab/aptos-wallet-adapter@npm:^0.1.20":
-  version: 0.1.21
-  resolution: "@atomrigslab/aptos-wallet-adapter@npm:0.1.21"
-  dependencies:
-    "@aptos-labs/wallet-standard": 0.0.11
-    "@atomrigslab/dekey-web-wallet-provider": 1.2.1
-  peerDependencies:
-    "@aptos-labs/ts-sdk": ^1.9.0
-  checksum: cd70a00d2bd6e0bc3b1482738b726ca76f45a889f417ca943a35f2c2edf52e96159b12fc58fe11ea92101ad0908772c050a9c96441e8900e6be64f7cdfc6b0dc
-  languageName: node
-  linkType: hard
-
-"@atomrigslab/dekey-web-wallet-provider@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@atomrigslab/dekey-web-wallet-provider@npm:1.2.1"
-  dependencies:
-    "@atomrigslab/providers": 1.1.0
-  checksum: 8a43a1fc194687fe69c0c7e0cf87b803aac0e1cb78f2657d9de048c7dc182029456db8bdeca0e9038dcd57152594047def3dc2e0fc8d50ee08e17fec4f7e4c99
-  languageName: node
-  linkType: hard
-
-"@atomrigslab/providers@npm:1.1.0":
-  version: 1.1.0
-  resolution: "@atomrigslab/providers@npm:1.1.0"
-  dependencies:
-    "@metamask/object-multiplex": ^1.1.0
-    "@metamask/safe-event-emitter": ^2.0.0
-    "@types/chrome": ^0.0.136
-    detect-browser: ^5.2.0
-    eth-rpc-errors: ^4.0.2
-    extension-port-stream: ^2.0.1
-    fast-deep-equal: ^2.0.1
-    is-stream: ^2.0.0
-    json-rpc-engine: ^6.1.0
-    json-rpc-middleware-stream: ^3.0.0
-    pump: ^3.0.0
-    webextension-polyfill-ts: ^0.25.0
-  checksum: 8f70ed98f70299458047f5b05a07807a42bd3fcaf796c41214aafadd539ad0ad8441cdbc4bbf7d2dd633a060f3b8d0b196f25b1ee9c1299dfa7403dc311914a4
+  checksum: 0b044c9e00c78f8671f2bebf0236f752b6f85675e4e5306ce2297e7d02e2f448a0b4f06361e836b0be8a9cec7fc55f6dccc443f0129ed7631261eea8d76dacdb
   languageName: node
   linkType: hard
 
@@ -626,52 +569,51 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@identity-connect/api@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "@identity-connect/api@npm:0.7.0"
-  checksum: 040eb2852f80c37ae87c906504f918356e31dd32bf1a13632b51f05c44cb5e187b6e5344ff113a32e4032c2d69dcbc110990c8096178fdea9d120e62e7dac12a
+"@identity-connect/api@npm:0.8.0":
+  version: 0.8.0
+  resolution: "@identity-connect/api@npm:0.8.0"
+  checksum: 426e6f6358e945cfbdede70cd27550f1f007d9a2f885f65e4bd5e7479715def0f227d97236a28e687f99739bdf21d2dba9ccef640487bcf3d02abe5f83393091
   languageName: node
   linkType: hard
 
-"@identity-connect/crypto@npm:^0.2.5":
-  version: 0.2.5
-  resolution: "@identity-connect/crypto@npm:0.2.5"
+"@identity-connect/crypto@npm:0.3.1":
+  version: 0.3.1
+  resolution: "@identity-connect/crypto@npm:0.3.1"
   dependencies:
-    "@aptos-connect/wallet-api": ^0.1.6
+    "@aptos-connect/wallet-api": 0.6.1
     "@noble/hashes": ^1.3.1
     ed2curve: ^0.3.0
     tweetnacl: ^1.0.3
   peerDependencies:
-    "@aptos-labs/ts-sdk": ^1.33.1
-  checksum: a80998c25267dea81eb0e3d7387c0fedf18414c8e3ed80a26033d16ac0b9be99be438e4169ad1adff3d072b0bccd0eacfc53e5dbf95f12f976944acacf18433a
+    "@aptos-labs/ts-sdk": ^5 || ^6
+  checksum: c5a188ce15531480a06d9dacc4f6ca13032d5022de5ac360642f2181ea2889520382654d9db6c539dad226e54e8b22911cc15f5639324dfd52293e0062b35618
   languageName: node
   linkType: hard
 
-"@identity-connect/dapp-sdk@npm:^0.10.4":
-  version: 0.10.4
-  resolution: "@identity-connect/dapp-sdk@npm:0.10.4"
+"@identity-connect/dapp-sdk@npm:0.16.2":
+  version: 0.16.2
+  resolution: "@identity-connect/dapp-sdk@npm:0.16.2"
   dependencies:
-    "@aptos-connect/wallet-api": ^0.1.9
-    "@aptos-connect/web-transport": ^0.1.3
-    "@identity-connect/api": ^0.7.0
-    "@identity-connect/crypto": ^0.2.5
-    "@identity-connect/wallet-api": ^0.1.2
-    axios: ^1.6.0
+    "@aptos-connect/wallet-api": 0.6.1
+    "@aptos-connect/web-transport": 0.6.2
+    "@identity-connect/api": 0.8.0
+    "@identity-connect/crypto": 0.3.1
+    "@identity-connect/wallet-api": 0.2.0
+    axios: ^1.9.0
     uuid: ^9.0.1
   peerDependencies:
-    "@aptos-labs/ts-sdk": ^1.33.1
-    "@aptos-labs/wallet-standard": ^0.3.0
-  checksum: 3d24663b79155c23adbd9174f6da115048d3d872684f8e7b93abb55fb3b4b4967ee981b782d2d9c990b966a3efc49fede0824ddfd57c0f827c792a69bd909bc4
+    "@aptos-labs/ts-sdk": ^5 || ^6
+    "@aptos-labs/wallet-standard": ^0.5.0
+  checksum: d906d910d5369390ce12f7bc49f3625c3a09b2aa18c1c6cc0d6c5d1a7333e6dc9004da3efd449c7cfa1ce29f3fb151ad547b01e418a49b9014c22f8d19bcc3f8
   languageName: node
   linkType: hard
 
-"@identity-connect/wallet-api@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "@identity-connect/wallet-api@npm:0.1.2"
+"@identity-connect/wallet-api@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@identity-connect/wallet-api@npm:0.2.0"
   peerDependencies:
-    "@aptos-labs/ts-sdk": ^1.33.1
-    aptos: ^1.20.0
-  checksum: 3b1b7e59fa7b96828cb735694ab6dc9c57e62936ff9a7de68ffab778e79d8ac10452cc8924c879f77a0c3f1a5e8901ba7f09102d6550b99b7b3ac32fa73aee1d
+    "@aptos-labs/ts-sdk": ^1.33.1 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
+  checksum: b98c8a83c64ae23ce9f88f2cd63752d6bdc42abd65cb666e47e35b3892b1f7825fb52a1445ec4336ec1f312bcbb67c6d10a2f02114b78f9c39172b36a7796eaf
   languageName: node
   linkType: hard
 
@@ -825,17 +767,6 @@ __metadata:
     "@metamask/utils": ^8.3.0
     readable-stream: ^3.6.2
   checksum: ff11ad3ff0ec27530efc53c4e6543661648f437dacdd58797449307e20dbc428b479cd8d1e9767797268b98d0445bd6f1986820a8c855faeef01d5c03b55323b
-  languageName: node
-  linkType: hard
-
-"@metamask/object-multiplex@npm:^1.1.0":
-  version: 1.3.0
-  resolution: "@metamask/object-multiplex@npm:1.3.0"
-  dependencies:
-    end-of-stream: ^1.4.4
-    once: ^1.4.0
-    readable-stream: ^2.3.3
-  checksum: 4a2b48fc0e1a8f536edbab9f37b637cd91102538ad76ce07bdfad99b90d98b34585a0e5afa62ca9c1d550a0016347568ff0d635e5bf8cfa266d049e1c0ebedc8
   languageName: node
   linkType: hard
 
@@ -1008,53 +939,6 @@ __metadata:
     semver: ^7.5.4
     uuid: ^9.0.1
   checksum: f720b0f7bdd46054aa88d15a9702e1de6d7200a1ca1d4f6bc48761b039f1bbffb46ac88bc87fe79e66128c196d424f3b9ef071b3cb4b40139223786d56da35e0
-  languageName: node
-  linkType: hard
-
-"@microsoft/fetch-event-source@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@microsoft/fetch-event-source@npm:2.0.1"
-  checksum: a50e1c0f33220206967266d0a4bbba0703e2793b079d9f6e6bfd48f71b2115964a803e14cf6e902c6fab321edc084f26022334f5eaacc2cec87f174715d41852
-  languageName: node
-  linkType: hard
-
-"@mizuwallet-sdk/aptos-wallet-adapter@npm:^0.3.2":
-  version: 0.3.2
-  resolution: "@mizuwallet-sdk/aptos-wallet-adapter@npm:0.3.2"
-  dependencies:
-    "@aptos-labs/ts-sdk": ^1.26.0
-    "@aptos-labs/wallet-standard": 0.1.0-ms.1
-    buffer: ^6.0.3
-  peerDependencies:
-    "@mizuwallet-sdk/core": ">=1.4.0"
-    "@mizuwallet-sdk/protocol": 0.0.6
-  checksum: 39c4f69d544db25febaf848317292ce8c6f85443108ea4c7f5565a717977536bd7cd01b8dd6420469ae89d3624eb7cbfb715692fbd886ebe86fc66bc08f1e9fb
-  languageName: node
-  linkType: hard
-
-"@mizuwallet-sdk/core@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@mizuwallet-sdk/core@npm:1.4.0"
-  dependencies:
-    "@mizuwallet-sdk/protocol": 0.0.2
-    buffer: ^6.0.3
-    jwt-decode: ^4.0.0
-  peerDependencies:
-    "@aptos-labs/ts-sdk": ">=1.14.0"
-    "@mizuwallet-sdk/protocol": 0.0.2
-    graphql-request: ">=7.0.1"
-  checksum: d554ce2b10c76a8b6f4019c186c7726d1333337b61693e351bfb5662f11531b2e82a8657bd79a47553c8e477dfcfc6f621d172a2475744ee0a99bc2525016569
-  languageName: node
-  linkType: hard
-
-"@mizuwallet-sdk/protocol@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@mizuwallet-sdk/protocol@npm:0.0.2"
-  dependencies:
-    "@microsoft/fetch-event-source": ^2.0.1
-    tweetnacl: ^1.0.3
-    tweetnacl-util: ^0.15.1
-  checksum: b6f7212b546c4e72118e2785b4f822f662e2349b90f038f85f4d93fcf7ba6f643b82a59f6652fbfdd53723394cff3da5398873457e59eaf853c0acfc2fedbb97
   languageName: node
   linkType: hard
 
@@ -1258,6 +1142,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noble/curves@npm:^1.9.0":
+  version: 1.9.7
+  resolution: "@noble/curves@npm:1.9.7"
+  dependencies:
+    "@noble/hashes": 1.8.0
+  checksum: 65acad44ac6944ab96471109087d6cfcbcaa251faad6295961be9a5ace220634f4b7c74a96d1ee2274ad3880ea953d8e8259893ed8c906c831ef29f5c04ec9cc
+  languageName: node
+  linkType: hard
+
 "@noble/hashes@npm:1.3.3, @noble/hashes@npm:~1.3.0":
   version: 1.3.3
   resolution: "@noble/hashes@npm:1.3.3"
@@ -1276,6 +1169,13 @@ __metadata:
   version: 1.7.1
   resolution: "@noble/hashes@npm:1.7.1"
   checksum: 4f1b56428a10323feef17e4f437c9093556cb18db06f94d254043fadb69c3da8475f96eb3f8322d41e8670117d7486475a8875e68265c2839f60fd03edd6a616
+  languageName: node
+  linkType: hard
+
+"@noble/hashes@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@noble/hashes@npm:1.8.0"
+  checksum: c94e98b941963676feaba62475b1ccfa8341e3f572adbb3b684ee38b658df44100187fa0ef4220da580b13f8d27e87d5492623c8a02ecc61f23fb9960c7918f5
   languageName: node
   linkType: hard
 
@@ -1462,15 +1362,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@scaffold-move/common@workspace:*, @scaffold-move/common@workspace:packages/common":
+  version: 0.0.0-use.local
+  resolution: "@scaffold-move/common@workspace:packages/common"
+  languageName: unknown
+  linkType: soft
+
 "@scaffold-move/move@workspace:packages/move":
   version: 0.0.0-use.local
   resolution: "@scaffold-move/move@workspace:packages/move"
   dependencies:
-    "@aptos-labs/ts-sdk": ^1.38.0
+    "@aptos-labs/ts-sdk": ^5.2.1
+    "@scaffold-move/common": "workspace:*"
     "@types/js-yaml": ^4
     "@types/minimist": ^1.2.5
     "@types/node": ^20.11.24
-    axios: ^1.8.4
     got: 11.8.6
     js-yaml: ^4.1.0
     minimist: ^1.2.8
@@ -1484,10 +1390,12 @@ __metadata:
   resolution: "@scaffold-move/nextjs@workspace:packages/nextjs"
   dependencies:
     "@apollo/client": ^3.12.4
+    "@aptos-labs/ts-sdk": ^5.2.1
+    "@aptos-labs/wallet-adapter-react": ^8.3.3
+    "@aptos-labs/wallet-standard": ^0.5.2
     "@heroicons/react": ^2.1.5
-    "@mizuwallet-sdk/core": ^1.4.0
     "@rainbow-me/rainbowkit": 2.1.6
-    "@scaffold-move/wallet-adapter-react": ^4.1.2
+    "@scaffold-move/common": "workspace:*"
     "@tanstack/react-query": ^5.56.2
     "@telegram-apps/bridge": ^1.9.0
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
@@ -1495,6 +1403,7 @@ __metadata:
     "@types/nprogress": ^0.2.3
     "@types/react": ^18.3.5
     "@typescript-eslint/eslint-plugin": ^5.62.0
+    "@wallet-standard/core": ^1.1.2
     abitype: 1.0.6
     aptos: ^1.21.0
     autoprefixer: ^10.4.20
@@ -1529,35 +1438,6 @@ __metadata:
     zustand: ^4.5.5
   languageName: unknown
   linkType: soft
-
-"@scaffold-move/wallet-adapter-core@npm:^5.1.1":
-  version: 5.2.0
-  resolution: "@scaffold-move/wallet-adapter-core@npm:5.2.0"
-  dependencies:
-    "@aptos-connect/wallet-adapter-plugin": 2.4.1
-    "@aptos-labs/wallet-standard": ^0.3.0
-    "@atomrigslab/aptos-wallet-adapter": ^0.1.20
-    "@mizuwallet-sdk/aptos-wallet-adapter": ^0.3.2
-    buffer: ^6.0.3
-    eventemitter3: ^4.0.7
-    tweetnacl: ^1.0.3
-  peerDependencies:
-    "@aptos-labs/ts-sdk": ^1.37.1
-  checksum: 330178ba60f10f78222b1041748ad038512a1add17cb7f248ed6f3bbe25f3757b840dfe5ae9b86569f9c9defed9be95a5cdd6dfc071ae1ac864f665506a83bb8
-  languageName: node
-  linkType: hard
-
-"@scaffold-move/wallet-adapter-react@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "@scaffold-move/wallet-adapter-react@npm:4.1.2"
-  dependencies:
-    "@radix-ui/react-slot": ^1.0.2
-    "@scaffold-move/wallet-adapter-core": ^5.1.1
-  peerDependencies:
-    react: ^18
-  checksum: b8391d175e6e4f5878987e17c5b466bbd6e5887771ed4cf4f2df1f9cd0cb33a23c98551c355cbea84a102c1891eabcc638fe1cd2d91a915d63f96ae8b9f69b0b
-  languageName: node
-  linkType: hard
 
 "@scure/base@npm:^1.1.3, @scure/base@npm:~1.2.2, @scure/base@npm:~1.2.4":
   version: 1.2.4
@@ -2014,16 +1894,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chrome@npm:^0.0.136":
-  version: 0.0.136
-  resolution: "@types/chrome@npm:0.0.136"
-  dependencies:
-    "@types/filesystem": "*"
-    "@types/har-format": "*"
-  checksum: af96fdc79fb019d827fdb6269f831921f8f36215ee05a2624436dd2ad4d84d7be12333cc6f54912fb8bae0ca49cbfde5a78de94723bfbd20d309d2e71e274a1b
-  languageName: node
-  linkType: hard
-
 "@types/debug@npm:^4.1.7":
   version: 4.1.12
   resolution: "@types/debug@npm:4.1.12"
@@ -2037,29 +1907,6 @@ __metadata:
   version: 1.0.7
   resolution: "@types/estree@npm:1.0.7"
   checksum: d9312b7075bdd08f3c9e1bb477102f5458aaa42a8eec31a169481ce314ca99ac716645cff4fca81ea65a2294b0276a0de63159d1baca0f8e7b5050a92de950ad
-  languageName: node
-  linkType: hard
-
-"@types/filesystem@npm:*":
-  version: 0.0.36
-  resolution: "@types/filesystem@npm:0.0.36"
-  dependencies:
-    "@types/filewriter": "*"
-  checksum: fad9f6b291598e65a0c5e73e685977b2c86c9bdb1ede5ce29eb35f196bbdf8d668a32bd4361624391ae1eb699362daa13442b75177dd73c6b300967fdd1ed765
-  languageName: node
-  linkType: hard
-
-"@types/filewriter@npm:*":
-  version: 0.0.33
-  resolution: "@types/filewriter@npm:0.0.33"
-  checksum: 56ba7f0d3c2dafbb899e7f5a9574df41d2f07494040aa09f9fd51c7004c0b255c36c554333c380b23625afb50e50cf1d13f5925d956a627d4ee6e3fbe8f3176b
-  languageName: node
-  linkType: hard
-
-"@types/har-format@npm:*":
-  version: 1.2.16
-  resolution: "@types/har-format@npm:1.2.16"
-  checksum: 8012e244818e50492d6785dc2e11287532eff0cd72337f4bcee75f5c15a49da06f237b2afdc81c1b1cfec0757609edf0101fa1f9f50e9cdf7f562c07b6e760ac
   languageName: node
   linkType: hard
 
@@ -2812,49 +2659,62 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wallet-standard/app@npm:^1.0.1":
-  version: 1.1.0
-  resolution: "@wallet-standard/app@npm:1.1.0"
+"@wallet-standard/app@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@wallet-standard/app@npm:1.1.1"
   dependencies:
-    "@wallet-standard/base": ^1.1.0
-  checksum: 0ae77b20f7c5e1cd1d213c96fd79118eba63475eef37a164fa7dc5b38e4d48037ae3dd7152b7f44b336d324d1880682c9a0c044f74d4fbd0980866ad06120326
+    "@wallet-standard/base": ^1.1.1
+  checksum: 03014b5eba10ce3cd58c7c2314f4bb310330300451949c344b3d22867dc7116c79de21aae4b1f0dcbfc2effc122341ab9cf0b13e61612937d7cb68f9ee51b023
   languageName: node
   linkType: hard
 
-"@wallet-standard/base@npm:^1.0.1, @wallet-standard/base@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@wallet-standard/base@npm:1.1.0"
-  checksum: 4057188f615f1deeb0c8a39f04018d4575f87cb387749dab6bc2e8232a95400be51ea4235450829bb256aa21136621f47167383ef1767f0eb3109f1140c74d86
+"@wallet-standard/base@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@wallet-standard/base@npm:1.1.1"
+  checksum: 45fe4e4f95a8691496fa1b33df29d25ba46ff5c16f889f8c7a5cb18d886f3ccde1683de015f5df961e71d7db9162e1bcac258d11dc20ac63d7bcf2dcbc37831c
   languageName: node
   linkType: hard
 
-"@wallet-standard/core@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@wallet-standard/core@npm:1.0.3"
+"@wallet-standard/core@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@wallet-standard/core@npm:1.1.2"
   dependencies:
-    "@wallet-standard/app": ^1.0.1
-    "@wallet-standard/base": ^1.0.1
-    "@wallet-standard/features": ^1.0.3
-    "@wallet-standard/wallet": ^1.0.1
-  checksum: e06d6df4258052b5d743b6b266444ed511b28a6392b8a105efa8a0c392824bd10d786e542c4998b9ed106c497d90a657957d908e7afee469ceec4ca6db71964c
+    "@wallet-standard/app": ^1.1.1
+    "@wallet-standard/base": ^1.1.1
+    "@wallet-standard/errors": ^0.1.2
+    "@wallet-standard/features": ^1.1.1
+    "@wallet-standard/wallet": ^1.1.1
+  checksum: 5315620e48c0e7166217cfe0f9d41913068938dd0fe1d89428e665aecd3af55b53dd541684a9dadd84ff83e3385e43727b111fbd96416cc880175220856cc76c
   languageName: node
   linkType: hard
 
-"@wallet-standard/features@npm:^1.0.3":
-  version: 1.1.0
-  resolution: "@wallet-standard/features@npm:1.1.0"
+"@wallet-standard/errors@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@wallet-standard/errors@npm:0.1.2"
   dependencies:
-    "@wallet-standard/base": ^1.1.0
-  checksum: c0c101ee0bd4c55619e39505d15158132bbd619f4dc611880a4b0c001e96806957bed35d7a51efdff0077cf5afb01e0dc46a32b01d9d8c27f807fc2b61e92159
+    chalk: ^5.4.1
+    commander: ^13.1.0
+  bin:
+    errors: bin/cli.mjs
+  checksum: 754367770a6460eb527741248af17771c52e0abf8679835316a131bf8a2bf34dd4115aa7552da341939d42733210aa917e7eb53551e494db977aa804960bd3ed
   languageName: node
   linkType: hard
 
-"@wallet-standard/wallet@npm:^1.0.1":
-  version: 1.1.0
-  resolution: "@wallet-standard/wallet@npm:1.1.0"
+"@wallet-standard/features@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@wallet-standard/features@npm:1.1.1"
   dependencies:
-    "@wallet-standard/base": ^1.1.0
-  checksum: b2d4e2aebe5c89c47d10650bc6ca285a0f32a7df7dff4ee6b59645be3f4a5c616afa45f436719e9999347a519e59663a4d655e9f60d296e0e97fccb980bf06ba
+    "@wallet-standard/base": ^1.1.1
+  checksum: 59ee4b027f00139998b69dbee50794d62c87c59debcfc9ee6b10888afcdf24ec546445482ca4eed4e269198a6dfa620fee72ed255ccf2373b693052546ad8c95
+  languageName: node
+  linkType: hard
+
+"@wallet-standard/wallet@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@wallet-standard/wallet@npm:1.1.1"
+  dependencies:
+    "@wallet-standard/base": ^1.1.1
+  checksum: b198e039a58abe1028d451c782516ba5cd13429b6466ae58d1d1a63bbaa10077d14accac9bf41ecc82fab782de7c23cb062be7ac3c6e8fd31cae65a7a8dc2a76
   languageName: node
   linkType: hard
 
@@ -3293,6 +3153,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"agent-base@npm:6":
+  version: 6.0.2
+  resolution: "agent-base@npm:6.0.2"
+  dependencies:
+    debug: 4
+  checksum: f52b6872cc96fd5f622071b71ef200e01c7c4c454ee68bc9accca90c98cfb39f2810e3e9aa330435835eedc8c23f4f8a15267f67c6e245d2b33757575bdac49d
+  languageName: node
+  linkType: hard
+
 "agent-base@npm:^7.1.0, agent-base@npm:^7.1.2":
   version: 7.1.3
   resolution: "agent-base@npm:7.1.3"
@@ -3658,14 +3527,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.0, axios@npm:^1.8.4":
-  version: 1.8.4
-  resolution: "axios@npm:1.8.4"
+"axios@npm:^1.9.0":
+  version: 1.20.0
+  resolution: "axios@npm:1.20.0"
   dependencies:
-    follow-redirects: ^1.15.6
-    form-data: ^4.0.0
-    proxy-from-env: ^1.1.0
-  checksum: e901dc1730bdcd769839b3d93ae6d6457a53d79b19a0eb623ebfea333441259ab51e63ca118baa47a5156567401466ac739f31087b4ee5e6770ab2e227484538
+    follow-redirects: ^1.16.0
+    form-data: ^4.0.6
+    https-proxy-agent: ^5.0.1
+    proxy-from-env: ^2.1.0
+  checksum: 58ff916938e317352e0c3483496a4609fd528da4823a8580969821748284bea2add069a39f2285a161020ce0886f33a982a162ebb49b5403c51a6977a1d50627
   languageName: node
   linkType: hard
 
@@ -3991,6 +3861,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chalk@npm:^5.4.1":
+  version: 5.6.2
+  resolution: "chalk@npm:5.6.2"
+  checksum: 4ee2d47a626d79ca27cb5299ecdcce840ef5755e287412536522344db0fc51ca0f6d6433202332c29e2288c6a90a2b31f3bd626bc8c14743b6b6ee28abd3b796
+  languageName: node
+  linkType: hard
+
 "chokidar@npm:4.0.0":
   version: 4.0.0
   resolution: "chokidar@npm:4.0.0"
@@ -4159,6 +4036,13 @@ __metadata:
   version: 12.1.0
   resolution: "commander@npm:12.1.0"
   checksum: 68e9818b00fc1ed9cdab9eb16905551c2b768a317ae69a5e3c43924c2b20ac9bb65b27e1cab36aeda7b6496376d4da908996ba2c0b5d79463e0fb1e77935d514
+  languageName: node
+  linkType: hard
+
+"commander@npm:^13.1.0":
+  version: 13.1.0
+  resolution: "commander@npm:13.1.0"
+  checksum: 8ca2fcb33caf2aa06fba3722d7a9440921331d54019dabf906f3603313e7bf334b009b862257b44083ff65d5a3ab19e83ad73af282bd5319f01dc228bdf87ef0
   languageName: node
   linkType: hard
 
@@ -4731,7 +4615,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"end-of-stream@npm:^1.1.0, end-of-stream@npm:^1.4.0, end-of-stream@npm:^1.4.1, end-of-stream@npm:^1.4.4":
+"end-of-stream@npm:^1.1.0, end-of-stream@npm:^1.4.0, end-of-stream@npm:^1.4.1":
   version: 1.4.4
   resolution: "end-of-stream@npm:1.4.4"
   dependencies:
@@ -5570,13 +5454,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:^4.0.7":
-  version: 4.0.7
-  resolution: "eventemitter3@npm:4.0.7"
-  checksum: 1875311c42fcfe9c707b2712c32664a245629b42bb0a5a84439762dd0fd637fc54d078155ea83c2af9e0323c9ac13687e03cfba79b03af9f40c89b4960099374
-  languageName: node
-  linkType: hard
-
 "events-intercept@npm:^2.0.0":
   version: 2.0.0
   resolution: "events-intercept@npm:2.0.0"
@@ -5615,15 +5492,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"extension-port-stream@npm:^2.0.1":
-  version: 2.1.1
-  resolution: "extension-port-stream@npm:2.1.1"
-  dependencies:
-    webextension-polyfill: ">=0.10.0 <1.0"
-  checksum: aee8bbeb2ed6f69a62f58a89580e0e9002dadb11062edbaedb7bb04cfc5a5e0b0d3980bfeaa1c3ee7e08dec7e5fac26e25497fc2f82000db7653442bd5eca157
-  languageName: node
-  linkType: hard
-
 "extension-port-stream@npm:^3.0.0":
   version: 3.0.0
   resolution: "extension-port-stream@npm:3.0.0"
@@ -5631,13 +5499,6 @@ __metadata:
     readable-stream: ^3.6.2 || ^4.4.2
     webextension-polyfill: ">=0.10.0 <1.0"
   checksum: 4f51d2258a96154c2d916a8a5425636a2b0817763e9277f7dc378d08b6f050c90d185dbde4313d27cf66ad99d4b3116479f9f699c40358c64cccfa524d2b55bf
-  languageName: node
-  linkType: hard
-
-"fast-deep-equal@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "fast-deep-equal@npm:2.0.1"
-  checksum: b701835a87985e0ec4925bdf1f0c1e7eb56309b5d12d534d5b4b69d95a54d65bb16861c081781ead55f73f12d6c60ba668713391ee7fbf6b0567026f579b7b0b
   languageName: node
   linkType: hard
 
@@ -5856,6 +5717,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"follow-redirects@npm:^1.16.0":
+  version: 1.16.1
+  resolution: "follow-redirects@npm:1.16.1"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: d42ff9158fe6c66692567b712fd4bba25ef8736253c1436439642884f9c218df05fe946928d1944367b1b72f7ca5e5d277c26608159e2adf1bad9e42b12d2c30
+  languageName: node
+  linkType: hard
+
 "for-each@npm:^0.3.3, for-each@npm:^0.3.5":
   version: 0.3.5
   resolution: "for-each@npm:0.3.5"
@@ -5902,6 +5773,19 @@ __metadata:
     es-set-tostringtag: ^2.1.0
     mime-types: ^2.1.12
   checksum: e887298b22c13c7c9c5a8ba3716f295a479a13ca78bfd855ef11cbce1bcf22bc0ae2062e94808e21d46e5c667664a1a1a8a7f57d7040193c1fefbfb11af58aab
+  languageName: node
+  linkType: hard
+
+"form-data@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "form-data@npm:4.0.6"
+  dependencies:
+    asynckit: ^0.4.0
+    combined-stream: ^1.0.8
+    es-set-tostringtag: ^2.1.0
+    hasown: ^2.0.4
+    mime-types: ^2.1.35
+  checksum: e51b9e97678c250c872cd4ec3e5eaa8fa43bee4b1acf8274c337308aebc6aebb0553091ce0810612826601ffafed9dace12504a63c6ef16c57fffcd7dcfec457
   languageName: node
   linkType: hard
 
@@ -6374,6 +6258,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hasown@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "hasown@npm:2.0.4"
+  dependencies:
+    function-bind: ^1.1.2
+  checksum: 4bd8f916b629e06324853593ffbdd45e200022952a85ad0c967f3bd4c2e4c7e1f9a9766fbe6186f60bd394e0afc73e719730caa1da15cd9bd832b7cdf53fd26c
+  languageName: node
+  linkType: hard
+
 "hey-listen@npm:^1.0.8":
   version: 1.0.8
   resolution: "hey-listen@npm:1.0.8"
@@ -6458,6 +6351,16 @@ __metadata:
     quick-lru: ^5.1.1
     resolve-alpn: ^1.2.0
   checksum: e95e55e22c6fd61182ce81fecb9b7da3af680d479febe8ad870d05f7ebbc9f076e455193766f4e7934e50913bf1d8da3ba121fb5cd2928892390b58cf9d5c509
+  languageName: node
+  linkType: hard
+
+"https-proxy-agent@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "https-proxy-agent@npm:5.0.1"
+  dependencies:
+    agent-base: 6
+    debug: 4
+  checksum: 571fccdf38184f05943e12d37d6ce38197becdd69e58d03f43637f7fa1269cf303a7d228aa27e5b27bbd3af8f09fd938e1c91dcfefff2df7ba77c20ed8dfc765
   languageName: node
   linkType: hard
 
@@ -7064,16 +6967,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-rpc-middleware-stream@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "json-rpc-middleware-stream@npm:3.0.0"
-  dependencies:
-    "@metamask/safe-event-emitter": ^2.0.0
-    readable-stream: ^2.3.3
-  checksum: 9ff56cd40a6ba0a6f3d0226ea100921635120154c602822f0f4fdfa6bf7c61367d1e8cd055b6e7a7639aa19ed51a9ce7fbf2932a2d348b2404c060f75bc1231f
-  languageName: node
-  linkType: hard
-
 "json-rpc-random-id@npm:^1.0.0, json-rpc-random-id@npm:^1.0.1":
   version: 1.0.1
   resolution: "json-rpc-random-id@npm:1.0.1"
@@ -7517,7 +7410,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime-types@npm:^2.1.12":
+"mime-types@npm:^2.1.12, mime-types@npm:^2.1.35":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
@@ -8811,6 +8704,13 @@ __metadata:
   version: 1.1.0
   resolution: "proxy-from-env@npm:1.1.0"
   checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "proxy-from-env@npm:2.1.0"
+  checksum: b106ad790f26d47ba4791af3fe8cba5c8d35d85020119c82c05b413eb11b3ab97d2393ecaed51bca97c2788fa256408283dfeb4d970b2ebcae6702310f064e7e
   languageName: node
   linkType: hard
 
@@ -10378,13 +10278,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tweetnacl-util@npm:^0.15.1":
-  version: 0.15.1
-  resolution: "tweetnacl-util@npm:0.15.1"
-  checksum: ae6aa8a52cdd21a95103a4cc10657d6a2040b36c7a6da7b9d3ab811c6750a2d5db77e8c36969e75fdee11f511aa2b91c552496c6e8e989b6e490e54aca2864fc
-  languageName: node
-  linkType: hard
-
 "tweetnacl@npm:1.0.3, tweetnacl@npm:1.x.x, tweetnacl@npm:^1.0.3":
   version: 1.0.3
   resolution: "tweetnacl@npm:1.0.3"
@@ -11089,15 +10982,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webextension-polyfill-ts@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "webextension-polyfill-ts@npm:0.25.0"
-  dependencies:
-    webextension-polyfill: ^0.7.0
-  checksum: c4dc82c86e34cea717a26af549f2822d63e92af52632f5e909ea13b5e7bd9d6110781f10313e36ada2b54c770ebca018bc3784756d12ba3b0b623d285f1a14a7
-  languageName: node
-  linkType: hard
-
 "webextension-polyfill@npm:>=0.10.0 <1.0":
   version: 0.12.0
   resolution: "webextension-polyfill@npm:0.12.0"
@@ -11109,13 +10993,6 @@ __metadata:
   version: 0.10.0
   resolution: "webextension-polyfill@npm:0.10.0"
   checksum: 4a59036bda571360c2c0b2fb03fe1dc244f233946bcf9a6766f677956c40fd14d270aaa69cdba95e4ac521014afbe4008bfa5959d0ac39f91c990eb206587f91
-  languageName: node
-  linkType: hard
-
-"webextension-polyfill@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "webextension-polyfill@npm:0.7.0"
-  checksum: fb738a5de07feb593875e02f25c3ab4276c8736118929556c8d4bdf965bb0f11c96ea263cd397b9b21259e8faf2dce2eaaa42ce08c922d96de7adb5896ec7d10
   languageName: node
   linkType: hard
 

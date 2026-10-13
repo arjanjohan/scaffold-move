@@ -52,7 +52,9 @@ yarn account
 
 This command overwrites `packages/move/.aptos/config.yaml` with a new Aptos account. The new address is copied over to the first address in the Move.toml file. If no address exists in this file, it is added on a new line.
 
-Use the `--network` tag to define a network to create the account on. Alternatively, you can change the `defaultNetwork` value in `packages/move/move.config.js`.
+Use the `--network` tag to define a network to create the account on, e.g. `yarn account --network aptos_testnet`. Valid networks are the keys of `defaultChains` in `packages/common/chains.ts`, or `custom` together with `--rest-url` (and optionally `--faucet-url`). Alternatively, you can change the `defaultNetwork` value in `packages/move/move.config.ts`.
+
+All network information (chain IDs, RPC, indexer, faucet and explorer URLs) lives in `packages/common/chains.ts` and is shared by the move scripts and the frontend.
 
 3. Deploy the test modules:
 
@@ -60,7 +62,7 @@ Use the `--network` tag to define a network to create the account on. Alternativ
 yarn deploy
 ```
 
-This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/load-modules.js` to make the new modules available in the nextjs frontend.
+This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command runs `packages/move/scripts/deploy.ts`, which uses `aptos move publish` to publish the modules to the network. After this it executes `packages/move/scripts/load-modules.ts` to make the new modules available in the nextjs frontend.
 
 4. On a second terminal, start your NextJS app:
 
@@ -83,7 +85,6 @@ Scaffold Move has successfully implemented core features essential for Move deve
 Looking ahead, we have an exciting roadmap of enhancements and new features planned:
 
 - Add a testing framework for Move modules.
-- Add custom networks to network switching. This is currently not available in the Aptos Wallet Adapter. Once [our PR](https://github.com/aptos-labs/aptos-wallet-adapter/pull/425) is merged, this feature will be added to Scaffold Move.
 - Enhance documentation and create tutorials for easier onboarding.
 - Develop additional pre-built components for common dApp functionalities.
 - Integrate different templates/configurations (similar to [create-aptos-dapp](https://aptos.dev/en/build/create-aptos-dapp))

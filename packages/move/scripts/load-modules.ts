@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Aptos, AptosConfig, Network, MoveModuleBytecode } from '@aptos-labs/ts-sdk';
-import axios from 'axios';
 import { loadExternalModules } from '../move.config';
 import { getConfigPath, getMoveTomlPath, parseYaml, getAccountFromConfig } from './utils';
 
@@ -10,7 +9,6 @@ const deploymentsDir = path.join(__dirname, '../deployments');
 // Paths to the relevant files
 const deployedModulesPath = path.join(__dirname, '../../../packages/nextjs/modules/deployedModules.ts');
 const externalModulesPath = path.join(__dirname, '../../../packages/nextjs/modules/externalModules.ts');
-const otherModulePath = path.join(__dirname, '../../../packages/nextjs/modules/latestChainId.ts');
 
 interface Addresses {
   [key: string]: string;
@@ -63,15 +61,9 @@ async function getAccountModules(
 }
 
 // Function to fetch chainId from the REST API
-async function fetchChainId(nodeUrl: string): Promise<number> {
-  let url: string;
-  if (nodeUrl.includes("movement")) {
-    url = nodeUrl; // Use nodeUrl directly without appending '/v1'
-  } else {
-    url = `${nodeUrl}/v1`; // Default behavior, append '/v1'
-  }
-  const response = await axios.get(url);
-  return response.data.chain_id;
+async function fetchChainId(network: Network, nodeUrl?: string): Promise<number> {
+  const client = new Aptos(new AptosConfig({ network, fullnode: nodeUrl }));
+  return client.getChainId();
 }
 
 // Function to get existing module data
@@ -158,7 +150,7 @@ async function main(): Promise<void> {
   const addresses = parseToml(getMoveTomlPath());
 
   // Fetch the chainId from the REST API
-  const chainId = await fetchChainId(nodeUrl);
+  const chainId = await fetchChainId(network, network === Network.CUSTOM ? nodeUrl : undefined);
 
   // Ensure the output directory exists
   const outputDirectory = path.dirname(deployedModulesPath);
@@ -191,10 +183,6 @@ async function main(): Promise<void> {
     writeChainModules(chainId, externalModules, false);
     writeModules(externalModulesPath, "externalModules");
   }
-
-  const chainIdContent = `const latestChainId = ${chainId};\nexport default latestChainId;\n`;
-  fs.writeFileSync(otherModulePath, chainIdContent, 'utf-8');
-  console.log(`Chain ID ${chainId} written to ${otherModulePath}`);
 }
 
 main().catch(console.error);

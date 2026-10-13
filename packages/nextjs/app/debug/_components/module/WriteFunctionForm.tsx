@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useFunctionArguments } from "./utilFunctionArgs";
 import { parseTypeTag } from "@aptos-labs/ts-sdk";
-import { useWallet } from "@scaffold-move/wallet-adapter-react";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import {
@@ -108,25 +108,20 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
       <div className={"flex gap-3 flex-col"}>
         <p className="font-medium my-0 break-words">{fn.name}</p>
         {/* Type Arguments */}
-        {data.typeArgs.map(
-          (_, i) => (
-            console.log(data.typeArgs),
-            (
-              <div key={`type-arg-${i}`} className="flex flex-col gap-1.5 w-full">
-                <div className="flex items-center mt-2 ml-2">
-                  <span className="block text-xs font-extralight leading-none">{`T${i}:`}</span>
-                </div>
-                <div className={"flex border-2 border-base-300 bg-base-200 rounded-full text-accent"}>
-                  <input
-                    placeholder={`Type Argument ${i}`}
-                    className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
-                    onChange={e => handleTypeArgChange(i, e.target.value)}
-                  />
-                </div>
-              </div>
-            )
-          ),
-        )}
+        {data.typeArgs.map((_, i) => (
+          <div key={`type-arg-${i}`} className="flex flex-col gap-1.5 w-full">
+            <div className="flex items-center mt-2 ml-2">
+              <span className="block text-xs font-extralight leading-none">{`T${i}:`}</span>
+            </div>
+            <div className={"flex border-2 border-base-300 bg-base-200 rounded-full text-accent"}>
+              <input
+                placeholder={`Type Argument ${i}`}
+                className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
+                onChange={e => handleTypeArgChange(i, e.target.value)}
+              />
+            </div>
+          </div>
+        ))}
         {/* Function Arguments */}
         {fnParams.map((param, i) => {
           return (

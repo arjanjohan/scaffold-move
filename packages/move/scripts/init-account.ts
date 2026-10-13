@@ -1,11 +1,14 @@
 import * as fs from 'fs';
 import { exec } from 'child_process';
 import minimist from 'minimist';
-import { defaultNetwork, networks } from '../move.config';
+import { Chain, defaultChains } from '@scaffold-move/common';
+import { defaultNetwork } from '../move.config';
 import { getConfigPath, getMoveTomlPath, parseYaml } from './utils';
 
 const args = minimist(process.argv.slice(2));
 const network = args.network || defaultNetwork; // Use default network from config if not provided
+const chains: Record<string, Chain> = defaultChains;
+const chain: Chain | undefined = chains[network];
 const restUrl = args['rest-url'];
 const faucetUrl = args['faucet-url'];
 const moveTomlPath = getMoveTomlPath();
@@ -53,11 +56,7 @@ function initCustomNetwork(restUrl: string, faucetUrl?: string): void {
     }
     console.log(`Custom network initialized successfully.`);
     updateMoveTomlAfterInit();
-     // For Movement testnet, prompt user to get tokens from the faucet
-    if (network === 'movement_testnet') {
-      console.log('\nTo get test tokens for Movement Testnet, visit:');
-      console.log('https://faucet.movementnetwork.xyz/?network=bardock');
-    }
+    printFaucetUrl();
   });
 }
 
@@ -72,7 +71,16 @@ function initPredefinedNetwork(network: string): void {
     }
     console.log(`${network} network initialized successfully.`);
     updateMoveTomlAfterInit();
+    printFaucetUrl();
   });
+}
+
+// Accounts are only funded by `aptos init` when a faucet API is known, otherwise point to the faucet page
+function printFaucetUrl(): void {
+  if (chain?.faucet_url && !chain.faucet_api) {
+    console.log(`\nTo get test tokens for ${chain.name}, visit:`);
+    console.log(chain.faucet_url);
+  }
 }
 
 function updateMoveTomlAfterInit(): void {
@@ -85,18 +93,17 @@ function updateMoveTomlAfterInit(): void {
   }
 }
 
-if (network in networks) {
-  const { 'rest-url': configRestUrl, 'faucet-url': configFaucetUrl } = networks[network];
-  initCustomNetwork(configRestUrl, configFaucetUrl);
+if (chain?.network === 'custom') {
+  initCustomNetwork(chain.fullnode, chain.faucet_api);
+} else if (chain) {
+  initPredefinedNetwork(chain.network);
 } else if (network === 'custom') {
   if (!restUrl) {
     console.log('Error: custom network requires --rest-url');
     process.exit(1);
   }
   initCustomNetwork(restUrl, faucetUrl);
-} else if (["devnet", "testnet", "mainnet", "local"].includes(network)) {
-  initPredefinedNetwork(network);
 } else {
-  console.log(`Error: Unknown network: ${network}`);
+  console.log(`Error: Unknown network: ${network}. Use one of: ${Object.keys(defaultChains).join(', ')}, custom`);
   process.exit(1);
 }
