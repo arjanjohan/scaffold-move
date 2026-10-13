@@ -1,7 +1,8 @@
 import { Chain, defaultChains } from "@scaffold-move/common";
 
 export type ScaffoldConfig = {
-  targetNetworks: readonly Chain[];
+  // At least one network; the first one is used for module types and as the initial network
+  targetNetworks: readonly [Chain, ...Chain[]];
   pollingInterval: number;
   onlyLocalBurnerWallet: boolean;
   allowAptosConnect: boolean;
