@@ -11,8 +11,8 @@ const defaultNetwork = 'movement_testnet';
 
 const networks: Networks = {
   movement_testnet: {
-    "rest-url": "https://testnet.bardock.movementnetwork.xyz/v1",
-    // "faucet-url": "https://faucet.testnet.bardock.movementnetwork.xyz/",
+    "rest-url": "https://testnet.movementnetwork.xyz/v1",
+    // "faucet-url": "https://faucet.testnet.movementnetwork.xyz",
   },
   movement_mainnet: {
     "rest-url": "https://mainnet.movementnetwork.xyz/v1"

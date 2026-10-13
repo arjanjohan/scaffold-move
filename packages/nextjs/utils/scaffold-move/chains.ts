@@ -19,13 +19,13 @@ type Chains = {
 export const defaultChains: Chains = {
   movement_testnet: {
     id: 250,
-    name: "Movement Bardock Testnet",
+    name: "Movement Testnet",
     network: Network.CUSTOM,
-    fullnode: "https://testnet.bardock.movementnetwork.xyz/v1",
-    indexer: "https://indexer.testnet.movementnetwork.xyz",
-    faucet: "https://faucet.movementnetwork.xyz/",
-    block_explorer: "https://explorer.movementnetwork.xyz/",
-    explorer_network_param: "bardock+testnet",
+    fullnode: "https://testnet.movementnetwork.xyz/v1",
+    indexer: "https://indexer.testnet.movementnetwork.xyz/v1/graphql",
+    faucet: "https://faucet.movementnetwork.xyz",
+    block_explorer: "https://explorer.movementnetwork.xyz",
+    explorer_network_param: "testnet",
     native_token_symbol: "MOVE",
   },
   movement_mainnet: {

@@ -56,7 +56,7 @@ function initCustomNetwork(restUrl: string, faucetUrl?: string): void {
      // For Movement testnet, prompt user to get tokens from the faucet
     if (network === 'movement_testnet') {
       console.log('\nTo get test tokens for Movement Testnet, visit:');
-      console.log('https://faucet.movementnetwork.xyz/?network=bardock');
+      console.log('https://faucet.movementnetwork.xyz');
     }
   });
 }
