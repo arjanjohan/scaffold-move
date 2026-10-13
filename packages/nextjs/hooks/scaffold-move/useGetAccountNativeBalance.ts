@@ -1,38 +1,28 @@
-import { useEffect, useState } from "react";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useQuery } from "@tanstack/react-query";
 import { useAptosClient } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 
 export const useGetAccountNativeBalance = (address?: string) => {
-  const [balance, setBalance] = useState<number | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
-
   const network = useTargetNetwork();
   const aptosClient = useAptosClient(network.targetNetwork.id);
   const { account } = useWallet();
 
-  useEffect(() => {
-    const accountAddress = address || account?.address;
-    if (!accountAddress) return;
+  // If address is not provided, use the wallet address
+  const accountAddress = address || account?.address?.toString() || "";
 
-    const fetchBalance = async () => {
-      setLoading(true);
-      setError(false);
+  // Shared per chain and address, so multiple Balance components reuse one request
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["accountNativeBalance", { chainId: network.targetNetwork.id, address: accountAddress }],
+    queryFn: () => aptosClient.getAccountAPTAmount({ accountAddress }),
+    enabled: !!accountAddress,
+    retry: false,
+  });
 
-      try {
-        const result = await aptosClient.getAccountAPTAmount({ accountAddress });
-
-        setBalance(result);
-      } catch (e) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBalance();
-  }, [address, account, aptosClient]);
-
-  return { balance, loading, error, nativeTokenSymbol: network.targetNetwork.native_token_symbol || "APT" };
+  return {
+    balance: data ?? null,
+    loading: isPending,
+    error: isError,
+    nativeTokenSymbol: network.targetNetwork.native_token_symbol || "APT",
+  };
 };
