@@ -1,5 +1,5 @@
-import { defaultChains } from "../../utils/scaffold-move/chains";
-import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
+import { Aptos, AptosConfig, NetworkToNetworkName } from "@aptos-labs/ts-sdk";
+import { defaultChains } from "@scaffold-move/common";
 
 const aptosApiKey = process.env.NEXT_PUBLIC_APTOS_API_KEY;
 
@@ -10,8 +10,8 @@ export function useAptosClient(chainId: number) {
   }
 
   const aptosConfig = new AptosConfig({
-    network: chain.network,
-    ...(chain.network === Network.CUSTOM && {
+    network: NetworkToNetworkName[chain.network],
+    ...(chain.network === "custom" && {
       fullnode: chain.fullnode,
       indexer: chain.indexer,
       faucet: chain.faucet,

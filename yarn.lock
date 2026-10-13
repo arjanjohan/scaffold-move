@@ -1395,11 +1395,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@scaffold-move/common@workspace:*, @scaffold-move/common@workspace:packages/common":
+  version: 0.0.0-use.local
+  resolution: "@scaffold-move/common@workspace:packages/common"
+  languageName: unknown
+  linkType: soft
+
 "@scaffold-move/move@workspace:packages/move":
   version: 0.0.0-use.local
   resolution: "@scaffold-move/move@workspace:packages/move"
   dependencies:
     "@aptos-labs/ts-sdk": ^5.2.1
+    "@scaffold-move/common": "workspace:*"
     "@types/js-yaml": ^4
     "@types/minimist": ^1.2.5
     "@types/node": ^20.11.24
@@ -1421,6 +1428,7 @@ __metadata:
     "@heroicons/react": ^2.1.5
     "@mizuwallet-sdk/core": ^1.4.0
     "@rainbow-me/rainbowkit": 2.1.6
+    "@scaffold-move/common": "workspace:*"
     "@tanstack/react-query": ^5.56.2
     "@telegram-apps/bridge": ^1.9.0
     "@trivago/prettier-plugin-sort-imports": ^4.3.0

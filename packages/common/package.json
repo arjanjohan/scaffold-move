@@ -1,0 +1,7 @@
+{
+  "name": "@scaffold-move/common",
+  "private": true,
+  "version": "0.0.1",
+  "main": "chains.ts",
+  "types": "chains.ts"
+}

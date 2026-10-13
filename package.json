@@ -4,6 +4,7 @@
   "private": true,
   "workspaces": {
     "packages": [
+      "packages/common",
       "packages/move",
       "packages/nextjs"
     ]

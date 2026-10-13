@@ -1,4 +1,4 @@
-import { Chain, defaultChains } from "./utils/scaffold-move/chains";
+import { Chain, defaultChains } from "@scaffold-move/common";
 
 export type ScaffoldConfig = {
   targetNetworks: readonly Chain[];

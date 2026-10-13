@@ -20,6 +20,7 @@
     "@heroicons/react": "^2.1.5",
     "@mizuwallet-sdk/core": "^1.4.0",
     "@rainbow-me/rainbowkit": "2.1.6",
+    "@scaffold-move/common": "workspace:*",
     "@tanstack/react-query": "^5.56.2",
     "@telegram-apps/bridge": "^1.9.0",
     "@wallet-standard/core": "^1.1.2",

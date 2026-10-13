@@ -1,6 +1,7 @@
 // Import your notification utility
-import { Network } from "@aptos-labs/ts-sdk";
+import { NetworkToNetworkName } from "@aptos-labs/ts-sdk";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { Chain } from "@scaffold-move/common";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
 import { getTargetNetworks } from "~~/utils/scaffold-move";
 import { notification } from "~~/utils/scaffold-move/notification";
@@ -14,9 +15,9 @@ type NetworkOptionsProps = {
 export const NetworkOptions = ({ hidden = false }: NetworkOptionsProps) => {
   const { network, changeNetwork } = useWallet();
 
-  const handleNetworkChange = async (allowedNetwork: any) => {
+  const handleNetworkChange = async (allowedNetwork: Chain) => {
     try {
-      await changeNetwork(allowedNetwork.network);
+      await changeNetwork(NetworkToNetworkName[allowedNetwork.network]);
       notification.success(`Successfully switched to ${allowedNetwork.name}`);
     } catch (error) {
       notification.error(`Failed to switch network: ${error}`);
@@ -28,7 +29,7 @@ export const NetworkOptions = ({ hidden = false }: NetworkOptionsProps) => {
       {allowedNetworks
         .filter(allowedNetwork => allowedNetwork.id !== Number(network?.chainId))
         .map(allowedNetwork => {
-          const isCustomNetwork = allowedNetwork.network === Network.CUSTOM;
+          const isCustomNetwork = allowedNetwork.network === "custom";
 
           return (
             <li key={allowedNetwork.id} className={hidden ? "hidden" : ""}>
