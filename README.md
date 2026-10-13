@@ -62,7 +62,7 @@ All network information (chain IDs, RPC, indexer, faucet and explorer URLs) live
 yarn deploy
 ```
 
-This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/load-modules.js` to make the new modules available in the nextjs frontend.
+This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command runs `packages/move/scripts/deploy.ts`, which uses `aptos move publish` to publish the modules to the network. After this it executes `packages/move/scripts/load-modules.ts` to make the new modules available in the nextjs frontend.
 
 4. On a second terminal, start your NextJS app:
 
@@ -85,7 +85,6 @@ Scaffold Move has successfully implemented core features essential for Move deve
 Looking ahead, we have an exciting roadmap of enhancements and new features planned:
 
 - Add a testing framework for Move modules.
-- Add custom networks to network switching. This is currently not available in the Aptos Wallet Adapter. Once [our PR](https://github.com/aptos-labs/aptos-wallet-adapter/pull/425) is merged, this feature will be added to Scaffold Move.
 - Enhance documentation and create tutorials for easier onboarding.
 - Develop additional pre-built components for common dApp functionalities.
 - Integrate different templates/configurations (similar to [create-aptos-dapp](https://aptos.dev/en/build/create-aptos-dapp))
