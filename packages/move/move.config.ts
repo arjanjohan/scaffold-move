@@ -1,4 +1,4 @@
-// Network used by `yarn account` when no --network is given.
+// Network used by `yarn account`, `yarn deploy`, `yarn compile` and `yarn test` when no --network is given.
 // Must be a key of `defaultChains` in packages/common/chains.ts.
 const defaultNetwork = 'movement_testnet';
 

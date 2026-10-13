@@ -17,6 +17,10 @@ export type Chain = {
   block_explorer?: string;
   explorer_network_param?: string;
   native_token_symbol?: string;
+  // CLI the move scripts use for this chain. Its accounts live in packages/move/.<cli>/config.yaml
+  cli: "aptos" | "movement";
+  // Aptos framework branch to compile against (`--override-std`). Without it, the framework in Move.toml is used
+  override_std?: "mainnet" | "testnet" | "devnet";
 } & (
   | { network: "custom"; fullnode: string }
   | { network: Exclude<NetworkName, "custom">; fullnode?: undefined }
@@ -35,6 +39,7 @@ export const defaultChains = {
     block_explorer: "https://explorer.movementnetwork.xyz",
     explorer_network_param: "testnet",
     native_token_symbol: "MOVE",
+    cli: "movement",
   },
   movement_mainnet: {
     id: 126,
@@ -45,6 +50,7 @@ export const defaultChains = {
     block_explorer: "https://explorer.movementnetwork.xyz",
     explorer_network_param: "mainnet",
     native_token_symbol: "MOVE",
+    cli: "movement",
   },
   aptos_mainnet: {
     id: 1,
@@ -52,6 +58,8 @@ export const defaultChains = {
     network: "mainnet",
     block_explorer: "https://explorer.aptoslabs.com",
     explorer_network_param: "mainnet",
+    cli: "aptos",
+    override_std: "mainnet",
   },
   aptos_testnet: {
     id: 2,
@@ -60,10 +68,14 @@ export const defaultChains = {
     faucet_url: "https://aptos.dev/en/network/faucet",
     block_explorer: "https://explorer.aptoslabs.com",
     explorer_network_param: "testnet",
+    cli: "aptos",
+    override_std: "testnet",
   },
   local: {
     id: 4,
     name: "Local",
     network: "local",
+    cli: "aptos",
+    override_std: "mainnet",
   },
 } as const satisfies Record<string, Chain>;

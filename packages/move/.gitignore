@@ -1,4 +1,5 @@
 build/
 .aptos
+.movement
 
 /deployments 

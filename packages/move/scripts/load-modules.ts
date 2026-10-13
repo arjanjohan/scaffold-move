@@ -1,18 +1,14 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { Aptos, AptosConfig, Network, MoveModuleBytecode } from '@aptos-labs/ts-sdk';
+import { Aptos, AptosConfig, Network, MoveModuleBytecode, NetworkToNetworkName } from '@aptos-labs/ts-sdk';
 import { loadExternalModules } from '../move.config';
-import { getConfigPath, getMoveTomlPath, parseYaml, getAccountFromConfig } from './utils';
+import { Target, getMoveTomlAddresses, getProfile } from './utils';
 
 const deploymentsDir = path.join(__dirname, '../deployments');
 
 // Paths to the relevant files
 const deployedModulesPath = path.join(__dirname, '../../../packages/nextjs/modules/deployedModules.ts');
 const externalModulesPath = path.join(__dirname, '../../../packages/nextjs/modules/externalModules.ts');
-
-interface Addresses {
-  [key: string]: string;
-}
 
 interface ModuleData {
   [key: string]: {
@@ -23,22 +19,6 @@ interface ModuleData {
 
 interface ChainModules {
   [chainId: string]: ModuleData;
-}
-
-// Function to parse the TOML file and extract addresses
-function parseToml(filePath: string): Addresses | null {
-  const toml = fs.readFileSync(filePath, 'utf-8');
-  const addressesSection = toml.match(/\[addresses\]([\s\S]*?)(?=\[|$)/);
-  if (addressesSection) {
-    const addresses: Addresses = {};
-    const lines = addressesSection[1].trim().split('\n');
-    lines.forEach(line => {
-      const [key, value] = line.split('=').map(part => part.trim().replace(/['"]+/g, ''));
-      addresses[key] = value.replace(/^0x/, ''); // Strip 0x from the address
-    });
-    return addresses;
-  }
-  return null;
 }
 
 // Function to fetch account modules
@@ -134,20 +114,18 @@ function writeModules(filePath: string, variableName: string): void {
   fs.writeFileSync(filePath, fileContent.trim(), 'utf-8');
 }
 
-// Main function to perform the tasks
-async function main(): Promise<void> {
-  const config = parseYaml(getConfigPath());
-  const nodeUrl = config.profiles.default.rest_url || '';
-  const network: Network = {
-    'Custom': Network.CUSTOM,
-    'Mainnet': Network.MAINNET,
-    'Devnet': Network.DEVNET,
-    'Testnet': Network.TESTNET
-  }[config.profiles.default.network || 'Custom'] || Network.CUSTOM;
+// Loads the modules deployed for the target network into the nextjs app
+export async function loadModules(target: Target): Promise<void> {
+  const profile = getProfile(target);
+  const network: Network = target.chain ? NetworkToNetworkName[target.chain.network] : Network.CUSTOM;
+  const nodeUrl = target.chain ? target.chain.fullnode : profile.rest_url;
 
-  const accountAddress = getAccountFromConfig().replace(/^0x/, ''); // Strip 0x from the account address
+  const accountAddress = profile.account.replace(/^0x/, ''); // Strip 0x from the account address
 
-  const addresses = parseToml(getMoveTomlPath());
+  // Other named addresses from Move.toml, unset ones ('_') are the deployed account
+  const addresses = Object.values(getMoveTomlAddresses())
+    .filter(address => address !== '_')
+    .map(address => address.replace(/^0x/, ''));
 
   // Fetch the chainId from the REST API
   const chainId = await fetchChainId(network, network === Network.CUSTOM ? nodeUrl : undefined);
@@ -162,18 +140,18 @@ async function main(): Promise<void> {
     fs.mkdirSync(deploymentsDir, { recursive: true });
   }
 
-  // Fetch and save account modules for the account from config.yaml
+  // Fetch and save account modules for the deployed account
   const deployedModules = await getAccountModules({ address: accountAddress }, network, network === Network.CUSTOM ? nodeUrl : undefined);
   writeChainModules(chainId, deployedModules, true);
   writeModules(deployedModulesPath, "deployedModules");
   console.log(`Data for deployed modules at address ${accountAddress} saved successfully.`);
 
-  // Fetch and save account modules for each address from Move.toml, excluding the one from config.yaml
+  // Fetch and save account modules for each other address from Move.toml
   console.log('Data for external modules:', loadExternalModules);
-  if (loadExternalModules && addresses) {
+  if (loadExternalModules) {
     console.log('Loading external modules...');
     const externalModules: MoveModuleBytecode[] = [];
-    for (const [name, address] of Object.entries(addresses)) {
+    for (const address of addresses) {
       if (address.toLowerCase() !== accountAddress.toLowerCase()) {
         const modules = await getAccountModules({ address }, network, network === Network.CUSTOM ? nodeUrl : undefined);
         externalModules.push(...modules);
@@ -184,5 +162,3 @@ async function main(): Promise<void> {
     writeModules(externalModulesPath, "externalModules");
   }
 }
-
-main().catch(console.error);

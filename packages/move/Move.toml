@@ -1,9 +1,16 @@
 [package]
 name = 'onchain_bio'
 version = '1.0.0'
+
+# Movement framework. For Aptos networks the scripts compile with `--override-std` (see packages/common/chains.ts)
 [dependencies.AptosFramework]
-git = "https://github.com/movementlabsxyz/aptos-core.git"
-rev = "movement"
+git = "https://github.com/movement-network/aptos-core.git"
+rev = "m1"
 subdir = "aptos-move/framework/aptos-framework"
+
+# '_' is replaced by the network's account on `yarn deploy`
 [addresses]
-deployment_addr='_'
+deployment_addr = '_'
+
+[dev-addresses]
+deployment_addr = '0xcafe'

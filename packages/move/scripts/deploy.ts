@@ -1,17 +1,31 @@
-import { execSync } from 'child_process';
+import minimist from 'minimist';
+import { loadModules } from './load-modules';
+import { checkCli, getCompileArgs, getMoveTomlAddresses, getProfile, getTarget, runCli } from './utils';
 
 async function main(): Promise<void> {
-  const deployCommand = 'aptos move publish --assume-yes';
+  const target = getTarget(minimist(process.argv.slice(2)).network);
+  checkCli(target.cli);
+  const { account } = getProfile(target);
 
-  try {
-    // Execute deploy command
-    console.log(`Executing: ${deployCommand}`);
-    execSync(deployCommand, { stdio: 'inherit' });
+  // Addresses left unset in Move.toml ('_') are deployed to the network's account
+  const namedAddresses = Object.entries(getMoveTomlAddresses())
+    .filter(([, value]) => value === '_')
+    .map(([name]) => `${name}=${account}`);
 
-  } catch (error) {
-    console.error('Deployment failed:', error instanceof Error ? error.message : 'Unknown error');
-    process.exit(1);
-  }
+  runCli(target, [
+    'move',
+    'publish',
+    '--profile',
+    target.network,
+    '--assume-yes',
+    ...(namedAddresses.length ? ['--named-addresses', namedAddresses.join(',')] : []),
+    ...getCompileArgs(target),
+  ]);
+
+  await loadModules(target);
 }
 
-main().catch(console.error);
+main().catch(error => {
+  console.error(error);
+  process.exit(1);
+});
