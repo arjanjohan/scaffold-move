@@ -43,17 +43,21 @@ export function useGetAccountResource<T = any>(
   const { account } = useWallet();
 
   // If address is not provided, use the wallet address
-  // Default to empty string if account is not connected
+  // Default to empty string if account is not connected, the query is skipped then
   const resourceAddress = address || account?.address?.toString() || "";
 
   return useQuery<T, ResponseError>({
-    queryKey: ["accountResource", { address: resourceAddress, moduleAddress, moduleName, resourceName }],
+    queryKey: [
+      "accountResource",
+      { chainId: network.targetNetwork.id, address: resourceAddress, moduleAddress, moduleName, resourceName },
+    ],
     queryFn: () => {
       if (!moduleAddress) {
         throw new Error(`Module address not found for module: ${moduleName}`);
       }
       return getAccountResource({ address: resourceAddress, moduleAddress, moduleName, resourceName }, aptosClient);
     },
+    enabled: !!resourceAddress && !!moduleAddress,
     retry: options?.retry ?? false,
   });
 }

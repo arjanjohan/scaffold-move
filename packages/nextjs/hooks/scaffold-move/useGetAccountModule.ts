@@ -25,7 +25,7 @@ export function useGetAccountModule(
   const aptosClient = useAptosClient(network.targetNetwork.id);
 
   return useQuery<Types.MoveModuleBytecode, ResponseError>({
-    queryKey: ["accountModule", { address, moduleName }],
+    queryKey: ["accountModule", { chainId: network.targetNetwork.id, address, moduleName }],
     queryFn: () => getAccountModule({ accountAddress: address, moduleName }, aptosClient),
   });
 }
