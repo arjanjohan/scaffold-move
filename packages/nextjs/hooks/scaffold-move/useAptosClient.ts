@@ -14,7 +14,7 @@ export function useAptosClient(chainId: number) {
     ...(chain.network === "custom" && {
       fullnode: chain.fullnode,
       indexer: chain.indexer,
-      faucet: chain.faucet,
+      faucet: chain.faucet_api,
     }),
     ...(aptosApiKey && {
       apiKey: aptosApiKey,

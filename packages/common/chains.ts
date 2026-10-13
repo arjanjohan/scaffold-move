@@ -10,7 +10,10 @@ export type Chain = {
   id: number;
   name: string;
   indexer?: string;
-  faucet?: string;
+  // Faucet API, used by the SDK and `aptos init`
+  faucet_api?: string;
+  // Faucet page, linked in the UI
+  faucet_url?: string;
   block_explorer?: string;
   explorer_network_param?: string;
   native_token_symbol?: string;
@@ -26,7 +29,8 @@ export const defaultChains: Record<string, Chain> = {
     network: "custom",
     fullnode: "https://testnet.movementnetwork.xyz/v1",
     indexer: "https://indexer.testnet.movementnetwork.xyz/v1/graphql",
-    faucet: "https://faucet.movementnetwork.xyz",
+    faucet_api: "https://faucet.testnet.movementnetwork.xyz",
+    faucet_url: "https://faucet.movementnetwork.xyz",
     block_explorer: "https://explorer.movementnetwork.xyz",
     explorer_network_param: "testnet",
     native_token_symbol: "MOVE",
@@ -52,7 +56,7 @@ export const defaultChains: Record<string, Chain> = {
     id: 2,
     name: "Aptos Testnet",
     network: "testnet",
-    faucet: "https://aptos.dev/en/network/faucet",
+    faucet_url: "https://aptos.dev/en/network/faucet",
     block_explorer: "https://explorer.aptoslabs.com",
     explorer_network_param: "testnet",
   },

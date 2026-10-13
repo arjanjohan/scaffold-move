@@ -2,13 +2,10 @@ import { Chain } from "@scaffold-move/common";
 import scaffoldConfig from "~~/scaffold.config";
 
 /**
- * Gives the faucet address URL, returns empty string if the faucet is not defined (mainnet or local chain)
+ * Gives the faucet page URL, returns empty string if the faucet is not defined (mainnet or local chain)
  */
 export function getFaucetAddressLink(chain: Chain) {
-  if (chain.faucet === "") {
-    return "";
-  }
-  return chain.faucet;
+  return chain.faucet_url ?? "";
 }
 
 /**

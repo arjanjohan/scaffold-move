@@ -74,10 +74,11 @@ function initPredefinedNetwork(network: string): void {
   });
 }
 
+// Accounts are only funded by `aptos init` when a faucet API is known, otherwise point to the faucet page
 function printFaucetUrl(): void {
-  if (chain?.faucet) {
+  if (chain?.faucet_url && !chain.faucet_api) {
     console.log(`\nTo get test tokens for ${chain.name}, visit:`);
-    console.log(chain.faucet);
+    console.log(chain.faucet_url);
   }
 }
 
@@ -92,7 +93,7 @@ function updateMoveTomlAfterInit(): void {
 }
 
 if (chain?.network === 'custom') {
-  initCustomNetwork(chain.fullnode);
+  initCustomNetwork(chain.fullnode, chain.faucet_api);
 } else if (chain) {
   initPredefinedNetwork(chain.network);
 } else if (network === 'custom') {
