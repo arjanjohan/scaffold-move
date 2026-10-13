@@ -30,7 +30,9 @@ Before you begin, you need to install the following tools:
 - [Node (>= v18.17)](https://nodejs.org/en/download/)
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
-- [Aptos CLI](https://aptos.dev/en/build/cli)
+- The CLI for the network(s) you deploy to:
+  - Movement: [Movement CLI](https://docs.movementnetwork.xyz/devs/movementcli) 7.4.x. Movement only accepts Move bytecode v7, which newer Aptos CLIs can't produce.
+  - Aptos: [Aptos CLI](https://aptos.dev/build/cli) 9.x.
 
 ## Quickstart
 
@@ -44,15 +46,15 @@ cd scaffold-move
 yarn install
 ```
 
-2. THen, initialize a new account.
+2. Then, create an account:
 
 ```
 yarn account
 ```
 
-This command overwrites `packages/move/.aptos/config.yaml` with a new Aptos account. The new address is copied over to the first address in the Move.toml file. If no address exists in this file, it is added on a new line.
+This command creates an account for the default network (`defaultNetwork` in `packages/move/move.config.ts`) and funds it from the faucet when the network has a faucet API. Use `--network` for another network, e.g. `yarn account --network aptos_testnet`. Valid networks are the keys of `defaultChains` in `packages/common/chains.ts`, or `custom` together with `--rest-url` (and optionally `--faucet-url`).
 
-Use the `--network` tag to define a network to create the account on, e.g. `yarn account --network aptos_testnet`. Valid networks are the keys of `defaultChains` in `packages/common/chains.ts`, or `custom` together with `--rest-url` (and optionally `--faucet-url`). Alternatively, you can change the `defaultNetwork` value in `packages/move/move.config.ts`.
+Every network gets its own account, stored as a CLI profile named after the network in `packages/move/.movement/config.yaml` (Movement) or `packages/move/.aptos/config.yaml` (Aptos). Running `yarn account` again for a network keeps its existing account; remove the profile from the config file to create a new one.
 
 All network information (chain IDs, RPC, indexer, faucet and explorer URLs) lives in `packages/common/chains.ts` and is shared by the move scripts and the frontend.
 
@@ -62,7 +64,9 @@ All network information (chain IDs, RPC, indexer, faucet and explorer URLs) live
 yarn deploy
 ```
 
-This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command runs `packages/move/scripts/deploy.ts`, which uses `aptos move publish` to publish the modules to the network. After this it executes `packages/move/scripts/load-modules.ts` to make the new modules available in the nextjs frontend.
+This command deploys the move modules in `packages/move/sources` to the default network, or to `--network <network>`. The modules can be modified to suit your needs. `packages/move/scripts/deploy.ts` publishes them with the network's CLI, deploying the addresses set to `'_'` in `Move.toml` to the network's account. After this it runs `packages/move/scripts/load-modules.ts` to make the new modules available in the nextjs frontend.
+
+`Move.toml` depends on Movement's framework. For Aptos networks the scripts compile against the Aptos framework with `--override-std`. `yarn compile` and `yarn test` also take `--network`.
 
 4. On a second terminal, start your NextJS app:
 
