@@ -1425,6 +1425,7 @@ __metadata:
     "@apollo/client": ^3.12.4
     "@aptos-labs/ts-sdk": ^5.2.1
     "@aptos-labs/wallet-adapter-react": ^8.3.3
+    "@aptos-labs/wallet-standard": ^0.5.2
     "@heroicons/react": ^2.1.5
     "@mizuwallet-sdk/core": ^1.4.0
     "@rainbow-me/rainbowkit": 2.1.6
