@@ -81,9 +81,7 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
         function_args: processArguments(args || []),
       };
 
-      console.log("request", request);
       const result = await view(request, aptos);
-      console.log("result: ", result);
       setData(result);
     } catch (err) {
       console.log("error: ", err);

@@ -4,7 +4,6 @@
  * @returns Processed array with parsed values where appropriate
  */
 export const processArguments = (args: (string | any)[]): any[] => {
-  console.log("args", args);
   return args.map(arg => {
     try {
       if (Array.isArray(arg)) {

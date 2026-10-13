@@ -62,7 +62,6 @@ const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModul
         functionArguments: processArguments(args || []),
       },
     };
-    console.log("transaction", transaction);
 
     setTransactionInProcess(true);
     const signAndSubmitTransactionCall = async (transaction: InputTransactionData): Promise<TransactionResponse> => {
