@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@aptos-labs/ts-sdk": "^5.2.1",
-    "axios": "^1.8.4",
     "got": "11.8.6",
     "js-yaml": "^4.1.0",
     "minimist": "^1.2.8"
