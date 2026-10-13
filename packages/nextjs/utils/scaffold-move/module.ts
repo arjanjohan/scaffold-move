@@ -47,9 +47,6 @@ type ExtractMoveReturns<T extends readonly string[]> = {
   [K in keyof T]: ExtractMoveParam<T[K] & string>;
 };
 
-// Get all modules for a specific chain
-type ChainModules = (typeof modulesData)[ConfiguredChainId];
-
 // Get all view functions for a module
 type ViewFunctions<TModule extends GenericModule> = {
   [K in TModule["abi"]["exposed_functions"][number]["name"] as Extract<
@@ -71,13 +68,19 @@ type ViewFunctions<TModule extends GenericModule> = {
     : never;
 };
 
+// Loose function types, used when no modules are declared for the configured chain
+type GenericModuleFunctions = {
+  [functionName: string]: { args: any; tyArgs: any; returns: any };
+};
+
 // Get all view functions for a specific module
-export type ModuleViewFunctions<TModuleName extends keyof ChainModules> = ViewFunctions<
-  Extract<ChainModules[TModuleName], GenericModule>
+export type ModuleViewFunctions<TModuleName extends keyof Modules> = IsModuleDeclarationMissing<
+  GenericModuleFunctions,
+  ViewFunctions<Extract<Modules[TModuleName], GenericModule>>
 >;
 
 // Get function names that are view functions
-export type ModuleViewFunctionNames<TModuleName extends keyof ChainModules> = keyof ModuleViewFunctions<TModuleName>;
+export type ModuleViewFunctionNames<TModuleName extends keyof Modules> = keyof ModuleViewFunctions<TModuleName>;
 
 // Get all non-view functions for a module
 type EntryFunctions<TModule extends GenericModule> = {
@@ -101,12 +104,13 @@ type EntryFunctions<TModule extends GenericModule> = {
 };
 
 // Get all non-view functions for a specific module
-export type ModuleEntryFunctions<TModuleName extends keyof ChainModules> = EntryFunctions<
-  Extract<ChainModules[TModuleName], GenericModule>
+export type ModuleEntryFunctions<TModuleName extends keyof Modules> = IsModuleDeclarationMissing<
+  GenericModuleFunctions,
+  EntryFunctions<Extract<Modules[TModuleName], GenericModule>>
 >;
 
 // Get function names that are non-view functions
-export type ModuleEntryFunctionNames<TModuleName extends keyof ChainModules> = keyof ModuleEntryFunctions<TModuleName>;
+export type ModuleEntryFunctionNames<TModuleName extends keyof Modules> = keyof ModuleEntryFunctions<TModuleName>;
 
 type AddExternalFlag<T> = {
   [ChainId in keyof T]: {
