@@ -32,7 +32,7 @@ export const useGetAccountNativeBalance = (address?: string) => {
     };
 
     fetchBalance();
-  }, [address, account]);
+  }, [address, account, aptosClient]);
 
   return { balance, loading, error, nativeTokenSymbol: network.targetNetwork.native_token_symbol || "APT" };
 };
