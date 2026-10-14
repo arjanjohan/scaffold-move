@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import CopyToClipboard from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-move";
+import { useCopyToClipboard } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { getBlockExplorerAddressLink } from "~~/utils/scaffold-move";
 
@@ -28,7 +27,7 @@ const blockieSizeMap = {
  * Displays an address with a Blockie image and option to copy address.
  */
 export const Address = ({ address, disableAddressLink, format, size = "base" }: AddressProps) => {
-  const [addressCopied, setAddressCopied] = useState(false);
+  const { copyToClipboard, isCopiedToClipboard } = useCopyToClipboard();
 
   const { targetNetwork } = useTargetNetwork();
   // Skeleton UI
@@ -67,26 +66,17 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
           {displayAddress}
         </a>
       )}
-      {addressCopied ? (
+      {isCopiedToClipboard ? (
         <CheckCircleIcon
           className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer shrink-0"
           aria-hidden="true"
         />
       ) : (
-        <CopyToClipboard
-          text={address}
-          onCopy={() => {
-            setAddressCopied(true);
-            setTimeout(() => {
-              setAddressCopied(false);
-            }, 800);
-          }}
-        >
-          <DocumentDuplicateIcon
-            className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer shrink-0"
-            aria-hidden="true"
-          />
-        </CopyToClipboard>
+        <DocumentDuplicateIcon
+          className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer shrink-0"
+          aria-hidden="true"
+          onClick={() => copyToClipboard(address)}
+        />
       )}
     </div>
   );

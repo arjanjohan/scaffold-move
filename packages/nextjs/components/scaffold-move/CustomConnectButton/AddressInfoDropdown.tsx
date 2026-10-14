@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { NetworkOptions } from "./NetworkOptions";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import CopyToClipboard from "react-copy-to-clipboard";
 import {
   ArrowLeftEndOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
@@ -13,7 +12,7 @@ import {
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-move";
-import { useOutsideClick } from "~~/hooks/scaffold-move";
+import { useCopyToClipboard, useOutsideClick } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { getFaucetAddressLink, getTargetNetworks } from "~~/utils/scaffold-move";
 
@@ -25,7 +24,7 @@ type AddressInfoDropdownProps = {
 };
 
 export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: AddressInfoDropdownProps) => {
-  const [addressCopied, setAddressCopied] = useState(false);
+  const { copyToClipboard, isCopiedToClipboard } = useCopyToClipboard();
   const [selectingNetwork, setSelectingNetwork] = useState(false);
   const dropdownRef = useRef<HTMLDetailsElement>(null);
   const closeDropdown = () => {
@@ -51,33 +50,14 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
         <ul tabIndex={0} className="dropdown-content menu z-2 p-2 mt-2 shadow-lg bg-base-200 gap-1">
           <NetworkOptions hidden={!selectingNetwork} />
           <li className={selectingNetwork ? "hidden" : ""}>
-            {addressCopied ? (
-              <div className="btn-sm flex gap-3 py-3">
-                <CheckCircleIcon
-                  className="text-xl font-normal h-6 w-4 cursor-pointer ml-2 sm:ml-0"
-                  aria-hidden="true"
-                />
-                <span className=" whitespace-nowrap">Copy address</span>
-              </div>
-            ) : (
-              <CopyToClipboard
-                text={address}
-                onCopy={() => {
-                  setAddressCopied(true);
-                  setTimeout(() => {
-                    setAddressCopied(false);
-                  }, 800);
-                }}
-              >
-                <div className="btn-sm flex gap-3 py-3">
-                  <DocumentDuplicateIcon
-                    className="text-xl font-normal h-6 w-4 cursor-pointer ml-2 sm:ml-0"
-                    aria-hidden="true"
-                  />
-                  <span className=" whitespace-nowrap">Copy address</span>
-                </div>
-              </CopyToClipboard>
-            )}
+            <div className="btn-sm flex gap-3 py-3 cursor-pointer" onClick={() => copyToClipboard(address)}>
+              {isCopiedToClipboard ? (
+                <CheckCircleIcon className="text-xl font-normal h-6 w-4 ml-2 sm:ml-0" aria-hidden="true" />
+              ) : (
+                <DocumentDuplicateIcon className="text-xl font-normal h-6 w-4 ml-2 sm:ml-0" aria-hidden="true" />
+              )}
+              <span className="whitespace-nowrap">Copy address</span>
+            </div>
           </li>
           <li className={selectingNetwork ? "hidden" : ""}>
             <label htmlFor="qrcode-modal" className="btn-sm flex gap-3 py-3">
