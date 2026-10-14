@@ -54,7 +54,7 @@ yarn account
 
 This command creates an account for the default network (`defaultNetwork` in `packages/move/move.config.ts`) and funds it from the faucet when the network has a faucet API. Use `--network` for another network, e.g. `yarn account --network aptos_testnet`. Valid networks are the keys of `defaultChains` in `packages/common/chains.ts`, or `custom` together with `--rest-url` (and optionally `--faucet-url`).
 
-Every network gets its own account, stored as a CLI profile named after the network in `packages/move/.movement/config.yaml` (Movement) or `packages/move/.aptos/config.yaml` (Aptos). Running `yarn account` again for a network keeps its existing account; remove the profile from the config file to create a new one.
+Every network gets its own account, stored as a CLI profile named after the network in `packages/move/.movement/config.yaml` (Movement) or `packages/move/.aptos/config.yaml` (Aptos). Running `yarn account` again for a network keeps its existing account. Add `--new` to create a new one; the previous account is kept as a profile named `<network>_old_<timestamp>`.
 
 All network information (chain IDs, RPC, indexer, faucet and explorer URLs) lives in `packages/common/chains.ts` and is shared by the move scripts and the frontend.
 

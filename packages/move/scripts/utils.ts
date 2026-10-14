@@ -90,11 +90,16 @@ export function getCompileArgs(target: Target): string[] {
   return target.chain?.override_std ? ['--override-std', target.chain.override_std] : [];
 }
 
-// The account `yarn account` created for the target network
-export function getProfile(target: Target): Profile & { account: string } {
+// The CLI profile for the target network, if `yarn account` created one
+export function findProfile(target: Target): Profile | undefined {
   const configPath = path.join(packageDir, `.${target.cli}`, 'config.yaml');
   const config = fs.existsSync(configPath) ? (yaml.load(fs.readFileSync(configPath, 'utf-8')) as Config) : undefined;
-  const profile = config?.profiles?.[target.network];
+  return config?.profiles?.[target.network];
+}
+
+// The account `yarn account` created for the target network
+export function getProfile(target: Target): Profile & { account: string } {
+  const profile = findProfile(target);
   if (!profile?.account) {
     console.error(`No account for ${target.network}. Run \`yarn account --network ${target.network}\` first.`);
     process.exit(1);

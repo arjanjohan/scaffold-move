@@ -1,11 +1,18 @@
 import minimist from 'minimist';
-import { checkCli, getProfile, getTarget, runCli } from './utils';
+import { checkCli, findProfile, getProfile, getTarget, runCli } from './utils';
 
-const args = minimist(process.argv.slice(2));
+const args = minimist(process.argv.slice(2), { boolean: ['new'] });
 const target = getTarget(args.network);
 checkCli(target.cli);
 
-// Creates or replaces the account (CLI profile) for this network
+// --new keeps the current account as a renamed profile, so its key isn't lost
+if (args.new && findProfile(target)) {
+  const backup = `${target.network}_old_${new Date().toISOString().replace(/\D/g, '').slice(0, 14)}`;
+  runCli(target, ['config', 'rename-profile', '--profile', target.network, '--new-profile-name', backup]);
+  console.log(`Previous account kept as profile ${backup}`);
+}
+
+// Creates the account (CLI profile) for this network, or keeps the existing one
 const initArgs = ['init', '--profile', target.network, '--assume-yes'];
 if (!target.chain) {
   if (!args['rest-url']) {
