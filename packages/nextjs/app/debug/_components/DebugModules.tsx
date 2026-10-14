@@ -37,10 +37,10 @@ export function DebugModules() {
             <div className="flex flex-row gap-2 w-full max-w-7xl pb-1 px-6 lg:px-10 flex-wrap">
               {moduleNames.map(moduleName => (
                 <button
-                  className={`btn btn-secondary btn-sm font-light hover:border-transparent ${
+                  className={`btn btn-sm font-light ${
                     moduleName === selectedModule
-                      ? "bg-base-300 text-base-content hover:bg-base-300 no-animation"
-                      : "bg-base-100 text-base-content hover:bg-secondary hover:text-secondary-content"
+                      ? "btn-secondary"
+                      : "bg-base-100 border-base-300 text-base-content/70 hover:bg-base-300 hover:text-base-content"
                   }`}
                   key={moduleName as string}
                   onClick={() => setSelectedModule(moduleName)}

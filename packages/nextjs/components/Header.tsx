@@ -43,8 +43,10 @@ export const HeaderMenuLinks = () => {
               href={href}
               passHref
               className={`${
-                isActive ? "bg-base-300" : ""
-              } hover:bg-base-300 focus:bg-base-300! h-full px-4 text-sm gap-2 flex items-center whitespace-nowrap`}
+                isActive
+                  ? "border-b-secondary text-base-content"
+                  : "border-b-transparent text-base-content/70 hover:border-b-base-content/20 hover:text-base-content"
+              } border-y-3 border-t-transparent h-full px-4 text-sm gap-2 flex items-center whitespace-nowrap`}
             >
               {icon}
               <span>{label}</span>
@@ -85,7 +87,8 @@ export const Header = () => {
             <span className="text-xs">Move dev stack</span>
           </div>
         </Link>
-        <ul className="hidden lg:flex lg:flex-nowrap h-full m-0 p-0 list-none">
+        {/* translate-y-0.5 puts the active underline on the header's bottom border */}
+        <ul className="hidden lg:flex lg:flex-nowrap h-full m-0 p-0 list-none translate-y-0.5">
           <HeaderMenuLinks />
         </ul>
       </div>
