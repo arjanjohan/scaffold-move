@@ -32,7 +32,7 @@ Before you begin, you need to install the following tools:
 - [Git](https://git-scm.com/downloads)
 - The CLI for the network(s) you deploy to:
   - Movement: [Movement CLI](https://docs.movementnetwork.xyz/devs/movementcli) 7.4.x. Movement only accepts Move bytecode v7, which newer Aptos CLIs can't produce.
-  - Aptos: [Aptos CLI](https://aptos.dev/build/cli) 9.x.
+  - Aptos: [Aptos CLI](https://aptos.dev/build/cli) 9.6 or newer (`aptos update aptos`). The Aptos framework needs a recent CLI to compile.
 
 ## Quickstart
 

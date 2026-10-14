@@ -32,8 +32,14 @@ const cliInstallUrls: Record<Cli, string> = {
   movement: 'https://docs.movementnetwork.xyz/devs/movementcli',
 };
 
-// Major CLI versions the scripts are tested with. Movement only accepts bytecode v7, which aptos CLI 9 can't emit.
-const testedCliMajor: Record<Cli, number> = { aptos: 9, movement: 7 };
+// Oldest tested CLI versions. The Aptos framework branches need a recent aptos CLI to compile (9.4 fails on testnet).
+const minCliVersion: Record<Cli, string> = { aptos: '9.6.0', movement: '7.4.0' };
+
+function isOlderVersion(version: string, min: string): boolean {
+  const [a, b] = [version, min].map(v => v.split('.').map(Number));
+  const index = a.findIndex((part, i) => part !== b[i]);
+  return index >= 0 && a[index] < b[index];
+}
 
 export function getTarget(network: string = defaultNetwork): Target {
   const chains: Record<string, Chain> = defaultChains;
@@ -45,7 +51,7 @@ export function getTarget(network: string = defaultNetwork): Target {
   return { network, chain, cli: chain?.cli ?? 'aptos' };
 }
 
-// Stop when the CLI for the target network is missing, warn when its version is untested
+// Stop when the CLI for the target network is missing, warn when it is older than tested
 export function checkCli(cli: Cli): void {
   let version: string;
   try {
@@ -60,8 +66,9 @@ export function checkCli(cli: Cli): void {
     console.error(`The \`${cli}\` command is ${version}, not the ${cli} CLI. See ${cliInstallUrls[cli]}`);
     process.exit(1);
   }
-  if (parseInt(version.split(' ')[1], 10) !== testedCliMajor[cli]) {
-    console.warn(`Warning: scaffold-move is tested with ${cli} CLI ${testedCliMajor[cli]}.x`);
+  const number = version.split(' ')[1];
+  if (isOlderVersion(number, minCliVersion[cli])) {
+    console.warn(`Warning: ${cli} CLI ${number} is older than ${minCliVersion[cli]}, compiling may fail. See ${cliInstallUrls[cli]}`);
   }
 }
 
