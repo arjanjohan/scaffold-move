@@ -72,17 +72,26 @@ export function checkCli(cli: Cli): void {
   }
 }
 
-// Runs the target's CLI in packages/move and exits when it fails
-export function runCli(target: Target, args: string[], input?: string): void {
-  console.log(`Executing: ${target.cli} ${args.join(' ')}`);
+// Runs the target's CLI in packages/move and exits when it fails.
+// A quiet run returns the CLI output instead of printing it, and only prints it when the CLI fails.
+export function runCli(target: Target, args: string[], options: { input?: string; quiet?: boolean } = {}): string {
+  const { input, quiet } = options;
+  if (!quiet) {
+    console.log(`Executing: ${target.cli} ${args.join(' ')}`);
+  }
   const result = spawnSync(target.cli, args, {
     cwd: packageDir,
     input,
-    stdio: [input === undefined ? 'inherit' : 'pipe', 'inherit', 'inherit'],
+    encoding: 'utf-8',
+    stdio: [input === undefined ? 'inherit' : 'pipe', quiet ? 'pipe' : 'inherit', quiet ? 'pipe' : 'inherit'],
   });
   if (result.status !== 0) {
+    if (quiet) {
+      console.error(`${target.cli} ${args.join(' ')} failed:\n${result.stdout}${result.stderr}`);
+    }
     process.exit(result.status ?? 1);
   }
+  return quiet ? `${result.stdout}${result.stderr}` : '';
 }
 
 // Extra arguments to compile for the target network

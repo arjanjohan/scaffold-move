@@ -6,10 +6,13 @@ const target = getTarget(args.network);
 checkCli(target.cli);
 
 // --new keeps the current account as a renamed profile, so its key isn't lost
-if (args.new && findProfile(target)) {
+const previous = findProfile(target)?.account;
+if (args.new && previous) {
   const backup = `${target.network}_old_${new Date().toISOString().replace(/\D/g, '').slice(0, 14)}`;
-  runCli(target, ['config', 'rename-profile', '--profile', target.network, '--new-profile-name', backup]);
-  console.log(`Previous account kept as profile ${backup}`);
+  runCli(target, ['config', 'rename-profile', '--profile', target.network, '--new-profile-name', backup], {
+    quiet: true,
+  });
+  console.log(`Previous account 0x${previous.replace(/^0x/, '')} kept as profile ${backup}`);
 }
 
 // Creates the account (CLI profile) for this network, or keeps the existing one
@@ -36,12 +39,18 @@ if (!target.chain) {
   }
 }
 
-// `init` asks for a private key; an empty answer generates a new one
-runCli(target, initArgs, '\n');
-console.log(`\nAccount for ${target.network}: ${getProfile(target).account}`);
+// `init` asks for a private key; an empty answer generates a new one, or keeps the existing one
+const output = runCli(target, initArgs, { input: '\n', quiet: true });
+const { account } = getProfile(target);
+console.log(`${previous && !args.new ? 'Using existing' : 'Created'} account for ${target.network}: ${account}`);
 
 // Accounts are only funded by `init` when a faucet API is known, otherwise point to the faucet page
-if (target.chain?.faucet_url && !target.chain.faucet_api) {
-  console.log(`\nTo get test tokens for ${target.chain.name}, visit:`);
-  console.log(target.chain.faucet_url);
+if (output.includes('funded successfully')) {
+  console.log('Funded from the faucet');
+} else if (target.chain?.faucet_url && !target.chain.faucet_api) {
+  console.log(`Get test tokens at ${target.chain.faucet_url}`);
+}
+if (target.chain?.block_explorer) {
+  const networkParam = target.chain.explorer_network_param ? `?network=${target.chain.explorer_network_param}` : '';
+  console.log(`Explorer: ${target.chain.block_explorer}/account/${account}${networkParam}`);
 }
