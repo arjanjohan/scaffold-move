@@ -80,7 +80,7 @@ export const Header = () => {
         </details>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0 self-center">
           <div className="flex relative w-10 h-10">
-            <Image alt="SM logo" className="cursor-pointer" fill sizes="40px" src="/logo.png" />
+            <Image alt="SM logo" className="cursor-pointer" fill sizes="40px" src="/logo.svg" />
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">Scaffold-Move</span>
