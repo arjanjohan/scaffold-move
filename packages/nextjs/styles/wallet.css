@@ -62,29 +62,3 @@
 .wallet-selector-text {
   font-size: 14px;
 }
-
-/* Scoped Ant CSS overrides */
-
-:where(.wallet-selector-modal .ant-modal-body) {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-:where(.wallet-selector-modal .ant-divider-inner-text) {
-  color: rgba(0, 0, 0, 0.5);
-}
-
-:where(.wallet-selector-modal .ant-collapse-header) {
-  justify-content: center !important;
-  color: rgba(0, 0, 0, 0.5) !important;
-}
-:where(.wallet-selector-modal .ant-collapse-header-text) {
-  flex: unset !important;
-  margin-inline-end: 0 !important;
-}
-
-:where(.wallet-selector-modal .ant-collapse-content-box) {
-  padding: 0px !important;
-  padding-top: 8px !important;
-}
