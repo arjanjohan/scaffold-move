@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -60,38 +60,22 @@ export const HeaderMenuLinks = () => {
  * Site header
  */
 export const Header = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const burgerMenuRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(
-    burgerMenuRef,
-    useCallback(() => setIsDrawerOpen(false), []),
-  );
+  const burgerMenuRef = useRef<HTMLDetailsElement>(null);
+  const closeBurgerMenu = useCallback(() => burgerMenuRef.current?.removeAttribute("open"), []);
+  useOutsideClick(burgerMenuRef, closeBurgerMenu);
 
   return (
     <div className="sticky lg:static top-0 navbar bg-base-100 min-h-16 shrink-0 justify-between z-20 border-b-2 border-base-300 p-0 sm:px-2">
       <div className="navbar-start w-auto self-stretch">
-        <div className="lg:hidden dropdown self-center" ref={burgerMenuRef}>
-          <label
-            tabIndex={0}
-            className={`ml-1 btn btn-ghost ${isDrawerOpen ? "hover:bg-base-300" : "hover:bg-transparent"}`}
-            onClick={() => {
-              setIsDrawerOpen(prevIsOpenState => !prevIsOpenState);
-            }}
-          >
+        {/* details instead of a focus dropdown: daisyUI 5 disables pointer events on a focused trigger */}
+        <details className="lg:hidden dropdown self-center" ref={burgerMenuRef}>
+          <summary className="ml-1 btn btn-ghost hover:bg-transparent">
             <Bars3Icon className="h-1/2" />
-          </label>
-          {isDrawerOpen && (
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 p-2 shadow-lg bg-base-100 w-52"
-              onClick={() => {
-                setIsDrawerOpen(false);
-              }}
-            >
-              <HeaderMenuLinks />
-            </ul>
-          )}
-        </div>
+          </summary>
+          <ul className="menu menu-sm dropdown-content mt-3 p-2 shadow-lg bg-base-100 w-52" onClick={closeBurgerMenu}>
+            <HeaderMenuLinks />
+          </ul>
+        </details>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0 self-center">
           <div className="flex relative w-10 h-10">
             <Image alt="SM logo" className="cursor-pointer" fill sizes="40px" src="/logo.png" />
