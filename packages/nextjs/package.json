@@ -19,7 +19,6 @@
     "@aptos-labs/wallet-adapter-react": "^8.3.3",
     "@aptos-labs/wallet-standard": "^0.5.2",
     "@heroicons/react": "^2.1.5",
-    "@rainbow-me/rainbowkit": "2.1.6",
     "@scaffold-move/common": "workspace:*",
     "@tanstack/react-query": "^5.56.2",
     "@telegram-apps/bridge": "^1.9.0",
@@ -41,8 +40,6 @@
     "react-json-view": "^1.21.3",
     "use-debounce": "^8.0.4",
     "usehooks-ts": "^2.16.0",
-    "viem": "2.23.0",
-    "wagmi": "2.14.11",
     "zustand": "^4.5.5"
   },
   "devDependencies": {
@@ -51,7 +48,6 @@
     "@types/nprogress": "^0.2.3",
     "@types/react": "^18.3.5",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "abitype": "1.0.6",
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.5.27",

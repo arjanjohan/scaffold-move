@@ -1,4 +1,3 @@
-import "@rainbow-me/rainbowkit/styles.css";
 import { ScaffoldMoveAppWithProviders } from "~~/components/ScaffoldMoveAppWithProviders";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
