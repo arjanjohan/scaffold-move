@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useGetModule } from "./useGetModule";
+import { TransactionResponse as AptosTransactionResponse } from "@aptos-labs/ts-sdk";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
-import { FailedTransactionError } from "aptos";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { processArguments } from "~~/utils/scaffold-move/arguments";
@@ -16,6 +16,7 @@ export type TransactionResponseOnSubmission = {
   transactionHash: string;
   success: boolean; // indicates if the transaction submitted but failed or not
   message?: string; // error message if the transaction failed
+  receipt: AptosTransactionResponse; // the transaction as committed on chain
 };
 
 export type TransactionResponseOnError = {
@@ -72,7 +73,7 @@ const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModul
         response = await signAndSubmitTransaction(transaction);
         // transaction submit succeed
         if (response.hash) {
-          await aptos.waitForTransaction({
+          const receipt = await aptos.waitForTransaction({
             transactionHash: response.hash,
             options: {
               checkSuccess: true,
@@ -81,19 +82,24 @@ const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModul
 
           return {
             transactionSubmitted: true,
-            transactionHash: response["hash"],
+            transactionHash: response.hash,
             success: true,
+            receipt,
           };
         }
         // transaction failed
         return { ...responseOnError, message: response.hash };
       } catch (error) {
-        if (error instanceof FailedTransactionError) {
+        // Committed on chain, but the transaction failed. waitForTransaction throws the SDK's
+        // FailedTransactionError, which isn't exported, so recognise it by the transaction it carries.
+        const failedTransaction = (error as { transaction?: AptosTransactionResponse }).transaction;
+        if (error instanceof Error && failedTransaction) {
           return {
             transactionSubmitted: true,
-            transactionHash: response ? response.hash : "",
+            transactionHash: failedTransaction.hash,
             message: error.message,
             success: false,
+            receipt: failedTransaction,
           };
         } else if (error instanceof Error) {
           return { ...responseOnError, message: error.message };
