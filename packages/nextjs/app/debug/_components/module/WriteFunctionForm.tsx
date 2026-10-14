@@ -155,7 +155,7 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
                         href={getBlockExplorerTxLink(network.targetNetwork, transactionResponse.transactionHash)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary hover:underline"
+                        className="text-accent hover:underline"
                       >
                         View on Explorer
                       </a>

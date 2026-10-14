@@ -17,7 +17,8 @@
 /*
   Theme colors based on the Movement brand kit (https://www.movementnetwork.xyz/brand-kit):
   Movement Cyan #15EDEB with black #0A0A0A and white. Cyan fails as text on white (1.46:1),
-  so in light mode it's only a fill with black text, and links use a darkened teal (#0F847E, 4.5:1).
+  so in light mode it's only a fill with black text, and links use a darkened teal (#0D7670,
+  4.5:1 even on base-300).
 */
 @plugin "daisyui/theme" {
   name: "light";
@@ -27,7 +28,7 @@
   --color-primary-content: #15edeb;
   --color-secondary: #15edeb;
   --color-secondary-content: #0a0a0a;
-  --color-accent: #0f847e;
+  --color-accent: #0d7670;
   --color-accent-content: #ffffff;
   --color-neutral: #0a0a0a;
   --color-neutral-content: #ffffff;
@@ -35,10 +36,14 @@
   --color-base-200: #f5f5f5;
   --color-base-300: #eaeaea;
   --color-base-content: #0a0a0a;
-  --color-info: #0f847e;
+  --color-info: #0d7670;
+  --color-info-content: #ffffff;
   --color-success: #1b7f3b;
+  --color-success-content: #ffffff;
   --color-warning: #9d5a16;
+  --color-warning-content: #ffffff;
   --color-error: #b84722;
+  --color-error-content: #ffffff;
 
   --radius-field: 9999rem;
   --radius-box: 1rem;
@@ -66,9 +71,13 @@
   --color-base-300: #262626;
   --color-base-content: #ffffff;
   --color-info: #15edeb;
+  --color-info-content: #0a0a0a;
   --color-success: #34eeb6;
+  --color-success-content: #0a0a0a;
   --color-warning: #ffcf72;
+  --color-warning-content: #0a0a0a;
   --color-error: #ff8863;
+  --color-error-content: #0a0a0a;
 
   --radius-field: 9999rem;
   --radius-box: 1rem;
