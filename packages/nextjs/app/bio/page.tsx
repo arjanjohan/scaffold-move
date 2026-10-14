@@ -95,7 +95,7 @@ const OnchainBio: NextPage = () => {
   };
 
   return (
-    <div className="flex items-center flex-col flex-grow">
+    <div className="flex items-center flex-col grow">
       <div className="flex flex-col items-center bg-base-100 border-base-300 border shadow-md rounded-3xl p-6 mt-8 w-full max-w-lg">
         <div className="text-xl">Your Onchain Bio</div>
         <p className="text-sm mb-2">This is your decentralized profile stored on the Aptos blockchain.</p>

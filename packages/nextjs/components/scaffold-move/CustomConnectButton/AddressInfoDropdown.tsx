@@ -43,16 +43,16 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
   return (
     <>
       <details ref={dropdownRef} className="dropdown dropdown-end leading-3">
-        <summary tabIndex={0} className="btn btn-secondary btn-sm pl-0 pr-2 shadow-md dropdown-toggle gap-0 !h-auto">
+        <summary tabIndex={0} className="btn btn-secondary btn-sm pl-0 pr-2 shadow-md dropdown-toggle gap-0 h-auto!">
           <BlockieAvatar address={address} size={30} />
           <span className="ml-2 mr-1">{address?.slice(0, 6) + "..." + address?.slice(-4)}</span>
           <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
         </summary>
-        <ul tabIndex={0} className="dropdown-content menu z-[2] p-2 mt-2 shadow-center bg-base-200 rounded-box gap-1">
+        <ul tabIndex={0} className="dropdown-content menu z-2 p-2 mt-2 shadow-center bg-base-200 rounded-box gap-1">
           <NetworkOptions hidden={!selectingNetwork} />
           <li className={selectingNetwork ? "hidden" : ""}>
             {addressCopied ? (
-              <div className="btn-sm !rounded-xl flex gap-3 py-3">
+              <div className="btn-sm rounded-xl! flex gap-3 py-3">
                 <CheckCircleIcon
                   className="text-xl font-normal h-6 w-4 cursor-pointer ml-2 sm:ml-0"
                   aria-hidden="true"
@@ -69,7 +69,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
                   }, 800);
                 }}
               >
-                <div className="btn-sm !rounded-xl flex gap-3 py-3">
+                <div className="btn-sm rounded-xl! flex gap-3 py-3">
                   <DocumentDuplicateIcon
                     className="text-xl font-normal h-6 w-4 cursor-pointer ml-2 sm:ml-0"
                     aria-hidden="true"
@@ -80,13 +80,13 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
             )}
           </li>
           <li className={selectingNetwork ? "hidden" : ""}>
-            <label htmlFor="qrcode-modal" className="btn-sm !rounded-xl flex gap-3 py-3">
+            <label htmlFor="qrcode-modal" className="btn-sm rounded-xl! flex gap-3 py-3">
               <QrCodeIcon className="h-6 w-4 ml-2 sm:ml-0" />
               <span className="whitespace-nowrap">View QR Code</span>
             </label>
           </li>
           <li className={selectingNetwork ? "hidden" : ""}>
-            <button className="menu-item btn-sm !rounded-xl flex gap-3 py-3" type="button">
+            <button className="menu-item btn-sm rounded-xl! flex gap-3 py-3" type="button">
               <ArrowTopRightOnSquareIcon className="h-6 w-4 ml-2 sm:ml-0" />
               <a
                 target="_blank"
@@ -101,7 +101,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
           {allowedNetworks.length > 1 ? (
             <li className={selectingNetwork ? "hidden" : ""}>
               <button
-                className={`btn-sm !rounded-xl flex gap-3 py-3 ${
+                className={`btn-sm rounded-xl! flex gap-3 py-3 ${
                   isNetworkSwitchingDisabled ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 type="button"
@@ -117,7 +117,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
             </li>
           ) : null}
           <li className={selectingNetwork ? "hidden" : ""}>
-            <button className="btn-sm !rounded-xl flex gap-3 py-3" type="button">
+            <button className="btn-sm rounded-xl! flex gap-3 py-3" type="button">
               <BanknotesIcon className="h-6 w-4 ml-2 sm:ml-0" />
               <a
                 target="_blank"
@@ -131,7 +131,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
           </li>
           <li className={selectingNetwork ? "hidden" : ""}>
             <button
-              className="menu-item text-error btn-sm !rounded-xl flex gap-3 py-3"
+              className="menu-item text-error btn-sm rounded-xl! flex gap-3 py-3"
               type="button"
               onClick={() => disconnect()}
             >

@@ -109,7 +109,7 @@ export function WalletSelector({ isModalOpen, setModalOpen, ...walletSortingOpti
 
   return (
     <>
-      <button className="btn btn-primary wallet-button" onClick={onWalletButtonClick}>
+      <button className="btn btn-primary mr-1" onClick={onWalletButtonClick}>
         {connected ? buttonText : "Connect Wallet"}
       </button>
 
@@ -204,10 +204,10 @@ function WalletRow({ wallet, onConnect }: WalletRowProps) {
           </WalletItem.Name>
         </div>
         {isInstallRequired(wallet) ? (
-          <WalletItem.InstallLink className="btn btn-sm btn-outline wallet-connect-install" />
+          <WalletItem.InstallLink className="btn btn-sm btn-outline btn-secondary mr-1" />
         ) : (
           <WalletItem.ConnectButton asChild>
-            <button className="btn btn-sm wallet-connect-button">Connect</button>
+            <button className="btn btn-sm btn-secondary">Connect</button>
           </WalletItem.ConnectButton>
         )}
       </div>

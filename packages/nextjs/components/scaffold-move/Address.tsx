@@ -51,8 +51,8 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   }
 
   return (
-    <div className="flex items-center flex-shrink-0">
-      <div className="flex-shrink-0">
+    <div className="flex items-center shrink-0">
+      <div className="shrink-0">
         <BlockieAvatar address={address} size={(blockieSizeMap[size] * 24) / blockieSizeMap["base"]} />
       </div>
       {disableAddressLink ? (
@@ -69,7 +69,7 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
       )}
       {addressCopied ? (
         <CheckCircleIcon
-          className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer flex-shrink-0"
+          className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer shrink-0"
           aria-hidden="true"
         />
       ) : (
@@ -83,7 +83,7 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
           }}
         >
           <DocumentDuplicateIcon
-            className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer flex-shrink-0"
+            className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer shrink-0"
             aria-hidden="true"
           />
         </CopyToClipboard>

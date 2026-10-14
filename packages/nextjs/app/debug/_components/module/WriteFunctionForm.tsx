@@ -107,7 +107,7 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
   return (
     <div className="py-5 space-y-3 first:pt-0 last:pb-1">
       <div className={"flex gap-3 flex-col"}>
-        <p className="font-medium my-0 break-words">{fn.name}</p>
+        <p className="font-medium my-0 wrap-break-word">{fn.name}</p>
         {/* Type Arguments */}
         {data.typeArgs.map((_, i) => (
           <div key={`type-arg-${i}`} className="flex flex-col gap-1.5 w-full">
@@ -117,7 +117,7 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
             <div className={"flex border-2 border-base-300 bg-base-200 rounded-full text-base-content"}>
               <input
                 placeholder={`Type Argument ${i}`}
-                className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-base-content h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-base-content/60 text-base-content"
+                className="input input-ghost focus-within:border-transparent focus:outline-hidden focus:bg-transparent focus:text-base-content h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-base-content/60 text-base-content"
                 onChange={e => handleTypeArgChange(i, e.target.value)}
               />
             </div>
@@ -133,7 +133,7 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
               <div className={"flex border-2 border-base-300 bg-base-200 rounded-full text-base-content"}>
                 <input
                   placeholder={param}
-                  className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-base-content h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-base-content/60 text-base-content"
+                  className="input input-ghost focus-within:border-transparent focus:outline-hidden focus:bg-transparent focus:text-base-content h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-base-content/60 text-base-content"
                   onChange={e => handleArgChange(i, e.target.value)}
                 />
               </div>
@@ -142,10 +142,10 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
         })}
 
         <div className="flex flex-col md:flex-row justify-between gap-2 flex-wrap">
-          <div className="flex-grow basis-0">
+          <div className="grow basis-0">
             {transactionResponse !== null && transactionResponse?.transactionSubmitted && (
-              <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
-                <pre className="whitespace-pre-wrap break-words">
+              <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 wrap-break-word overflow-auto">
+                <pre className="whitespace-pre-wrap wrap-break-word">
                   <span className="font-bold">Result: </span>
                   {transactionResponse.success ? "✅ transaction successful" : "❌ transaction failed"}
                   {getBlockExplorerTxLink(network.targetNetwork, transactionResponse.transactionHash) && (
@@ -166,9 +166,9 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
             )}
             {transactionResponse?.transactionSubmitted && <TxReceipt txResult={transactionResponse.receipt} />}
             {error && (
-              <div className="bg-error text-error-content rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
+              <div className="bg-error text-error-content rounded-3xl text-sm px-4 py-1.5 wrap-break-word overflow-auto">
                 <p className="font-bold m-0 mb-1">Error:</p>
-                <pre className="whitespace-pre-wrap break-words">{error}</pre>
+                <pre className="whitespace-pre-wrap wrap-break-word">{error}</pre>
               </div>
             )}
           </div>

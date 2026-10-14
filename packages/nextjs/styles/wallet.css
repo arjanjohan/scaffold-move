@@ -1,11 +1,3 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
-.wallet-button {
-  @apply flex flex-col items-center mr-1 btn btn-primary !important;
-}
-
 .wallet-modal-title {
   text-align: center;
   font-size: 1.5rem;
@@ -69,14 +61,6 @@
 
 .wallet-selector-text {
   font-size: 14px;
-}
-
-.wallet-connect-button {
-  @apply flex flex-col items-center btn btn-secondary;
-}
-
-.wallet-connect-install {
-  @apply flex flex-col items-center mr-1 btn btn-secondary;
 }
 
 /* Scoped Ant CSS overrides */

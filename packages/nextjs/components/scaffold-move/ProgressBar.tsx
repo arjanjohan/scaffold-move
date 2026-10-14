@@ -8,7 +8,7 @@ type PushStateInput = [data: any, unused: string, url?: string | URL | null | un
 export function ProgressBar() {
   const height = "3px";
   // Theme secondary color (Movement Cyan)
-  const color = "oklch(var(--s))";
+  const color = "var(--color-secondary)";
 
   const styles = (
     <style>
