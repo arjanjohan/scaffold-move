@@ -46,18 +46,6 @@ async function fetchChainId(network: Network, nodeUrl?: string): Promise<number>
   return client.getChainId();
 }
 
-// Function to get existing module data
-function getExistingModulesData(filePath: string): ModuleData {
-  if (fs.existsSync(filePath)) {
-    const fileContent = fs.readFileSync(filePath, 'utf-8');
-    const match = fileContent.match(/deployedModules\s*=\s*({[\s\S]*});/);
-    if (match && match[1]) {
-      return JSON.parse(match[1]);
-    }
-  }
-  return {};
-}
-
 // Function to write chain-specific modules
 function writeChainModules(chainId: number, modules: MoveModuleBytecode[], isDeployed: boolean): void {
   const chainDir = path.join(deploymentsDir, chainId.toString());
