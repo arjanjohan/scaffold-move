@@ -9,7 +9,7 @@
     "serve": "next start",
     "lint": "next lint",
     "format": "prettier --write . '!(node_modules|.next|modules)/**/*'",
-    "check-types": "next typegen && tsc --noEmit --incremental",
+    "check-types": "node -e \"require('fs').rmSync('.next/types', { recursive: true, force: true })\" && next typegen && tsc --noEmit --incremental",
     "vercel": "vercel",
     "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true"
   },
