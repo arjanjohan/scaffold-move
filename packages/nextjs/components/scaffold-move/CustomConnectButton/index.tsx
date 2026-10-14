@@ -32,7 +32,6 @@ export const CustomConnectButton = () => {
           </div>
           <AddressInfoDropdown
             address={account?.address?.toString() || ""}
-            // ensAvatar={""} // Update this with ENS Avatar if available
             blockExplorerAddressLink={blockExplorerAddressLink}
           />
           <AddressQRCodeModal address={account?.address?.toString() || ""} modalId="qrcode-modal" />

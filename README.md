@@ -80,7 +80,7 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 
 - Edit your Move module `OnchainBio.move` in `packages/move/sources`
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-<!-- - Edit your Move modules test in: `packages/move/test`. To run test use `yarn hardhat:test` -->
+- Edit the Move unit tests in `packages/move/tests` and run them with `yarn test`.
 
 ## Future Development
 
