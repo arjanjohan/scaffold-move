@@ -196,7 +196,7 @@ interface WalletRowProps {
 function WalletRow({ wallet, onConnect }: WalletRowProps) {
   return (
     <WalletItem wallet={wallet} onConnect={onConnect} asChild>
-      <div className="flex items-center justify-between p-2 rounded-lg hover:bg-base-200 wallet-menu-wrapper">
+      <div className="flex items-center justify-between p-2 hover:bg-base-200 wallet-menu-wrapper">
         <div className="flex items-center gap-2 wallet-name-wrapper">
           <WalletItem.Icon className="wallet-selector-icon" />
           <WalletItem.Name asChild>

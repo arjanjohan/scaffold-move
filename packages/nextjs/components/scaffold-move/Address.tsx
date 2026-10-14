@@ -35,9 +35,9 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   if (!address) {
     return (
       <div className="animate-pulse flex space-x-4">
-        <div className="rounded-md bg-base-300 h-6 w-6"></div>
+        <div className="bg-base-300 h-6 w-6"></div>
         <div className="flex items-center space-y-6">
-          <div className="h-2 w-28 bg-base-300 rounded"></div>
+          <div className="h-2 w-28 bg-base-300"></div>
         </div>
       </div>
     );

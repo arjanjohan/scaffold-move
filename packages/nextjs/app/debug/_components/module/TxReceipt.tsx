@@ -24,7 +24,7 @@ export const TxReceipt = ({ txResult }: { txResult: TransactionResponse }) => {
   const receipt = Object.entries(txResult).filter(([key]) => receiptFields.has(key));
 
   return (
-    <div className="flex text-sm rounded-3xl peer-checked:rounded-b-none min-h-0 bg-base-300 py-0">
+    <div className="flex text-sm min-h-0 bg-base-300 py-0">
       <div className="mt-1 pl-2">
         {txResultCopied ? (
           <CheckCircleIcon
@@ -54,7 +54,7 @@ export const TxReceipt = ({ txResult }: { txResult: TransactionResponse }) => {
         <div className="collapse-title text-sm min-h-0 py-1.5 pl-1 after:top-[calc(50%+0.25rem)]! peer-checked:after:top-1/2!">
           <strong>Transaction Receipt</strong>
         </div>
-        <div className="collapse-content overflow-auto bg-base-300 rounded-t-none rounded-3xl pl-0!">
+        <div className="collapse-content overflow-auto bg-base-300 pl-0!">
           <pre className="text-xs">
             {receipt.map(([k, v]) => (
               <ObjectFieldDisplay name={k} value={v} size="xs" leftPad={false} key={k} />

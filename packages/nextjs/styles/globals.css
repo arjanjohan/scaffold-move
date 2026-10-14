@@ -3,11 +3,6 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-@theme {
-  --shadow-center: 0 0 12px -2px rgb(0 0 0 / 0.05);
-  --animate-pulse-fast: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
 @plugin "daisyui" {
   themes:
     light,
@@ -45,9 +40,9 @@
   --color-error: #b84722;
   --color-error-content: #ffffff;
 
-  --radius-field: 9999rem;
-  --radius-box: 1rem;
-  --radius-selector: 1rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --radius-selector: 0rem;
   --depth: 0;
   --noise: 0;
 
@@ -79,9 +74,9 @@
   --color-error: #ff8863;
   --color-error-content: #0a0a0a;
 
-  --radius-field: 9999rem;
-  --radius-box: 1rem;
-  --radius-selector: 1rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --radius-selector: 0rem;
   --depth: 0;
   --noise: 0;
 
@@ -126,14 +121,6 @@
 :root,
 [data-theme] {
   background: var(--color-base-200);
-}
-
-.btn {
-  @apply shadow-md;
-}
-
-.btn.btn-ghost {
-  @apply shadow-none;
 }
 
 .link {
