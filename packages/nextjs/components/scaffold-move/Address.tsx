@@ -35,9 +35,9 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   if (!address) {
     return (
       <div className="animate-pulse flex space-x-4">
-        <div className="rounded-md bg-slate-300 h-6 w-6"></div>
+        <div className="rounded-md bg-base-300 h-6 w-6"></div>
         <div className="flex items-center space-y-6">
-          <div className="h-2 w-28 bg-slate-300 rounded"></div>
+          <div className="h-2 w-28 bg-base-300 rounded"></div>
         </div>
       </div>
     );
@@ -69,7 +69,7 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
       )}
       {addressCopied ? (
         <CheckCircleIcon
-          className="ml-1.5 text-xl font-normal text-sky-600 h-5 w-5 cursor-pointer flex-shrink-0"
+          className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer flex-shrink-0"
           aria-hidden="true"
         />
       ) : (
@@ -83,7 +83,7 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
           }}
         >
           <DocumentDuplicateIcon
-            className="ml-1.5 text-xl font-normal text-sky-600 h-5 w-5 cursor-pointer flex-shrink-0"
+            className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer flex-shrink-0"
             aria-hidden="true"
           />
         </CopyToClipboard>

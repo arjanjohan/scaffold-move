@@ -28,7 +28,7 @@ export const TxReceipt = ({ txResult }: { txResult: TransactionResponse }) => {
       <div className="mt-1 pl-2">
         {txResultCopied ? (
           <CheckCircleIcon
-            className="ml-1.5 text-xl font-normal text-sky-600 h-5 w-5 cursor-pointer"
+            className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer"
             aria-hidden="true"
           />
         ) : (
@@ -42,7 +42,7 @@ export const TxReceipt = ({ txResult }: { txResult: TransactionResponse }) => {
             }}
           >
             <DocumentDuplicateIcon
-              className="ml-1.5 text-xl font-normal text-sky-600 h-5 w-5 cursor-pointer"
+              className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer"
               aria-hidden="true"
             />
           </CopyToClipboard>

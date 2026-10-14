@@ -11,9 +11,9 @@ export const Balance = ({ address }: BalanceProps) => {
   if (loading) {
     return (
       <div className="animate-pulse flex space-x-4">
-        <div className="rounded-md bg-slate-300 h-6 w-6"></div>
+        <div className="rounded-md bg-base-300 h-6 w-6"></div>
         <div className="flex items-center space-y-6">
-          <div className="h-2 w-28 bg-slate-300 rounded"></div>
+          <div className="h-2 w-28 bg-base-300 rounded"></div>
         </div>
       </div>
     );
@@ -21,7 +21,7 @@ export const Balance = ({ address }: BalanceProps) => {
 
   if (error || balance === null) {
     return (
-      <div className="border-2 border-gray-400 rounded-md px-2 flex flex-col items-center max-w-fit cursor-pointer">
+      <div className="border-2 border-base-content/30 rounded-md px-2 flex flex-col items-center max-w-fit cursor-pointer">
         <div className="text-warning">Error</div>
       </div>
     );

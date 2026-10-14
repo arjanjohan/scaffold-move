@@ -39,8 +39,8 @@ export function DebugModules() {
                 <button
                   className={`btn btn-secondary btn-sm font-light hover:border-transparent ${
                     moduleName === selectedModule
-                      ? "bg-base-300 hover:bg-base-300 no-animation"
-                      : "bg-base-100 hover:bg-secondary"
+                      ? "bg-base-300 text-base-content hover:bg-base-300 no-animation"
+                      : "bg-base-100 text-base-content hover:bg-secondary hover:text-secondary-content"
                   }`}
                   key={moduleName as string}
                   onClick={() => setSelectedModule(moduleName)}

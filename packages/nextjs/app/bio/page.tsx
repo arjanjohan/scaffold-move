@@ -96,7 +96,7 @@ const OnchainBio: NextPage = () => {
 
   return (
     <div className="flex items-center flex-col flex-grow">
-      <div className="flex flex-col items-center bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl p-6 mt-8 w-full max-w-lg">
+      <div className="flex flex-col items-center bg-base-100 border-base-300 border shadow-md rounded-3xl p-6 mt-8 w-full max-w-lg">
         <div className="text-xl">Your Onchain Bio</div>
         <p className="text-sm mb-2">This is your decentralized profile stored on the Aptos blockchain.</p>
         <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
@@ -105,7 +105,7 @@ const OnchainBio: NextPage = () => {
           <Address address={account?.address?.toString()} />
         </div>{" "}
       </div>
-      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
+      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md border border-base-300 p-6 mt-8 w-full max-w-lg">
         <h2 className="text-lg font-semibold">Register or Update Your Bio</h2>
         <p className="text-sm">
           Enter your name and a short bio to store on-chain using the{" "}
@@ -135,7 +135,7 @@ const OnchainBio: NextPage = () => {
           Register Bio
         </button>
       </div>
-      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
+      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md border border-base-300 p-6 mt-8 w-full max-w-lg">
         <h2 className="text-lg font-semibold">Fetch Bio Resource</h2>
         <p className="text-sm">
           {" "}
@@ -168,7 +168,7 @@ const OnchainBio: NextPage = () => {
         )}
       </div>
 
-      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
+      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md border border-base-300 p-6 mt-8 w-full max-w-lg">
         <h2 className="text-lg font-semibold">View Bio</h2>
         <p className="text-sm">
           Read bio data from the Aptos blockchain using a view function using the Scaffold Move{" "}
