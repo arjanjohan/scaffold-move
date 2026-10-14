@@ -62,6 +62,8 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
 
   const fetchData = useCallback(async () => {
     if (!moduleAddress) {
+      // Clear data from a previous network where the module was deployed
+      setData(null);
       setError(new Error(`Module ${moduleName.toString()} is not deployed on ${network.targetNetwork.name}`));
       return;
     }
