@@ -2,7 +2,8 @@
 
 <div align="center">
 
-![logo](/assets/logo_small.png)
+<img src="packages/nextjs/public/logo.svg" alt="Scaffold Move logo" width="250">
+
 <h4 align="center">
   <a href="https://scaffold-move-docs.vercel.app/">Documentation</a> |
   <a href="https://scaffold-move-chi.vercel.app/">Website</a>
