@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useLocalStorage } from "usehooks-ts";
+import { useSessionStorage } from "usehooks-ts";
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
 import { ModuleUI } from "~~/app/debug/_components/module";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
@@ -17,7 +17,7 @@ export function DebugModules() {
 
   const selectedModuleStorageKey = "scaffoldMove.selectedModule";
 
-  const [selectedModule, setSelectedModule] = useLocalStorage<ModuleName>(selectedModuleStorageKey, moduleNames[0], {
+  const [selectedModule, setSelectedModule] = useSessionStorage<ModuleName>(selectedModuleStorageKey, moduleNames[0], {
     initializeWithValue: false,
   });
 
