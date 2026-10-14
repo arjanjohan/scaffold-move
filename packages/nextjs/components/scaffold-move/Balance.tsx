@@ -28,7 +28,7 @@ export const Balance = ({ address }: BalanceProps) => {
   }
 
   return (
-    <div className="w-full flex items-center justify-center">
+    <div className="flex items-center">
       <>
         <span>{getFormattedBalanceStr(balance.toString())}</span>
         <span className="text-[0.8em] font-bold ml-1">{nativeTokenSymbol}</span>
