@@ -1,5 +1,12 @@
 import { ChangeEvent, FocusEvent, ReactNode, useCallback, useEffect, useRef } from "react";
-import { CommonInputProps } from "~~/components/scaffold-move";
+
+export type CommonInputProps<T = string> = {
+  value: T;
+  onChange: (newValue: T) => void;
+  name?: string;
+  placeholder?: string;
+  disabled?: boolean;
+};
 
 type InputBaseProps<T> = CommonInputProps<T> & {
   error?: boolean;
@@ -36,7 +43,7 @@ export const InputBase = <T extends { toString: () => string } | undefined = str
   );
 
   // Runs only when reFocus prop is passed, useful for setting the cursor
-  // at the end of the input. Example AddressInput
+  // at the end of the input
   const onFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
     if (reFocus !== undefined) {
       e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length);
