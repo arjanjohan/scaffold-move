@@ -55,6 +55,11 @@ export function checkCli(cli: Cli): void {
     process.exit(1);
   }
   console.log(`Using ${version}`);
+  // e.g. an Aptos CLI renamed to `movement`, which keeps its accounts in .aptos/ instead of .movement/
+  if (!version.startsWith(`${cli} `)) {
+    console.error(`The \`${cli}\` command is ${version}, not the ${cli} CLI. See ${cliInstallUrls[cli]}`);
+    process.exit(1);
+  }
   if (parseInt(version.split(' ')[1], 10) !== testedCliMajor[cli]) {
     console.warn(`Warning: scaffold-move is tested with ${cli} CLI ${testedCliMajor[cli]}.x`);
   }
