@@ -4,11 +4,11 @@
   "scripts": {
     "account": "ts-node scripts/init-account.ts",
     "chain": "aptos node run-local-testnet",
-    "deploy": "ts-node scripts/deploy.ts && ts-node scripts/load-modules.ts",
-    "compile": "aptos move compile",
-    "test": "aptos move test",
+    "deploy": "ts-node scripts/deploy.ts",
+    "compile": "ts-node scripts/move.ts compile --dev",
+    "test": "ts-node scripts/move.ts test --dev",
     "format": "aptos move fmt",
-    "document": "aptos move document",
+    "document": "ts-node scripts/move.ts document --dev",
     "build": "tsc"
   },
   "dependencies": {

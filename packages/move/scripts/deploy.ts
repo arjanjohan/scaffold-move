@@ -1,36 +1,31 @@
-import { execSync } from 'child_process';
 import minimist from 'minimist';
-import { getNetworkFromConfig } from './utils';
+import { loadModules } from './load-modules';
+import { checkCli, getCompileArgs, getMoveTomlAddresses, getProfile, getTarget, runCli } from './utils';
 
 async function main(): Promise<void> {
-  // Parse command line arguments
-  const argv = minimist(process.argv.slice(2));
+  const target = getTarget(minimist(process.argv.slice(2)).network);
+  checkCli(target.cli);
+  const { account } = getProfile(target);
 
-  // Get network from config
-  const network = getNetworkFromConfig();
+  // Addresses left unset in Move.toml ('_') are deployed to the network's account
+  const namedAddresses = Object.entries(getMoveTomlAddresses())
+    .filter(([, value]) => value === '_')
+    .map(([name]) => `${name}=${account}`);
 
-  // Determine if network is custom (localhost or custom URL)
-  const isCustomNetwork = network.includes('Custom');
+  runCli(target, [
+    'move',
+    'publish',
+    '--profile',
+    target.network,
+    '--assume-yes',
+    ...(namedAddresses.length ? ['--named-addresses', namedAddresses.join(',')] : []),
+    ...getCompileArgs(target),
+  ]);
 
-  // Build deploy command
-  let deployCommand = 'aptos move publish';
-  if (isCustomNetwork) {
-    // Default to move-1 and bytecode-version 6 for custom networks, needed for deployment to Movement
-    deployCommand += ' --move-1 --bytecode-version 6';
-  }
-
-  // Add assume-yes flag
-  deployCommand += ' --assume-yes';
-
-  try {
-    // Execute deploy command
-    console.log(`Executing: ${deployCommand}`);
-    execSync(deployCommand, { stdio: 'inherit' });
-
-  } catch (error) {
-    console.error('Deployment failed:', error instanceof Error ? error.message : 'Unknown error');
-    process.exit(1);
-  }
+  await loadModules(target);
 }
 
-main().catch(console.error);
+main().catch(error => {
+  console.error(error);
+  process.exit(1);
+});
