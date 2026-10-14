@@ -31,3 +31,50 @@ jobs:
 
       - name: Check types (move scripts)
         run: yarn move:check-types
+
+  move:
+    runs-on: ubuntu-latest
+    env:
+      MOVEMENT_CLI_VERSION: 7.4.0
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install
+        run: yarn install --immutable
+
+      # Pinned: Movement only accepts bytecode v7, which newer CLIs can't emit
+      - name: Install Movement CLI
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          curl -fsSL -o movement.zip "https://github.com/movement-network/aptos-core/releases/download/movement-cli-v${MOVEMENT_CLI_VERSION}/movement-cli-${MOVEMENT_CLI_VERSION}-Linux-x86_64.zip"
+          unzip -o movement.zip -d "$HOME/.local/bin"
+          rm movement.zip
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      # Latest: the Aptos framework branches need a recent CLI to compile
+      - name: Install Aptos CLI
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: curl -fsSL https://aptos.dev/scripts/install_cli.sh | sh -s -- --yes --generic-linux
+
+      # Framework git dependencies; Movement's is a full aptos-core clone (~500 MB)
+      - uses: actions/cache@v4
+        with:
+          path: ~/.move
+          key: move-deps-${{ hashFiles('packages/move/Move.toml', 'packages/common/chains.ts') }}
+          restore-keys: move-deps-
+
+      - name: Compile and test (Movement)
+        run: |
+          yarn compile --network movement_testnet
+          yarn test --network movement_testnet
+
+      - name: Compile and test (Aptos)
+        run: |
+          yarn compile --network aptos_testnet
+          yarn test --network aptos_testnet
