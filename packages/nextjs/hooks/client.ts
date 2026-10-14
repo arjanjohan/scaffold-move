@@ -11,7 +11,6 @@ export type ResponseError =
 
 export async function withResponseError<T>(promise: Promise<T>): Promise<T> {
   return await promise.catch(error => {
-    console.error("ERROR!", error, typeof error);
     if (typeof error == "object" && "status" in error) {
       // This is a request!
       error = error as Response;
@@ -25,6 +24,8 @@ export async function withResponseError<T>(promise: Promise<T>): Promise<T> {
       };
     }
 
+    // Not found and rate limits are expected and handled by the caller; only log the rest
+    console.error("Request failed:", error);
     throw {
       type: ResponseErrorType.UNHANDLED,
       message: error.toString(),

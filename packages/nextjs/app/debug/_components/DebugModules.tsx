@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useLocalStorage } from "usehooks-ts";
+import { useSessionStorage } from "usehooks-ts";
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
 import { ModuleUI } from "~~/app/debug/_components/module";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
@@ -17,7 +17,7 @@ export function DebugModules() {
 
   const selectedModuleStorageKey = "scaffoldMove.selectedModule";
 
-  const [selectedModule, setSelectedModule] = useLocalStorage<ModuleName>(selectedModuleStorageKey, moduleNames[0], {
+  const [selectedModule, setSelectedModule] = useSessionStorage<ModuleName>(selectedModuleStorageKey, moduleNames[0], {
     initializeWithValue: false,
   });
 
@@ -37,10 +37,10 @@ export function DebugModules() {
             <div className="flex flex-row gap-2 w-full max-w-7xl pb-1 px-6 lg:px-10 flex-wrap">
               {moduleNames.map(moduleName => (
                 <button
-                  className={`btn btn-secondary btn-sm font-light hover:border-transparent ${
+                  className={`btn btn-sm font-light ${
                     moduleName === selectedModule
-                      ? "bg-base-300 hover:bg-base-300 no-animation"
-                      : "bg-base-100 hover:bg-secondary"
+                      ? "btn-secondary"
+                      : "bg-base-100 border-base-300 text-base-content/70 hover:bg-base-300 hover:text-base-content"
                   }`}
                   key={moduleName as string}
                   onClick={() => setSelectedModule(moduleName)}

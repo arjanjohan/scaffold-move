@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import CopyToClipboard from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-move";
+import { useCopyToClipboard } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { getBlockExplorerAddressLink } from "~~/utils/scaffold-move";
 
@@ -28,16 +27,16 @@ const blockieSizeMap = {
  * Displays an address with a Blockie image and option to copy address.
  */
 export const Address = ({ address, disableAddressLink, format, size = "base" }: AddressProps) => {
-  const [addressCopied, setAddressCopied] = useState(false);
+  const { copyToClipboard, isCopiedToClipboard } = useCopyToClipboard();
 
   const { targetNetwork } = useTargetNetwork();
   // Skeleton UI
   if (!address) {
     return (
       <div className="animate-pulse flex space-x-4">
-        <div className="rounded-md bg-slate-300 h-6 w-6"></div>
+        <div className="bg-base-300 h-6 w-6"></div>
         <div className="flex items-center space-y-6">
-          <div className="h-2 w-28 bg-slate-300 rounded"></div>
+          <div className="h-2 w-28 bg-base-300"></div>
         </div>
       </div>
     );
@@ -51,8 +50,8 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   }
 
   return (
-    <div className="flex items-center flex-shrink-0">
-      <div className="flex-shrink-0">
+    <div className="flex items-center shrink-0">
+      <div className="shrink-0">
         <BlockieAvatar address={address} size={(blockieSizeMap[size] * 24) / blockieSizeMap["base"]} />
       </div>
       {disableAddressLink ? (
@@ -67,26 +66,17 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
           {displayAddress}
         </a>
       )}
-      {addressCopied ? (
+      {isCopiedToClipboard ? (
         <CheckCircleIcon
-          className="ml-1.5 text-xl font-normal text-sky-600 h-5 w-5 cursor-pointer flex-shrink-0"
+          className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer shrink-0"
           aria-hidden="true"
         />
       ) : (
-        <CopyToClipboard
-          text={address}
-          onCopy={() => {
-            setAddressCopied(true);
-            setTimeout(() => {
-              setAddressCopied(false);
-            }, 800);
-          }}
-        >
-          <DocumentDuplicateIcon
-            className="ml-1.5 text-xl font-normal text-sky-600 h-5 w-5 cursor-pointer flex-shrink-0"
-            aria-hidden="true"
-          />
-        </CopyToClipboard>
+        <DocumentDuplicateIcon
+          className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer shrink-0"
+          aria-hidden="true"
+          onClick={() => copyToClipboard(address)}
+        />
       )}
     </div>
   );

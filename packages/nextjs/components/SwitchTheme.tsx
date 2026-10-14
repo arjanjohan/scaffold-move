@@ -26,10 +26,11 @@ export const SwitchTheme = ({ className }: { className?: string }) => {
 
   return (
     <div className={`flex space-x-2 h-8 items-center justify-center text-sm ${className}`}>
+      {/* daisyUI draws the knob in the toggle's text color, so don't give the track the same background */}
       <input
         id="theme-toggle"
         type="checkbox"
-        className="toggle toggle-primary bg-primary hover:bg-primary border-primary"
+        className="toggle toggle-primary [--depth:0]"
         onChange={handleToggle}
         checked={isDarkMode}
       />

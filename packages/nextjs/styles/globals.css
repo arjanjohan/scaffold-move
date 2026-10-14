@@ -1,33 +1,132 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-@import "./wallet.css";
+@import "tailwindcss";
+@import "./wallet.css" layer(utilities);
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@plugin "daisyui" {
+  themes:
+    light,
+    dark --prefersdark;
+}
+
+/*
+  Theme colors based on the Movement brand kit (https://www.movementnetwork.xyz/brand-kit):
+  Movement Cyan #15EDEB with black #0A0A0A and white. Cyan fails as text on white (1.46:1),
+  so in light mode it's only a fill with black text, and links use a darkened teal (#0D7670,
+  4.5:1 even on base-300).
+*/
+@plugin "daisyui/theme" {
+  name: "light";
+  color-scheme: light;
+
+  --color-primary: #15edeb;
+  --color-primary-content: #0a0a0a;
+  --color-secondary: #15edeb;
+  --color-secondary-content: #0a0a0a;
+  --color-accent: #0d7670;
+  --color-accent-content: #ffffff;
+  --color-neutral: #0a0a0a;
+  --color-neutral-content: #ffffff;
+  --color-base-100: #ffffff;
+  --color-base-200: #f5f5f5;
+  --color-base-300: #eaeaea;
+  --color-base-content: #0a0a0a;
+  --color-info: #0d7670;
+  --color-info-content: #ffffff;
+  --color-success: #1b7f3b;
+  --color-success-content: #ffffff;
+  --color-warning: #9d5a16;
+  --color-warning-content: #ffffff;
+  --color-error: #b84722;
+  --color-error-content: #ffffff;
+
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --radius-selector: 0rem;
+  --depth: 0;
+  --noise: 0;
+
+  --tt-tailw: 6px;
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  color-scheme: dark;
+
+  --color-primary: #15edeb;
+  --color-primary-content: #0a0a0a;
+  --color-secondary: #15edeb;
+  --color-secondary-content: #0a0a0a;
+  --color-accent: #15edeb;
+  --color-accent-content: #0a0a0a;
+  --color-neutral: #ffffff;
+  --color-neutral-content: #0a0a0a;
+  --color-base-100: #141414;
+  --color-base-200: #0a0a0a;
+  --color-base-300: #262626;
+  --color-base-content: #ffffff;
+  --color-info: #15edeb;
+  --color-info-content: #0a0a0a;
+  --color-success: #34eeb6;
+  --color-success-content: #0a0a0a;
+  --color-warning: #ffcf72;
+  --color-warning-content: #0a0a0a;
+  --color-error: #ff8863;
+  --color-error-content: #0a0a0a;
+
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --radius-selector: 0rem;
+  --depth: 0;
+  --noise: 0;
+
+  --tt-tailw: 6px;
+  --tt-bg: var(--color-primary);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin-bottom: 0.5rem;
+    line-height: 1;
+  }
+
+  p {
+    margin: 1rem 0;
+  }
+}
 
 :root,
 [data-theme] {
-  background: oklch(var(--b2));
+  background: var(--color-base-200);
 }
 
-body {
-  min-height: 100vh;
+.link {
+  text-underline-offset: 2px;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  margin-bottom: 0.5rem;
-  line-height: 1;
-}
-
-p {
-  margin: 1rem 0;
-}
-
-.btn {
-  @apply shadow-md;
-}
-
-.btn.btn-ghost {
-  @apply shadow-none;
+.link:hover {
+  opacity: 80%;
 }

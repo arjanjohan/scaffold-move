@@ -8,8 +8,10 @@ import { Address, InputBase } from "~~/components/scaffold-move";
 import { useGetAccountResource } from "~~/hooks/scaffold-move";
 import { useGetModule } from "~~/hooks/scaffold-move/useGetModule";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
+import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { useView } from "~~/hooks/scaffold-move/useView";
 import { AddressInput } from "~~/types/scaffold-move";
+import { getBlockExplorerTxLink } from "~~/utils/scaffold-move/networks";
 
 // Alert Component for showing error messages or warnings
 const Alert = ({ message }: { message: string }) => (
@@ -29,6 +31,7 @@ const OnchainBio: NextPage = () => {
   const [currentBio, setCurrentBio] = useState<string | null>(null);
 
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction("onchain_bio");
+  const { targetNetwork } = useTargetNetwork();
 
   const moveModule = useGetModule("onchain_bio");
   const bioAbi = moveModule?.abi;
@@ -78,15 +81,14 @@ const OnchainBio: NextPage = () => {
 
     try {
       await submitTransaction("register", [inputName, inputBio]);
-
-      // await fetchBio();
-      if (transactionResponse?.transactionSubmitted) {
-        console.log("Transaction successful:", transactionResponse.success ? "success" : "failed");
-      }
     } catch (error) {
       console.error("Error registering bio:", error);
     }
   };
+
+  const registerTxLink = transactionResponse?.transactionSubmitted
+    ? getBlockExplorerTxLink(targetNetwork, transactionResponse.transactionHash)
+    : undefined;
 
   // Helper to clear bio state
   const clearBio = () => {
@@ -95,8 +97,8 @@ const OnchainBio: NextPage = () => {
   };
 
   return (
-    <div className="flex items-center flex-col flex-grow">
-      <div className="flex flex-col items-center bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl p-6 mt-8 w-full max-w-lg">
+    <div className="flex items-center flex-col grow">
+      <div className="flex flex-col items-center bg-base-100 border-base-300 border p-6 mt-8 w-full max-w-lg">
         <div className="text-xl">Your Onchain Bio</div>
         <p className="text-sm mb-2">This is your decentralized profile stored on the Aptos blockchain.</p>
         <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
@@ -105,7 +107,7 @@ const OnchainBio: NextPage = () => {
           <Address address={account?.address?.toString()} />
         </div>{" "}
       </div>
-      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
+      <div className="flex flex-col items-center space-y-4 bg-base-100 border border-base-300 p-6 mt-8 w-full max-w-lg">
         <h2 className="text-lg font-semibold">Register or Update Your Bio</h2>
         <p className="text-sm">
           Enter your name and a short bio to store on-chain using the{" "}
@@ -131,11 +133,31 @@ const OnchainBio: NextPage = () => {
         <div className="w-full flex flex-col space-y-2">
           <InputBase placeholder="Write a short bio about yourself" value={inputBio} onChange={setInputBio} />
         </div>
-        <button className="btn btn-secondary mt-2" disabled={!account} onClick={registerBio}>
+        <button className="btn btn-secondary mt-2" disabled={!account || transactionInProcess} onClick={registerBio}>
+          {transactionInProcess && <span className="loading loading-spinner loading-xs"></span>}
           Register Bio
         </button>
+        {transactionResponse && !transactionInProcess && (
+          <p className="text-sm text-center m-0">
+            {transactionResponse.transactionSubmitted && transactionResponse.success ? (
+              <span>✅ Bio registered</span>
+            ) : (
+              <span className="text-error">❌ {transactionResponse.message || "Transaction failed"}</span>
+            )}
+            {registerTxLink && (
+              <a
+                href={registerTxLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent hover:underline ml-2"
+              >
+                View on Explorer
+              </a>
+            )}
+          </p>
+        )}
       </div>
-      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
+      <div className="flex flex-col items-center space-y-4 bg-base-100 border border-base-300 p-6 mt-8 w-full max-w-lg">
         <h2 className="text-lg font-semibold">Fetch Bio Resource</h2>
         <p className="text-sm">
           {" "}
@@ -168,7 +190,7 @@ const OnchainBio: NextPage = () => {
         )}
       </div>
 
-      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
+      <div className="flex flex-col items-center space-y-4 bg-base-100 border border-base-300 p-6 mt-8 w-full max-w-lg">
         <h2 className="text-lg font-semibold">View Bio</h2>
         <p className="text-sm">
           Read bio data from the Aptos blockchain using a view function using the Scaffold Move{" "}

@@ -4,3 +4,4 @@ export * from "./useGetAccountResource";
 export * from "./useGetAccountResources";
 export * from "./useOutsideClick";
 export * from "./useAptosClient";
+export * from "./useCopyToClipboard";

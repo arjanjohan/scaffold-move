@@ -46,15 +46,15 @@ const Notification = ({
   return toast.custom(
     t => (
       <div
-        className={`flex flex-row items-start justify-between max-w-sm rounded-xl shadow-center shadow-accent bg-base-200 p-4 transform-gpu relative transition-all duration-500 ease-in-out space-x-2
+        className={`flex flex-row items-start justify-between max-w-sm shadow-lg bg-base-200 p-4 transform-gpu relative transition-all duration-500 ease-in-out space-x-2
         ${
           position.substring(0, 3) == "top"
             ? `hover:translate-y-1 ${t.visible ? "top-0" : "-top-96"}`
             : `hover:-translate-y-1 ${t.visible ? "bottom-0" : "-bottom-96"}`
         }`}
       >
-        <div className="leading-[0] self-center">{icon ? icon : ENUM_STATUSES[status]}</div>
-        <div className={`overflow-x-hidden break-words whitespace-pre-line ${icon ? "mt-1" : ""}`}>{content}</div>
+        <div className="leading-0 self-center">{icon ? icon : ENUM_STATUSES[status]}</div>
+        <div className={`overflow-x-hidden wrap-break-word whitespace-pre-line ${icon ? "mt-1" : ""}`}>{content}</div>
 
         <div className={`cursor-pointer text-lg ${icon ? "mt-1" : ""}`} onClick={() => toast.dismiss(t.id)}>
           <XMarkIcon className="w-6 cursor-pointer" onClick={() => toast.remove(t.id)} />
