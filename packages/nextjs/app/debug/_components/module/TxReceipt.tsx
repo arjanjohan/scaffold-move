@@ -1,12 +1,27 @@
 import { useState } from "react";
+import { TransactionResponse } from "@aptos-labs/ts-sdk";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { TransactionReceipt } from "viem";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { ObjectFieldDisplay } from "~~/app/debug/_components/module";
 import { replacer } from "~~/utils/scaffold-move/common";
 
-export const TxReceipt = ({ txResult }: { txResult: TransactionReceipt }) => {
+// Fields shown in the receipt. The copy button copies the full transaction, including its write set.
+const receiptFields = new Set([
+  "hash",
+  "version",
+  "success",
+  "vm_status",
+  "gas_used",
+  "gas_unit_price",
+  "sender",
+  "sequence_number",
+  "timestamp",
+  "events",
+]);
+
+export const TxReceipt = ({ txResult }: { txResult: TransactionResponse }) => {
   const [txResultCopied, setTxResultCopied] = useState(false);
+  const receipt = Object.entries(txResult).filter(([key]) => receiptFields.has(key));
 
   return (
     <div className="flex text-sm rounded-3xl peer-checked:rounded-b-none min-h-0 bg-secondary py-0">
@@ -35,12 +50,12 @@ export const TxReceipt = ({ txResult }: { txResult: TransactionReceipt }) => {
       </div>
       <div className="flex-wrap collapse collapse-arrow">
         <input type="checkbox" className="min-h-0 peer" />
-        <div className="collapse-title text-sm min-h-0 py-1.5 pl-1">
+        <div className="collapse-title text-sm min-h-0 py-1.5 pl-1 after:!top-1/2 after:![--tw-translate-y:-50%]">
           <strong>Transaction Receipt</strong>
         </div>
         <div className="collapse-content overflow-auto bg-secondary rounded-t-none rounded-3xl !pl-0">
           <pre className="text-xs">
-            {Object.entries(txResult).map(([k, v]) => (
+            {receipt.map(([k, v]) => (
               <ObjectFieldDisplay name={k} value={v} size="xs" leftPad={false} key={k} />
             ))}
           </pre>

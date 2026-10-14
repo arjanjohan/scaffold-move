@@ -3,21 +3,12 @@ import { Chain, defaultChains } from "@scaffold-move/common";
 export type ScaffoldConfig = {
   // At least one network; the first one is used for module types and as the initial network
   targetNetworks: readonly [Chain, ...Chain[]];
-  pollingInterval: number;
-  onlyLocalBurnerWallet: boolean;
   allowAptosConnect: boolean;
 };
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
   targetNetworks: [defaultChains.aptos_testnet, defaultChains.movement_testnet],
-
-  // The interval at which your front-end polls the RPC servers for new data
-  // it has no effect if you only target the local network (default is 4000)
-  pollingInterval: 30000,
-
-  // Only show the Burner Wallet when running on hardhat network
-  onlyLocalBurnerWallet: true,
 
   // Allow Aptos Connect on the target networks
   allowAptosConnect: false,

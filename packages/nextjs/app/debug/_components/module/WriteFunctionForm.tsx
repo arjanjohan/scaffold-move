@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { TxReceipt } from "./TxReceipt";
 import { useFunctionArguments } from "./utilFunctionArgs";
 import { parseTypeTag } from "@aptos-labs/ts-sdk";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
@@ -146,29 +147,24 @@ export const WriteFunctionForm = ({ module, fn }: FunctionFormProps) => {
               <div className="bg-base-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
                 <pre className="whitespace-pre-wrap break-words">
                   <span className="font-bold">Result: </span>
-                  {transactionResponse.success ? (
+                  {transactionResponse.success ? "✅ transaction successful" : "❌ transaction failed"}
+                  {getBlockExplorerTxLink(network.targetNetwork, transactionResponse.transactionHash) && (
                     <>
-                      ✅ transaction successful
-                      {getBlockExplorerTxLink(network.targetNetwork, transactionResponse.transactionHash) && (
-                        <>
-                          <br />
-                          <a
-                            href={getBlockExplorerTxLink(network.targetNetwork, transactionResponse.transactionHash)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-primary hover:underline"
-                          >
-                            View on Explorer
-                          </a>
-                        </>
-                      )}
+                      <br />
+                      <a
+                        href={getBlockExplorerTxLink(network.targetNetwork, transactionResponse.transactionHash)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline"
+                      >
+                        View on Explorer
+                      </a>
                     </>
-                  ) : (
-                    "❌ transaction failed"
                   )}
                 </pre>
               </div>
             )}
+            {transactionResponse?.transactionSubmitted && <TxReceipt txResult={transactionResponse.receipt} />}
             {error && (
               <div className="bg-red-300 rounded-3xl text-sm px-4 py-1.5 break-words overflow-auto">
                 <p className="font-bold m-0 mb-1">Error:</p>

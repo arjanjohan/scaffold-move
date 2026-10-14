@@ -1,18 +1,8 @@
-import { ReactElement, useState } from "react";
-import { TransactionBase, TransactionReceipt, formatEther, isAddress, isHex } from "viem";
-import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
+import { ReactElement } from "react";
 import { Address } from "~~/components/scaffold-move";
 import { replacer } from "~~/utils/scaffold-move/common";
 
-type DisplayContent =
-  | string
-  | number
-  | bigint
-  | Record<string, any>
-  | TransactionBase
-  | TransactionReceipt
-  | undefined
-  | unknown;
+type DisplayContent = string | number | bigint | boolean | Record<string, any> | undefined | unknown;
 
 type ResultFontSize = "sm" | "base" | "xs" | "lg" | "xl" | "2xl" | "3xl";
 
@@ -25,16 +15,18 @@ export const displayTxResult = (
   }
 
   if (typeof displayContent === "bigint") {
-    return <NumberDisplay value={displayContent} />;
+    return displayContent.toString();
   }
 
   if (typeof displayContent === "string") {
-    if (isAddress(displayContent)) {
+    // Long-form account address (0x + 64 hex characters)
+    if (/^0x[0-9a-fA-F]{64}$/.test(displayContent)) {
       return <Address address={displayContent} size={fontSize} />;
     }
 
-    if (isHex(displayContent)) {
-      return displayContent; // don't add quotes
+    // u64/u128/u256 values come as numeric strings, vector<u8> and short addresses as hex: don't add quotes
+    if (/^\d+$/.test(displayContent) || /^0x[0-9a-fA-F]*$/.test(displayContent)) {
+      return displayContent;
     }
   }
 
@@ -47,29 +39,6 @@ export const displayTxResult = (
   }
 
   return JSON.stringify(displayContent, replacer, 2);
-};
-
-const NumberDisplay = ({ value }: { value: bigint }) => {
-  const [isEther, setIsEther] = useState(false);
-
-  const asNumber = Number(value);
-  if (asNumber <= Number.MAX_SAFE_INTEGER && asNumber >= Number.MIN_SAFE_INTEGER) {
-    return String(value);
-  }
-
-  return (
-    <div className="flex items-baseline">
-      {isEther ? "Ξ" + formatEther(value) : String(value)}
-      <span
-        className="tooltip tooltip-secondary font-sans ml-2"
-        data-tip={isEther ? "Multiply by 1e18" : "Divide by 1e18"}
-      >
-        <button className="btn btn-ghost btn-circle btn-xs" onClick={() => setIsEther(!isEther)}>
-          <ArrowsRightLeftIcon className="h-3 w-3 opacity-65" />
-        </button>
-      </span>
-    </div>
-  );
 };
 
 export const ObjectFieldDisplay = ({
