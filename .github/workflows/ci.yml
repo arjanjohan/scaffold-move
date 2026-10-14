@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Check types (nextjs)
+        run: yarn next:check-types
+
+      - name: Lint (nextjs)
+        run: yarn next:lint
+
+      # Runs on a clean checkout, so this also checks that the app builds without deployed modules
+      - name: Build (nextjs)
+        run: yarn next:build
+
+      - name: Check types (move scripts)
+        run: yarn move:check-types

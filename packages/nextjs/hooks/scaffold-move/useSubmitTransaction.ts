@@ -25,24 +25,14 @@ export type TransactionResponseOnError = {
 const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModuleName) => {
   const [transactionResponse, setTransactionResponse] = useState<TransactionResponse | null>(null);
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
-  const [moduleAddress, setModuleAddress] = useState<string | null>(null);
 
   const network = useTargetNetwork();
   const aptos = useAptosClient(network.targetNetwork.id);
 
   const { signAndSubmitTransaction } = useWallet();
 
-  const moveModule = useGetModule(moduleName.toString());
-  if (!moveModule) {
-    throw new Error("Module not found");
-  }
-  useEffect(() => {
-    if (moveModule) {
-      setModuleAddress(moveModule.abi.address);
-    } else {
-      throw new Error("Module not found");
-    }
-  }, [moveModule]);
+  // Undefined when the module isn't deployed on the target network
+  const moduleAddress = useGetModule(moduleName.toString())?.abi.address;
 
   useEffect(() => {
     if (transactionResponse !== null) {
@@ -55,6 +45,14 @@ const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModul
     args?: ModuleEntryFunctions<TModuleName>[TFunctionName]["args"],
     tyArgs?: ModuleEntryFunctions<TModuleName>[TFunctionName]["tyArgs"],
   ) {
+    if (!moduleAddress) {
+      setTransactionResponse({
+        transactionSubmitted: false,
+        message: `Module ${moduleName.toString()} is not deployed on ${network.targetNetwork.name}`,
+      });
+      return;
+    }
+
     const transaction: InputTransactionData = {
       data: {
         function: `${moduleAddress}::${moduleName.toString()}::${functionName.toString()}`,

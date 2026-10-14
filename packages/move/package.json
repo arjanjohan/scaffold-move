@@ -9,7 +9,8 @@
     "test": "ts-node scripts/move.ts test --dev",
     "format": "aptos move fmt",
     "document": "ts-node scripts/move.ts document --dev",
-    "build": "tsc"
+    "build": "tsc",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@aptos-labs/ts-sdk": "^5.2.1",
