@@ -20,6 +20,7 @@
     "next:lint": "yarn workspace @scaffold-move/nextjs lint",
     "next:format": "yarn workspace @scaffold-move/nextjs format",
     "next:check-types": "yarn workspace @scaffold-move/nextjs check-types",
+    "move:check-types": "yarn workspace @scaffold-move/move check-types",
     "next:build": "yarn workspace @scaffold-move/nextjs build",
     "next:serve": "yarn workspace @scaffold-move/nextjs serve",
     "postinstall": "husky install",
