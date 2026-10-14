@@ -54,17 +54,17 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const moveModule = useGetModule(moduleName.toString());
-  if (!moveModule) {
-    throw new Error("Module not found");
-  }
-
-  const moduleAddress = moveModule.abi.address;
+  // Undefined when the module isn't deployed on the target network
+  const moduleAddress = useGetModule(moduleName.toString())?.abi.address;
 
   // Memoize args to avoid stringifying in the dependency array
   const argsString = JSON.stringify(args);
 
   const fetchData = useCallback(async () => {
+    if (!moduleAddress) {
+      setError(new Error(`Module ${moduleName.toString()} is not deployed on ${network.targetNetwork.name}`));
+      return;
+    }
     if (args && args.some((arg: any) => arg === undefined)) {
       return;
     }
@@ -89,7 +89,7 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
     } finally {
       setIsLoading(false);
     }
-  }, [moduleAddress, moduleName, functionName, tyArgs, argsString, aptos]);
+  }, [moduleAddress, moduleName, functionName, tyArgs, argsString, aptos, network.targetNetwork.name]);
 
   useEffect(() => {
     fetchData();
