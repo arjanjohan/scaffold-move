@@ -19,8 +19,8 @@
   name: "light";
   color-scheme: light;
 
-  --color-primary: #0a0a0a;
-  --color-primary-content: #15edeb;
+  --color-primary: #15edeb;
+  --color-primary-content: #0a0a0a;
   --color-secondary: #15edeb;
   --color-secondary-content: #0a0a0a;
   --color-accent: #0d7670;
