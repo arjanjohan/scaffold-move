@@ -28,7 +28,7 @@ Perfect for hackathons, prototyping, or launching your next Move project!
 
 Before you begin, you need to install the following tools:
 
-- [Node (>= v18.17)](https://nodejs.org/en/download/)
+- [Node (>= v20)](https://nodejs.org/en/download/)
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
 - The CLI for the network(s) you deploy to:
@@ -82,6 +82,7 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 - Edit your Move module `OnchainBio.move` in `packages/move/sources`
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
 - Edit the Move unit tests in `packages/move/tests` and run them with `yarn test`.
+- Run a local node with `yarn chain` (the `local` network). It needs ports 8080 (node API) and 8081 (faucet) to be free.
 
 ## Future Development
 
