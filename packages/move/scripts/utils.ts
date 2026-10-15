@@ -135,7 +135,8 @@ export function getMoveTomlAddresses(): Record<string, string> {
 export function createClient(target: Target): Aptos {
   if (target.chain) {
     const network = NetworkToNetworkName[target.chain.network];
-    return new Aptos(new AptosConfig({ network, fullnode: target.chain.fullnode }));
+    // Custom chains need their URLs; Aptos networks (including local) use the SDK defaults
+    return new Aptos(new AptosConfig({ network, fullnode: target.chain.fullnode, faucet: target.chain.faucet_api }));
   }
   return new Aptos(new AptosConfig({ network: Network.CUSTOM, fullnode: getProfile(target).rest_url }));
 }

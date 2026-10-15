@@ -5,6 +5,7 @@
     "account": "ts-node scripts/init-account.ts",
     "chain": "ts-node scripts/chain.ts",
     "deploy": "ts-node scripts/deploy.ts",
+    "faucet": "ts-node scripts/faucet.ts",
     "compile": "ts-node scripts/move.ts compile --dev",
     "test": "ts-node scripts/move.ts test --dev",
     "format": "ts-node scripts/move.ts fmt",
