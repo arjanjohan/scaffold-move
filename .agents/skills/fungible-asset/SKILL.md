@@ -23,7 +23,7 @@ Done when the design from step 1 is in the module, every guard has a test that h
 - Create the metadata object with `object::create_named_object(admin, SEED)`. Its address is then known to everyone: `object::create_object_address(&@deployment_addr, SEED)`. Use a different seed for each token.
 - `primary_fungible_store::create_primary_store_enabled_fungible_asset` gives every account a store automatically, so recipients need no setup.
 - Amounts are `u64` base units: one token is `10^decimals`. The max supply is a `u128` in base units (`option::some(...)`), or `option::none()` for unlimited.
-- `init_module` runs once, at the module's first publish. A token added to an already-deployed package gets created in an admin-only entry function instead.
+- `init_module` runs once, at the module's first publish, also when the module is new in an upgrade of an already-deployed package. A token added to a later version of an already-published module gets created in an admin-only entry function instead.
 
 ### Refs
 - `MintRef`, `BurnRef` and `TransferRef` can only be made from the `ConstructorRef`, at creation. Generate only the ones the design needs, store them in a resource on the metadata object, and gate every use with a signer check.

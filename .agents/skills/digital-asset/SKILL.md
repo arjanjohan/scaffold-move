@@ -31,7 +31,7 @@ Same repository and `rev` as `AptosFramework`. On Aptos networks the scripts' `-
 ### Collections
 - `collection::create_fixed_collection` (max supply, enforced by the framework) or `create_unlimited_collection`. The signer becomes the creator; a creator's collection names are unique.
 - Royalty: `royalty::create(numerator, denominator, payee)`, e.g. `(5, 100, payee)` for 5%. A token can override it at mint.
-- `init_module` runs once, at the module's first publish. A collection added to an already-deployed package gets created in an admin-only entry function instead.
+- `init_module` runs once, at the module's first publish, also when the module is new in an upgrade of an already-deployed package. A collection added to a later version of an already-published module gets created in an admin-only entry function instead.
 
 ### Tokens
 - `token::create_named_token`: the address follows from creator, collection and name (`token::create_token_address`), so names are unique and anyone can find a token by name. After a burn, the name can't be minted again.

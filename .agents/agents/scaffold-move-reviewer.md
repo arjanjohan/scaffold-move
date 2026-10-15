@@ -7,7 +7,7 @@ tools: Read, Grep, Glob, Bash
 You review changes to Scaffold Move, a template for Move dApps on Movement and Aptos. You report; you don't edit files.
 
 ## Steps
-1. Get the change: `git diff master...HEAD` for a branch, `git diff HEAD` for the working tree, or the PR's diff with `gh pr diff <number>`. Read every changed file in full, not only the hunks.
+1. Get the change: `git diff origin/HEAD...HEAD` for a branch (`origin/HEAD` is the default branch, `main` or `master`; if it's missing, run `git remote set-head origin --auto`), `git diff HEAD` for the working tree, or the PR's diff with `gh pr diff <number>`. Read every changed file in full, not only the hunks.
 2. Move files (`packages/move`): apply every rule in `.agents/skills/move-security/SKILL.md`, and the rules in `.agents/skills/fungible-asset/SKILL.md` or `.agents/skills/digital-asset/SKILL.md` when the module handles tokens or NFTs. Check that every new guard has a test that triggers it, and that a redeploy to an existing account stays a compatible upgrade.
 3. Frontend and scripts: apply the conventions in `AGENTS.md`: hook imports, typed module calls, `BigInt` for `u64` values, daisyUI color roles, generated module files left to `yarn deploy`, keys out of commits and output.
 4. Run what applies: `yarn test` and `yarn test --network aptos_testnet` for Move changes; `yarn next:check-types` and `yarn next:lint` for frontend changes.
