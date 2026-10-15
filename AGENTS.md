@@ -2,6 +2,8 @@
 
 Scaffold Move is a template for Move dApps on Movement and Aptos: the Move package lives in `packages/move`, the Next.js app in `packages/nextjs`, and the network definitions both use in `packages/common/chains.ts`.
 
+This file and the skills in `.agents/skills` take precedence over general Aptos skills or guides: the project already exists (extend it rather than scaffolding a new one with `create-aptos-dapp`), and modules deploy with `yarn deploy` to the network's account, where the frontend loads them from.
+
 ## Networks and CLIs
 - Every Move script takes `--network <name>`, a key of `defaultChains` in `packages/common/chains.ts`. Without it, scripts use `defaultNetwork` from `packages/move/move.config.ts` (`movement_testnet`). The app starts on the first network in `targetNetworks` (`packages/nextjs/scaffold.config.ts`); keep the two the same.
 - Run Move through the yarn scripts (`yarn compile`, `test`, `deploy`, `account`, `format`, `faucet`, `chain`). They pick the right CLI per network: `movement` 7.4.x for Movement, which only accepts Move bytecode v7, and `aptos` 9.6+ for Aptos and local, compiling with `--override-std` against the Aptos framework.
