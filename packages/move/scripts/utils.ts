@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync, spawnSync } from 'child_process';
 import * as yaml from 'js-yaml';
+import { Aptos, AptosConfig, Network, NetworkToNetworkName } from '@aptos-labs/ts-sdk';
 import { Chain, defaultChains } from '@scaffold-move/common';
 import { defaultNetwork } from '../move.config';
 
@@ -128,4 +129,13 @@ export function getMoveTomlAddresses(): Record<string, string> {
     }
   }
   return addresses;
+}
+
+// SDK client for the target network. A `custom` target uses the REST URL of its CLI profile.
+export function createClient(target: Target): Aptos {
+  if (target.chain) {
+    const network = NetworkToNetworkName[target.chain.network];
+    return new Aptos(new AptosConfig({ network, fullnode: target.chain.fullnode }));
+  }
+  return new Aptos(new AptosConfig({ network: Network.CUSTOM, fullnode: getProfile(target).rest_url }));
 }
