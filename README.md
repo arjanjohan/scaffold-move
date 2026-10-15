@@ -108,6 +108,14 @@ yarn deploy --network local
 
 `yarn faucet <address>` also works on Movement testnet. Aptos testnet's faucet is web-only: https://aptos.dev/network/faucet
 
+## AI coding agents
+
+Scaffold Move ships with setup for coding agents (Claude Code, Cursor, Codex, OpenCode and others):
+
+- `AGENTS.md` describes the repo's conventions and gotchas: one CLI per network, upgrade rules, generated files and the frontend hooks. `CLAUDE.md` points to it.
+- The [Context7](https://context7.com) MCP server gives agents current library docs (`.mcp.json`, `.cursor/mcp.json`, `opencode.json`).
+- Skills in `.agents/skills`, linked from `.claude/skills` and `.cursor/skills`: `move-security` checks Move modules against common security pitfalls on Movement and Aptos.
+
 ## Future Development
 
 Scaffold Move has successfully implemented core features essential for Move developers, providing a robust foundation for building decentralized applications. The current version offers a streamlined development experience with hot module reloading, custom hooks, and seamless wallet integration.
