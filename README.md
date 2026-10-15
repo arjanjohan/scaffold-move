@@ -82,7 +82,29 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 - Edit your Move module `OnchainBio.move` in `packages/move/sources`
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
 - Edit the Move unit tests in `packages/move/tests` and run them with `yarn test`.
-- Run a local node with `yarn chain` (the `local` network). It needs ports 8080 (node API) and 8081 (faucet) to be free.
+
+## Local network
+
+To develop against your own node instead of a testnet:
+
+1. Start a local node with a faucet. It needs ports 8080 (node API) and 8081 (faucet) to be free.
+
+```
+yarn chain
+```
+
+2. In a second terminal, create an account and deploy:
+
+```
+yarn account --network local
+yarn deploy --network local
+```
+
+3. Add the local network to the app: uncomment `defaultChains.local` in `targetNetworks` in `packages/nextjs/scaffold.config.ts`.
+4. Connect a wallet that supports a local or custom network at `http://127.0.0.1:8080/v1`.
+5. Fund your wallet account with "Faucet" in the wallet dropdown, or with `yarn faucet <address> --network local`.
+
+`yarn faucet <address>` also works on Movement testnet. Aptos testnet's faucet is web-only: https://aptos.dev/network/faucet
 
 ## Future Development
 
