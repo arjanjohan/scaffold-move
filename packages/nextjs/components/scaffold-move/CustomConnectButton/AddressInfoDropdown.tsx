@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { NetworkOptions } from "./NetworkOptions";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   ArrowLeftEndOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
@@ -12,11 +13,14 @@ import {
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-move";
-import { useCopyToClipboard, useOutsideClick } from "~~/hooks/scaffold-move";
+import { useAptosClient, useCopyToClipboard, useOutsideClick } from "~~/hooks/scaffold-move";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { getFaucetAddressLink, getTargetNetworks } from "~~/utils/scaffold-move";
+import { getTargetNetworks } from "~~/utils/scaffold-move";
+import { notification } from "~~/utils/scaffold-move/notification";
 
 const allowedNetworks = getTargetNetworks();
+
+const FAUCET_AMOUNT = 100_000_000; // 1 MOVE / APT (8 decimals)
 
 type AddressInfoDropdownProps = {
   address: string;
@@ -27,6 +31,27 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
   const { copyToClipboard, isCopiedToClipboard } = useCopyToClipboard();
   const [selectingNetwork, setSelectingNetwork] = useState(false);
   const dropdownRef = useRef<HTMLDetailsElement>(null);
+  const { targetNetwork } = useTargetNetwork();
+  const aptos = useAptosClient(targetNetwork.id);
+  const queryClient = useQueryClient();
+  const [isFunding, setIsFunding] = useState(false);
+  const symbol = targetNetwork.native_token_symbol ?? "APT";
+
+  // Networks with a faucet API (Movement testnet, local) fund the connected account directly
+  const fundFromFaucet = async () => {
+    setIsFunding(true);
+    try {
+      // Waits for the transaction, not for an indexer (the local node runs none by default)
+      await aptos.fundAccount({ accountAddress: address, amount: FAUCET_AMOUNT, options: { waitForIndexer: false } });
+      await queryClient.invalidateQueries({ queryKey: ["accountNativeBalance"] });
+      notification.success(`Received 1 ${symbol} from the faucet`);
+    } catch (error) {
+      notification.error(`Faucet failed: ${error instanceof Error ? error.message : error}`);
+    } finally {
+      setIsFunding(false);
+    }
+  };
+
   const closeDropdown = () => {
     setSelectingNetwork(false);
     dropdownRef.current?.removeAttribute("open");
@@ -34,7 +59,6 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
   useOutsideClick(dropdownRef, closeDropdown);
 
   const { disconnect, wallet } = useWallet();
-  const { targetNetwork } = useTargetNetwork();
 
   // Check if connected wallet is Petra or Pontem
   const isNetworkSwitchingDisabled = wallet?.name === "Petra" || wallet?.name === "Pontem";
@@ -96,19 +120,34 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
               </button>
             </li>
           ) : null}
-          <li className={selectingNetwork ? "hidden" : ""}>
-            <button className="btn-sm flex gap-3 py-3" type="button">
-              <BanknotesIcon className="h-6 w-4 ml-2 sm:ml-0" />
-              <a
-                target="_blank"
-                href={getFaucetAddressLink(targetNetwork)}
-                rel="noopener noreferrer"
-                className="whitespace-nowrap"
-              >
-                Faucet
-              </a>
-            </button>
-          </li>
+          {targetNetwork.faucet_api ? (
+            <li className={selectingNetwork ? "hidden" : ""}>
+              <button className="btn-sm flex gap-3 py-3" type="button" disabled={isFunding} onClick={fundFromFaucet}>
+                {isFunding ? (
+                  <span className="loading loading-spinner loading-xs ml-2 sm:ml-0" />
+                ) : (
+                  <BanknotesIcon className="h-6 w-4 ml-2 sm:ml-0" />
+                )}
+                <span className="whitespace-nowrap">Faucet</span>
+              </button>
+            </li>
+          ) : (
+            targetNetwork.faucet_url && (
+              // e.g. Aptos testnet: its faucet only works through the website
+              <li className={selectingNetwork ? "hidden" : ""}>
+                <a
+                  className="btn-sm flex gap-3 py-3"
+                  target="_blank"
+                  href={targetNetwork.faucet_url}
+                  rel="noopener noreferrer"
+                >
+                  <BanknotesIcon className="h-6 w-4 ml-2 sm:ml-0" />
+                  <span className="whitespace-nowrap">Faucet</span>
+                  <ArrowTopRightOnSquareIcon className="h-4 w-4 -ml-1" aria-hidden="true" />
+                </a>
+              </li>
+            )
+          )}
           <li className={selectingNetwork ? "hidden" : ""}>
             <button className="menu-item text-error btn-sm flex gap-3 py-3" type="button" onClick={() => disconnect()}>
               <ArrowLeftEndOnRectangleIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Disconnect</span>
