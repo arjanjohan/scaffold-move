@@ -69,12 +69,15 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
       // Clear data from a previous network where the module was deployed
       setData(null);
       setError(new Error(`Module ${moduleName.toString()} is not deployed on ${network.targetNetwork.name}`));
+      // A superseded request in flight won't reset it anymore
+      setIsLoading(false);
       return;
     }
     if (args && args.some((arg: any) => arg === undefined)) {
       // e.g. no connected account yet; don't keep showing the result for earlier arguments
       setData(null);
       setError(null);
+      setIsLoading(false);
       return;
     }
 
