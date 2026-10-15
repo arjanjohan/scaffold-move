@@ -89,7 +89,6 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
       const result = await view(request, aptos);
       setData(result);
     } catch (err) {
-      console.log("error: ", err);
       // Don't keep showing the result for earlier arguments, e.g. another account's
       setData(null);
       setError(err instanceof Error ? err : new Error("An error occurred"));
