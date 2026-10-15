@@ -7,8 +7,9 @@ export type ScaffoldConfig = {
 };
 
 const scaffoldConfig = {
-  // The networks on which your DApp is live
-  targetNetworks: [defaultChains.aptos_testnet, defaultChains.movement_testnet],
+  // The networks on which your DApp is live. Keep the first one in sync with `defaultNetwork` in
+  // packages/move/move.config.ts, so the app starts on the network that `yarn deploy` deploys to.
+  targetNetworks: [defaultChains.movement_testnet, defaultChains.aptos_testnet],
 
   // Allow Aptos Connect on the target networks
   allowAptosConnect: false,

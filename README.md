@@ -75,7 +75,7 @@ This command deploys the move modules in `packages/move/sources` to the default 
 yarn start
 ```
 
-Visit your app on: `http://localhost:3000`. You can interact with your Move modules using the `Debug Modules` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+Visit your app on: `http://localhost:3000`. You can interact with your Move modules using the `Debug Modules` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`. The app starts on the first network in its `targetNetworks` (Movement testnet, the same as `yarn deploy`) and follows the network of the connected wallet.
 
 **What's next**:
 
