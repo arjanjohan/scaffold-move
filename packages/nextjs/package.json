@@ -19,6 +19,7 @@
     "@aptos-labs/wallet-adapter-react": "^8.3.3",
     "@aptos-labs/wallet-standard": "^0.5.2",
     "@heroicons/react": "^2.1.5",
+    "@microlink/react-json-view": "^1.31.40",
     "@scaffold-move/common": "workspace:*",
     "@tanstack/react-query": "^5.56.2",
     "@telegram-apps/bridge": "^1.9.0",
@@ -32,13 +33,12 @@
     "next": "^15.5.24",
     "next-themes": "^0.2.1",
     "nprogress": "^0.2.0",
-    "qrcode.react": "^3.2.0",
+    "qrcode.react": "^4.2.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-hot-toast": "^2.4.1",
-    "react-json-view": "^1.21.3",
     "use-debounce": "^8.0.4",
-    "usehooks-ts": "^2.16.0",
+    "usehooks-ts": "^3.1.1",
     "zustand": "^4.5.5"
   },
   "devDependencies": {
