@@ -63,7 +63,7 @@ jobs:
         run: curl -fsSL https://aptos.dev/scripts/install_cli.sh | sh -s -- --yes --generic-linux
 
       # Framework git dependencies; Movement's is a full aptos-core clone (~500 MB)
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: ~/.move
           key: move-deps-${{ hashFiles('packages/move/Move.toml', 'packages/common/chains.ts') }}

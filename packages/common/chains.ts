@@ -75,6 +75,10 @@ export const defaultChains = {
     id: 4,
     name: "Local",
     network: "local",
+    // The node (`yarn chain`) serves the API on 127.0.0.1:8080, the SDK and CLI defaults for `local`
+    faucet_api: "http://127.0.0.1:8081",
+    block_explorer: "https://explorer.aptoslabs.com",
+    explorer_network_param: "local",
     cli: "aptos",
     override_std: "mainnet",
   },

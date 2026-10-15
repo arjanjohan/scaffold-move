@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { Types } from "aptos";
 import { useTheme } from "next-themes";
 
-const DynamicReactJson = dynamic(() => import("react-json-view"), { ssr: false });
+const DynamicReactJson = dynamic(() => import("@microlink/react-json-view"), { ssr: false });
 
 interface ModuleResourceProps {
   resource: Types.MoveResource;

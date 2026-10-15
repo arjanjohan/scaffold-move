@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
 import { Address, InputBase } from "~~/components/scaffold-move";
+import { ResponseErrorType } from "~~/hooks/client";
 import { useGetAccountResource } from "~~/hooks/scaffold-move";
 import { useGetModule } from "~~/hooks/scaffold-move/useGetModule";
 import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
@@ -20,15 +21,15 @@ const Alert = ({ message }: { message: string }) => (
   </div>
 );
 
+const NO_BIO = "No bio registered for this account yet.";
+
 const OnchainBio: NextPage = () => {
   const { account } = useWallet();
 
   const [inputName, setInputName] = useState<string>("");
   const [inputBio, setInputBio] = useState<string>("");
 
-  const [accountHasBio, setAccountHasBio] = useState(false);
-  const [currentName, setCurrentName] = useState<string | null>(null);
-  const [currentBio, setCurrentBio] = useState<string | null>(null);
+  const [showBioResource, setShowBioResource] = useState(false);
 
   const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction("onchain_bio");
   const { targetNetwork } = useTargetNetwork();
@@ -36,10 +37,16 @@ const OnchainBio: NextPage = () => {
   const moveModule = useGetModule("onchain_bio");
   const bioAbi = moveModule?.abi;
 
-  const { data: bioResource, refetch: refetchBio } = useGetAccountResource("onchain_bio", "Bio");
+  // Both follow the connected account: the resource query is keyed by its address, useView refetches when args change
+  const {
+    data: bioResource,
+    error: bioResourceError,
+    refetch: refetchBio,
+  } = useGetAccountResource("onchain_bio", "Bio");
 
   const {
     data: bioView,
+    error: bioViewError,
     isLoading: isLoadingBioView,
     refetch: refetchBioView,
   } = useView({
@@ -53,24 +60,9 @@ const OnchainBio: NextPage = () => {
     return <Alert message="Onchain Bio module not found!" />;
   }
 
-  // Fetch bio details from the blockchain
   const fetchBio = async () => {
-    if (!account) return;
-
-    try {
-      await refetchBio();
-      if (bioResource) {
-        setAccountHasBio(true);
-        setCurrentName(bioResource.name);
-        setCurrentBio(bioResource.bio);
-      } else {
-        clearBio();
-      }
-    } catch (error) {
-      console.error("Error fetching bio:", error);
-      setAccountHasBio(false);
-      clearBio();
-    }
+    await refetchBio();
+    setShowBioResource(true);
   };
 
   const registerBio = async () => {
@@ -89,12 +81,6 @@ const OnchainBio: NextPage = () => {
   const registerTxLink = transactionResponse?.transactionSubmitted
     ? getBlockExplorerTxLink(targetNetwork, transactionResponse.transactionHash)
     : undefined;
-
-  // Helper to clear bio state
-  const clearBio = () => {
-    setCurrentName(null);
-    setCurrentBio(null);
-  };
 
   return (
     <div className="flex items-center flex-col grow">
@@ -176,18 +162,30 @@ const OnchainBio: NextPage = () => {
           Fetch Bio Resource
         </button>
 
-        {accountHasBio && !transactionInProcess && (
-          <div className="space-y-4 w-full max-w-lg">
-            <div className="flex items-center">
-              <span className="text-xs font-medium mr-2 leading-none">Name:</span>
+        {showBioResource &&
+          !transactionInProcess &&
+          (bioResource ? (
+            <div className="space-y-4 w-full max-w-lg">
+              <div className="flex items-center">
+                <span className="text-xs font-medium mr-2 leading-none">Name:</span>
+              </div>
+              <div className="w-full flex flex-col space-y-2">{bioResource.name}</div>
+              <div className="flex items-center">
+                <span className="text-xs font-medium mr-2 leading-none">Bio:</span>
+              </div>
+              <div className="w-full flex flex-col space-y-2">{bioResource.bio}</div>
             </div>
-            <div className="w-full flex flex-col space-y-2">{currentName}</div>
-            <div className="flex items-center">
-              <span className="text-xs font-medium mr-2 leading-none">Bio:</span>
-            </div>
-            <div className="w-full flex flex-col space-y-2">{currentBio}</div>
-          </div>
-        )}
+          ) : (
+            bioResourceError && (
+              <p className="text-sm m-0">
+                {bioResourceError.type === ResponseErrorType.NOT_FOUND ? (
+                  NO_BIO
+                ) : (
+                  <span className="text-error">❌ {bioResourceError.message || bioResourceError.type}</span>
+                )}
+              </p>
+            )
+          ))}
       </div>
 
       <div className="flex flex-col items-center space-y-4 bg-base-100 border border-base-300 p-6 mt-8 w-full max-w-lg">
@@ -208,6 +206,16 @@ const OnchainBio: NextPage = () => {
           View Bio
         </button>
 
+        {bioViewError && !isLoadingBioView && (
+          <p className="text-sm m-0 wrap-break-word">
+            {/* get_bio aborts for an account without a bio */}
+            {bioViewError.message.includes("Failed to borrow global resource") ? (
+              NO_BIO
+            ) : (
+              <span className="text-error">❌ {bioViewError.message}</span>
+            )}
+          </p>
+        )}
         {bioView && !isLoadingBioView && (
           <div className="space-y-4 w-full max-w-lg">
             <div className="flex items-center">

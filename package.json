@@ -13,6 +13,7 @@
     "account": "yarn workspace @scaffold-move/move account",
     "chain": "yarn workspace @scaffold-move/move chain",
     "deploy": "yarn workspace @scaffold-move/move deploy",
+    "faucet": "yarn workspace @scaffold-move/move faucet",
     "compile": "yarn workspace @scaffold-move/move compile",
     "test": "yarn workspace @scaffold-move/move test",
     "format": "yarn next:format && yarn workspace @scaffold-move/move format",

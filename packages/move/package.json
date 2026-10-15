@@ -3,11 +3,12 @@
   "packageManager": "yarn@3.2.3",
   "scripts": {
     "account": "ts-node scripts/init-account.ts",
-    "chain": "aptos node run-local-testnet",
+    "chain": "ts-node scripts/chain.ts",
     "deploy": "ts-node scripts/deploy.ts",
+    "faucet": "ts-node scripts/faucet.ts",
     "compile": "ts-node scripts/move.ts compile --dev",
     "test": "ts-node scripts/move.ts test --dev",
-    "format": "aptos move fmt",
+    "format": "ts-node scripts/move.ts fmt",
     "document": "ts-node scripts/move.ts document --dev",
     "build": "tsc",
     "check-types": "tsc --noEmit"
