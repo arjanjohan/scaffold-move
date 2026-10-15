@@ -43,4 +43,9 @@ This file and the skills in `.agents/skills` take precedence over general Aptos 
 ## Docs and skills
 - Library docs: the Context7 MCP server (`.mcp.json`, `.cursor/mcp.json`, `opencode.json`) has current docs for the Aptos TS SDK, the Aptos wallet adapter, daisyUI and Next.js, and the Aptos and Movement docs.
 - Skills live in `.agents/skills/<name>/SKILL.md` (linked from `.claude/skills` and `.cursor/skills`). Read the skill before the task:
+  - `add-module`: a feature that needs new on-chain code, from module to page.
   - `move-security`: writing, changing or reviewing a Move module.
+  - `fungible-asset`: tokens (create, mint, burn, transfer, balances).
+  - `digital-asset`: NFTs and collections.
+  - `indexer`: lists or history a view can't give (owned NFTs, all balances, transactions).
+- Agents live in `.agents/agents` (linked from `.claude/agents` and `.cursor/agents`): `scaffold-move-reviewer` for a code review of a branch, PR or the working tree.
