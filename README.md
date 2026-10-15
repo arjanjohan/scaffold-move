@@ -93,7 +93,9 @@ To develop against your own node instead of a testnet:
 yarn chain
 ```
 
-2. In a second terminal, create an account and deploy:
+Every `yarn chain` starts a new, empty chain, so run step 2 again after each start.
+
+2. In a second terminal, create (or refund) your account and deploy:
 
 ```
 yarn account --network local
