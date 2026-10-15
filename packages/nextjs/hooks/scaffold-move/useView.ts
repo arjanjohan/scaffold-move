@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useGetModule } from "./useGetModule";
 import { Aptos } from "@aptos-labs/ts-sdk";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
@@ -60,7 +60,11 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
   // Memoize args to avoid stringifying in the dependency array
   const argsString = JSON.stringify(args);
 
+  // Only the latest request may update the state: an older one can finish after it, e.g. after switching accounts
+  const latestRequest = useRef(0);
+
   const fetchData = useCallback(async () => {
+    const request = ++latestRequest.current;
     if (!moduleAddress) {
       // Clear data from a previous network where the module was deployed
       setData(null);
@@ -78,7 +82,7 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
     setError(null);
 
     try {
-      const request: ViewArguments = {
+      const viewArguments: ViewArguments = {
         module_address: moduleAddress,
         module_name: moduleName.toString(),
         function_name: functionName.toString(),
@@ -86,14 +90,20 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
         function_args: processArguments(args || []),
       };
 
-      const result = await view(request, aptos);
-      setData(result);
+      const result = await view(viewArguments, aptos);
+      if (request === latestRequest.current) {
+        setData(result);
+      }
     } catch (err) {
-      // Don't keep showing the result for earlier arguments, e.g. another account's
-      setData(null);
-      setError(err instanceof Error ? err : new Error("An error occurred"));
+      if (request === latestRequest.current) {
+        // Don't keep showing the result for earlier arguments, e.g. another account's
+        setData(null);
+        setError(err instanceof Error ? err : new Error("An error occurred"));
+      }
     } finally {
-      setIsLoading(false);
+      if (request === latestRequest.current) {
+        setIsLoading(false);
+      }
     }
   }, [moduleAddress, moduleName, functionName, tyArgs, argsString, aptos, network.targetNetwork.name]);
 
