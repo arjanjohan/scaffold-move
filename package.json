@@ -35,5 +35,11 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "resolutions": {
+    "form-data@4.0.0": "4.0.6",
+    "path-to-regexp@6.1.0": "6.3.0",
+    "@tootallnate/once@2.0.0": "2.0.1",
+    "ajv@8.6.3": "8.18.0"
   }
 }
