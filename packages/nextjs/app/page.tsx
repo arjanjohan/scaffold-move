@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { BugAntIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-move";
 
 const Home: NextPage = () => {
@@ -53,11 +53,13 @@ const Home: NextPage = () => {
               </p>
             </div>
             <div className="flex flex-col bg-base-100 border border-base-300 px-10 py-10 text-center items-center max-w-xs">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
+              <UserCircleIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Explore your local transactions with the {/* <Link href="/blockexplorer" passHref className="link"> */}
-                Block Explorer {/* </Link>{" "} */}
-                tab. <b>Coming soon...</b>
+                See the Scaffold Move hooks in action on the{" "}
+                <Link href="/bio" passHref className="link">
+                  Onchain Bio
+                </Link>{" "}
+                example page.
               </p>
             </div>
           </div>
