@@ -16,9 +16,14 @@ async function checkBalance(target: Target, account: string): Promise<void> {
     return;
   }
   const symbol = target.chain?.native_token_symbol ?? 'APT';
-  const faucet = target.chain?.faucet_url ?? target.chain?.faucet_api;
   console.error(`Account ${account} has no ${symbol} on ${target.network}.`);
-  console.error(faucet ? `Get test tokens at ${faucet}, then run this again.` : `Fund it first, then run this again.`);
+  if (target.chain?.faucet_api) {
+    console.error(`Fund it with \`yarn faucet ${account} --network ${target.network}\`, then run this again.`);
+  } else if (target.chain?.faucet_url) {
+    console.error(`Get test tokens at ${target.chain.faucet_url}, then run this again.`);
+  } else {
+    console.error('Fund it first, then run this again.');
+  }
   process.exit(1);
 }
 
