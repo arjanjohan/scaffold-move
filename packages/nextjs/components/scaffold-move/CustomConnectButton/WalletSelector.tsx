@@ -33,10 +33,11 @@ export function WalletSelector({ isModalOpen, setModalOpen, ...walletSortingOpti
     }
   }, [isModalOpen]);
 
-  const { account, connected, disconnect, wallets = [] } = useWallet();
+  const { account, connected, disconnect, wallets = [], notDetectedWallets = [] } = useWallet();
 
+  // `wallets` only holds detected wallets, so add the not-detected ones to get install links under "More Wallets"
   const { aptosConnectWallets, availableWallets, installableWallets } = groupAndSortWallets(
-    wallets,
+    [...wallets, ...notDetectedWallets],
     walletSortingOptions,
   );
 
