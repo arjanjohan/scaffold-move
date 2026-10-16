@@ -41,7 +41,9 @@ export const NetworkOptions = ({ hidden = false }: NetworkOptionsProps) => {
       }
       notification.success(`Successfully switched to ${allowedNetwork.name}`);
     } catch (error) {
-      notification.error(`Failed to switch network: ${error}`);
+      // The adapter rethrows only the wallet's error message, which can be empty
+      console.error("Failed to switch network", error);
+      notification.error(`Failed to switch network: ${error || "unknown error"}`);
     }
   };
 
