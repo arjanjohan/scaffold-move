@@ -9,12 +9,16 @@ import { notification } from "~~/utils/scaffold-move/notification";
 
 const allowedNetworks = getTargetNetworks();
 
+// Petra rejects network changes from the app (with an empty error). Switching in Petra works, and the app follows.
+export const isNetworkSwitchingDisabled = (walletName?: string) => walletName === "Petra";
+
 type NetworkOptionsProps = {
   hidden?: boolean;
 };
 
 export const NetworkOptions = ({ hidden = false }: NetworkOptionsProps) => {
   const { network, wallet, changeNetwork } = useWallet();
+  const switchingDisabled = isNetworkSwitchingDisabled(wallet?.name);
 
   const handleNetworkChange = async (allowedNetwork: Chain) => {
     try {
@@ -37,7 +41,9 @@ export const NetworkOptions = ({ hidden = false }: NetworkOptionsProps) => {
       }
       notification.success(`Successfully switched to ${allowedNetwork.name}`);
     } catch (error) {
-      notification.error(`Failed to switch network: ${error}`);
+      // The adapter rethrows only the wallet's error message, which can be empty
+      console.error("Failed to switch network", error);
+      notification.error(`Failed to switch network: ${error || "unknown error"}`);
     }
   };
 
@@ -48,9 +54,12 @@ export const NetworkOptions = ({ hidden = false }: NetworkOptionsProps) => {
         .map(allowedNetwork => (
           <li key={allowedNetwork.id} className={hidden ? "hidden" : ""}>
             <button
-              className="menu-item btn-sm flex gap-3 py-3 whitespace-nowrap"
+              className={`menu-item btn-sm flex gap-3 py-3 whitespace-nowrap ${
+                switchingDisabled ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               type="button"
               onClick={() => handleNetworkChange(allowedNetwork)}
+              disabled={switchingDisabled}
             >
               <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" />
               <span>

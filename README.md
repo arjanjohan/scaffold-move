@@ -18,7 +18,7 @@
 - ✅ **Module Hot Reload**: Your frontend automatically adapts to changes in your Move modules as you edit them.
 - 🪝 **Custom Hooks**: A collection of React hooks to simplify interactions with Move modules.
 - 🧱 **Components**: A library of common Web3 components to rapidly build your frontend.
-- 🔐 **Wallet Integration**: Connect to any Aptos-compatible wallet and interact with the Aptos network directly from your frontend.
+- 🔐 **Wallet Integration**: Connect a Movement or Aptos wallet and interact with the network directly from your frontend.
 
 Perfect for hackathons, prototyping, or launching your next Move project!
 
@@ -107,6 +107,19 @@ yarn deploy --network local
 5. Fund your wallet account with "Faucet" in the wallet dropdown, or with `yarn faucet <address> --network local`.
 
 `yarn faucet <address>` also works on Movement testnet. Aptos testnet's faucet is web-only: https://aptos.dev/network/faucet
+
+## Supported wallets
+
+Scaffold Move supports and is tested with these wallets:
+
+- [Nightly](https://nightly.app)
+- [Razor](https://razorwallet.xyz)
+- [Motion](https://motion.movementnetwork.xyz)
+- [Petra](https://petra.app)
+
+[Pontem](https://pontem.network/pontem-wallet) is not supported.
+
+Other wallets appear under "More Wallets" in the connect dialog, but are untested.
 
 ## AI coding agents
 

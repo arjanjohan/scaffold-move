@@ -3,7 +3,6 @@ import { Chain, defaultChains } from "@scaffold-move/common";
 export type ScaffoldConfig = {
   // At least one network; the first one is used for module types and as the initial network
   targetNetworks: readonly [Chain, ...Chain[]];
-  allowAptosConnect: boolean;
 };
 
 const scaffoldConfig = {
@@ -14,9 +13,6 @@ const scaffoldConfig = {
     defaultChains.aptos_testnet,
     // defaultChains.local, // needs `yarn chain`, see "Local network" in the README
   ],
-
-  // Allow Aptos Connect on the target networks
-  allowAptosConnect: false,
 } as const satisfies ScaffoldConfig;
 
 export default scaffoldConfig;
