@@ -60,8 +60,8 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
 
   const { disconnect, wallet } = useWallet();
 
-  // Check if connected wallet is Petra or Pontem
-  const isNetworkSwitchingDisabled = wallet?.name === "Petra" || wallet?.name === "Pontem";
+  // Check if connected wallet is Petra
+  const isNetworkSwitchingDisabled = wallet?.name === "Petra";
 
   return (
     <>
@@ -114,7 +114,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
                     setSelectingNetwork(true);
                   }
                 }}
-                disabled={isNetworkSwitchingDisabled} // Disable the button if Petra or Pontem is connected
+                disabled={isNetworkSwitchingDisabled} // Disable the button if Petra is connected
               >
                 <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Switch Network</span>
               </button>
