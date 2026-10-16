@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { NetworkOptions } from "./NetworkOptions";
+import { NetworkOptions, isNetworkSwitchingDisabled } from "./NetworkOptions";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -60,8 +60,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
 
   const { disconnect, wallet } = useWallet();
 
-  // Check if connected wallet is Petra
-  const isNetworkSwitchingDisabled = wallet?.name === "Petra";
+  const switchingDisabled = isNetworkSwitchingDisabled(wallet?.name);
 
   return (
     <>
@@ -105,16 +104,14 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
           {allowedNetworks.length > 1 ? (
             <li className={selectingNetwork ? "hidden" : ""}>
               <button
-                className={`btn-sm flex gap-3 py-3 ${
-                  isNetworkSwitchingDisabled ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                className={`btn-sm flex gap-3 py-3 ${switchingDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
                 type="button"
                 onClick={() => {
-                  if (!isNetworkSwitchingDisabled) {
+                  if (!switchingDisabled) {
                     setSelectingNetwork(true);
                   }
                 }}
-                disabled={isNetworkSwitchingDisabled} // Disable the button if Petra is connected
+                disabled={switchingDisabled}
               >
                 <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Switch Network</span>
               </button>
