@@ -57,6 +57,6 @@
     "tailwindcss": "^4.3.3",
     "type-fest": "^4.26.1",
     "typescript": "5.6.2",
-    "vercel": "^41.5.0"
+    "vercel": "^64.5.0"
   }
 }
