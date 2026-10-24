@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useGetModule } from "./useGetModule";
 import { TransactionResponse as AptosTransactionResponse } from "@aptos-labs/ts-sdk";
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
 import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { processArguments } from "~~/utils/scaffold-move/arguments";
@@ -29,6 +30,7 @@ const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModul
 
   const network = useTargetNetwork();
   const aptos = useAptosClient(network.targetNetwork.id);
+  const queryClient = useQueryClient();
 
   const { signAndSubmitTransaction } = useWallet();
 
@@ -108,7 +110,12 @@ const useSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModul
       return responseOnError;
     };
 
-    await signAndSubmitTransactionCall(transaction).then(setTransactionResponse);
+    const response = await signAndSubmitTransactionCall(transaction);
+    // Gas is paid even when the transaction fails, so any committed transaction changes the balance
+    if (response.transactionSubmitted) {
+      queryClient.invalidateQueries({ queryKey: ["accountNativeBalance"] });
+    }
+    setTransactionResponse(response);
   }
 
   function clearTransactionResponse() {
