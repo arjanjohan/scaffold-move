@@ -66,18 +66,18 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
           {displayAddress}
         </a>
       )}
-      {isCopiedToClipboard ? (
-        <CheckCircleIcon
-          className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer shrink-0"
-          aria-hidden="true"
-        />
-      ) : (
-        <DocumentDuplicateIcon
-          className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer shrink-0"
-          aria-hidden="true"
-          onClick={() => copyToClipboard(address)}
-        />
-      )}
+      <button
+        type="button"
+        className="ml-1.5 shrink-0 cursor-pointer"
+        aria-label={isCopiedToClipboard ? "Address copied" : "Copy address"}
+        onClick={() => copyToClipboard(address)}
+      >
+        {isCopiedToClipboard ? (
+          <CheckCircleIcon className="text-xl font-normal text-accent h-5 w-5" aria-hidden="true" />
+        ) : (
+          <DocumentDuplicateIcon className="text-xl font-normal text-accent h-5 w-5" aria-hidden="true" />
+        )}
+      </button>
     </div>
   );
 };
