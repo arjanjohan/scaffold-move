@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 
-export const SwitchTheme = ({ className }: { className?: string }) => {
+export const SwitchTheme = ({ className = "" }: { className?: string }) => {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -31,10 +31,15 @@ export const SwitchTheme = ({ className }: { className?: string }) => {
         id="theme-toggle"
         type="checkbox"
         className="toggle toggle-primary [--depth:0]"
+        aria-label="Dark mode"
         onChange={handleToggle}
         checked={isDarkMode}
       />
-      <label htmlFor="theme-toggle" className={`swap swap-rotate ${!isDarkMode ? "swap-active" : ""}`}>
+      <label
+        htmlFor="theme-toggle"
+        aria-hidden="true"
+        className={`swap swap-rotate ${!isDarkMode ? "swap-active" : ""}`}
+      >
         <SunIcon className="swap-on h-5 w-5" />
         <MoonIcon className="swap-off h-5 w-5" />
       </label>
