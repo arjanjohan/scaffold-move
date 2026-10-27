@@ -73,14 +73,14 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
         <ul tabIndex={0} className="dropdown-content menu z-2 p-2 mt-2 shadow-lg bg-base-200 gap-1">
           <NetworkOptions hidden={!selectingNetwork} />
           <li className={selectingNetwork ? "hidden" : ""}>
-            <div className="btn-sm flex gap-3 py-3 cursor-pointer" onClick={() => copyToClipboard(address)}>
+            <button className="btn-sm flex gap-3 py-3" type="button" onClick={() => copyToClipboard(address)}>
               {isCopiedToClipboard ? (
                 <CheckCircleIcon className="text-xl font-normal h-6 w-4 ml-2 sm:ml-0" aria-hidden="true" />
               ) : (
                 <DocumentDuplicateIcon className="text-xl font-normal h-6 w-4 ml-2 sm:ml-0" aria-hidden="true" />
               )}
               <span className="whitespace-nowrap">Copy address</span>
-            </div>
+            </button>
           </li>
           <li className={selectingNetwork ? "hidden" : ""}>
             <label htmlFor="qrcode-modal" className="btn-sm flex gap-3 py-3">
@@ -89,17 +89,15 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
             </label>
           </li>
           <li className={selectingNetwork ? "hidden" : ""}>
-            <button className="menu-item btn-sm flex gap-3 py-3" type="button">
-              <ArrowTopRightOnSquareIcon className="h-6 w-4 ml-2 sm:ml-0" />
-              <a
-                target="_blank"
-                href={blockExplorerAddressLink}
-                rel="noopener noreferrer"
-                className="whitespace-nowrap"
-              >
-                View on Block Explorer
-              </a>
-            </button>
+            <a
+              className="btn-sm flex gap-3 py-3"
+              target="_blank"
+              href={blockExplorerAddressLink}
+              rel="noopener noreferrer"
+            >
+              <ArrowTopRightOnSquareIcon className="h-6 w-4 ml-2 sm:ml-0" aria-hidden="true" />
+              <span className="whitespace-nowrap">View on Block Explorer</span>
+            </a>
           </li>
           {allowedNetworks.length > 1 ? (
             <li className={selectingNetwork ? "hidden" : ""}>
