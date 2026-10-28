@@ -42,6 +42,7 @@ export const HeaderMenuLinks = () => {
             <Link
               href={href}
               passHref
+              aria-current={isActive ? "page" : undefined}
               className={`${
                 isActive
                   ? "border-b-secondary text-base-content"
@@ -71,8 +72,8 @@ export const Header = () => {
       <div className="navbar-start w-auto self-stretch">
         {/* details instead of a focus dropdown: daisyUI 5 disables pointer events on a focused trigger */}
         <details className="lg:hidden dropdown self-center" ref={burgerMenuRef}>
-          <summary className="ml-1 btn btn-ghost hover:bg-transparent">
-            <Bars3Icon className="h-1/2" />
+          <summary className="ml-1 btn btn-ghost hover:bg-transparent" aria-label="Open navigation menu">
+            <Bars3Icon className="h-1/2" aria-hidden="true" />
           </summary>
           <ul className="menu menu-sm dropdown-content mt-3 p-2 shadow-lg bg-base-100 w-52" onClick={closeBurgerMenu}>
             <HeaderMenuLinks />
