@@ -25,18 +25,18 @@ export const TxReceipt = ({ txResult }: { txResult: TransactionResponse }) => {
   return (
     <div className="flex text-sm min-h-0 bg-base-300 py-0">
       <div className="mt-1 pl-2">
-        {isCopiedToClipboard ? (
-          <CheckCircleIcon
-            className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer"
-            aria-hidden="true"
-          />
-        ) : (
-          <DocumentDuplicateIcon
-            className="ml-1.5 text-xl font-normal text-accent h-5 w-5 cursor-pointer"
-            aria-hidden="true"
-            onClick={() => copyToClipboard(JSON.stringify(txResult, replacer, 2))}
-          />
-        )}
+        <button
+          type="button"
+          className="ml-1.5 cursor-pointer"
+          aria-label={isCopiedToClipboard ? "Transaction copied" : "Copy transaction"}
+          onClick={() => copyToClipboard(JSON.stringify(txResult, replacer, 2))}
+        >
+          {isCopiedToClipboard ? (
+            <CheckCircleIcon className="text-xl font-normal text-accent h-5 w-5" aria-hidden="true" />
+          ) : (
+            <DocumentDuplicateIcon className="text-xl font-normal text-accent h-5 w-5" aria-hidden="true" />
+          )}
+        </button>
       </div>
       <div className="flex-wrap collapse collapse-arrow">
         <input type="checkbox" className="min-h-0 peer" />
