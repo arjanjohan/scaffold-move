@@ -7,7 +7,7 @@
     "start": "next dev",
     "build": "next build",
     "serve": "next start",
-    "lint": "next lint",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx app components",
     "format": "prettier --write . '!(node_modules|.next|modules)/**/*'",
     "check-types": "node -e \"require('fs').rmSync('.next/types', { recursive: true, force: true })\" && next typegen && tsc --noEmit --incremental",
     "vercel": "vercel",
