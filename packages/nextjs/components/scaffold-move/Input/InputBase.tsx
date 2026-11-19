@@ -59,6 +59,8 @@ export const InputBase = <T extends { toString: () => string } | undefined = str
       <input
         className="input input-ghost focus-within:border-transparent focus:outline-hidden focus:bg-transparent focus:text-base-content h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-base-content/60 text-base-content"
         placeholder={placeholder}
+        // The placeholder disappears once typed into, so it can't be the only accessible name.
+        aria-label={placeholder || name}
         name={name}
         value={value?.toString()}
         onChange={handleChange}
