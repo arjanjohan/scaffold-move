@@ -43,6 +43,7 @@ export function DebugModules() {
                       : "bg-base-100 border-base-300 text-base-content/70 hover:bg-base-300 hover:text-base-content"
                   }`}
                   key={moduleName as string}
+                  aria-pressed={moduleName === selectedModule}
                   onClick={() => setSelectedModule(moduleName)}
                 >
                   {moduleName as string}

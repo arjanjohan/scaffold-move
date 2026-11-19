@@ -59,12 +59,14 @@ export function WalletSelector({ isModalOpen, setModalOpen, ...walletSortingOpti
       </button>
 
       {walletSelectorModalOpen && (
-        <dialog open className="modal modal-open">
+        <dialog open className="modal modal-open" aria-modal="true" aria-labelledby="wallet-modal-title">
           <div className="modal-box max-w-sm border-2 border-base-300 shadow-xl">
             {/* Modal header */}
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-lg wallet-modal-title">Connect Wallet</h3>
-              <button className="btn btn-sm btn-circle btn-ghost" onClick={closeModal}>
+              <h3 id="wallet-modal-title" className="font-bold text-lg wallet-modal-title">
+                Connect Wallet
+              </h3>
+              <button className="btn btn-sm btn-circle btn-ghost" aria-label="Close" onClick={closeModal}>
                 ✕
               </button>
             </div>
@@ -80,7 +82,7 @@ export function WalletSelector({ isModalOpen, setModalOpen, ...walletSortingOpti
 
                 {!!installableWallets.length && (
                   <div className="collapse collapse-arrow">
-                    <input type="checkbox" />
+                    <input type="checkbox" aria-label="Show more wallets" />
                     <div className="collapse-title">More Wallets</div>
                     <div className="collapse-content">
                       <div className="flex flex-col gap-3">
