@@ -21,6 +21,9 @@ export type Chain = {
   cli: "aptos" | "movement";
   // Aptos framework branch to compile against (`--override-std`). Without it, the framework in Move.toml is used
   override_std?: "mainnet" | "testnet" | "devnet";
+  // Aptos framework commit to compile against instead of the `override_std` branch. The scripts stage the package with
+  // the Move.toml dependencies pointed at this commit, as `--override-std` only takes a branch name.
+  framework_rev?: string;
 } & (
   | { network: "custom"; fullnode: string }
   | { network: Exclude<NetworkName, "custom">; fullnode?: undefined }
@@ -70,6 +73,9 @@ export const defaultChains = {
     explorer_network_param: "testnet",
     cli: "aptos",
     override_std: "testnet",
+    // Pinned: the testnet branch got Lean proof files (`*.proof.lean`) that aptos CLI 9.6.0 fails to compile without
+    // Lean installed. Unpin once a CLI release handles them (#74).
+    framework_rev: "8f12e0e30b0b42aa5fcc6d7f4d44721832bb2ba2",
   },
   local: {
     id: 4,

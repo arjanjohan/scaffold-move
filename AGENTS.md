@@ -6,7 +6,7 @@ This file and the skills in `.agents/skills` take precedence over general Aptos 
 
 ## Networks and CLIs
 - The Move scripts take `--network <name>`: a key of `defaultChains` in `packages/common/chains.ts`, or `custom` for any other node (set up with `yarn account --network custom --rest-url <url>`). Without it, they use `defaultNetwork` from `packages/move/move.config.ts` (`movement_testnet`). `yarn chain` is the exception: it always starts the `local` network. The app starts on the first network in `targetNetworks` (`packages/nextjs/scaffold.config.ts`); keep the two the same.
-- Run Move through the yarn scripts (`yarn compile`, `test`, `deploy`, `account`, `format`, `faucet`, `chain`). They pick the right CLI per network: `movement` 7.4.x for Movement, which only accepts Move bytecode v7, and `aptos` 9.6+ for Aptos and local, compiling with `--override-std` against the Aptos framework.
+- Run Move through the yarn scripts (`yarn compile`, `test`, `deploy`, `account`, `format`, `faucet`, `chain`). They pick the right CLI per network: `movement` 7.4.x for Movement, which only accepts Move bytecode v7, and `aptos` 9.6+ for Aptos and local, compiling with `--override-std` against the Aptos framework. `aptos_testnet` compiles a staged copy in `packages/move/.pinned` against the framework commit in `framework_rev` (`chains.ts`), since the testnet branch's Lean proof files break the CLI; unpin when a CLI release handles them (#74).
 - Code must work on both frameworks: run `yarn test` (Movement) and `yarn test --network aptos_testnet`.
 
 ## Accounts and keys

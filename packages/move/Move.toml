@@ -2,7 +2,8 @@
 name = 'onchain_bio'
 version = '1.0.0'
 
-# Movement framework. For Aptos networks the scripts compile with `--override-std` (see packages/common/chains.ts)
+# Movement framework. For Aptos networks the scripts compile against the Aptos framework instead: `--override-std`, or a
+# pinned commit when the chain has `framework_rev` (see packages/common/chains.ts)
 [dependencies.AptosFramework]
 git = "https://github.com/movement-network/aptos-core.git"
 rev = "m1"
