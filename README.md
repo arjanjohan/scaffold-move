@@ -67,7 +67,7 @@ yarn deploy
 
 This command deploys the move modules in `packages/move/sources` to the default network, or to `--network <network>`. The modules can be modified to suit your needs. `packages/move/scripts/deploy.ts` publishes them with the network's CLI, deploying the addresses set to `'_'` in `Move.toml` to the network's account. After this it runs `packages/move/scripts/load-modules.ts` to make the new modules available in the nextjs frontend.
 
-`Move.toml` depends on Movement's framework. For Aptos networks the scripts compile against the Aptos framework with `--override-std`. `yarn compile` and `yarn test` also take `--network`.
+`Move.toml` depends on Movement's framework. For Aptos networks the scripts compile against the Aptos framework with `--override-std`. `aptos_testnet` is pinned to a framework commit (`framework_rev` in `chains.ts`) until the Aptos CLI can compile the framework's Lean proof files (#74). `yarn compile` and `yarn test` also take `--network`.
 
 4. On a second terminal, start your NextJS app:
 

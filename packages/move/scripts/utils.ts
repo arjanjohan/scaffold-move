@@ -7,6 +7,8 @@ import { Chain, defaultChains } from '@scaffold-move/common';
 import { defaultNetwork } from '../move.config';
 
 const packageDir = path.join(__dirname, '..');
+// Where the package is staged to compile against a pinned Aptos framework commit
+const pinnedDir = path.join(packageDir, '.pinned');
 
 export type Cli = Chain['cli'];
 
@@ -73,15 +75,38 @@ export function checkCli(cli: Cli): void {
   }
 }
 
+// `--override-std` only takes a branch name, so a target with `framework_rev` compiles from a copy of the package in
+// .pinned/ instead. Its Move.toml points the Movement framework dependencies at the pinned commit of the Aptos
+// framework repo; sources and tests are symlinked. The CLI still finds the profiles in the parent's .aptos/.
+function stagePinnedPackage(rev: string): string {
+  const toml = fs
+    .readFileSync(path.join(packageDir, 'Move.toml'), 'utf-8')
+    .replace(
+      /^git\s*=\s*["']https:\/\/github\.com\/movement-network\/aptos-core\.git["']\s*\nrev\s*=\s*["'][^"']*["']\s*\nsubdir\s*=\s*["']aptos-move\/framework\/([^"']*)["']/gm,
+      `git = "https://github.com/aptos-labs/aptos-framework.git"\nrev = "${rev}"\nsubdir = "$1"`,
+    );
+  fs.mkdirSync(pinnedDir, { recursive: true });
+  fs.writeFileSync(path.join(pinnedDir, 'Move.toml'), toml);
+  for (const name of ['sources', 'tests']) {
+    const link = path.join(pinnedDir, name);
+    if (!fs.existsSync(link) && fs.existsSync(path.join(packageDir, name))) {
+      fs.symlinkSync(path.join('..', name), link);
+    }
+  }
+  return pinnedDir;
+}
+
 // Runs the target's CLI in packages/move and exits when it fails.
 // A quiet run returns the CLI output instead of printing it, and only prints it when the CLI fails.
 export function runCli(target: Target, args: string[], options: { input?: string; quiet?: boolean } = {}): string {
   const { input, quiet } = options;
+  // Only `move` commands that compile use the pinned copy; accounts and the local node stay in packages/move
+  const frameworkRev = args[0] === 'move' && args[1] !== 'fmt' ? target.chain?.framework_rev : undefined;
   if (!quiet) {
     console.log(`Executing: ${target.cli} ${args.join(' ')}`);
   }
   const result = spawnSync(target.cli, args, {
-    cwd: packageDir,
+    cwd: frameworkRev ? stagePinnedPackage(frameworkRev) : packageDir,
     input,
     encoding: 'utf-8',
     stdio: [input === undefined ? 'inherit' : 'pipe', quiet ? 'pipe' : 'inherit', quiet ? 'pipe' : 'inherit'],
@@ -95,9 +120,9 @@ export function runCli(target: Target, args: string[], options: { input?: string
   return quiet ? `${result.stdout}${result.stderr}` : '';
 }
 
-// Extra arguments to compile for the target network
+// Extra arguments to compile for the target network. A pinned framework replaces `--override-std`, see stagePinnedPackage.
 export function getCompileArgs(target: Target): string[] {
-  return target.chain?.override_std ? ['--override-std', target.chain.override_std] : [];
+  return target.chain?.override_std && !target.chain.framework_rev ? ['--override-std', target.chain.override_std] : [];
 }
 
 // The CLI profile for the target network, if `yarn account` created one
