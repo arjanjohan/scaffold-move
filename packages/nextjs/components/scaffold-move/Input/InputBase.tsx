@@ -4,6 +4,8 @@ export type CommonInputProps<T = string> = {
   value: T;
   onChange: (newValue: T) => void;
   name?: string;
+  // Lets a <label htmlFor={id}> name the input
+  id?: string;
   placeholder?: string;
   disabled?: boolean;
 };
@@ -16,6 +18,7 @@ type InputBaseProps<T> = CommonInputProps<T> & {
 };
 
 export const InputBase = <T extends { toString: () => string } | undefined = string>({
+  id,
   name,
   value,
   onChange,
@@ -59,8 +62,10 @@ export const InputBase = <T extends { toString: () => string } | undefined = str
       <input
         className="input input-ghost focus-within:border-transparent focus:outline-hidden focus:bg-transparent focus:text-base-content h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-base-content/60 text-base-content"
         placeholder={placeholder}
+        id={id}
         // The placeholder disappears once typed into, so it can't be the only accessible name.
-        aria-label={placeholder || name}
+        // With an id, the matching <label> provides the name instead.
+        aria-label={id ? undefined : placeholder || name}
         name={name}
         value={value?.toString()}
         onChange={handleChange}
