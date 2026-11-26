@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
@@ -55,6 +55,14 @@ const OnchainBio: NextPage = () => {
     args: [account?.address?.toString() as AddressInput],
   });
 
+  // Reload what's shown once a registration is committed, otherwise it keeps the previous bio
+  useEffect(() => {
+    if (transactionResponse?.transactionSubmitted && transactionResponse.success) {
+      refetchBio();
+      refetchBioView();
+    }
+  }, [transactionResponse, refetchBio, refetchBioView]);
+
   // If the bioModule or ABI is not found, show an alert message and return early
   if (!bioAbi) {
     return <Alert message="Onchain Bio module not found!" />;
@@ -65,14 +73,15 @@ const OnchainBio: NextPage = () => {
     setShowBioResource(true);
   };
 
+  const name = inputName.trim();
+  const bio = inputBio.trim();
+  const canRegister = !!account && !!name && !!bio && !transactionInProcess;
+
   const registerBio = async () => {
-    if (!inputName || !inputBio) {
-      console.error("Name or Bio is missing");
-      return;
-    }
+    if (!canRegister) return;
 
     try {
-      await submitTransaction("register", [inputName, inputBio]);
+      await submitTransaction("register", [name, bio]);
     } catch (error) {
       console.error("Error registering bio:", error);
     }
@@ -108,21 +117,33 @@ const OnchainBio: NextPage = () => {
           hook from Scaffold Move.
         </p>
         <div className="flex items-center ml-2">
-          <span className="text-xs font-medium mr-2 leading-none">Your Name</span>
+          <label htmlFor="bio-name" className="text-xs font-medium mr-2 leading-none">
+            Your Name
+          </label>
         </div>
         <div className="w-full flex flex-col space-y-2">
-          <InputBase placeholder="Enter your name" value={inputName} onChange={setInputName} />
+          <InputBase id="bio-name" placeholder="Enter your name" value={inputName} onChange={setInputName} />
         </div>
         <div className="flex items-center ml-2">
-          <span className="text-xs font-medium mr-2 leading-none">Your Bio</span>
+          <label htmlFor="bio-text" className="text-xs font-medium mr-2 leading-none">
+            Your Bio
+          </label>
         </div>
         <div className="w-full flex flex-col space-y-2">
-          <InputBase placeholder="Write a short bio about yourself" value={inputBio} onChange={setInputBio} />
+          <InputBase
+            id="bio-text"
+            placeholder="Write a short bio about yourself"
+            value={inputBio}
+            onChange={setInputBio}
+          />
         </div>
-        <button className="btn btn-secondary mt-2" disabled={!account || transactionInProcess} onClick={registerBio}>
+        <button className="btn btn-secondary mt-2" disabled={!canRegister} onClick={registerBio}>
           {transactionInProcess && <span className="loading loading-spinner loading-xs"></span>}
           Register Bio
         </button>
+        {account && (!name || !bio) && !transactionInProcess && (
+          <p className="text-xs text-center m-0">Enter both a name and a bio to register.</p>
+        )}
         {transactionResponse && !transactionInProcess && (
           <p className="text-sm text-center m-0">
             {transactionResponse.transactionSubmitted && transactionResponse.success ? (
